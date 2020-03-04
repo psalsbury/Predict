@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Predict.Models;
+using System.Data.Entity;
+using AutoMapper;
+using Predict.ViewModels;
+
+namespace Predict.Controllers
+{
+    public class FixturesController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+
+        public FixturesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        // GET: Fixtures
+        public ActionResult Index()
+        {
+            var eventId = Helper.Cache.GetEventId();
+            var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
+                .Include(b => b.AwayTeam)
+                .Where(p => p.EventId == eventId).ToList();
+
+            return View(fixtures);
+        }
+
+        public ActionResult Create()
+        {
+            // If not an admin of the site, then do not allow the creation of a fixture
+            if (!User.IsInRole("Admin"))
+            {
+                return HttpNotFound();
+            }
+
+            var eventId = Predict.Helper.Cache.GetEventId();
+            var fixtureViewModel = new FixtureViewModel
+            {
+                Teams = (from a in _context.Teams
+                         join c in _context.EventTeams on a.Id equals c.TeamId
+                         where c.EventId == eventId
+                         select a).ToList()              
+            };
+            fixtureViewModel.EventId = eventId;
+
+            return View("EditFixture", fixtureViewModel);
+        }
+
+        public ActionResult Edit(int id)
+        {
+
+            if (!User.IsInRole("Admin"))
+            {
+                return HttpNotFound();
+            }
+
+            var eventId = Predict.Helper.Cache.GetEventId();
+            var fixtureViewModel = new FixtureViewModel
+            {
+                Teams = (from a in _context.Teams
+                         join c in _context.EventTeams on a.Id equals c.TeamId
+                         where c.EventId == eventId
+                         select a).ToList()
+            };
+
+            var fixture = _context.Fixtures
+                .Include(t => t.HomeTeam)
+                .Include(t => t.AwayTeam)
+                .SingleOrDefault(f => f.Id == id);
+
+            Mapper.Map(fixture,fixtureViewModel);
+            return View("EditFixture", fixtureViewModel);
+
+        }
+
+        public ActionResult Save(FixtureViewModel fixtureViewModel)
+        {
+
+            var fixture = new Fixture();
+            if (fixtureViewModel.Id != 0)
+            {
+                fixture = _context.Fixtures.SingleOrDefault(f => f.Id == fixtureViewModel.Id);
+            }
+
+            Mapper.Map(fixtureViewModel, fixture);
+
+            fixture.ModifiedDateTime = DateTime.Now;
+
+            if (fixtureViewModel.Id == 0)
+            {
+                fixture.CreatedDateTime = DateTime.Now;
+                _context.Fixtures.Add(fixture);
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Fixtures");
+        }
+    }
+}

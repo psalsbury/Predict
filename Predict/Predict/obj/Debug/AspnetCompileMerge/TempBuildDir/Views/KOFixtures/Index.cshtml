@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Predict.Models.KoFixture>
+
+@{
+    ViewBag.Title = "KO Fixture Admin";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table table-bordered table-hover" id="KO1">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FixtureDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoundOf)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedDateTime)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        if (item.Team1FromLeague != null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FixtureDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoundOf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDateTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditKoFixture", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteKoFixture", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+<table class="table table-bordered table-hover" id="KO2">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FixtureDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoundOf)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Team1FromKoFixtureId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Team2FromKoFixtureId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedDateTime)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        if (item.Team1FromLeague == null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FixtureDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoundOf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Team1FromKoFixtureId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Team2FromKoFixtureId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDateTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditKoFixture", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteKoFixture", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+<script>
+
+    $(function () {
+        $("#KO1, #KO2").DataTable( {
+            "bLengthChange": false
+            , "bPaginate": false
+        } );;
+    });
+
+
+</script>

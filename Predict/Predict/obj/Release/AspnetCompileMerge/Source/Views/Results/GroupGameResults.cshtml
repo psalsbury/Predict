@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Predict.Models.Fixture>
+
+@{
+    ViewBag.Title = "Group Game Results";
+}
+<div>
+
+    <table  style="width: 70%" class="table table-bordered table-hover" id="fixtures">
+        <tr>
+            <th></th>
+            <th style="text-align: right">
+                @Html.DisplayNameFor(model => model.HomeTeam.TeamName)
+            </th>
+            <th style="text-align: center">
+                Score
+            </th>
+            <th style="text-align: left">
+                @Html.DisplayNameFor(model => model.AwayTeam.TeamName)
+            </th>
+            <th>
+
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FixtureDateTime)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20" />
+                </td>
+
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.HomeTeam.TeamName)
+                </td>
+                <td>
+                    @if (item.HomeResult != null)
+                    {
+                        <table border="black" width="100%">
+                            <tr>
+                                <td style="text-align: center">
+                                    @Html.DisplayFor(modelItem => item.HomeResult)
+                                </td>
+                                <td style="text-align: center">
+                                    @Html.DisplayFor(modelItem => item.AwayResult)
+                                </td>
+
+                            </tr>
+                        </table>
+                    }
+                </td>
+
+                <td style="text-align: left">
+                    @Html.DisplayFor(modelItem => item.AwayTeam.TeamName)
+                </td>
+                <td>
+                    <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20" />
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FixtureDateTime)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+<script>
+
+    $(function () {
+        $("#fixtures").DataTable( {
+            "bLengthChange": false,
+            "autoWidth": false
+        } );;
+    });
+
+</script>

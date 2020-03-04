@@ -1,0 +1,101 @@
+ActionResult Types
+ViewResult--> View()
+PartialViewResult --> PartialView()
+ContentResult -> Content()
+RedirectResult --> Redirect()
+RedirectToRouteResult --> RedirectToAction()
+JsonResult --> Json()
+FileResult --> File()
+HttpNotFoundResult --> HttpNotFound()
+EmptyResult --> 
+
+Variable
+var <varName> = <value>;
+<type> <varname> = <value>;
+
+controller --> the c# code that hits when a page loads
+view --> the html
+viewmodel --> a class thats fits better for the view
+model --> classes that are ties to the database
+
+Shortcuts
+Ctrl, F5 --> Run the application
+Ctrl, Shift, B --> Compile without opening new tab in the browser
+
+Ctrl R, R -- >  Change variable name. Changes all references to variable to the new name
+
+Alt, / then . --> manually assigned for package manager console
+
+Ctrl D, duplicate line
+
+
+
+html
+when displaying the name of the field, display property [Display(Name = "Date Of Birth")] will change the name of the field displayed in the html form when its rendered. This is called data annotation
+
+
+Debugging
+F9 - puts or removes a break point on the current line
+
+USE AUTOMAPPER 
+DTO = DATA TRANSFER OBJECT. = ANOTHER CLASS WHICH IS JUST A REPRESENTATION OF THE PROPERTIES THAT CAN BE UPDATED. AUTOMAPPER WILL UPDATE EVERYTHING BY DEFAULT
+
+
+data annotations for form validation
+[Required] --> To override error message [Required(ErrorMessage = "Please enter customers name")]
+[StringLength(100)]
+[Range(1,100)]
+[Compare("OtherProperty")] -> for things like comparing 2 passwords
+[Phone]
+[EmailAddress]
+[Url]
+[RegularExpression("..")]
+
+
+Attribute routing. On the controller, use, above the public ActionResult
+[Route("movies/released/{year}/{month:regex([0-9]{2})}")]
+
+if statements
+condition ? "true" : "else"
+
+|| = OR (it wont check the next part if the first part is true)
+
+Lambda
+(c => c.id == id)
+first bit is saying that c is every object, and for every object only select those where c.id = id
+
+Package manager console
+	--> enable-migrations --> This will allow entity framework code first
+	--> add-migration <MigrationName> (-force to overwrite))
+	--> update-database
+
+FixtureId
+FixtureId
+
+
+http://localhost:64432/FixturePredictions/EditFixturePredictions
+
+awdrgyjil100@yahoo.co.uk
+Kcalb278vr
+
+
+JQUERY
+
+dom = document object model
+
+JQuery is 
+$("div").hide();  --> Will hide all the divs on the page
+$("p").fadeOut(1000); --> Will fade out all the paragraphs
+
+--> The following will be called automatically if any <p> is clicked. Nothing in the <p> itself needs to be defined
+--> Event Handlers
+$("p").on('click', function(){
+	$(this).fadeOut(1000);
+});
+
+
+$("p").addClass("classname classname2");
+$("p").removeClass("classname classname2");
+
+
+<script> code is usually within the body tag (at the end of the document)

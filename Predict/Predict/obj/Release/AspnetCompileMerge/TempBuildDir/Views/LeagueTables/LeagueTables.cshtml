@@ -1,0 +1,55 @@
+﻿@model Predict.ViewModels.LeagueTablesViewModel
+
+@{
+    ViewBag.Title = "Your Predicted League Tables";
+}
+
+<div class="container" style="width: 75%" align="left">
+    @foreach (var leagueTable in Model.LeagueTables)
+    {
+        <text>
+            <h3>
+                League
+                @Html.Label(leagueTable.League)
+            </h3>
+        </text>
+        <div class="box-body">
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th style="width: 5%">Posn</th>
+                        <th style="width: 15%">Team</th>
+                        <th style="width: 5%">Played</th>
+                        <th style="width: 5%">Won</th>
+                        <th style="width: 5%">Drawn</th>
+                        <th style="width: 5%">Lost</th>
+                        <th style="width: 5%">For</th>
+                        <th style="width: 5%">Against</th>
+                        <th style="width: 5%">Diff</th>
+                        <th style="width: 5%">Points</th>
+                    </tr>
+                    </thead>
+                    @foreach (var leagueTableTeam in leagueTable.LeagueTableTeams)
+                    {
+                        <tr>
+                            <td>@leagueTableTeam.Position.ToString()</td>
+                            <td>@leagueTableTeam.Team <img src="@Url.Content(leagueTableTeam.TeamFlag)" /></td>
+                            <td>@leagueTableTeam.Played.ToString()</td>
+                            <td>@leagueTableTeam.Won.ToString()</td>
+                            <td>@leagueTableTeam.Draws.ToString()</td>
+                            <td>@leagueTableTeam.Lost.ToString()</td>
+                            <td>@leagueTableTeam.GoalsFor.ToString()</td>
+                            <td>@leagueTableTeam.GoalsAgainst.ToString()</td>
+                            <td>@leagueTableTeam.GoalDifference.ToString()</td>
+                            <td>@leagueTableTeam.Points.ToString()</td>
+                        </tr>
+                    }
+
+
+                </table>
+            </div>
+        </div>
+
+                }
+            </div>

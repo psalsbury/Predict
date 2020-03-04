@@ -1,0 +1,3 @@
+<%
+response.write Server.MapPath("..\db\db.mdb")
+%>

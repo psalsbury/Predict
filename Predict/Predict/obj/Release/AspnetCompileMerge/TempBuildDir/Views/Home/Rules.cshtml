@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "Rules";
+}
+
+<h2>Rules</h2>
+
+<h4>Introduction</h4>
+<p>
+    This free to enter competition is designed to test your
+    skill and judgement in predicting what is going to happen in this years
+    @ViewBag.EventName competition. You will need to make a series of predictions to gain points, the more predictions you get right, the greater your score will be.
+</p>
+
+<p>
+    Just like the real @ViewBag.EventName tournament, there are two phases to this competition.
+    The group phase and the knockout phase.
+</p>
+<p><h4>Group Stage</h4></p>
+<p>
+    The group stage consists of 48 matches, you have to predict the results
+    of these matches.<br> The scoring is as follows:
+</p>
+<table width="85%" style="border: solid 0 BLACK; border-width:1px" bgcolor="efeff0">
+    <tr>
+        <td width=70%>&nbsp;</td>
+        <td><b>Score</b></td>
+    </tr>
+    <tr>
+        <td width=70%>Correct Score</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td width=70%>Correct Result</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td width=70%>Incorrect Score/Result</td>
+        <td>0</td>
+    </tr>
+</table>
+<p>
+    For example, take the first game of the competition (Russia vs Saudi Arabia).
+    If you have predicted that Russia will win 1-0, based on the following
+    possible results your score would be as follows:
+</p>
+<table width="85%" style="border: solid 0 BLACK; border-width:1px" bgcolor="efeff0">
+    <tr>
+        <td width=70%><b>Actual Result</b></td>
+        <td><b>You Score</b></td>
+    </tr>
+    <tr>
+        <td width=70%>Russia 1 Saudi Arabia 0 (i.e. Correct score predicted)</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td width=70%>Russia 5 Saudi Arabia 1 (i..e. Brazil win, as you predicted)</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td width=70%>Russia 0 Saudi Arabia 0</td>
+        <td>0</td>
+    </tr>
+</table>
+<p>You can enter and change your prediction right up to the kick off time (Unless your league administrator has selected to lock down predictions after the first match kicks off. If this is the case there will be a note on your home page)</p>
+<p><h4>KO Stage</h4></p>
+<p>
+    The second phase is the knockout phase. In the actual @ViewBag.EventName tournament, only teams that have qualified
+    from the group stage by finishing 1st or 2nd will get to this
+    stage. Your job is to predict which teams these will be. The Last 16 should be relatively simple, but predicting
+    who will progress further than that will be difficult. This is represented
+    in the score achieved for correct predictions .
+</p>
+<table width="65%" style="border: solid 0 BLACK; border-width:1px" bgcolor="efeff0">
+    <tr>
+        <td width=70%>&nbsp;</td>
+        <td><b>Score</b></td>
+    </tr>
+    <tr>
+    <tr>
+        <td width=70%>Last 16</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td width=70%>Quarter Finalist</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td width=70%>Semi Finalist</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td width=70%>Finalist</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td width=70%>Winner</td>
+        <td>5</td>
+    </tr>
+</table>
+<p>
+    You can pick any teams for each stage of the knock out phase, the only rule is that no team can be picked
+    more than once in any one phase i.e. you can't pick Italy 8 times for the quarter finals. The strategy you choose for the knockout phases is up to
+    you. You could (for example, in the quarter finals) pick all teams from 2 groups to be guranteed 4 points, or you could work out
+    who you think will come 1st and 2nd in each group and position them accordingly. Its up to you.
+    If the same team is repeated in the same stage then only the first
+    occurrence of the team will count.
+
+<p>
+    You will also get a bonus <b>*6 points*</b> if you get the time of the first goal in the final correct. The value of this can be 0-120. If you guess 0, this is classed as guessing that no goals will be scored.
+    You will not get these bonus points if you are have the closest guess, your guess has to be exactly correct.
+</p>
+
+<p> <B><font color='red'> KNOCK OUT PREDICTIONS MUST BE ENTERED BEFORE THE @ViewBag.EventName.ToString().ToUpper() TOURNAMENT STARTS</font></B></p>
+
+<p><h4>Pools/Leagues/Sweepstakes</h4></p>
+<p>
+    When you register you will automatically be
+    entered into our 'Global' league which is for everybody who has
+    registered and completed their online predictions.
+    You can also join or create your own Pool/League/Sweepstake for your colleagues/mates.
+    <br><br>If you create the league you have the responsibility of administering the league and its entrants.
+    When creating the league you have the option of specifying whether there is an entry fee and how much the entry fee is.
+    From here you can also specify how to distribute the 'pot' amongst the winners. i.e. 60% to 1st place, 30% to second and so on.
+    The league administrator will usually be the person who collects the entry fees and pays the winners of your league/sweepstake.
+    <br>
+    <br>
+    If you create your own league you can also specify your own scoring system. You will have the option
+    to pick your own points for correct scores/correct results and correct winning margins. On top of this,
+    you also have the option to include/exclude the bonus question (time of first goal in the final), and you can
+    also opt to freeze all your leagues predictions when the tournament begins.
+
+<p><h4>General Information</h4></p>
+<p>
+    The person with the most points at the end of the competiition is the
+    winner. In the event of a draw the next winning considerations are as
+    follows:
+</p>
+<table width="75%" style="border: solid 0 BLACK; border-width:1px" bgcolor="efeff0">
+    <tr>
+        <td>1. Total number of correct scores</td>
+    </tr>
+    <tr>
+        <td>2. Total number of correct results</td>
+    </tr>
+    <tr>
+        <td>3. Date Registered (People who register 1st get priority)</td>
+    </tr>
+
+</table>
+<p>Your email address will not be passed onto any other organisations. Your details will remain safe in the @ViewBag.EventName Prediction Competition.
+<p>If you have any further questions or <B><font color='red'> if you get any error messages or cannot login </font></B> then <B><font color='red'>please</font></B> send me an email at <A href="mailto:help@wccomp.com">help@wccomp.com</A></p>
+<P>Good luck.</P>

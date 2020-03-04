@@ -1,0 +1,250 @@
+﻿@using System.Data.Entity;
+@model Predict.ViewModels.KoFixturePredictionViewModel
+
+@{
+    ViewBag.Title = Model.Predictions?"Edit Knock Out Fixture Predictions": "Edit Knock Out Fixture Results";
+}
+
+@using (Html.BeginForm(Model.Predictions?(Model.ReadOnly?"ReadOnly":"Save"): "SaveKoResults", (Model.Predictions ? "KoFixturePredictions": "KoFixtures") ))
+{
+    @Html.AntiForgeryToken()
+
+  
+    @Html.HiddenFor(model => model.MaxRows)
+    @Html.HiddenFor(model => model.MaxCols)
+
+    <table >
+        <tr>
+
+            @{
+
+                for (int col = 1; col <= Model.MaxCols; col++)
+                {
+                    @:<td width="150">
+                    int sPoints = GetPoints(col);
+                    @:@sPoints.ToString()
+                    @:Points</td>
+                }
+            }
+
+        </tr>
+
+        @{
+
+            for (int row = 1; row <= Model.MaxRows; row++)
+            {
+                @:<tr>
+    for (int col = 1; col <= Model.MaxCols; col++)
+    {
+
+
+        int lRowStartPos = Power2(col); // First column we want a drop down
+        int lRowPattern = Power2(col + 1); // Every x rows
+        int lActualPos = row - lRowStartPos; //
+
+        if ((lActualPos % lRowPattern) == 0)
+        {
+            @:<td style="border: 1px solid #000000">
+                var roundOf = Power2(Math.Abs((col - 1) - Model.MaxCols));
+                var position = (lActualPos / lRowPattern) + 1;
+
+                @Html.Raw(ReturnDropDown(roundOf, position));
+       }
+        else
+        {
+            @:<td>
+        }
+        @:</td>
+
+
+    }
+@:</tr>
+
+            }
+        }
+        @if (!Model.ReadOnly && Model.RankedTeamsForAutoFill.Count>0)
+        {
+            <tr></tr>
+            <tr>
+                @{
+                    for (int col = 1; col <= Model.MaxCols; col++)
+                    {
+                        var roundOf = Power2(Math.Abs((col - 1) - Model.MaxCols));
+                        var autoFilButtonName = "AutoFil_" + roundOf.ToString();
+                        @:<td><input class="btn" type="button" name="@autoFilButtonName" value="Auto Fill" id="@autoFilButtonName" onclick="AutoFill(this)"></td>
+
+
+                    }
+
+                }
+            </tr>
+        }
+    </table>
+
+    if (!Model.ReadOnly)
+     {
+         <div class="form-group">
+             <div class="col-md-offset-2 col-md-10">
+                 @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+                 <input type="submit" value="Save" class="btn btn-default"/>
+             </div>
+         </div>
+     }
+}
+@functions {
+
+    public static int Power2(int exponent)
+    {
+        int result = 1;
+        for (int power = 2; power <= exponent; power++)
+        {
+            result = result * 2;
+        }
+        return result;
+    }
+
+    public static int GetPoints(int col)
+    {
+        int points = 0;
+        switch (col)
+        {
+            case 1:
+                points = 1;
+                break;
+
+            case 2:
+                points = 2;
+                break;
+
+            case 3:
+                points = 4;
+                break;
+
+            case 4:
+                points = 6;
+                break;
+            case 5:
+                points = 10;
+                break;
+        }
+        return points;
+    }
+
+    public string ReturnDropDown(int roundOf, int position)
+    {
+        var listName = roundOf.ToString() + "_" + position.ToString();
+        var selectedTeam = "Not Selected";
+        string defaultValue = "Select Team";
+        int selectedValue = 0;
+
+        if (roundOf == 1)
+        {
+            if (Model.KoWinningTeam != null)
+            {
+                selectedValue = Model.KoWinningTeam.TeamId ?? default(int);
+                selectedTeam = Model.KoWinningTeam.Team.TeamName;
+            }
+        }
+        else
+        {
+            var firstTeam = position % 2 != 0;
+
+            int koFixturePosition = firstTeam ? (position + 1) / 2 : position / 2;
+            var koFixturePredictions = Model.KoFixturePredictions.SingleOrDefault(k => k.KoFixture.RoundOf == roundOf && k.KoFixture.Position == koFixturePosition);
+            if (koFixturePredictions != null)
+            {
+                selectedValue = firstTeam ? koFixturePredictions.Team1Id ?? default(int) : koFixturePredictions.Team2Id ?? default(int);
+                if (firstTeam && koFixturePredictions.Team1 != null)
+                {
+                    selectedTeam = koFixturePredictions.Team1.TeamName;
+                }
+
+                if (!firstTeam && koFixturePredictions.Team2 != null)
+                {
+                    selectedTeam = koFixturePredictions.Team2.TeamName;
+                }
+
+            }
+
+        }
+        if (Model.ReadOnly == true)
+        {
+            return selectedTeam;
+
+        }
+        else
+        {
+            return Html.DropDownList(listName, new SelectList(Model.Teams, "id", "TeamName", selectedValue), defaultValue, new { @id = listName, @class = "myclass" }).ToString();
+
+        }
+
+    }
+
+
+}
+
+
+
+
+<script>
+    function AutoFill(obj) {
+        var a;
+        var objectName;
+        var team1;
+        var team2;
+        var winningTeam;
+        var teamsInOrder = [
+            @{
+                for (int a = 1; a <= Model.RankedTeamsForAutoFill.Count; a++)
+                {
+                    if (a != 1)
+                    {
+                        @:,
+                    }
+                    @:"@Model.RankedTeamsForAutoFill[a]"
+                }
+            }
+        ];
+        if (obj.id === "AutoFil_16") {
+            @{
+                if (Model.RankedTeamsForAutoFill.Count > 0)
+                {
+                    for (int a = 1; a <= 16; a++)
+                    {
+                        @:document.getElementById("16_@a").value = @Model.FirstStageAutoFill[a];
+
+                    }
+                }
+            }
+        } else {
+            var thisRound = parseInt(obj.id.split('_')[1]);
+            var previousRound = thisRound * 2;
+
+            for (a = 1; a <= thisRound; a++) {
+                objectName = previousRound.toString().concat("_").concat(((a*2)-1).toString());
+                team1 = document.getElementById(objectName).value;
+                objectName = previousRound.toString().concat("_").concat((a * 2).toString());
+                team2 = document.getElementById(objectName).value;
+                winningTeam = GetBestTeam(teamsInOrder,team1, team2);
+
+                objectName = thisRound.toString().concat("_").concat(a.toString());
+                document.getElementById(objectName).value = winningTeam;
+            }
+        }
+
+    }
+    function GetBestTeam(teamsInOrder,team1, team2) {
+        var a;
+        var nbrTeams = @Model.RankedTeamsForAutoFill.Count;
+        for (a = 1; a <= nbrTeams; a++) {
+            if (teamsInOrder[a-1] === team1)
+                return team1;
+            if (teamsInOrder[a - 1] === team2)
+                return team2;
+
+        }
+    }
+
+    
+</script>
+

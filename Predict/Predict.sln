@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predict", "Predict\Predict.csproj", "{DA765AF8-7DE0-4C73-9FC8-7741CCDD88E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predict.Tests", "Predict.Tests\Predict.Tests.csproj", "{CAF16E78-BC4F-4702-8E13-C755D479163D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA765AF8-7DE0-4C73-9FC8-7741CCDD88E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA765AF8-7DE0-4C73-9FC8-7741CCDD88E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA765AF8-7DE0-4C73-9FC8-7741CCDD88E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA765AF8-7DE0-4C73-9FC8-7741CCDD88E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAF16E78-BC4F-4702-8E13-C755D479163D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAF16E78-BC4F-4702-8E13-C755D479163D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAF16E78-BC4F-4702-8E13-C755D479163D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAF16E78-BC4F-4702-8E13-C755D479163D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63A28CCB-DE91-44C2-9FFF-48A036D03728}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://salsbury.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Predict\\Predict.csproj
+		SccProjectName1 = Predict
+		SccLocalPath1 = Predict
+		SccProjectUniqueName2 = Predict.Tests\\Predict.Tests.csproj
+		SccProjectName2 = Predict.Tests
+		SccLocalPath2 = Predict.Tests
+	EndGlobalSection
+EndGlobal

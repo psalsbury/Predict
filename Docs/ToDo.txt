@@ -1,0 +1,67 @@
+check anti forgery token used for updates
+
+add a widget to show position in the global league
+
+show fixture date in BST, store in Universal time
+
+work out how to get offset for times in javascript and show fixture dates with time difference
+
+PREVIOUS HISTORY FOR RESULTS PAGE S(LOUISE SUGGESTED IT)
+
+check that if after the deadline the points etc on the edit pool screen are not editable
+
+error when updating account details without password
+
+position graph - get data from database
+
+restrict leagues to 2
+
+add leagues that are entered as menu options if autorised to be in league
+
+update chart showing league position to include leagues. top is top position, bottom is lowest position. different colour per league
+
+remove freeze predictions option.. allow eveyone to update predictions until kick off
+
+allow visibilty of proper ko screen. .. readonly
+
+update league tables screen
+
+add league tables screen onto predictions summary page
+
+add help page
+
+add a page to submit a question/bug
+
+ensure that auto fil works for for last 16
+
+
+
+
+
+ideas for homepage
+	--> donut chart showing correct where points have come from (cs, cr, KO, WM)
+	--> position in the global league
+	--> position in pool
+	--> number of people in your league
+
+	--> for admins, number of people that need authorising
+	--> 
+
+
+goDaddy database
+admin
+Kcalb267da
+
+ftp
+188.121.43.19
+ph16631149421
+Kcalb267ft
+
+web.config
+
+<system.web>
+    <trust level="Full"/>
+  </system.web>
+
+if the else shorthand
+condition ? consequent : alternative

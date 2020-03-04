@@ -1,0 +1,102 @@
+﻿@model Predict.ViewModels.PoolPlayerViewModel
+
+@{
+    ViewBag.Title = "Manage the players in your pool";
+}
+
+
+<table class="table table-bordered table-hover" id="poolPlayers">
+    <thead>
+        <tr>
+            <th>
+                Player Name
+            </th>
+            <th>
+                Date Registered
+            </th>
+            <th>
+                Date Approved
+            </th>
+            <th>
+                Approve
+            </th>
+            <th class="no-sort">
+                Remove
+            </th>
+        </tr>
+    </thead>
+    @for (int i = 0; i < Model.PoolPlayers.Count(); i++)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(m => m.PoolPlayers[i].Player.PlayerName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.PoolPlayers[i].Player.CreatedDateTime)
+            </td>
+            <td id="js-approvedate">
+                @Html.DisplayFor(m => m.PoolPlayers[i].AdminApprovedDateTime)
+            </td>
+            <td>
+                @if (@Model.PoolPlayers[i].AdminApprovedDateTime == null)
+                {
+                    <button class="btn btn-success js-approve" value="Remove" dataPlayerId="@Model.PoolPlayers[i].PlayerId" dataPoolId="@Model.PoolPlayers[i].PoolId">Approve</button>
+                }
+            </td>
+            <td>
+                <button class="btn btn-danger js-delete" value="Remove" dataPlayerId="@Model.PoolPlayers[i].PlayerId" dataPoolId="@Model.PoolPlayers[i].PoolId">Remove</button>
+            </td>
+        </tr>
+    }
+</table>
+<script src="/Scripts/bootbox.js"></script>
+<script>
+
+    $("#poolPlayers").on("click", ".js-delete", function () {
+        var button = $(this);
+        bootbox.confirm("Are you sure you want to delete this player?", function (result) {
+            if (result) {
+                $.ajax(
+                    {
+                        url: "/api/poolPlayers/" + button.attr("dataPoolId") + "/" + button.attr("dataPlayerId"),
+                        method: "DELETE",
+                        success: function () {
+                            $(button.closest("tr")).fadeOut(1000);
+                        }
+                    });
+            }
+        });
+    });
+
+    $("#poolPlayers").on("click", ".js-approve", function () {
+        var button = $(this);
+        bootbox.confirm("Are you sure you want to approve this player?", function (result) {
+            if (result) {
+                $.ajax(
+                    {
+                        url: "/api/poolPlayers/" + button.attr("dataPoolId") + "/" + button.attr("dataPlayerId"),
+                        method: "PUT",
+                        success: function () {
+                            $(button).fadeOut(1000);
+                            $(button.closest('tr')).find("#js-approvedate").html(moment().format('MMMM Do YYYY, h:mm:ss a'));
+                        }
+                    });
+            }
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#poolPlayers").DataTable({
+            'columnDefs': [{
+                'targets': [3, 4], /* column index */
+                'orderable': false, /* true or false */
+
+            }]
+        });
+    });
+
+</script>
+

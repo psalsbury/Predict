@@ -1,0 +1,15 @@
+﻿
+<div class="style:">
+    @if (Request.IsAuthenticated)
+    {
+
+        @Html.Partial("LoggedOn")
+    }
+    else
+    { 
+
+
+    @Html.Partial("NotLoggedOn")
+
+}
+</div>
