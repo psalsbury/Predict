@@ -11,8 +11,8 @@
     </a>
     @{
 
-        //var player = SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());
-        var player = (Player) Session["player"];
+        var player = (Player) SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());
+        //var player = (Player) Session["player"];
     }
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Contact Us";
+}
+
+<p>
+
+    Please enter your question below and we will do out best to get back to you as soon as we can.
+
+</p>
+@using (Html.BeginForm("SendMessage", "Home"))
+
+{
+    @Html.TextArea("message", new {@class = "form-control", @rows = 8})
+    <br/>
+
+    <div class="form-group">
+        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+        <input type="submit" value="Send" class="btn btn-success" onclick="return ValidateForm()"/>
+    </div>
+}
+    <script>
+
+        function ValidateForm() {
+
+            if (document.getElementById("message").value === "") {
+                alert("Please enter a message");
+                return false;
+            }
+            return true;
+        }
+
+    </script>

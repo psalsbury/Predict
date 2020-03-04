@@ -131,7 +131,6 @@ C:\Projects\Predict\Predict\Predict\bin\Microsoft.AI.DependencyCollector.xml
 C:\Projects\Predict\Predict\Predict\bin\Microsoft.AI.WindowsServer.xml
 C:\Projects\Predict\Predict\Predict\bin\Microsoft.AI.Web.xml
 C:\Projects\Predict\Predict\Predict\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.InitialMigration.resources
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.number2.resources
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.Bonus.resources
@@ -141,3 +140,4 @@ C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.CoreCompileInputs.c
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.pdb
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache

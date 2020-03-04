@@ -19,11 +19,27 @@ namespace Predict.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult ContactUs()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendMessage()
+        {
+            var message = Request["message"];
+
+            var emailMesesage = new IdentityMessage
+            {
+                Body = message,
+                Destination = "pete@salsbury.co.uk",
+                Subject = string.Format("Query from {0}", User.Identity.Name)
+            };
+
+            Predict.Helper.Cache.SendEmail(emailMesesage);
+            return RedirectToAction("Index", "Home");
+
         }
 
         public ActionResult Rules()

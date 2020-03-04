@@ -45,7 +45,7 @@ namespace Predict.Helper
             UpdateFixturesSessionVar(context, session, eventId, userId);
             UpdatePositionHistorySessionVar(context, session, eventId, userId);
             UpdateBonusSessionVar(context, session, eventId, userId);
-            session.Timeout = 1440; // 1 day
+            session.Timeout = 252000; // 180 day
 
         }
 

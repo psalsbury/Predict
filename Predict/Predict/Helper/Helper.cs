@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Runtime.Caching;
+using Microsoft.AspNet.Identity;
 using Predict.Models;
 
 namespace Predict.Helper
@@ -10,6 +13,27 @@ namespace Predict.Helper
     // this class is for perm data. Not user specific.
     public static class Cache
     {
+        public static void SendEmail(IdentityMessage message)
+        {
+            MailMessage smtpMessage = new MailMessage
+            {
+                From = new MailAddress(ConfigurationManager.AppSettings["SupportEmailAddr"])
+            };
+            smtpMessage.To.Add(new MailAddress(message.Destination));
+            smtpMessage.Subject = message.Subject;
+            smtpMessage.Body = message.Body;
+            smtpMessage.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient();
+            if (System.Environment.MachineName == "THINKPAD")
+            {
+                client.Host = "ignored";
+                client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+                client.PickupDirectoryLocation = @"c:\predictemails";
+            }
+            client.Send(smtpMessage);
+        }
+    
         public static object GetCachedItem(string cacheId)
         {            
             return MemoryCache.Default.Get(cacheId);
