@@ -161,7 +161,7 @@ namespace Predict.Controllers
         public ActionResult KoFixturePredictions(string userId)
         {
             var loggedInUserId = User.Identity.GetUserId();
-            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId);
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId, false);
 
             return View(koFixturePredictionViewModel);
         }
@@ -171,12 +171,12 @@ namespace Predict.Controllers
         public ActionResult KoFixturePredictionsGrouped(string userId)
         {
             var loggedInUserId = User.Identity.GetUserId();
-            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId);
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId,false);
 
             return View(koFixturePredictionViewModel);
         }
 
-        public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId,string userId)
+        public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId,string userId, bool readOnly)
         {
             
             var eventId = Predict.Helper.Cache.GetEventId();
@@ -202,13 +202,18 @@ namespace Predict.Controllers
                          join c in _context.EventTeams on a.Id equals c.TeamId
                          where c.EventId == eventId
                          select a).ToList(),
-                FirstStageAutoFill = Helper.LeagueTableHelper.FetchFirstRoundTeamsForAutoFill(eventId, userId),
-                RankedTeamsForAutoFill = Helper.LeagueTableHelper.FetchAllTeamsInOrder(eventId, userId),
                 KoWinningTeam = _context.KoWinningTeamPredictions
                 .Include(b => b.Team)
                 .FirstOrDefault(e => e.EventId == eventId && e.PlayerId == userId)
-
             };
+
+            if (!readOnly)
+            {
+                koFixturePredictionViewModel.FirstStageAutoFill =
+                    Helper.LeagueTableHelper.FetchFirstRoundTeamsForAutoFill(eventId, userId);
+                koFixturePredictionViewModel.RankedTeamsForAutoFill =
+                    Helper.LeagueTableHelper.FetchAllTeamsInOrder(eventId, userId);
+            }
 
             int maxRoundOf = _context.KoFixtures.Max(p => p.RoundOf);
             koFixturePredictionViewModel.MaxRows = (maxRoundOf * 2) - 1;

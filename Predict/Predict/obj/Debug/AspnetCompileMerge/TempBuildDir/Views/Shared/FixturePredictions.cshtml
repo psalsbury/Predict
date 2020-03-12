@@ -32,19 +32,19 @@
                 </th>
                 <th style="vertical-align: middle;text-align:center">Game</th>
                 <th style="vertical-align: middle;text-align:center">
-                    Fixture Date/Time
+                    Fixture Date
                 </th>
             </tr>
         </thead>
         @for (int i = 0; i < Model.FixturePredictions.Count(); i++)
         {
             <tr>
-                <td style="vertical-align: middle;text-align:center">
+                <td style="vertical-align: middle;text-align:center" witdth="25%">
                     @Html.HiddenFor(m => m.FixturePredictions[i].FixtureId)
                     <b> @Model.EventTeams.Find(m => m.TeamId == @Model.FixturePredictions[i].Fixture.HomeTeam.Id && m.EventId == @Model.FixturePredictions[i].Fixture.EventId).League</b>
                 </td>
 
-                <td style="vertical-align: middle;text-align:center">
+                <td style="vertical-align: middle;text-align:center" witdth="50%">
                     <div class="container-fluid">
                         <div class="row vertical-middle text-center">
                             <div class="col-sm-6 text-center">
@@ -54,16 +54,17 @@
                                             <img src="@Url.Content(@Model.FixturePredictions[i].Fixture.HomeTeam.FlagFileLocation)" height="20" />
                                         </td>
                                         <td style="text-align:left" width="60%">
+                                            &nbsp
                                             @Html.DisplayFor(m => m.FixturePredictions[i].Fixture.HomeTeam.TeamName)
                                         </td>
-                                        <td style="text-align:left" width="20%" >
+                                        <td style="text-align: left" width="20%">
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
                                                 @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
                                             }
                                         </td>
                                     </tr>
@@ -77,9 +78,10 @@
                                             <img src="@Url.Content(@Model.FixturePredictions[i].Fixture.AwayTeam.FlagFileLocation)" height="20" />
                                         </td>
                                         <td style="text-align:left" width="60%">
+                                            &nbsp
                                             @Html.DisplayFor(m => m.FixturePredictions[i].Fixture.AwayTeam.TeamName)
                                         </td>
-                                        <td style="text-align:left" width="20%">
+                                        <td style="text-align: left" width="20%">
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
                                                 @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
@@ -96,8 +98,8 @@
                     </div>
                 </td>
 
-                <td style="vertical-align: middle; text-align: center">
-                    @Model.FixturePredictions[i].Fixture.FixtureDateTime.ToString("dd MMM") @@ @Model.FixturePredictions[i].Fixture.FixtureDateTime.ToShortTimeString()
+                <td style="vertical-align: middle; text-align: center" witdth="25%">
+                    @Model.FixturePredictions[i].Fixture.FixtureDateTime.ToString("dd MMM") @Model.FixturePredictions[i].Fixture.FixtureDateTime.ToShortTimeString()
                 </td>
             </tr>
         }
@@ -236,3 +238,26 @@
     });
 </script>
 
+<script>
+    $(function () {
+        // Determine timezone offset in milliseconds
+        // from: http://www.w3schools.com/jsref/jsref_getTimezoneOffset.asp
+        var d = new Date()
+        var offsetms = d.getTimezoneOffset() * 60 * 1000;
+        $('.UTCTime').each(function () {
+            try {
+                var text = $(this).html();
+
+                var n = new Date(text);
+                n = new Date(n.valueOf() - offsetms);
+
+                $(this).html(n.toDateString() + " " + n.toLocaleTimeString());
+
+                $(this).attr("Converted from UTC " + text);
+            }
+            catch (ex) {
+                console.warn("Error converting time", ex);
+            }
+        });
+    });
+</script>

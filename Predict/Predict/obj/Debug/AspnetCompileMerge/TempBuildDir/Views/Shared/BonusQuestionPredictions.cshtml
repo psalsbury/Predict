@@ -61,9 +61,11 @@
         }
     </table>
 
-    <p style="color:red">*All bonus points are worth <b>6</b> points</p>
-    <p style="color:red">**Goals scored in penalty shoot-outs do not count</p>
-
+    if (!Model.ReadOnly)
+    {
+        <p style="color: red">*All bonus points are worth <b>6</b> points</p>
+        <p style="color: red">**Goals scored in penalty shoot-outs do not count</p>
+    }
     @Html.AntiForgeryToken()
 
     if (!Model.ReadOnly)

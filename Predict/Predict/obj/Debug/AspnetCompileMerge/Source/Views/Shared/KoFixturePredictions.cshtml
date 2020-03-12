@@ -200,65 +200,70 @@
 
 }
 
-<script>
-    function AutoFill(obj) {
-        var a;
-        var objectName;
-        var team1;
-        var team2;
-        var winningTeam;
-        var teamsInOrder = [
-            @{
-                for (int a = 1; a <= Model.RankedTeamsForAutoFill.Count; a++)
-                {
-                    if (a != 1)
-                    {
-                        @:,
-                    }
-                    @:"@Model.RankedTeamsForAutoFill[a]"
-                }
-            }
-        ];
-        if (obj.id === "AutoFil_16") {
-            @{
-                if (Model.RankedTeamsForAutoFill.Count > 0)
-                {
-                    for (int a = 1; a <= 16; a++)
-                    {
-                        @:document.getElementById("16_@a").value = @Model.FirstStageAutoFill[a];
+@if (!Model.ReadOnly)
+{
 
+    <script>
+        function AutoFill(obj) {
+            var a;
+            var objectName;
+            var team1;
+            var team2;
+            var winningTeam;
+            var teamsInOrder = [
+                @{
+                    for (int a = 1; a <= Model.RankedTeamsForAutoFill.Count; a++)
+                    {
+                        if (a != 1)
+                        {
+                            @:,
+                        }
+                        @:"@Model.RankedTeamsForAutoFill[a]"
                     }
                 }
+            ];
+            if (obj.id === "AutoFil_16") {
+                @{
+                    if (Model.RankedTeamsForAutoFill.Count > 0)
+                    {
+                        for (int a = 1; a <= 16; a++)
+                        {
+                            @:document.getElementById("16_@a").value = @Model.FirstStageAutoFill[a];
+
+                        }
+                    }
+                }
+            } else {
+                var thisRound = parseInt(obj.id.split('_')[1]);
+                var previousRound = thisRound * 2;
+
+                for (a = 1; a <= thisRound; a++) {
+                    objectName = previousRound.toString().concat("_").concat(((a * 2) - 1).toString());
+                    team1 = document.getElementById(objectName).value;
+                    objectName = previousRound.toString().concat("_").concat((a * 2).toString());
+                    team2 = document.getElementById(objectName).value;
+                    winningTeam = GetBestTeam(teamsInOrder, team1, team2);
+
+                    objectName = thisRound.toString().concat("_").concat(a.toString());
+                    document.getElementById(objectName).value = winningTeam;
+                }
             }
-        } else {
-            var thisRound = parseInt(obj.id.split('_')[1]);
-            var previousRound = thisRound * 2;
 
-            for (a = 1; a <= thisRound; a++) {
-                objectName = previousRound.toString().concat("_").concat(((a*2)-1).toString());
-                team1 = document.getElementById(objectName).value;
-                objectName = previousRound.toString().concat("_").concat((a * 2).toString());
-                team2 = document.getElementById(objectName).value;
-                winningTeam = GetBestTeam(teamsInOrder,team1, team2);
+        }
 
-                objectName = thisRound.toString().concat("_").concat(a.toString());
-                document.getElementById(objectName).value = winningTeam;
+        function GetBestTeam(teamsInOrder, team1, team2) {
+            var a;
+            var nbrTeams = @Model.RankedTeamsForAutoFill.Count;
+            for (a = 1; a <= nbrTeams; a++) {
+                if (teamsInOrder[a - 1] === team1)
+                    return team1;
+                if (teamsInOrder[a - 1] === team2)
+                    return team2;
+
             }
         }
 
-    }
-    function GetBestTeam(teamsInOrder,team1, team2) {
-        var a;
-        var nbrTeams = @Model.RankedTeamsForAutoFill.Count;
-        for (a = 1; a <= nbrTeams; a++) {
-            if (teamsInOrder[a-1] === team1)
-                return team1;
-            if (teamsInOrder[a - 1] === team2)
-                return team2;
 
-        }
-    }
+    </script>
 
-    
-</script>
-
+}

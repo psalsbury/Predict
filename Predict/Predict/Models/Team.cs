@@ -12,12 +12,11 @@ namespace Predict.Models
     {
         private string _flagFileLocation;
         private string _animatedFlagLocation;
-        private string _homeFolder;
 
         public Team()
         {
-            _flagFileLocation = _homeFolder + System.Configuration.ConfigurationManager.AppSettings["FlagFileLocation"];
-            _animatedFlagLocation = _homeFolder + System.Configuration.ConfigurationManager.AppSettings["AnimatedFlagFileLocation"];
+            _flagFileLocation = System.Configuration.ConfigurationManager.AppSettings["FlagFileLocation"];
+            _animatedFlagLocation = System.Configuration.ConfigurationManager.AppSettings["AnimatedFlagFileLocation"];
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

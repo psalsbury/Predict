@@ -18,6 +18,16 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
 
+        // GET: LeagueTableResults
+        public ActionResult LeagueTableResults()
+        {
+            var leagueTablesViewModel = new Predict.ViewModels.LeagueTablesViewModel();
+            var eventId = Helper.Cache.GetEventId();
+            leagueTablesViewModel.LeagueTables = Predict.Helper.LeagueTableHelper.FetchLeagueTablesFromResults(eventId);
+            leagueTablesViewModel.Results = true;
+            return View("LeagueTables", leagueTablesViewModel);
+        }
+
         // GET: Results
         public ActionResult GroupGameResults()
         {

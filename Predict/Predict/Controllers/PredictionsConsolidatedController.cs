@@ -37,7 +37,7 @@ namespace Predict.Controllers
             fixturePredictionsViewModel.ReadOnly = true;
 
             var koFixturePredictionsController = new KoFixturePredictionsController();
-            var kOFixturePredictionsViewModel = koFixturePredictionsController.GetKoFixturePredictionViewModel(loggedInUserId,playerId);
+            var kOFixturePredictionsViewModel = koFixturePredictionsController.GetKoFixturePredictionViewModel(loggedInUserId,playerId,true);
             kOFixturePredictionsViewModel.ReadOnly = true;
 
             var bonusQuestionPredictionsController = new BonusQuestionPredictionsController();
@@ -46,6 +46,7 @@ namespace Predict.Controllers
 
             var leagueTablesController = new LeagueTablesController();
             var leagueTablesViewModel = leagueTablesController.GetLeagueTablesViewModel(loggedInUserId, playerId);
+            leagueTablesViewModel.Results = false;
 
             predictionsConsolidated.KoFixturePredictionViewModel = kOFixturePredictionsViewModel;
             predictionsConsolidated.FixturePredictionsViewModel = fixturePredictionsViewModel;

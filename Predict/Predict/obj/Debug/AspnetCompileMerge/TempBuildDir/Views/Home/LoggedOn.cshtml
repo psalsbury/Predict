@@ -4,9 +4,9 @@
     var nbrKoPredictionsToEnter = 31;
     var nbrBonusQuestionsToEnter = 2;
 
-    var nbrFixturePredictionsEntered = (int) Session["nbrFixturePredictions"];
+    var nbrFixturePredictionsEntered = (int)Session["nbrFixturePredictions"];
     var nbrKoPredictionsEntered = (int)Session["nbrKoPredictions"] + (int)Session["nbrWinningTeamPredictions"];
-    var nbrBonusQuestionPredictionsEntered = (int) Session["nbrBonusQuestionPredictions"];
+    var nbrBonusQuestionPredictionsEntered = (int)Session["nbrBonusQuestionPredictions"];
 
     var bonusPredictionBox = "green";
     if (nbrBonusQuestionPredictionsEntered == 0)
@@ -64,7 +64,7 @@
         <div class="small-box bg-@koPredictionBox">
             <div class="inner">
                 <h3>@nbrKoPredictionsEntered <sup style="font-size: 20px"> out of @nbrKoPredictionsToEnter</sup></h3>
-                <p>Knock Out Predictions entered</p>
+                <p>KO Predictions entered</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -87,41 +87,158 @@
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="~/BonusQuestionPredictions/Edit" class="small-box-footer">
+            <a href="~/BonusQuestionPredictions/BonusQuestionPredictions" class="small-box-footer">
                 Enter them here <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
 
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>12 <sup style="font-size: 20px"> pool members</sup></h3>
+                <p>to be authorised</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="~/BonusQuestionPredictions/BonusQuestionPredictions" class="small-box-footer">
+                Authorise them here <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    
+
 </div>
 
-<div class="col-md-6">
-    <!-- LINE CHART -->
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">Global League Position</h3>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Global Pool Info</h3>
 
-            <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Nbr of Members</span>
+                    <span class="info-box-number">2,000</span>
+                </div>
+                <!-- /.info-box-content -->
             </div>
         </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-blue"><i class="ion ion-ios-football-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Pool Position</span>
+                    <span class="info-box-number">12</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="ion ion-ios-circle-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Pool Movement</span>
+                    <span class="info-box-number">+10</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="box box-info  collapsed-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Petes Pool Info</h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+        </div>
+
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Nbr of Members</span>
+                    <span class="info-box-number">2,000</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-blue"><i class="ion ion-ios-football-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Pool Position</span>
+                    <span class="info-box-number">12</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="ion ion-ios-circle-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Pool Movement</span>
+                    <span class="info-box-number">+10</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <b>Member Information</b>
+            <textarea class="form-control" readonly="true">blah</textarea>
+        </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+@*<div class="col-md-12">
         <div class="box-body chart-responsive">
             <div class="chart" id="line-chart" style="height: 300px;"></div>
         </div>
-        <!-- /.box-body -->
-    </div>
+    </div>*@
 
-</div>
+
 
 
 <script src="~/plugins/morris/morris.min.js"></script>
 <script src="~/plugins/morris/raphael.min.js"></script>
 
 @{
-    var posnHistory = (List<PoolPlayerPositionHistory>) Session["posnHistory"] ;
+    var posnHistory = (List<PoolPlayerPositionHistory>)Session["posnHistory"];
 }
 
 <script>

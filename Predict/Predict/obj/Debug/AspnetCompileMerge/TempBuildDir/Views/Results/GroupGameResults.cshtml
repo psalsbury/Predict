@@ -29,42 +29,42 @@
         @for (int i = 0; i < Model.Fixtures.Count(); i++)
         {
             <tr>
-                <td style="vertical-align: middle;text-align:center">
-                    @Html.HiddenFor(m => m.Fixtures[i].Id)
-
+                <td style="vertical-align: middle;text-align:center" witdth="25%">
                     <b> @Model.EventTeams.Find(m => m.TeamId == @Model.Fixtures[i].HomeTeam.Id && m.EventId == @Model.Fixtures[i].EventId).League</b>
                 </td>
 
-                <td style="vertical-align: middle;text-align:left">
+                <td style="vertical-align: middle;text-align:center" witdth="50%">
                     <div class="container-fluid">
                         <div class="row vertical-middle text-center">
                             <div class="col-sm-6 text-center">
-                                <table>
+                                <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(@Model.Fixtures[i].HomeTeam.FlagFileLocation)" />
+                                            <img src="@Url.Content(@Model.Fixtures[i].HomeTeam.FlagFileLocation)" height="20" />
                                         </td>
-                                        <td width="60%" style="text-align: left">
+                                        <td style="text-align:left" width="60%">
+                                            &nbsp
                                             @Html.DisplayFor(m => m.Fixtures[i].HomeTeam.TeamName)
                                         </td>
-                                        <td width="20%">
-                                            @Html.DisplayFor(m => m.Fixtures[i].HomeResult)
+                                        <td style="text-align: left" width="20%">
+                                                @Html.DisplayFor(m => m.Fixtures[i].HomeResult, new { @class = "control-label col-md-2" })
                                         </td>
                                     </tr>
                                 </table>
                             </div>
 
                             <div class="col-sm-6 text-center">
-                                <table>
+                                <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(@Model.Fixtures[i].AwayTeam.FlagFileLocation)" />
+                                            <img src="@Url.Content(@Model.Fixtures[i].AwayTeam.FlagFileLocation)" height="20" />
                                         </td>
-                                        <td width="60%" style="text-align: left">
+                                        <td style="text-align:left" width="60%">
+                                            &nbsp
                                             @Html.DisplayFor(m => m.Fixtures[i].AwayTeam.TeamName)
                                         </td>
-                                        <td width="20%">
-                                            @Html.DisplayFor(m => m.Fixtures[i].AwayResult)
+                                        <td style="text-align: left" width="20%">
+                                                @Html.DisplayFor(m => m.Fixtures[i].AwayResult, new { @class = "control-label col-md-2" })
                                         </td>
                                     </tr>
                                 </table>
@@ -73,11 +73,10 @@
                     </div>
                 </td>
 
-                <td style="vertical-align: middle; text-align: center">
-                    @Model.Fixtures[i].FixtureDateTime.ToString("dd MMM") @@ @Model.Fixtures[i].FixtureDateTime.ToShortTimeString()
+                <td style="vertical-align: middle; text-align: center" witdth="25%">
+                    @Model.Fixtures[i].FixtureDateTime.ToString("dd MMM") @Model.Fixtures[i].FixtureDateTime.ToShortTimeString()
                 </td>
-            </tr>
-        }
+            </tr>}
     </table>
 
 </div>

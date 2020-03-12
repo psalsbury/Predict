@@ -20,14 +20,6 @@ add leagues that are entered as menu options if autorised to be in league
 
 update chart showing league position to include leagues. top is top position, bottom is lowest position. different colour per league
 
-allow visibilty of proper ko screen. .. readonly
-
-update league tables screen
-
-add league tables screen onto predictions summary page
-
-add a page to submit a question/bug
-
 ensure that auto fil works for for last 16
 
 send email to admin when someone joins a pool
