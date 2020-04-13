@@ -15,8 +15,8 @@ namespace Predict
 
             //routes.MapRoute(
             //    name: "Pete",                                                                         // Route name
-            //    url: "PoolAdmin/{poolId}",                                  // URL with parameters
-            //    defaults: new { controller = "PoolPlayers", action = "PoolAdmin" }  // Parameter defaults
+            //    url: "Table/FindPlayer/{poolId}{playerid}",                                  // URL with parameters
+            //    defaults: new { controller = "Table", action = "FindPlayer" }  // Parameter defaults
             //);
 
             routes.MapRoute(

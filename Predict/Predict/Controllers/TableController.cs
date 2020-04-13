@@ -17,6 +17,7 @@ namespace Predict.Controllers
     public class TableController : Controller
     {
         private ApplicationDbContext _context;
+        private const int PAGE_SIZE = 5;
         public TableController()
         {
             _context = new ApplicationDbContext();
@@ -29,7 +30,7 @@ namespace Predict.Controllers
         public ActionResult BestPools(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 50;
+            var pageSize = PAGE_SIZE;
 
             var eventId = Predict.Helper.Cache.GetEventId();
             var tableViewModels = _context.Database.SqlQuery<BestPoolsTableViewModel>("spGetBestPoolsTable @intEventId"
@@ -45,7 +46,7 @@ namespace Predict.Controllers
         {
 
             var pageNumber = page ?? 1;
-            var pageSize = 5;
+            var pageSize = PAGE_SIZE;
 
             var eventId = Predict.Helper.Cache.GetEventId();
             var tableViewModels = _context.Database.SqlQuery<BestTeamsTableViewModel>("spGetBestTeamsTable @intEventId"
@@ -57,7 +58,26 @@ namespace Predict.Controllers
 
         }
 
+        // routing for poolid/player
 
+        //need to finsih of the routing for when a player clicks on a link on the home page to find their position
+
+
+        //[Route("FindPlayer/{poolId}/{playerId}")]
+        [Route("Table/FindPlayer/{poolId}/{playerId}")]
+        public ActionResult FindPlayer(int poolId, string playerId)
+        {
+            //poolId = 1;
+            //var playerId = "1c6a9081-e07f-4142-beae-1dc806ae31ee";
+            var tableViewModels = GetTableViewModel(1, (int)poolId);
+            var posn = tableViewModels.FindIndex(p => p.PlayerId == playerId);
+            var pageNumber = (posn / PAGE_SIZE)+1;
+            ViewBag.FindPlayer = playerId;
+
+            return View("Index",tableViewModels.ToPagedList(pageNumber, PAGE_SIZE));
+        }
+
+        [Route("index /{tableTypeId ?}/{poolId?}/{page?}/{playerId?}")]
         public ActionResult Index(int? tableTypeId, int? poolId, int? page)
         {
             // tableTypeId 1 = Normal or global pool
@@ -65,7 +85,7 @@ namespace Predict.Controllers
             // tableTypeId 3 = Teams Best, based on global league scoring
 
             var pageNumber = page ?? 1;
-            var pageSize = 5;
+            var pageSize = PAGE_SIZE;
 
             tableTypeId = tableTypeId ?? 1;
             poolId = (poolId ?? Predict.Helper.Cache.GetGlobalPoolId());
@@ -79,7 +99,7 @@ namespace Predict.Controllers
 
                 ViewBag.PoolName = pool.PoolName;
             }
-            else if (tableTypeId==2)
+            else if (tableTypeId == 2)
             {
                 ViewBag.PoolName = "Pools Best Players";
             }
@@ -89,16 +109,25 @@ namespace Predict.Controllers
             }
 
 
-            var eventId = Predict.Helper.Cache.GetEventId();
-            var tableViewModels =_context.Database.SqlQuery<TableViewModel>("spGetTable @intEventId, @intTableTypeId, @intPoolId "
-                , new SqlParameter("@intEventId", eventId)
-                , new SqlParameter("@intTableTypeId", tableTypeId)
-                , new SqlParameter("@intPoolId", poolId)).ToList();
-        
+            var tableViewModels = GetTableViewModel((int)tableTypeId, (int)poolId);
+
             ViewBag.PoolId = poolId;
             ViewBag.TableTypeId = tableTypeId;
 
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
+        }
+
+        private List<TableViewModel> GetTableViewModel(int tableTypeId, int poolId)
+        {
+
+                var eventId = Predict.Helper.Cache.GetEventId();
+                var tableViewModels = _context.Database.SqlQuery<TableViewModel>(
+                    "spGetTable @intEventId, @intTableTypeId, @intPoolId "
+                    , new SqlParameter("@intEventId", eventId)
+                    , new SqlParameter("@intTableTypeId", tableTypeId)
+                    , new SqlParameter("@intPoolId", poolId)).ToList();
+                return tableViewModels;
+            
         }
     }
 }

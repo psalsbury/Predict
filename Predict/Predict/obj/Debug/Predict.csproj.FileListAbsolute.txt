@@ -140,3 +140,4 @@ C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.CoreCompileInputs.c
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.pdb
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache

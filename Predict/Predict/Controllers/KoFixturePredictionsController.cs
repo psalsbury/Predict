@@ -129,6 +129,7 @@ namespace Predict.Controllers
 
             _context.SaveChanges();
             Predict.Helper.SessionHelper.RefreshKoPredictions(Session, userId);
+            Predict.Helper.SessionHelper.RefreshWinningTeamPredictions(Session, userId);
             return RedirectToAction("Index", "Home");
         }
 

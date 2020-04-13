@@ -254,6 +254,7 @@
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\PoolPlayersController.cs" />
     <Compile Include="Controllers\PoolsController.cs" />
+    <Compile Include="Controllers\PositionHistoryController.cs" />
     <Compile Include="Controllers\PredictionsConsolidatedController.cs" />
     <Compile Include="Controllers\ResultsController.cs" />
     <Compile Include="Controllers\StatsGroupController.cs" />
@@ -320,6 +321,7 @@
     <Compile Include="ViewModels\MessageReplyViewModel.cs" />
     <Compile Include="ViewModels\PlayerListViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
+    <Compile Include="ViewModels\PoolInfoViewModel.cs" />
     <Compile Include="ViewModels\PoolMembershipViewModel.cs" />
     <Compile Include="ViewModels\PoolPlayerViewModel.cs" />
     <Compile Include="ViewModels\PredictionsConsolidatedViewModel.cs" />
@@ -438,6 +440,7 @@
     <Folder Include="Views\FixturePredictions\" />
     <Folder Include="Views\KOFixturePredictions\" />
     <Folder Include="Views\LeagueTables\" />
+    <Folder Include="Views\PosnHistory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

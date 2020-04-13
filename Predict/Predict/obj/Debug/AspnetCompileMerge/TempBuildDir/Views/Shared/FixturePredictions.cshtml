@@ -6,15 +6,15 @@
 @{
     ViewBag.Title = "Edit Group Game Predictions";
 }
-    @if (!Model.ReadOnly)
-    {
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="~/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Fixture Predictions</li>
-            </ol>
-        </nav>
-    }
+@if (!Model.ReadOnly)
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Fixture Predictions</li>
+        </ol>
+    </nav>
+}
 
 
 @if (!Model.ReadOnly)
@@ -64,7 +64,7 @@
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
                                             }
                                         </td>
                                     </tr>
@@ -98,8 +98,9 @@
                     </div>
                 </td>
 
-                <td style="vertical-align: middle; text-align: center" witdth="25%">
-                    @Model.FixturePredictions[i].Fixture.FixtureDateTime.ToString("dd MMM") @Model.FixturePredictions[i].Fixture.FixtureDateTime.ToShortTimeString()
+                <td style="vertical-align: middle; text-align: center" witdth="25%" class="myDate">
+                    @Html.Hidden("FixtureDateTime", Model.FixturePredictions[i].Fixture.FixtureDateTime.ToLongDateString() + " " + Model.FixturePredictions[i].Fixture.FixtureDateTime.ToShortTimeString())
+
                 </td>
             </tr>
         }
@@ -119,7 +120,6 @@
     }
 }
 <br />
-
 <script src="../Scripts/bootbox.js"></script>
 @if (!Model.ReadOnly)
 {
@@ -206,12 +206,39 @@
     </script>
 }
 
+
 <script>
-    function adjustForTimeZone(date) {
-        var d = new Date();
-        var minutes = d.getTimezoneOffset();
-        return new Date(date.getTime() + minutes * 60000).toDateString();
+
+    //get all td with actionclass in table
+    $("tbody tr td.myDate").each(function () {
+
+        $hiddenValue = $(this).find("input[type=hidden]").val();
+
+        var d = new Date($hiddenValue);
+
+        this.innerHTML = convertUTCDateToLocalDate(d);
+
+    });
+
+    function convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours - offset);
+        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
+        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+
+        return da + ' ' + mo + ' ' + newDate.getHours() + ':' + pad(newDate.getMinutes(), 2);
+
     }
+    function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+
 </script>
 
 <script>
