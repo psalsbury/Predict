@@ -10,7 +10,7 @@
 {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="~/">Home</a></li>
+            <li class="breadcrumb-item"><a href=hidden"~/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Fixture Predictions</li>
         </ol>
     </nav>
@@ -23,6 +23,7 @@
 }
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
+    @Html.HiddenFor(m => m.EventId)
     <table id="predictions" name="precictions" class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -120,7 +121,7 @@
     }
 }
 <br />
-<script src="../Scripts/bootbox.js"></script>
+<script src="../../Scripts/bootbox.js"></script>
 @if (!Model.ReadOnly)
 {
     <script>

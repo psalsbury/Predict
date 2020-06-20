@@ -1,8 +1,10 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Predict.Models;
 using Predict.ViewModels;
+using System.Data.Entity;
 
 namespace Predict.Helper
 {
@@ -19,38 +21,53 @@ namespace Predict.Helper
             return session[sessionKey];
         }
 
-        public static void RefreshKoPredictions(HttpSessionStateBase session, string userId)
+        public static void RefreshKoPredictions(HttpSessionStateBase session, string userId, short eventId)
         {
             var context = new ApplicationDbContext();
-            var eventId = Predict.Helper.Cache.GetEventId();
-            UpdateKoSessionVar(context, session, eventId, userId, true);
+            UpdateKoPredictionsSessionVar(context, session, eventId, userId, true);
         }
 
-        public static void RefreshWinningTeamPredictions(HttpSessionStateBase session, string userId)
+        public static void RefreshWinningTeamPredictions(HttpSessionStateBase session, string userId, short eventId)
         {
             var context = new ApplicationDbContext();
-            var eventId = Predict.Helper.Cache.GetEventId();
             UpdateWinningTeamPredictions(context, session, eventId, userId, true);
         }
 
-        public static void RefreshFixturePredictions(HttpSessionStateBase session, string userId)
+        public static void RefreshFixturePredictions(HttpSessionStateBase session, string userId, short eventId)
         {
             var context = new ApplicationDbContext();
-            var eventId = Predict.Helper.Cache.GetEventId();
-            UpdateFixturesSessionVar(context, session, eventId, userId, true);
+            UpdateFixturePredictionsSessionVar(context, session, eventId, userId, true);
         }
 
         public static void SetUserSessionVariables(HttpSessionStateBase session, string userId)
         {
             var context = new ApplicationDbContext();
-            var eventId = Predict.Helper.Cache.GetEventId();
 
             UpdatePlayerSessionVariable(context, session, userId, false);
-            UpdateFixturesSessionVar(context, session, eventId, userId, false);
-            UpdateKoSessionVar(context, session, eventId, userId, false);
-            UpdateWinningTeamPredictions(context, session, eventId, userId, false);
-            UpdateBonusSessionVar(context, session, eventId, userId, false);
-            UpdatePlayerPoolInfo(context, session, eventId, userId, false);
+            UpdateEventPlayersSessionVariable(context, session, userId, false);
+
+            var eventPlayers = (List<EventPlayer>)session["Events"];
+
+            foreach(EventPlayer eventPlayer in eventPlayers)
+            {
+                var eventId = eventPlayer.EventId;
+
+                // Static fixtures
+                UpdateFixturesSessionVar(context, session, eventId, false);
+                UpdateKoFixturesSessionVar(context, session, eventId, false);
+                UpdateBonusSessionVar(context, session, eventId, false);
+
+                //Predictions
+                UpdateFixturePredictionsSessionVar(context, session, eventId, userId, false);
+                UpdateKoPredictionsSessionVar(context, session, eventId, userId, false);
+                UpdateWinningTeamPredictions(context, session, eventId, userId, false);
+                UpdateBonusPredictionsSessionVar(context, session, eventId, userId, false);
+
+
+            }
+
+            // Pool info
+            UpdatePlayerPoolInfo(context, session, userId, false);
             session.Timeout = 252000; // 180 day
 
         }
@@ -60,16 +77,31 @@ namespace Predict.Helper
             session.Clear();
         }
 
+        private static void UpdateEventPlayersSessionVariable(ApplicationDbContext context,
+            HttpSessionStateBase session,
+            string userId, bool forceRefresh)
+        {
+            const string sessionName = "Events";
+            if (session[sessionName] != null && !forceRefresh)
+                return;
+
+            var eventPlayers = context.EventPlayers
+                .Include(t => t.Event)
+                .Where(e => e.PlayerId == userId).ToList();
+
+            session[sessionName] = eventPlayers;
+
+        }
+
         private static void UpdatePlayerPoolInfo(ApplicationDbContext context, HttpSessionStateBase session,
-            short eventId, string userId, bool forceRefresh)
+            string userId, bool forceRefresh)
         {
             const string sessionName = "PoolInfo";
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
             var poolInfoViewModel = context.Database.SqlQuery<PoolInfoViewModel>(
-                "spGetPlayerPoolInfo @intEventId, @strPlayerId"
-                , new SqlParameter("@intEventId", eventId)
+                "spGetPlayerPoolInfo @strPlayerId"
                 , new SqlParameter("@strPlayerId", userId)).ToList();
 
             session[sessionName] = poolInfoViewModel;
@@ -89,10 +121,48 @@ namespace Predict.Helper
             }
         }
 
+
         private static void UpdateFixturesSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
+            short eventId, bool forceRefresh)
+        {
+            string sessionName = "nbrFixtures*"+eventId;
+            if (session[sessionName] != null && !forceRefresh)
+                return;
+
+            var nbrFixtures = context.Fixtures.Count(e => e.EventId == eventId);
+            session[sessionName] = nbrFixtures;
+        }
+
+        private static void UpdateKoFixturesSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
+            short eventId, bool forceRefresh)
+        {
+            string sessionName = "nbrKoFixtures*"+eventId;
+            if (session[sessionName] != null && !forceRefresh)
+                return;
+
+            var nbrKoFixtures = context.KoFixtures.Count(e => e.EventId == eventId);
+            session[sessionName] = nbrKoFixtures;
+        }
+
+        private static void UpdateBonusSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
+            short eventId, bool forceRefresh)
+        {
+
+            string sessionName = "nbrBonusQuestions*"+eventId;
+            if (session[sessionName] != null && !forceRefresh)
+                return;
+
+            var nbrBonusQuestions = context.BonusQuestions.Count(e => e.EventId == eventId);
+
+            session[sessionName] = nbrBonusQuestions;
+
+        }
+        
+
+        private static void UpdateFixturePredictionsSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, string userId, bool forceRefresh)
         {
-            const string sessionName = "nbrFixturePredictions";
+            string sessionName = "nbrFixturePredictions*"+eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -105,10 +175,10 @@ namespace Predict.Helper
             session[sessionName] = nbrFixturePredictions;
         }
 
-        private static void UpdateKoSessionVar(ApplicationDbContext context, HttpSessionStateBase session
+        private static void UpdateKoPredictionsSessionVar(ApplicationDbContext context, HttpSessionStateBase session
             , short eventId, string userId, bool forceRefresh)
         {
-            const string sessionName = "nbrKoPredictions";
+            string sessionName = "nbrKoPredictions*"+eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -133,7 +203,7 @@ namespace Predict.Helper
         private static void UpdateWinningTeamPredictions(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, string userId, bool forceRefresh)
         {
-            const string sessionName = "nbrWinningTeamPredictions";
+            string sessionName = "nbrWinningTeamPredictions*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -145,11 +215,11 @@ namespace Predict.Helper
             session[sessionName] = nbrWinningTeamPredictions;
         }
 
-        private static void UpdateBonusSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
+        private static void UpdateBonusPredictionsSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, string userId, bool forceRefresh)
         {
 
-            const string sessionName = "nbrBonusQuestionPredictions";
+            string sessionName = "nbrBonusQuestionPredictions*"+eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 

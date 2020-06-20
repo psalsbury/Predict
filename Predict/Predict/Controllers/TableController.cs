@@ -27,49 +27,13 @@ namespace Predict.Controllers
 
         // 3 action sREsults, bestPools, bestTeams, and one for the others. The others will all be the same view i.e. 1 object per player
 
-        public ActionResult BestPools(int? page)
-        {
-            var pageNumber = page ?? 1;
-            var pageSize = PAGE_SIZE;
-
-            var eventId = Predict.Helper.Cache.GetEventId();
-            var tableViewModels = _context.Database.SqlQuery<BestPoolsTableViewModel>("spGetBestPoolsTable @intEventId"
-                , new SqlParameter("@intEventId", eventId)).ToList();
-
-            ViewBag.TableName = "Best Pools";
-
-            return View(tableViewModels.ToPagedList(pageNumber, pageSize));
-
-        }
-
-        public ActionResult BestTeams(int? page)
-        {
-
-            var pageNumber = page ?? 1;
-            var pageSize = PAGE_SIZE;
-
-            var eventId = Predict.Helper.Cache.GetEventId();
-            var tableViewModels = _context.Database.SqlQuery<BestTeamsTableViewModel>("spGetBestTeamsTable @intEventId"
-                , new SqlParameter("@intEventId", eventId)).ToList();
-
-            ViewBag.TableName = "Best Teams";
-
-            return View(tableViewModels.ToPagedList(pageNumber, pageSize));
-
-        }
-
-        // routing for poolid/player
-
-        //need to finsih of the routing for when a player clicks on a link on the home page to find their position
-
-
         //[Route("FindPlayer/{poolId}/{playerId}")]
         [Route("Table/FindPlayer/{poolId}/{playerId}")]
         public ActionResult FindPlayer(int poolId, string playerId)
         {
             //poolId = 1;
             //var playerId = "1c6a9081-e07f-4142-beae-1dc806ae31ee";
-            var tableViewModels = GetTableViewModel(1, (int)poolId);
+            var tableViewModels = GetTableViewModel(poolId);
             var posn = tableViewModels.FindIndex(p => p.PlayerId == playerId);
             var pageNumber = (posn / PAGE_SIZE)+1;
             ViewBag.FindPlayer = playerId;
@@ -78,7 +42,7 @@ namespace Predict.Controllers
         }
 
         [Route("index /{tableTypeId ?}/{poolId?}/{page?}/{playerId?}")]
-        public ActionResult Index(int? tableTypeId, int? poolId, int? page)
+        public ActionResult Index(int poolId, int? page)
         {
             // tableTypeId 1 = Normal or global pool
             // tableTypeId 2 = Pools Best, based on global league scoring
@@ -87,44 +51,25 @@ namespace Predict.Controllers
             var pageNumber = page ?? 1;
             var pageSize = PAGE_SIZE;
 
-            tableTypeId = tableTypeId ?? 1;
-            poolId = (poolId ?? Predict.Helper.Cache.GetGlobalPoolId());
+            var pool = _context.Pools.FirstOrDefault(p => p.Id == poolId);
+            if (pool == null)
+                return HttpNotFound();
 
-            if (tableTypeId == 1)
-            {
+            ViewBag.PoolName = pool.PoolName;
+            
 
-                var pool = _context.Pools.FirstOrDefault(p => p.Id == poolId);
-                if (pool == null)
-                    return HttpNotFound();
-
-                ViewBag.PoolName = pool.PoolName;
-            }
-            else if (tableTypeId == 2)
-            {
-                ViewBag.PoolName = "Pools Best Players";
-            }
-            else if (tableTypeId == 3)
-            {
-                ViewBag.PoolName = "Teams Best Players";
-            }
-
-
-            var tableViewModels = GetTableViewModel((int)tableTypeId, (int)poolId);
+            var tableViewModels = GetTableViewModel(poolId);
 
             ViewBag.PoolId = poolId;
-            ViewBag.TableTypeId = tableTypeId;
 
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
         }
 
-        private List<TableViewModel> GetTableViewModel(int tableTypeId, int poolId)
+        private List<TableViewModel> GetTableViewModel(int poolId)
         {
 
-                var eventId = Predict.Helper.Cache.GetEventId();
                 var tableViewModels = _context.Database.SqlQuery<TableViewModel>(
-                    "spGetTable @intEventId, @intTableTypeId, @intPoolId "
-                    , new SqlParameter("@intEventId", eventId)
-                    , new SqlParameter("@intTableTypeId", tableTypeId)
+                    "spGetTable @intPoolId"
                     , new SqlParameter("@intPoolId", poolId)).ToList();
                 return tableViewModels;
             

@@ -10,6 +10,8 @@ namespace Predict.ViewModels
     {
         public int PoolId { get; set; }
 
+        public short EventId { get; set; }
+
         public Int16 TotalScore { get; set; }
 
         public string PoolName { get; set; }

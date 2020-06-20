@@ -19,23 +19,19 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
         
-        public LeagueTablesViewModel GetLeagueTablesViewModel(string loggedInUserId, string userId)
+        public LeagueTablesViewModel GetLeagueTablesViewModel(string loggedInUserId, string userId, short eventId)
         {
-            var eventId = Predict.Helper.Cache.GetEventId();
             var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
             if (userId == null)
                 userId = loggedInUserId;
 
-            if (loggedInUserId != userId && !player.PremiumPlayer)
-            {
-                throw new Exception("Only Premium Players are allowed to view other predictions");
-            }
-
             var leagueTablesViewModel = new LeagueTablesViewModel
             {
                 LeagueTables = Helper.LeagueTableHelper.FetchLeagueTablesByUserId(eventId, userId)
             };
+            var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
+            leagueTablesViewModel.IsPremiumPlayer = isPremiumPlayer;
             return leagueTablesViewModel;
         }
 

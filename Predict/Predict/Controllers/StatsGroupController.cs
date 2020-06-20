@@ -11,19 +11,17 @@ namespace Predict.Controllers
     {
 
         private readonly ApplicationDbContext _context;
-        private readonly int _eventId;
 
         public StatsGroupController()
         {
             _context = new ApplicationDbContext();
-            _eventId = Helper.Cache.GetEventId();
         }
         // GET: StatsGroup
-        public ActionResult Index()
+        public ActionResult Index(short eventId)
         {            
             var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
                 .Include(b => b.AwayTeam)
-                .Where(p => p.EventId == _eventId).ToList();
+                .Where(p => p.EventId == eventId).ToList();
 
             return View(fixtures);
         }

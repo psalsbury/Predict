@@ -21,12 +21,6 @@ namespace Predict.Models
         [Display(Name = "Display Name")]
         public string DisplayName { get; set; }
 
-        public int? SupportTeamId { get; set; }
-
-        [ForeignKey("SupportTeamId")]
-        [Display(Name = "Supported Team")]
-        public Team SupportTeam { get; set; }
-
         [DefaultValue("false")]
         public bool PremiumPlayer { get; set; }
 

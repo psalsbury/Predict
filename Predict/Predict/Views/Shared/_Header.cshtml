@@ -7,13 +7,9 @@
         @* Mini logo for sidebar 50x50 pixels *@
         <span class="logo-mini"><b>2</b>020</span>
         @* Logo for regular state and mobile devices *@
-        <span class="logo-lg"><b>Euro 2020 Prediction Competition </b></span>
+        <span class="logo-lg"><b>Prediction Comp</b></span>
     </a>
-    @{
-
-        var player = (Player) SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());
-        //var player = (Player) Session["player"];
-    }
+   
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -22,8 +18,10 @@
 
             <ul class="nav navbar-nav">
 
-                @if (Request.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated)
                 {
+                   
+                     var player = (Player) SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());                    
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">

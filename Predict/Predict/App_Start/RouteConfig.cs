@@ -13,11 +13,11 @@ namespace Predict
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute(
-            //    name: "Pete",                                                                         // Route name
-            //    url: "Table/FindPlayer/{poolId}{playerid}",                                  // URL with parameters
-            //    defaults: new { controller = "Table", action = "FindPlayer" }  // Parameter defaults
-            //);
+            routes.MapRoute(
+                "EnterFixturePredictions",                                               // Route name
+                "FixturePredictions/FixturePredictions/{eventId}",                       // URL with parameters
+                new {controller = "FixturePredictions", action = "FixturePredictions"}   // Parameter default
+            );
 
             routes.MapRoute(
                 name: "Default",

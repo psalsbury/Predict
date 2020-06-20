@@ -11,6 +11,7 @@ namespace Predict.ViewModels
     {
         public string PlayerId { get; set; }
         public Player Player { get; set; }
+        public Pool Pool { get; set; }
         public KoFixturePredictionViewModel KoFixturePredictionViewModel { get; set; }
         public FixturePredictionsViewModel FixturePredictionsViewModel { get; set; }
         public LeagueTablesViewModel LeagueTablesViewModel { get; set; }

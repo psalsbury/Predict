@@ -19,12 +19,9 @@ namespace Predict.Controllers
         // GET: PosnHistory
         public ActionResult Index(string playerId, int poolId)
         {
-            var eventId = Helper.Cache.GetEventId();
-        
             var positionHistory = (from a in _context.PoolPlayerPositionHistory
                 join c in _context.Pools on a.PoolId equals c.Id
-                where c.EventId == eventId 
-                      && a.PlayerId == playerId
+                where a.PlayerId == playerId
                       && c.Id == poolId
                            select a).ToList();
             return View();

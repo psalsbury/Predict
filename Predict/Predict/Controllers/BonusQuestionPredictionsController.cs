@@ -21,26 +21,23 @@ namespace Predict.Controllers
         }
 
         // GET: BonusQuestionPredictions
-        public ActionResult BonusQuestionPredictions()
+        public ActionResult BonusQuestionPredictions(short eventId)
         {
             var loggedInUserId = User.Identity.GetUserId();
-            var bonusQuestionPredictionsViewModel = GetBonusQuestionPredictionsViewModel(loggedInUserId, loggedInUserId);
+            var bonusQuestionPredictionsViewModel = GetBonusQuestionPredictionsViewModel(loggedInUserId, loggedInUserId, eventId);
             bonusQuestionPredictionsViewModel.ReadOnly = false;
             return View(bonusQuestionPredictionsViewModel);
         }
 
-        public BonusQuestionPredictionsViewModel GetBonusQuestionPredictionsViewModel(string loggedInUserId, string playerId)
+        public BonusQuestionPredictionsViewModel GetBonusQuestionPredictionsViewModel(string loggedInUserId, string playerId, short eventId)
         {
-            var eventId = Predict.Helper.Cache.GetEventId();
             var bonusQuestionPredictionsViewModel = new BonusQuestionPredictionsViewModel();
             var player = (Player)System.Web.HttpContext.Current.Session["Player"];
             
             bonusQuestionPredictionsViewModel.PlayerId = playerId;
 
-            if (loggedInUserId != playerId && !player.PremiumPlayer)
-            {
-                throw new Exception("Only Premium Players are allowed to view other predictions");
-            }
+            var isPremiumPlayer = !(loggedInUserId != playerId && !player.PremiumPlayer);
+            bonusQuestionPredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
 
             var bonusQuestions = _context.BonusQuestions.Where(e => e.EventId == eventId);
 
@@ -80,7 +77,7 @@ namespace Predict.Controllers
         public ActionResult Save(BonusQuestionPredictionsViewModel bonusQuestionPredictionsViewModel)
         {
 
-            var eventId = Predict.Helper.Cache.GetEventId();
+            var eventId = bonusQuestionPredictionsViewModel.eventId;
             var loggedInUserId = User.Identity.GetUserId();
 
             var bonusQuestionPredictionsInDb = _context.BonusQuestionPredictions

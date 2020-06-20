@@ -21,9 +21,8 @@ namespace Predict.Controllers
         }
 
         // GET: Pools
-        public ActionResult Index()
+        public ActionResult Index(short eventId)
         {
-            var eventId = Predict.Helper.Cache.GetEventId();
             List<Pool> pools;
             if (User.IsInRole("Admin"))
             {
@@ -42,9 +41,8 @@ namespace Predict.Controllers
 
 
         // GET: Pools
-        public ActionResult PoolMembershipIndex()
+        public ActionResult PoolMembershipIndex(short eventId)
         {
-            var eventId = Predict.Helper.Cache.GetEventId();
             var playerId = User.Identity.GetUserId();
             var poolMembershipViewModel = new PoolMembershipViewModel();
             var globalPoolId =
@@ -76,12 +74,12 @@ namespace Predict.Controllers
         }
 
 
-        public ActionResult New()
+        public ActionResult New(short eventId)
         {
             var poolModel = new Pool
             {
                 AdminPlayerId = User.Identity.GetUserId()
-                ,EventId = Predict.Helper.Cache.GetEventId()
+                ,EventId = eventId
                 ,CorrectScorePoints = 3
                 ,CorrectResultPoints = 1
                 ,WinMarginPoints = 0
@@ -99,17 +97,16 @@ namespace Predict.Controllers
 
         public ActionResult Edit(int id)
         {
-
+            
             var loggedInUserId = User.Identity.GetUserId();
-            var isInLockDown = Predict.Helper.Cache.IsInLockDown();
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
-
-            if(!isPoolAdmin)
+            var poolModel = _context.Pools.SingleOrDefault(p => p.Id == id);
+            var isInLockDown = Predict.Helper.Cache.HasEventStarted(poolModel.EventId);
+            if (!isPoolAdmin)
             {
                 throw new Exception("Only pool admin is allowed to edit the pool");
             }
 
-            var poolModel = _context.Pools.SingleOrDefault(p => p.Id == id);
             ViewBag.isInLockDown = isInLockDown;
             return View("EditPool", poolModel);
         }
@@ -151,9 +148,15 @@ namespace Predict.Controllers
 
         public ActionResult Delete(int id)
         {
+            var pool = _context.Pools.FirstOrDefault(a => a.Id == id);
+            if (pool==null)
+            {
+                return HttpNotFound();
+            }
 
+            var eventId = pool.EventId;
             var loggedInUserId = User.Identity.GetUserId();
-            var isInLockDown = Predict.Helper.Cache.IsInLockDown();
+            var isInLockDown = Predict.Helper.Cache.HasEventStarted(eventId);
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
 
             if (!isPoolAdmin)
@@ -166,10 +169,6 @@ namespace Predict.Controllers
                 throw new Exception("Pool cannot be removed after the tournament has started");
             }
 
-            var pool = _context.Pools.SingleOrDefault(p => p.Id == id);
-
-            if (pool == null)
-                return HttpNotFound();
 
             // Remove all the players from the pool
             var poolPlayers = _context.PoolPlayers.Where(b => b.PoolId==id);

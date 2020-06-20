@@ -45,7 +45,7 @@ namespace Predict.Controllers
         public ActionResult Rules()
         {
             ViewBag.Message = "Rules.";
-            ViewBag.EventName = Predict.Helper.Cache.GetEventName();
+            ViewBag.EventName = "Prediction Competition";
 
             return View();
         }

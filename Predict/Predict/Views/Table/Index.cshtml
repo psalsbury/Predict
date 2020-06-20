@@ -47,7 +47,7 @@
                 @tableViewModel.PoolPosition.ToString()
             </td>
             <td>
-                @Html.ActionLink(tableViewModel.DisplayName, "ViewPredictions", "PredictionsConsolidated", new { playerId = tableViewModel.PlayerId }, null)
+                @Html.ActionLink(tableViewModel.DisplayName, "ViewPredictions", "PredictionsConsolidated", new { playerId = tableViewModel.PlayerId, poolId = tableViewModel.PoolId}, null)
             </td>
             <td STYLE="text-align:center">
                 @tableViewModel.CorrectScore.ToString()

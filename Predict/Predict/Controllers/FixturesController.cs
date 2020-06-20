@@ -20,9 +20,8 @@ namespace Predict.Controllers
         }
 
         // GET: Fixtures
-        public ActionResult Index()
+        public ActionResult Index(short eventId)
         {
-            var eventId = Helper.Cache.GetEventId();
             var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
                 .Include(b => b.AwayTeam)
                 .Where(p => p.EventId == eventId).ToList();
@@ -30,7 +29,7 @@ namespace Predict.Controllers
             return View(fixtures);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(short eventId)
         {
             // If not an admin of the site, then do not allow the creation of a fixture
             if (!User.IsInRole("Admin"))
@@ -38,7 +37,6 @@ namespace Predict.Controllers
                 return HttpNotFound();
             }
 
-            var eventId = Predict.Helper.Cache.GetEventId();
             var fixtureViewModel = new FixtureViewModel
             {
                 Teams = (from a in _context.Teams
@@ -59,19 +57,18 @@ namespace Predict.Controllers
                 return HttpNotFound();
             }
 
-            var eventId = Predict.Helper.Cache.GetEventId();
-            var fixtureViewModel = new FixtureViewModel
-            {
-                Teams = (from a in _context.Teams
-                         join c in _context.EventTeams on a.Id equals c.TeamId
-                         where c.EventId == eventId
-                         select a).ToList()
-            };
-
             var fixture = _context.Fixtures
                 .Include(t => t.HomeTeam)
                 .Include(t => t.AwayTeam)
                 .SingleOrDefault(f => f.Id == id);
+
+            var fixtureViewModel = new FixtureViewModel
+            {
+                Teams = (from a in _context.Teams
+                    join c in _context.EventTeams on a.Id equals c.TeamId
+                    where c.EventId == fixture.EventId
+                    select a).ToList()
+            };
 
             Mapper.Map(fixture,fixtureViewModel);
             return View("EditFixture", fixtureViewModel);

@@ -141,3 +141,8 @@ C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.pdb
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.generic.resources
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.generic2.resources
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.generic3.resources
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.generic4.resources
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.generic5.resources

@@ -18,14 +18,12 @@ namespace Predict.ViewModels
         [Display(Name = "Player Name")]
         public string PlayerName { get; set; }
 
-        [Display(Name = "Supported Team")]
-        public int? SupportTeamId { get; set; }
-
-        [ForeignKey("SupportTeamId")]
-        public Team Team { get; set; }
-
         public string Id { get; set; }
 
+        [Display(Name = "Event")]
+        public short EventId { get; set; }
+
         public IEnumerable<Team> Teams { get; set; }
+        public IEnumerable<Event> Events { get; set; }
     }
 }

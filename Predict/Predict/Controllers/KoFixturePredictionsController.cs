@@ -28,9 +28,9 @@ namespace Predict.Controllers
         public ActionResult Save(KoFixturePredictionViewModel koFixturePredictionViewModel)
         {
             string userId = User.Identity.GetUserId();
-            var eventId = Predict.Helper.Cache.GetEventId();
+            var eventId = koFixturePredictionViewModel.EventId;
 
-            if (Predict.Helper.Cache.IsInLockDown())
+            if (Predict.Helper.Cache.HasEventStarted(eventId))
             {
                 throw new Exception("Knock out predictions are not allowed to be changed after the competition has started");
             }
@@ -128,8 +128,8 @@ namespace Predict.Controllers
             }
 
             _context.SaveChanges();
-            Predict.Helper.SessionHelper.RefreshKoPredictions(Session, userId);
-            Predict.Helper.SessionHelper.RefreshWinningTeamPredictions(Session, userId);
+            Predict.Helper.SessionHelper.RefreshKoPredictions(Session, userId,eventId);
+            Predict.Helper.SessionHelper.RefreshWinningTeamPredictions(Session, userId, eventId);
             return RedirectToAction("Index", "Home");
         }
 
@@ -159,38 +159,32 @@ namespace Predict.Controllers
 
         // GET: KOFixturePredictions
         [System.Web.Mvc.Route("KoFixturePredictions/{userId}")]
-        public ActionResult KoFixturePredictions(string userId)
+        public ActionResult KoFixturePredictions(string userId, short eventId)
         {
             var loggedInUserId = User.Identity.GetUserId();
-            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId, false);
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId, false, eventId);
 
             return View(koFixturePredictionViewModel);
         }
 
         // GET: KOFixturePredictions
         [System.Web.Mvc.Route("KoFixturePredictions/{userId}")]
-        public ActionResult KoFixturePredictionsGrouped(string userId)
+        public ActionResult KoFixturePredictionsGrouped(string userId, short eventId)
         {
             var loggedInUserId = User.Identity.GetUserId();
-            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId,false);
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId,false, eventId);
 
             return View(koFixturePredictionViewModel);
         }
 
-        public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId,string userId, bool readOnly)
+        public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId,string userId, bool readOnly, short eventId)
         {
+            var isInLockDown = Predict.Helper.Cache.HasEventStarted(eventId);
+            var player = (Player) System.Web.HttpContext.Current.Session["Player"];   
             
-            var eventId = Predict.Helper.Cache.GetEventId();
-            var isInLockDown = Predict.Helper.Cache.IsInLockDown();
-            var player = (Player) System.Web.HttpContext.Current.Session["Player"];            
 
             if (userId == null)
                 userId = loggedInUserId;
-
-            if (loggedInUserId != userId && !player.PremiumPlayer)
-            {
-                throw new Exception("Only Premium Players are allowed to view other predictions");
-            }
 
             var koFixturePredictionViewModel = new KoFixturePredictionViewModel
             {
@@ -207,6 +201,9 @@ namespace Predict.Controllers
                 .Include(b => b.Team)
                 .FirstOrDefault(e => e.EventId == eventId && e.PlayerId == userId)
             };
+
+            var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
+            koFixturePredictionViewModel.IsPremiumPlayer = isPremiumPlayer;
 
             if (!readOnly)
             {

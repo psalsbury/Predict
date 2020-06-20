@@ -59,7 +59,6 @@ namespace Predict.Controllers
         {
             var context = new ApplicationDbContext();
             string userId = User.Identity.GetUserId();
-            var eventId = Predict.Helper.Cache.GetEventId();
             var player = context.Players.FirstOrDefault(p => p.Id == userId);
             var user = context.Users.FirstOrDefault(p => p.Id == userId);
 
@@ -68,13 +67,7 @@ namespace Predict.Controllers
                 Id = player.Id,
                 DisplayName = player.DisplayName,
                 PlayerName = player.PlayerName,
-                SupportTeamId = player.SupportTeamId,
-                Email = user.Email,
-                Teams = (from a in context.Teams
-                        join c in context.EventTeams on a.Id equals c.TeamId
-                        where c.EventId == eventId
-                        select a
-                    ).ToList()
+                Email = user.Email
             };
             return View("Register", registerViewModel);
             
@@ -123,7 +116,6 @@ namespace Predict.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    Predict.Helper.SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId());
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -185,15 +177,9 @@ namespace Predict.Controllers
         public ActionResult Register()
         {
             var context = new ApplicationDbContext();
-            var eventId = Predict.Helper.Cache.GetEventId();
             var registerViewModel = new Predict.ViewModels.RegisterViewModel
             {
-                Teams = (from a in context.Teams
-                        join c in context.EventTeams on a.Id equals c.TeamId 
-                        where c.EventId == eventId
-                        select a
-                        ).ToList(),
-            
+                Events = context.Events.Where(a => a.PlayerDeadlineDateTime >= DateTime.Now).ToList()
             };
             context.Dispose();
             return View(registerViewModel);
@@ -217,7 +203,6 @@ namespace Predict.Controllers
             {
                 // password is correct 
                 player.DisplayName = model.DisplayName;
-                player.SupportTeamId = model.SupportTeamId;
                 player.PlayerName = model.PlayerName;
                 context.SaveChanges();
             }
@@ -244,11 +229,16 @@ namespace Predict.Controllers
                     return View("Register", model);
                 }
 
+                var context = new ApplicationDbContext();
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                var context = new ApplicationDbContext();
                 if (result.Succeeded)
                 {
+                    var myEvent = context.Events.FirstOrDefault(a => a.Id == model.EventId);
+                    if (myEvent == null)
+                    {
+                        throw new Exception("Event Not Found");
+                    }
                     UserManager.AddToRole(user.Id, "Player");
 
                     var player = new Player
@@ -258,25 +248,30 @@ namespace Predict.Controllers
                         ,PlayerName = model.DisplayName // both the same//
                         ,CreatedDateTime = DateTime.Now
                         ,ModifiedDateTime = DateTime.Now
-                        ,SupportTeamId = model.SupportTeamId
                     };                   
                     context.Players.Add(player);
 
                     // Add the global PoolIs
-                    var globalPoolId = System.Configuration.ConfigurationManager.AppSettings["GlobalPoolId"];
 
-                    if (globalPoolId != null)
+                    var eventPlayer = new EventPlayer
                     {
-                        var globalPoolPlayer = new PoolPlayer()
-                        {
-                            PoolId =  System.Convert.ToInt32(globalPoolId),
-                            PlayerId = user.Id,
-                            CreatedDateTime = DateTime.Now,
-                            ModifiedDateTime = DateTime.Now
-                        };
-                        context.PoolPlayers.Add(globalPoolPlayer);
-                    }
+                        EventId = model.EventId,
+                        PlayerId = user.Id,
+                        CreatedDateTime = DateTime.Now,
+                        ModifiedDateTime = DateTime.Now
+                    };
+                    context.EventPlayers.Add(eventPlayer);
 
+                    var defaultPoolId = myEvent.DefaultPoolId;
+                    var globalPoolPlayer = new PoolPlayer()
+                    {
+                        PoolId = defaultPoolId,
+                        PlayerId = user.Id,
+                        AdminApprovedDateTime = DateTime.Now,
+                        CreatedDateTime = DateTime.Now,
+                        ModifiedDateTime = DateTime.Now
+                    };
+                    context.PoolPlayers.Add(globalPoolPlayer);                    
                     context.SaveChanges();
                     context.Dispose();               
 
@@ -291,12 +286,7 @@ namespace Predict.Controllers
                 AddErrors(result);
 
                 // If we got this far, something failed, redisplay form
-                var eventId = Predict.Helper.Cache.GetEventId();
-                model.Teams = (from a in context.Teams
-                        join c in context.EventTeams on a.Id equals c.TeamId
-                        where c.EventId == eventId
-                        select a
-                    ).ToList();
+                model.Events = context.Events.Where(a => a.PlayerDeadlineDateTime >= DateTime.Now).ToList();
             }
 
             return View(model);

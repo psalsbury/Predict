@@ -13,23 +13,21 @@ namespace Predict.Controllers
     {
 
         private readonly ApplicationDbContext _context;
-        private readonly int _eventId;
 
         public StatsKoController()
         {
             _context = new ApplicationDbContext();
-            _eventId = Helper.Cache.GetEventId();
         }
 
 
         // GET: StatsKO
-        public ActionResult Index()
+        public ActionResult Index(short eventId)
         {
             var statsKoViewModel = new StatsKoViewModel
             {
 
                 StatsKoRoundOfs = _context.Database.SqlQuery<StatsKoRoundOf>("spGetStatsKo @intEventId"
-                    , new SqlParameter("@intEventId", _eventId)
+                    , new SqlParameter("@intEventId", eventId)
                 ).ToList()
             };
 

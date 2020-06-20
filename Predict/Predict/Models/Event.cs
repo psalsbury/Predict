@@ -21,6 +21,11 @@ namespace Predict.Models
         public DateTime EventStartDateTime { get; set; }
 
         [Required]
+        public DateTime PlayerDeadlineDateTime { get; set; }
+
+        public int DefaultPoolId { get; set; }
+
+        [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateTime { get; set; }
 

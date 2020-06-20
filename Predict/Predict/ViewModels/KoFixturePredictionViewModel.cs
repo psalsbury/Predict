@@ -14,6 +14,7 @@ namespace Predict.ViewModels
             Predictions = true;
         }
 
+        public short EventId { get; set; }
         public List<KoFixturePrediction> KoFixturePredictions { get; set; }
         public KoWinningTeamPrediction KoWinningTeam { get; set; }
         public List<Team> Teams { get; set; }
@@ -21,6 +22,7 @@ namespace Predict.ViewModels
         public int MaxCols { get; set; }
         public bool ReadOnly { get; set; }
         public bool Predictions { get; set; } // if false then used for results
+        public bool IsPremiumPlayer { get; set; }
 
         public Dictionary<int, int> FirstStageAutoFill;
         public Dictionary<int, int> RankedTeamsForAutoFill;

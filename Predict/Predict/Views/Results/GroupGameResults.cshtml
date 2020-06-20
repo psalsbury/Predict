@@ -47,7 +47,7 @@
                                             @Html.DisplayFor(m => m.Fixtures[i].HomeTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                                @Html.DisplayFor(m => m.Fixtures[i].HomeResult, new { @class = "control-label col-md-2" })
+                                            @Html.DisplayFor(m => m.Fixtures[i].HomeResult, new { @class = "control-label col-md-2" })
                                         </td>
                                     </tr>
                                 </table>
@@ -64,7 +64,7 @@
                                             @Html.DisplayFor(m => m.Fixtures[i].AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                                @Html.DisplayFor(m => m.Fixtures[i].AwayResult, new { @class = "control-label col-md-2" })
+                                            @Html.DisplayFor(m => m.Fixtures[i].AwayResult, new { @class = "control-label col-md-2" })
                                         </td>
                                     </tr>
                                 </table>
@@ -72,11 +72,15 @@
                         </div>
                     </div>
                 </td>
+                
+                <td style="vertical-align: middle; text-align: center" witdth="25%" class="myDate">
+                    @Html.Hidden("FixtureDateTime", Model.Fixtures[i].FixtureDateTime.ToLongDateString() + " " + Model.Fixtures[i].FixtureDateTime.ToShortTimeString())
 
-                <td style="vertical-align: middle; text-align: center" witdth="25%">
-                    @Model.Fixtures[i].FixtureDateTime.ToString("dd MMM") @Model.Fixtures[i].FixtureDateTime.ToShortTimeString()
                 </td>
-            </tr>}
+
+            </tr>
+
+        }
     </table>
 
 </div>
@@ -114,4 +118,40 @@
             }]
         });
     });
+</script>
+
+
+
+<script>
+
+    //get all td with actionclass in table
+    $("tbody tr td.myDate").each(function () {
+
+        $hiddenValue = $(this).find("input[type=hidden]").val();
+
+        var d = new Date($hiddenValue);
+
+        this.innerHTML = convertUTCDateToLocalDate(d);
+
+    });
+
+    function convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours - offset);
+        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
+        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+
+        return da + ' ' + mo + ' ' + newDate.getHours() + ':' + pad(newDate.getMinutes(), 2);
+
+    }
+    function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+
 </script>

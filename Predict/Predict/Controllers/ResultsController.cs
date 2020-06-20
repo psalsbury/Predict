@@ -19,19 +19,17 @@ namespace Predict.Controllers
         }
 
         // GET: LeagueTableResults
-        public ActionResult LeagueTableResults()
+        public ActionResult LeagueTableResults(int eventId)
         {
             var leagueTablesViewModel = new Predict.ViewModels.LeagueTablesViewModel();
-            var eventId = Helper.Cache.GetEventId();
             leagueTablesViewModel.LeagueTables = Predict.Helper.LeagueTableHelper.FetchLeagueTablesFromResults(eventId);
             leagueTablesViewModel.Results = true;
             return View("LeagueTables", leagueTablesViewModel);
         }
 
         // GET: Results
-        public ActionResult GroupGameResults()
+        public ActionResult GroupGameResults(int eventId)
         {
-            var eventId = Helper.Cache.GetEventId();
             var groupGameResultsViewModel = new GroupGameResultsViewModel();
 
             var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
@@ -46,10 +44,10 @@ namespace Predict.Controllers
         }
 
         // GET: Results
-        public ActionResult KOResults()
+        public ActionResult KOResults(short eventId)
         {
             var koFixtureController = new KoFixturesController();
-            var koFixturePredictionViewModel = koFixtureController.GetKoFixturePredictionViewModel();
+            var koFixturePredictionViewModel = koFixtureController.GetKoFixturePredictionViewModel(eventId);
             koFixturePredictionViewModel.ReadOnly = true;
 
             return View("KoFixturePredictions", koFixturePredictionViewModel);

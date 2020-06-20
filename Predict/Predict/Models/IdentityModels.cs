@@ -24,6 +24,8 @@ namespace Predict.Models
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<EventPlayer> EventPlayers { get; set; }
+
         public DbSet<EventKo> EventKos { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<FixturePrediction> FixturePredictions { get; set; }

@@ -17,19 +17,31 @@ namespace Predict.Controllers
         {
             _context = new ApplicationDbContext();
         }
+
         // GET: FixturePredictions
-        public ActionResult FixturePredictions(string userId)
+        // Used to enter predictions
+        //[Route("FixturePredictions/FixturePredictions/{eventId}")]
+        public ActionResult FixturePredictions(int eventId)
         {
             var loggedInUserId = User.Identity.GetUserId();
-            var fixturePredictionsViewModel = GetFixturePredictionsViewModel(loggedInUserId, userId);
+            var fixturePredictionsViewModel = GetFixturePredictionsViewModel(loggedInUserId, loggedInUserId, eventId);
             return View(fixturePredictionsViewModel);
         }
 
-        public FixturePredictionsViewModel GetFixturePredictionsViewModel(string loggedInUserId,string userId)
+        // GET: FixturePredictions
+        // Used to view predictions
+        [ActionName("ViewFixturePredictions")]
+        public ActionResult FixturePredictions(int eventId, string userId)
+        {
+            var loggedInUserId = User.Identity.GetUserId();
+            var fixturePredictionsViewModel = GetFixturePredictionsViewModel(loggedInUserId, userId, eventId);
+            return View("FixturePredictions",fixturePredictionsViewModel);
+        }
+
+        public FixturePredictionsViewModel GetFixturePredictionsViewModel(string loggedInUserId,string userId, int eventId)
         {
            
             var fixturePredictions = new List<FixturePrediction>();
-            var eventId = Predict.Helper.Cache.GetEventId();
             var fixturePredictionsViewModel = new FixturePredictionsViewModel();
             var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
@@ -38,10 +50,8 @@ namespace Predict.Controllers
 
             fixturePredictionsViewModel.UserId = userId;
 
-            if (loggedInUserId != userId && !player.PremiumPlayer)
-            {
-                throw new Exception("Only Premium Players are allowed to view other predictions");
-            }
+            var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
+            fixturePredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
 
             if (loggedInUserId != userId)
                 fixturePredictionsViewModel.ReadOnly = true;
@@ -97,7 +107,7 @@ namespace Predict.Controllers
         {
 
             string userId = User.Identity.GetUserId();
-            var eventId = Predict.Helper.Cache.GetEventId();
+            var eventId = fixturePredictionsViewModel.EventId;
             bool predictionChanged = true;
 
             // Get existing predictions and update or delete
@@ -175,7 +185,7 @@ namespace Predict.Controllers
             }
 
             _context.SaveChanges();
-            Predict.Helper.SessionHelper.RefreshFixturePredictions(Session, userId);
+            Predict.Helper.SessionHelper.RefreshFixturePredictions(Session, userId, eventId);
 
             return RedirectToAction("Index", "Home");
 

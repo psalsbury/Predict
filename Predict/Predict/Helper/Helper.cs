@@ -44,7 +44,7 @@ namespace Predict.Helper
             MemoryCache.Default.Add(cacheId, cachedItem, DateTime.Now.AddDays(1));
         }
 
-        public static string GetEventName()
+        public static string GetEventName(int eventId)
         {
             var currentEvent = (Event) GetCachedItem("Event");
             if (currentEvent == null)
@@ -55,48 +55,18 @@ namespace Predict.Helper
             return currentEvent.EventName;
         }
 
-        public static bool IsInLockDown()
+        public static bool HasEventStarted(short eventId)
         {
-            var predictionsLockDown = GetCachedItem("PredictionsLockDownDateTime");
-            if (predictionsLockDown == null)
-            {
-                SetGlobalCache();
-                predictionsLockDown = GetCachedItem("PredictionsLockDownDateTime");
-            }
-            var predictionsLockDownDateTime = Convert.ToDateTime(predictionsLockDown);
-            if (predictionsLockDownDateTime < DateTime.Today.ToUniversalTime())
-            {
-                return true;
-            }
             return false;
         }
 
-        public static DateTime GetLastFixtureDate()
+        public static DateTime GetFirstFixtureDate(short eventId)
         {
-            var lastFixture = GetCachedItem("LastFixture");
-            if (lastFixture == null)
-            {
-                SetGlobalCache();
-                lastFixture = GetCachedItem("LastFixture");
-            }
-            var lastFixtureDatetime = Convert.ToDateTime(lastFixture);
-            return lastFixtureDatetime;
-        }
-
-        public static DateTime GetFirstFixtureDate()
-        {
-            var firstFixture = GetCachedItem("PredictionsLockDownDateTime");
-            if (firstFixture == null)
-            {
-                SetGlobalCache();
-                firstFixture = GetCachedItem("PredictionsLockDownDateTime");
-            }
-            var firstFixtureDateTime = Convert.ToDateTime(firstFixture);
-            return firstFixtureDateTime;
+            return DateTime.Now;
         }
 
 
-        public static bool HasLastFixturePassed()
+        public static bool HasLastFixturePassed(short eventId)
         {
             var predictionsLockDown = GetCachedItem("LastFixture");
             if (predictionsLockDown == null)
@@ -113,29 +83,29 @@ namespace Predict.Helper
         }
 
         
-        public static short GetEventId()
-        {
-            var currentEvent = (Event)GetCachedItem("Event");
-            if (currentEvent == null)
-            {
-                SetGlobalCache();
-                currentEvent = (Event)GetCachedItem("Event");
-            }
+        //public static short GetEventId()
+        //{
+        //    var currentEvent = (Event)GetCachedItem("Event");
+        //    if (currentEvent == null)
+        //    {
+        //        SetGlobalCache();
+        //        currentEvent = (Event)GetCachedItem("Event");
+        //    }
 
-            return currentEvent.Id;
-        }
-        public static int GetGlobalPoolId()
-        {
-            var globalPoolId = GetCachedItem("GlobalPoolId");
-            if (globalPoolId == null)
-            {
-                SetGlobalCache();
-                globalPoolId = GetCachedItem("GlobalPoolId");
-            }
+        //    return currentEvent.Id;
+        //}
+        //public static int GetGlobalPoolId()
+        //{
+        //    var globalPoolId = GetCachedItem("GlobalPoolId");
+        //    if (globalPoolId == null)
+        //    {
+        //        SetGlobalCache();
+        //        globalPoolId = GetCachedItem("GlobalPoolId");
+        //    }
 
-            globalPoolId = (globalPoolId ?? 1); // ?? use p, but if null use 1
-            return (int)globalPoolId;
-        }
+        //    globalPoolId = (globalPoolId ?? 1); // ?? use p, but if null use 1
+        //    return (int)globalPoolId;
+        //}
 
         private static void SetGlobalCache()
         {
@@ -143,11 +113,17 @@ namespace Predict.Helper
             var eventId = Convert.ToInt16(System.Configuration.ConfigurationManager.AppSettings["EventId"]);
             var globalPoolId = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["GlobalPoolId"]);
             var predictionsLockDown = context.Fixtures.Where(e => e.EventId == eventId).Min(f => f.FixtureDateTime);
-            var lastFixture = context.KoFixtures.Where((e => e.EventId == eventId)).Max(f => f.FixtureDateTime);
-            if (predictionsLockDown > lastFixture)
+            var lastFixture = predictionsLockDown;
+            var hasKo = context.KoFixtures.Count(e => e.EventId == eventId);
+            if (hasKo>0)
             {
-                lastFixture = predictionsLockDown;
+                var lastKoFixture = context.KoFixtures.Where((e => e.EventId == eventId)).Max(f => f.FixtureDateTime);
+                if (lastKoFixture > lastFixture)
+                {
+                    lastFixture = lastKoFixture;
+                }
             }
+
 
             Helper.Cache.SetCachedItem("Event", context.Events.Single(e=> e.Id == eventId));
             Helper.Cache.SetCachedItem("GlobalPoolId", globalPoolId);

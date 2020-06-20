@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Migrations;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -57,25 +58,16 @@ namespace Predict
 
                 var myEvent = new Event()
                 {
-                    EventName = "Euro 2020",
+                    EventName = "Think Social Comp 1",
                     CreatedDateTime = DateTime.Now,
                     ModifiedDateTime = DateTime.Now,
-                    EventStartDateTime = System.DateTime.Parse("12 jun 2020")
+                    EventStartDateTime = System.DateTime.Parse("27 jun 2020 11:30")
                 };
                 context.Events.Add(myEvent);
 
-                var myEventKO = new EventKo()
-                {
-                    EventId = myEvent.Id,
-                    CreatedDateTime = DateTime.Now,
-                    ModifiedDateTime = DateTime.Now,
-                    KoStageFirstRoundQty = 16
-                };
-                context.EventKos.Add(myEventKO);
-
                 var pool = new Pool()
                 {
-                    PoolName = "Global Pool",
+                    PoolName = "Think Money Comp 1",
                     EventId = myEvent.Id,
                     AdminPlayerId = user.Id,
                     CorrectScorePoints = 3,
@@ -90,6 +82,9 @@ namespace Predict
                     ModifiedDateTime = DateTime.Now
                 };
                 context.Pools.Add(pool);
+
+                myEvent.DefaultPoolId = pool.Id;
+                context.Events.AddOrUpdate(myEvent);
 
                 // Add the PoolPlayer entry for newly created admin to the global pool
                 var globalPoolPlayer = new PoolPlayer()
