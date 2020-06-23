@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
 using Predict.Dtos;
@@ -13,7 +10,7 @@ namespace Predict.Controllers.Api
 {
     public class PlayersController : ApiController
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public PlayersController()
         {
@@ -51,7 +48,7 @@ namespace Predict.Controllers.Api
 
         //    playerDto.Id = player.Id;
         //    return Created(new Uri(Request.RequestUri + "/" + player.Id), playerDto);
-            
+
         //}
 
         //PUT /api/players/1
@@ -63,7 +60,7 @@ namespace Predict.Controllers.Api
 
             var playerInDb = _context.Players.SingleOrDefault(c => c.Id == id);
 
-            if (playerInDb== null)
+            if (playerInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
             Mapper.Map(playerDto, playerInDb);

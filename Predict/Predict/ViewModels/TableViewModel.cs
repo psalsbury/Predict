@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Web;
-using Predict.Models;
-
-namespace Predict.ViewModels
+﻿namespace Predict.ViewModels
 {
     public class TableViewModel
     {
-        public Int64 PoolPosition { get; set; }
+        public long PoolPosition { get; set; }
         public string PlayerId { get; set; }
         public string DisplayName { get; set; }
         public int? PoolId { get; set; }
@@ -21,12 +14,11 @@ namespace Predict.ViewModels
         public int CorrectResult { get; set; }
         public int KoScore { get; set; }
         public int TotalScore { get; set; }
-
     }
 
     public class BestPoolsTableViewModel
     {
-        public Int64 PoolPosition { get; set; }
+        public long PoolPosition { get; set; }
         public int PoolId { get; set; }
         public string PoolName { get; set; }
         public int CorrectScore { get; set; }
@@ -39,7 +31,7 @@ namespace Predict.ViewModels
 
     public class BestTeamsTableViewModel
     {
-        public Int64 PoolPosition { get; set; }
+        public long PoolPosition { get; set; }
         public int TeamId { get; set; }
         public string TeamName { get; set; }
         public string TeamFlag { get; set; }
@@ -48,7 +40,5 @@ namespace Predict.ViewModels
         public int KoScore { get; set; }
         public int TotalScore { get; set; }
         public int NbrPlayers { get; set; }
-
     }
-
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Data.Entity.Migrations;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
-using Predict.Models;
+using Predict;
 
-[assembly: OwinStartupAttribute(typeof(Predict.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
+
 namespace Predict
 {
     public partial class Startup
@@ -15,11 +12,5 @@ namespace Predict
         {
             ConfigureAuth(app);
         }
-
-
     }
 }
-
-
-
- 

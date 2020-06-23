@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Predict.Models;
+﻿using System.Collections.Generic;
 
 namespace Predict.ViewModels
 {
@@ -17,6 +13,5 @@ namespace Predict.ViewModels
         public int TeamId { get; set; }
         public string TeamName { get; set; }
         public int NumberOfPredictions { get; set; }
-
     }
 }

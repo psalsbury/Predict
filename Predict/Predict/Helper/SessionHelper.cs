@@ -1,23 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Predict.Models;
 using Predict.ViewModels;
-using System.Data.Entity;
 
 namespace Predict.Helper
 {
-
     public static class SessionHelper
     {
         // this class is for session variable
         public static object GetPlayerSessionData(HttpSessionStateBase session, string sessionKey, string userId)
         {
-            if(session[sessionKey] == null)
-            {
-                SetUserSessionVariables(session,userId);
-            }
+            if (session[sessionKey] == null) SetUserSessionVariables(session, userId);
             return session[sessionKey];
         }
 
@@ -46,9 +42,9 @@ namespace Predict.Helper
             UpdatePlayerSessionVariable(context, session, userId, false);
             UpdateEventPlayersSessionVariable(context, session, userId, false);
 
-            var eventPlayers = (List<EventPlayer>)session["Events"];
+            var eventPlayers = (List<EventPlayer>) session["Events"];
 
-            foreach(EventPlayer eventPlayer in eventPlayers)
+            foreach (var eventPlayer in eventPlayers)
             {
                 var eventId = eventPlayer.EventId;
 
@@ -62,14 +58,11 @@ namespace Predict.Helper
                 UpdateKoPredictionsSessionVar(context, session, eventId, userId, false);
                 UpdateWinningTeamPredictions(context, session, eventId, userId, false);
                 UpdateBonusPredictionsSessionVar(context, session, eventId, userId, false);
-
-
             }
 
             // Pool info
             UpdatePlayerPoolInfo(context, session, userId, false);
             session.Timeout = 252000; // 180 day
-
         }
 
         public static void ClearSessionVariables(HttpSessionStateBase session)
@@ -90,7 +83,6 @@ namespace Predict.Helper
                 .Where(e => e.PlayerId == userId).ToList();
 
             session[sessionName] = eventPlayers;
-
         }
 
         private static void UpdatePlayerPoolInfo(ApplicationDbContext context, HttpSessionStateBase session,
@@ -115,17 +107,14 @@ namespace Predict.Helper
                 return;
 
             var player = context.Players.FirstOrDefault(p => p.Id == userId);
-            if (player != null)
-            {
-                session[sessionName] = player;
-            }
+            if (player != null) session[sessionName] = player;
         }
 
 
         private static void UpdateFixturesSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, bool forceRefresh)
         {
-            string sessionName = "nbrFixtures*"+eventId;
+            var sessionName = "nbrFixtures*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -136,7 +125,7 @@ namespace Predict.Helper
         private static void UpdateKoFixturesSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, bool forceRefresh)
         {
-            string sessionName = "nbrKoFixtures*"+eventId;
+            var sessionName = "nbrKoFixtures*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -147,22 +136,21 @@ namespace Predict.Helper
         private static void UpdateBonusSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, bool forceRefresh)
         {
-
-            string sessionName = "nbrBonusQuestions*"+eventId;
+            var sessionName = "nbrBonusQuestions*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
             var nbrBonusQuestions = context.BonusQuestions.Count(e => e.EventId == eventId);
 
             session[sessionName] = nbrBonusQuestions;
-
         }
-        
 
-        private static void UpdateFixturePredictionsSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
+
+        private static void UpdateFixturePredictionsSessionVar(ApplicationDbContext context,
+            HttpSessionStateBase session,
             short eventId, string userId, bool forceRefresh)
         {
-            string sessionName = "nbrFixturePredictions*"+eventId;
+            var sessionName = "nbrFixturePredictions*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -178,7 +166,7 @@ namespace Predict.Helper
         private static void UpdateKoPredictionsSessionVar(ApplicationDbContext context, HttpSessionStateBase session
             , short eventId, string userId, bool forceRefresh)
         {
-            string sessionName = "nbrKoPredictions*"+eventId;
+            var sessionName = "nbrKoPredictions*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -196,14 +184,13 @@ namespace Predict.Helper
                       && a.Team2Id != null
                 select a).Count();
 
-            session[sessionName] = nbrKoPredictionsTeam1+ nbrKoPredictionsTeam2;
-            
+            session[sessionName] = nbrKoPredictionsTeam1 + nbrKoPredictionsTeam2;
         }
 
         private static void UpdateWinningTeamPredictions(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, string userId, bool forceRefresh)
         {
-            string sessionName = "nbrWinningTeamPredictions*" + eventId;
+            var sessionName = "nbrWinningTeamPredictions*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -218,8 +205,7 @@ namespace Predict.Helper
         private static void UpdateBonusPredictionsSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, string userId, bool forceRefresh)
         {
-
-            string sessionName = "nbrBonusQuestionPredictions*"+eventId;
+            var sessionName = "nbrBonusQuestionPredictions*" + eventId;
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -229,12 +215,6 @@ namespace Predict.Helper
                 select a).Count();
 
             session[sessionName] = nbrBonusQuestionPredictions;
-
         }
-
-
     }
-
-
-
 }

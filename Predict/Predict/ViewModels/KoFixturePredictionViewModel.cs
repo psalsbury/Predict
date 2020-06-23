@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Predict.Models;
 
 namespace Predict.ViewModels
 {
     public class KoFixturePredictionViewModel
     {
+        public Dictionary<int, int> FirstStageAutoFill;
+        public Dictionary<int, int> RankedTeamsForAutoFill;
 
         public KoFixturePredictionViewModel()
         {
@@ -24,16 +23,10 @@ namespace Predict.ViewModels
         public bool Predictions { get; set; } // if false then used for results
         public bool IsPremiumPlayer { get; set; }
 
-        public Dictionary<int, int> FirstStageAutoFill;
-        public Dictionary<int, int> RankedTeamsForAutoFill;
-
         public int Power2(int exponent)
         {
             var result = 1;
-            for (var power = 2; power <= exponent; power++)
-            {
-                result = result * 2;
-            }
+            for (var power = 2; power <= exponent; power++) result = result * 2;
             return result;
         }
     }

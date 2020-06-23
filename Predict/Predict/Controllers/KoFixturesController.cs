@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Predict.Models;
@@ -18,10 +17,10 @@ namespace Predict.Controllers
         {
             _context = new ApplicationDbContext();
         }
+
         // GET: KOFixtures
         public ActionResult Index(int eventId)
         {
-            
             var fixtures = _context.KoFixtures.Where(p => p.EventId == eventId).ToList();
             return View(fixtures);
         }
@@ -30,29 +29,25 @@ namespace Predict.Controllers
         {
             var koFixture = new KoFixture();
             if (koFixtureViewModel.Id != 0)
-            {
                 koFixture = _context.KoFixtures.SingleOrDefault(f => f.Id == koFixtureViewModel.Id);
-            }
- 
+
             Mapper.Map(koFixtureViewModel, koFixture);
             if (koFixtureViewModel.Id == 0)
             {
                 koFixture.CreatedDateTime = DateTime.Now;
                 _context.KoFixtures.Add(koFixture);
             }
+
             koFixture.ModifiedDateTime = DateTime.Now;
             _context.SaveChanges();
-            
+
             return RedirectToAction("Index", "KoFixtures");
         }
 
         public ActionResult Create(short eventId)
         {
             // If not an admin of the site, then do not allow the creation of a fixture
-            if (!User.IsInRole("Admin"))
-            {
-                return HttpNotFound();
-            }
+            if (!User.IsInRole("Admin")) return HttpNotFound();
             var koFixtureViewModel = PrepareViewModel(eventId);
 
             return View("EditKoFixture", koFixtureViewModel);
@@ -61,45 +56,39 @@ namespace Predict.Controllers
 
         public ActionResult SaveKoResults(KoFixturePredictionViewModel koFixturePredictionViewModel)
         {
-
             var eventId = koFixturePredictionViewModel.EventId;
 
             var koFixtures = _context.KoFixtures
                 .Where(f => f.EventId == eventId)
                 .ToList();
 
-            var round = (int)koFixtures.Max(a => a.RoundOf);
+            var round = (int) koFixtures.Max(a => a.RoundOf);
 
             var stringWinningTeamId = Request["1_1"];
 
             var koEvent = _context.EventKos.FirstOrDefault(f => f.EventId == eventId);
             if (koEvent != null)
             {
-                int? winningTeamId = stringWinningTeamId == "" ? 0 : System.Convert.ToInt32(stringWinningTeamId);
+                int? winningTeamId = stringWinningTeamId == "" ? 0 : Convert.ToInt32(stringWinningTeamId);
                 if (winningTeamId == 0)
-                {
                     koEvent.WinningTeamId = null;
-                }
                 else
-                {
                     koEvent.WinningTeamId = winningTeamId;
-                }
-                
+
                 _context.EventKos.AddOrUpdate(koEvent);
             }
 
 
             while (round > 1)
             {
-
-                for (int a = 1; a <= round / 2; a++)
+                for (var a = 1; a <= round / 2; a++)
                 {
                     var koFixture = koFixtures.Single(k => k.RoundOf == round && k.Position == a);
-                    var stringTeam1Id = Request[round.ToString() + "_" + ((a * 2) - 1).ToString()];
-                    var stringTeam2Id = Request[round.ToString() + "_" + (a * 2).ToString()];
+                    var stringTeam1Id = Request[round + "_" + (a * 2 - 1)];
+                    var stringTeam2Id = Request[round + "_" + a * 2];
 
-                    int? team1Id = stringTeam1Id == "" ? 0 : System.Convert.ToInt32(stringTeam1Id);
-                    int? team2Id = stringTeam2Id == "" ? 0 : System.Convert.ToInt32(stringTeam2Id);
+                    int? team1Id = stringTeam1Id == "" ? 0 : Convert.ToInt32(stringTeam1Id);
+                    int? team2Id = stringTeam2Id == "" ? 0 : Convert.ToInt32(stringTeam2Id);
                     if (team1Id == 0)
                         team1Id = null;
 
@@ -112,8 +101,8 @@ namespace Predict.Controllers
 
                     _context.KoFixtures.AddOrUpdate(koFixture);
                 }
-                round = round / 2;
 
+                round = round / 2;
             }
 
             _context.SaveChanges();
@@ -123,21 +112,17 @@ namespace Predict.Controllers
         public ActionResult EditKoResults(short eventId)
         {
             // I WANT TO REUSE THE KO FIXTURE PREDICTION CONTROLLER, SO WILL SIMULATE PREDICTIONS
-        
-         return View("KoFixturePredictions", GetKoFixturePredictionViewModel(eventId));
-       
+
+            return View("KoFixturePredictions", GetKoFixturePredictionViewModel(eventId));
         }
 
         public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(short eventId)
         {
             var koFixturePredictionViewModel = new KoFixturePredictionViewModel
             {
-                FirstStageAutoFill = new Dictionary<int, int>()
-                ,
-                RankedTeamsForAutoFill = new Dictionary<int, int>()
-                ,
-                Predictions = false
-                ,
+                FirstStageAutoFill = new Dictionary<int, int>(),
+                RankedTeamsForAutoFill = new Dictionary<int, int>(),
+                Predictions = false,
                 EventId = eventId
             };
 
@@ -146,26 +131,24 @@ namespace Predict.Controllers
             var koEvent = _context.EventKos.FirstOrDefault(f => f.EventId == eventId);
 
             var teams = (from a in _context.Teams
-                         join c in _context.EventTeams on a.Id equals c.TeamId
-                         where c.EventId == eventId
-                         select a).ToList();
+                join c in _context.EventTeams on a.Id equals c.TeamId
+                where c.EventId == eventId
+                select a).ToList();
 
             if (koEvent?.WinningTeamId != null)
             {
                 var koWinningTeamPrediction = new KoWinningTeamPrediction();
-                koFixturePredictionViewModel.KoWinningTeam = koWinningTeamPrediction; koWinningTeamPrediction.TeamId = koEvent.WinningTeamId;
+                koFixturePredictionViewModel.KoWinningTeam = koWinningTeamPrediction;
+                koWinningTeamPrediction.TeamId = koEvent.WinningTeamId;
             }
 
             foreach (var koFixture in koFixtures)
             {
                 var koFixturePrediction = new KoFixturePrediction
                 {
-                    Team1Id = koFixture.Team1Id
-                    ,
-                    Team2Id = koFixture.Team2Id
-                    ,
-                    KoFixtureId = koFixture.Id
-                    ,
+                    Team1Id = koFixture.Team1Id,
+                    Team2Id = koFixture.Team2Id,
+                    KoFixtureId = koFixture.Id,
                     KoFixture = koFixture
                 };
                 koFixturePredictions.Add(koFixturePrediction);
@@ -178,14 +161,15 @@ namespace Predict.Controllers
             koFixturePredictionViewModel.Teams = teams;
 
             int maxRoundOf = koFixtures.Max(p => p.RoundOf);
-            koFixturePredictionViewModel.MaxRows = (maxRoundOf * 2) - 1;
+            koFixturePredictionViewModel.MaxRows = maxRoundOf * 2 - 1;
 
-            int maxCols = 1;
+            var maxCols = 1;
             do
             {
                 maxRoundOf = maxRoundOf / 2;
                 maxCols++;
             } while (maxRoundOf > 1);
+
             koFixturePredictionViewModel.MaxCols = maxCols;
 
             return koFixturePredictionViewModel;
@@ -193,11 +177,7 @@ namespace Predict.Controllers
 
         public ActionResult EditKoFixture(int id, short eventId)
         {
-
-            if (!User.IsInRole("Admin"))
-            {
-                return HttpNotFound();
-            }
+            if (!User.IsInRole("Admin")) return HttpNotFound();
 
             var koFixtureViewModel = PrepareViewModel(eventId);
             var koFixtureFromDb = _context.KoFixtures.SingleOrDefault(f => f.Id == id);
@@ -209,20 +189,17 @@ namespace Predict.Controllers
 
         public ActionResult DeleteKoFixture(int id)
         {
-
             var koFixture = _context.KoFixtures.SingleOrDefault(f => f.Id == id);
-            if (!User.IsInRole("Admin") | koFixture == null)
-            {
-                return HttpNotFound();
-            }
+            if (!User.IsInRole("Admin") | (koFixture == null)) return HttpNotFound();
             _context.KoFixtures.Remove(koFixture);
             _context.SaveChanges();
-            
+
             return View("Index");
         }
 
         private KoFixtureViewModel PrepareViewModel(short eventId)
-        {;
+        {
+            ;
             var koFixtureViewModel = new KoFixtureViewModel
             {
                 Teams = (from a in _context.Teams
@@ -230,17 +207,14 @@ namespace Predict.Controllers
                     where c.EventId == eventId
                     select a).ToList(),
                 RoundOfs = new List<short>()
-
             };
-            for (int power = 0; power <= 4; power++)
-                koFixtureViewModel.RoundOfs.Add((short)Math.Pow(2, power));
+            for (var power = 0; power <= 4; power++)
+                koFixtureViewModel.RoundOfs.Add((short) Math.Pow(2, power));
 
             koFixtureViewModel.Leagues = _context.EventTeams.Select(m => m.League).Distinct().ToList();
             koFixtureViewModel.EventId = eventId;
 
             return koFixtureViewModel;
         }
-
-
     }
 }

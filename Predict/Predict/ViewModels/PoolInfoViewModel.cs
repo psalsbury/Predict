@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Web;
 
 namespace Predict.ViewModels
 {
@@ -12,11 +8,11 @@ namespace Predict.ViewModels
 
         public short EventId { get; set; }
 
-        public Int16 TotalScore { get; set; }
+        public short TotalScore { get; set; }
 
         public string PoolName { get; set; }
 
-        public Int16 PoolPosition { get; set; }
+        public short PoolPosition { get; set; }
 
         public string MemberInfo { get; set; }
 
@@ -27,6 +23,5 @@ namespace Predict.ViewModels
         public int PlayersToApprove { get; set; }
 
         public int TotalNumberOfPlayers { get; set; }
-
     }
 }

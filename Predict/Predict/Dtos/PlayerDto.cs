@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using Predict.Models;
 
 namespace Predict.Dtos
 {
     public class PlayerDto
     {
-        [StringLength(128)]
-        public string Id { get; set; }
+        [StringLength(128)] public string Id { get; set; }
 
         public string PlayerName { get; set; }
 
@@ -23,6 +18,5 @@ namespace Predict.Dtos
         public DateTime ModifiedDateTime { get; set; }
 
         public DateTime? EmailConfirmedDateTime { get; set; }
-
     }
 }

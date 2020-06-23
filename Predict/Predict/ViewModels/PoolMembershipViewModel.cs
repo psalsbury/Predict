@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Predict.Models;
 
 namespace Predict.ViewModels
 {
     public class PoolMembershipViewModel
     {
-
         public PoolMembershipViewModel()
         {
             ReadOnlyPools = new List<int>();

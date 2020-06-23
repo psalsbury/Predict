@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Predict.Models;
 
@@ -11,12 +6,13 @@ namespace Predict.Controllers
 {
     public class TeamsController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+
         public TeamsController()
         {
             _context = new ApplicationDbContext();
         }
-        
+
         //GET : Teams
         public ActionResult Index()
         {

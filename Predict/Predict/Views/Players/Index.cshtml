@@ -14,15 +14,12 @@
     </tbhead>
     @foreach (var player in Model)
     {
-    <tr>
-        @*
+        <tr>
+            @*
         <td>@Html.ActionLink(@player.PlayerName, "EditPlayer", "Players", new { id = player.Id }, null) </td>
         *@
-        <td>@player.AspNetUser.Email</td>
-    </tr>
-
-
+            <td>@player.AspNetUser.Email</td>
+        </tr>
     }
 
 </table>
-

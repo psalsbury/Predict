@@ -3,11 +3,11 @@
     ViewBag.Title = "Register";
     if (Model.Id != "")
     {
-     ViewBag.Title = "Your Account";
+        ViewBag.Title = "Your Account";
     }
 }
 
-@using (Html.BeginForm((Model.Id == null) ? "Register" : "UpdateRegister" , "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form", id= "RegisterForm" }))
+@using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form", id = "RegisterForm"}))
 {
     @Html.AntiForgeryToken()
     if (Model.Id == null)
@@ -25,11 +25,11 @@
         <div class="col-md-10">
             @if (Model.Id == null)
             {
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
             }
             else
             {
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , @readonly = "readonly" })
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", @readonly = "readonly"})
             }
 
         </div>
@@ -39,11 +39,11 @@
         <div class="col-md-10">
             @if (Model.Id == null)
             {
-                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})
             }
             else
             {
-                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" , @readonly = "readonly" })
+                @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control", @readonly = "readonly"})
             }
         </div>
     </div>
@@ -51,7 +51,6 @@
 
     if (Model.Id == null)
     {
-
         <div class="form-group">
             @Html.LabelFor(m => m.EventId, new {@class = "col-md-2 control-label"})
 
@@ -70,7 +69,6 @@
             </div>
 
         </div>
-
     }
 
     if (Model.Id == null)
@@ -91,7 +89,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="btnSubmit" class="btn btn-default" value="@((Model.Id == null) ? "Register" : "Update")"/>
+                <input type="submit" id="btnSubmit" class="btn btn-default" value="@(Model.Id == null ? "Register" : "Update")"/>
             </div>
         </div>
 
@@ -101,9 +99,9 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
-        $("#RegisterForm").submit(function (e) {
+        $("#RegisterForm").submit(function(e) {
 
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);

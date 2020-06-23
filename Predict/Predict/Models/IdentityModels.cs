@@ -1,7 +1,7 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -21,6 +21,11 @@ namespace Predict.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext()
+            : base(Environment.MachineName == "THINKPAD" ? "DefaultConnection" : "GoDaddyConnection", false)
+        {
+        }
+
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Event> Events { get; set; }
@@ -33,10 +38,10 @@ namespace Predict.Models
         public DbSet<BonusQuestionPrediction> BonusQuestionPredictions { get; set; }
 
         public DbSet<EventTeam> EventTeams { get; set; }
-        
+
         public DbSet<Pool> Pools { get; set; }
         public DbSet<PoolPlayer> PoolPlayers { get; set; }
-        public DbSet<PoolPlayerPositionHistory> PoolPlayerPositionHistory  {get; set; }
+        public DbSet<PoolPlayerPositionHistory> PoolPlayerPositionHistory { get; set; }
 
         public DbSet<KoFixture> KoFixtures { get; set; }
         public DbSet<KoFixturePrediction> KoFixturePredictions { get; set; }
@@ -44,11 +49,6 @@ namespace Predict.Models
 
         public DbSet<Message> Messages { get; set; }
         public DbSet<Reply> Replies { get; set; }
-
-        public ApplicationDbContext()
-            : base(System.Environment.MachineName=="THINKPAD"?"DefaultConnection":"GoDaddyConnection", throwIfV1Schema: false)
-        {
-        }
 
         public static ApplicationDbContext Create()
         {

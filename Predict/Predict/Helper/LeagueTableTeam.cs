@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Predict.Models;
-
-namespace Predict.Helper
+﻿namespace Predict.Helper
 {
     public class LeagueTableTeam
     {
@@ -16,11 +10,10 @@ namespace Predict.Helper
         public short Lost { get; set; }
         public short GoalsFor { get; set; }
         public short GoalsAgainst { get; set; }
-        public int GoalDifference { get => GoalsFor - GoalsAgainst;}
+        public int GoalDifference => GoalsFor - GoalsAgainst;
 
         public string TeamFlag { get; set; }
         public short Points { get; set; }
         public short Position { get; set; }
-
     }
 }

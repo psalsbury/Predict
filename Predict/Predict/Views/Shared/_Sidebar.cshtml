@@ -1,23 +1,18 @@
-﻿@using System.Web.UI.WebControls
-@using Microsoft.AspNet.Identity
-@using Predict.Models
+﻿@using Predict.Models
 @using WebHelpers.Mvc5
 <aside class="main-sidebar">
     <section class="sidebar">
-       
+
         @* BEGIN Menu *@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Prediction Menu</li>
 
             @if (Request.IsAuthenticated)
             {
+                var eventPlayers = (List<EventPlayer>) Session["Events"];
 
-                var eventPlayers = (List<EventPlayer>)Session["Events"];
-
-                foreach (EventPlayer eventPlayer in eventPlayers)
+                foreach (var eventPlayer in eventPlayers)
                 {
-
-
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-trophy"></i> <span>@eventPlayer.Event.EventName</span>
@@ -27,54 +22,62 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="@Url.Action("Index", "Home" , new {eventId = eventPlayer.EventId})"><i class="fa fa-home"></i> <span>Home Page</span></a>
+                                <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
+                                    <i class="fa fa-home"></i> <span>Home Page</span>
+                                </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index", "Table"  , new {poolId = eventPlayer.Event.DefaultPoolId})"><i class="fa fa-table"></i> <span>Table</span></a>
+                                <a href="@Url.Action("Index", "Table", new {poolId = eventPlayer.Event.DefaultPoolId})">
+                                    <i class="fa fa-table"></i> <span>Table</span>
+                                </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index", "StatsGroup"  , new {eventId = eventPlayer.EventId})"><i class="fa fa-table"></i> <span>Game Stats</span></a>
+                                <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})">
+                                    <i class="fa fa-table"></i> <span>Game Stats</span>
+                                </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("GroupGameResults", "Results"  , new {eventId = eventPlayer.EventId})"><i class="fa fa-table"></i> <span>Results</span></a>
+                                <a href="@Url.Action("GroupGameResults", "Results", new {eventId = eventPlayer.EventId})">
+                                    <i class="fa fa-table"></i> <span>Results</span>
+                                </a>
                             </li>
 
 
                         </ul>
 
                     </li>
-
                 }
 
-                 if (User.IsInRole("Admin"))
-                 {
-                     <li class="treeview">
-                         <a href="#">
-                             <i class="fa fa-book"></i> <span>Admin</span>
-                             <span class="pull-right-container">
-                                 <i class="fa fa-angle-left pull-right"></i>
-                             </span>
-                         </a>
-                         <ul class="treeview-menu">
+                if (User.IsInRole("Admin"))
+                {
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-book"></i> <span>Admin</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
 
-                             @foreach (EventPlayer eventPlayer in eventPlayers)
-                             {
-                                 <li>
-                                    <a href="@Url.Action("AdminHome", "Admin"  , new {eventId = eventPlayer.EventId})"><i class="fa fa-table"></i> <span>@eventPlayer.Event.EventName</span></a>
-                                 </li>
-                             }
-                         </ul>
-                     </li>
-                 }
-
-
+                            @foreach (var eventPlayer in eventPlayers)
+                            {
+                                <li>
+                                    <a href="@Url.Action("AdminHome", "Admin", new {eventId = eventPlayer.EventId})">
+                                        <i class="fa fa-table"></i> <span>@eventPlayer.Event.EventName</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
             }
             else
             {
-                <li class="@Url.IsLinkActive("Index", "Home" )">
-                    <a href="@Url.Action("Index", "Home" )"><i class="fa fa-home"></i> <span>Home</span></a>
+                <li class="@Url.IsLinkActive("Index", "Home")">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-home"></i> <span>Home</span>
+                    </a>
                 </li>
-
             }
 
 
@@ -90,8 +93,6 @@
                     <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
                 </ul>
             </li>
-            
-
 
 
         </ul>

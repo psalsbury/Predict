@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using Predict.Models;
 using Predict.ViewModels;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using Microsoft.Ajax.Utilities;
-using PagedList;
 
 namespace Predict.Controllers
 {
     public class TableController : Controller
     {
-        private ApplicationDbContext _context;
         private const int PAGE_SIZE = 5;
+        private readonly ApplicationDbContext _context;
+
         public TableController()
         {
             _context = new ApplicationDbContext();
@@ -35,10 +30,10 @@ namespace Predict.Controllers
             //var playerId = "1c6a9081-e07f-4142-beae-1dc806ae31ee";
             var tableViewModels = GetTableViewModel(poolId);
             var posn = tableViewModels.FindIndex(p => p.PlayerId == playerId);
-            var pageNumber = (posn / PAGE_SIZE)+1;
+            var pageNumber = posn / PAGE_SIZE + 1;
             ViewBag.FindPlayer = playerId;
 
-            return View("Index",tableViewModels.ToPagedList(pageNumber, PAGE_SIZE));
+            return View("Index", tableViewModels.ToPagedList(pageNumber, PAGE_SIZE));
         }
 
         [Route("index /{tableTypeId ?}/{poolId?}/{page?}/{playerId?}")]
@@ -56,7 +51,7 @@ namespace Predict.Controllers
                 return HttpNotFound();
 
             ViewBag.PoolName = pool.PoolName;
-            
+
 
             var tableViewModels = GetTableViewModel(poolId);
 
@@ -67,12 +62,10 @@ namespace Predict.Controllers
 
         private List<TableViewModel> GetTableViewModel(int poolId)
         {
-
-                var tableViewModels = _context.Database.SqlQuery<TableViewModel>(
-                    "spGetTable @intPoolId"
-                    , new SqlParameter("@intPoolId", poolId)).ToList();
-                return tableViewModels;
-            
+            var tableViewModels = _context.Database.SqlQuery<TableViewModel>(
+                "spGetTable @intPoolId"
+                , new SqlParameter("@intPoolId", poolId)).ToList();
+            return tableViewModels;
         }
     }
 }

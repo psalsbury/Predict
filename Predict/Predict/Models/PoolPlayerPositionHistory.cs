@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-using Predict.Models;
 
 namespace Predict.Models
-{ 
+{
     [Table("PoolPlayerPositionHistory")]
     public class PoolPlayerPositionHistory
     {
@@ -18,19 +14,14 @@ namespace Predict.Models
 
         public string PlayerId { get; set; }
 
-        [ForeignKey("PoolId, PlayerId")]
-        public PoolPlayer PoolPlayer { get; set; }
+        [ForeignKey("PoolId, PlayerId")] public PoolPlayer PoolPlayer { get; set; }
 
-        [Column(TypeName = "Date")]
-        public DateTime PositionDate { get; set; }
+        [Column(TypeName = "Date")] public DateTime PositionDate { get; set; }
 
         public short PoolPosition { get; set; }
 
-        [Required]
-        public DateTime CreatedDateTime { get; set; }
+        [Required] public DateTime CreatedDateTime { get; set; }
 
-        [Required]
-        public DateTime ModifiedDateTime { get; set; }
-
+        [Required] public DateTime ModifiedDateTime { get; set; }
     }
 }

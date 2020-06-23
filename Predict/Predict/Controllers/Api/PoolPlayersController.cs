@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
 using Predict.Models;
@@ -11,8 +10,8 @@ namespace Predict.Controllers.Api
 {
     public class PoolPlayersController : ApiController
     {
+        private readonly ApplicationDbContext _context;
 
-        private ApplicationDbContext _context;
         public PoolPlayersController()
         {
             _context = new ApplicationDbContext();
@@ -44,15 +43,10 @@ namespace Predict.Controllers.Api
         [Route("api/PoolPlayers/{poolId}/{playerId}")]
         public PoolPlayer GetPoolPlayer(int poolId, string playerId)
         {
-
             var poolPlayer = _context.PoolPlayers.SingleOrDefault(p => p.PoolId == poolId && p.PlayerId == playerId);
-            if (poolPlayer == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
+            if (poolPlayer == null) throw new HttpResponseException(HttpStatusCode.NotFound);
 
             return poolPlayer;
-
         }
 
         [HttpPost]
@@ -74,23 +68,17 @@ namespace Predict.Controllers.Api
         [Route("api/PoolPlayers/AddNewPoolPlayer/{poolId}/{playerId}/{joinCode}")]
         public IHttpActionResult AddNewPoolPlayer(int poolId, string playerId, string joinCode)
         {
-
             var pool = _context.Pools.SingleOrDefault(p => p.Id == poolId);
             if (pool == null)
                 return BadRequest("Player does not exist");
 
             if (!pool.JoinCode.IsNullOrWhiteSpace() && pool.JoinCode != joinCode)
-            {
                 return BadRequest("Join Code is Not Valid");
-            }
 
             var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
 
-            if(poolPlayer != null)
-            {
-                return BadRequest("Player already belongs to this pool");
-            }
-            
+            if (poolPlayer != null) return BadRequest("Player already belongs to this pool");
+
             poolPlayer = new PoolPlayer
             {
                 PlayerId = playerId,

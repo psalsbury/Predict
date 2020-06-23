@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace Predict.Models
 {
@@ -13,21 +10,15 @@ namespace Predict.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public short EventId { get; set; }
+        [Required] public short EventId { get; set; }
 
-        [Required]
-        [StringLength(200)]
-        public string Question { get; set; }
+        [Required] [StringLength(200)] public string Question { get; set; }
 
-        [Required]
-        public int Score { get; set; }
+        [Required] public int Score { get; set; }
 
-        [StringLength(50)]
-        public string Answer { get; set; }
+        [StringLength(50)] public string Answer { get; set; }
 
-        [ForeignKey("EventId")]
-        public Event Event { get; set; }
+        [ForeignKey("EventId")] public Event Event { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]
@@ -42,6 +33,5 @@ namespace Predict.Models
         public DateTime ModifiedDateTime { get; set; }
 
         public bool DatePassed => ToBeAnsweredByDateTime < DateTime.Now.ToUniversalTime();
-
     }
 }

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 using Predict.Models;
 
 namespace Predict.ViewModels
 {
     public class KoFixtureViewModel
     {
-
         public List<Team> Teams { get; set; }
         public IList<string> Leagues { get; set; }
         public IList<short> RoundOfs { get; set; }
@@ -25,7 +21,7 @@ namespace Predict.ViewModels
 
         [Display(Name = "Round Of")]
         [Required]
-        public short RoundOf { get; set; }  // How many teams are in this round //
+        public short RoundOf { get; set; } // How many teams are in this round //
 
         [Display(Name = "Position in the round")]
         [Required]
@@ -48,17 +44,10 @@ namespace Predict.ViewModels
         [Display(Name = "Team 2 From League - Position")]
         public int? Team2FromLeaguePosition { get; set; }
 
-        [Display(Name = "Team 2- Fixture Id")]
-        public int? Team2FromKoFixtureId { get; set; }
+        [Display(Name = "Team 2- Fixture Id")] public int? Team2FromKoFixtureId { get; set; }
 
-        [Required]
-        public DateTime CreatedDateTime { get; set; }
+        [Required] public DateTime CreatedDateTime { get; set; }
 
-        [Required]
-        public DateTime ModifiedDateTime { get; set; }
-
-
-
-
+        [Required] public DateTime ModifiedDateTime { get; set; }
     }
 }

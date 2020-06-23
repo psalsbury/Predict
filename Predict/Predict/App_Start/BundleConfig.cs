@@ -6,8 +6,8 @@ namespace Predict
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-
-            BundleTable.EnableOptimizations = false; // Ensures the minification doesnt occur so relative pathnames work in the css//
+            BundleTable.EnableOptimizations =
+                false; // Ensures the minification doesnt occur so relative pathnames work in the css//
             bundles.Add(new StyleBundle("~/Bundles/css")
                 .Include("~/Content/css/bootstrap.min.css")
                 .Include("~/Content/css/bootstrap-select.css")
@@ -17,7 +17,7 @@ namespace Predict
                 .Include("~/Content/css/skins/skin-blue.css")
                 .Include("~/Content/css/font-awesome.min.css")
                 .Include("~/plugins/datatables/dataTables.bootstrap.min.css"));
-            
+
             bundles.Add(new ScriptBundle("~/Bundles/jquery")
                 .Include("~/Content/js/plugins/jquery/jquery-3.3.1.js"));
 

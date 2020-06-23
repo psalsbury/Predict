@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using Predict.Models;
 
 namespace Predict.Helper
 {
     public static class LeagueTableHelper
     {
-
         public static Dictionary<int, int> FetchFirstRoundTeamsForAutoFill(int eventId, string userId)
         {
-
             var context = new ApplicationDbContext();
             var resultingDictionary = new Dictionary<int, int>();
 
@@ -36,60 +32,53 @@ namespace Predict.Helper
                     ? GetTeamFromPosition(leagueTables, team2FromLeague, team2FromLeaguePosition)
                     : GetBestPlacedThirdPosition(leagueTables, team2FromLeague, team2FromLeaguePosition);
 
-                resultingDictionary.Add(((koFixture.Position-1)*2)+1, team1.TeamId);
-                resultingDictionary.Add(((koFixture.Position-1)*2)+2, team2.TeamId);
+                resultingDictionary.Add((koFixture.Position - 1) * 2 + 1, team1.TeamId);
+                resultingDictionary.Add((koFixture.Position - 1) * 2 + 2, team2.TeamId);
             }
 
             return resultingDictionary;
-
         }
 
-        public static LeagueTableTeam GetTeamFromPosition(List<LeagueTable> leagueTables, string teamFromLeague, int teamFromLeaguePosition)
+        public static LeagueTableTeam GetTeamFromPosition(List<LeagueTable> leagueTables, string teamFromLeague,
+            int teamFromLeaguePosition)
         {
             var teamLeagueTable = leagueTables.Find(l => l.League == teamFromLeague);
             return teamLeagueTable.LeagueTableTeams.Find(t => t.Position == teamFromLeaguePosition);
         }
 
-        public static LeagueTableTeam GetBestPlacedThirdPosition(List<LeagueTable> leagueTables, string teamFromLeague, int teamFromLeaguePosition)
+        public static LeagueTableTeam GetBestPlacedThirdPosition(List<LeagueTable> leagueTables, string teamFromLeague,
+            int teamFromLeaguePosition)
         {
-
             //TODO This will all need updating once the qualifing is understood
             var nbrLeagues = teamFromLeague.Length;
-            var firstLeague = teamFromLeague[nbrLeagues-1];
+            var firstLeague = teamFromLeague[nbrLeagues - 1];
 
             var teamLeagueTable = leagueTables.Find(l => l.League == firstLeague.ToString());
             return teamLeagueTable.LeagueTableTeams.Find(t => t.Position == teamFromLeaguePosition);
-
         }
 
-        public static Dictionary<int,int> FetchAllTeamsInOrder(int eventId, string userId)
+        public static Dictionary<int, int> FetchAllTeamsInOrder(int eventId, string userId)
         {
-
             var allLeagueTeams = new List<LeagueTableTeam>();
             var leagueTables = FetchLeagueTablesByUserId(eventId, userId);
             var result = new Dictionary<int, int>();
 
             foreach (var leagueTable in leagueTables)
-            {
-                foreach (var leagueTableTeam in leagueTable.LeagueTableTeams)
-                {
-                    allLeagueTeams.Add(leagueTableTeam);
-                }
-            }
+            foreach (var leagueTableTeam in leagueTable.LeagueTableTeams)
+                allLeagueTeams.Add(leagueTableTeam);
 
             allLeagueTeams = allLeagueTeams.OrderByDescending(c => c.Points)
-                            .ThenByDescending(e => e.GoalDifference)
-                            .ThenByDescending(e => e.GoalsFor).ToList();
+                .ThenByDescending(e => e.GoalDifference)
+                .ThenByDescending(e => e.GoalsFor).ToList();
 
-            Int16 position = 0;
+            short position = 0;
             foreach (var leagueTeam in allLeagueTeams)
             {
                 position += 1;
-                result.Add(position,leagueTeam.TeamId);
+                result.Add(position, leagueTeam.TeamId);
             }
 
             return result;
-
         }
 
         public static List<LeagueTable> FetchLeagueTablesFromResults(int eventId)
@@ -117,13 +106,13 @@ namespace Predict.Helper
                     var leagueTableTeamAway = leagueTable.LeagueTableTeams.First(t => t.TeamId == awayTeamId);
 
                     leagueTableTeamHome =
-                        UpdateLeagueTableTeam(leagueTableTeamHome, fixture.HomeResult ?? default(short), fixture.AwayResult ?? default(short));
+                        UpdateLeagueTableTeam(leagueTableTeamHome, fixture.HomeResult ?? default(short),
+                            fixture.AwayResult ?? default(short));
 
                     leagueTableTeamAway =
-                        UpdateLeagueTableTeam(leagueTableTeamAway, fixture.HomeResult ?? default(short), fixture.AwayResult ?? default(short));
-
+                        UpdateLeagueTableTeam(leagueTableTeamAway, fixture.HomeResult ?? default(short),
+                            fixture.AwayResult ?? default(short));
                 }
-
             }
 
             return SortTables(leagueTables);
@@ -156,19 +145,21 @@ namespace Predict.Helper
                     var leagueTableTeamAway = leagueTable.LeagueTableTeams.First(t => t.TeamId == awayTeamId);
 
                     leagueTableTeamHome =
-                        UpdateLeagueTableTeam(leagueTableTeamHome, fixturePrediction.HomePrediction ?? default(short), fixturePrediction.AwayPrediction ?? default(short));
+                        UpdateLeagueTableTeam(leagueTableTeamHome, fixturePrediction.HomePrediction ?? default(short),
+                            fixturePrediction.AwayPrediction ?? default(short));
 
                     leagueTableTeamAway =
-                        UpdateLeagueTableTeam(leagueTableTeamAway, fixturePrediction.AwayPrediction ?? default(short), fixturePrediction.HomePrediction ?? default(short));
+                        UpdateLeagueTableTeam(leagueTableTeamAway, fixturePrediction.AwayPrediction ?? default(short),
+                            fixturePrediction.HomePrediction ?? default(short));
                 }
             }
 
             return SortTables(leagueTables);
-
         }
 
 
-        private static LeagueTableTeam UpdateLeagueTableTeam(LeagueTableTeam leagueTableTeam, short goalsFor, short goalsAgainst)
+        private static LeagueTableTeam UpdateLeagueTableTeam(LeagueTableTeam leagueTableTeam, short goalsFor,
+            short goalsAgainst)
         {
             leagueTableTeam.Played += 1;
             leagueTableTeam.GoalsFor += goalsFor;
@@ -184,7 +175,6 @@ namespace Predict.Helper
             {
                 // Team Lost
                 leagueTableTeam.Lost += 1;
-
             }
             else if (goalsFor == goalsAgainst)
             {
@@ -194,7 +184,6 @@ namespace Predict.Helper
             }
 
             return leagueTableTeam;
-
         }
 
         private static List<LeagueTable> SortTables(List<LeagueTable> leagueTables)
@@ -229,9 +218,9 @@ namespace Predict.Helper
             return eventTeams;
         }
 
-        private static List<LeagueTable> GetLeagueTables(ApplicationDbContext context, List<EventTeam> eventTeams, int eventId)
+        private static List<LeagueTable> GetLeagueTables(ApplicationDbContext context, List<EventTeam> eventTeams,
+            int eventId)
         {
-
             var leagueTables = new List<LeagueTable>();
 
             foreach (var eventTeam in eventTeams)
@@ -242,16 +231,17 @@ namespace Predict.Helper
                 {
                     var leagueTable = new LeagueTable
                     {
-                        League = league
-                        ,LeagueTableTeams = new List<LeagueTableTeam>()
+                        League = league, LeagueTableTeams = new List<LeagueTableTeam>()
                     };
-                    leagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.Team.TeamName, eventTeam.TeamId, eventTeam.Team.FlagFileLocation));
+                    leagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.Team.TeamName, eventTeam.TeamId,
+                        eventTeam.Team.FlagFileLocation));
 
                     leagueTables.Add(leagueTable);
                 }
                 else
                 {
-                    currentLeagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.Team.TeamName, eventTeam.TeamId, eventTeam.Team.FlagFileLocation));
+                    currentLeagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.Team.TeamName,
+                        eventTeam.TeamId, eventTeam.Team.FlagFileLocation));
                 }
             }
 
@@ -276,7 +266,5 @@ namespace Predict.Helper
             };
             return leagueTableTeam;
         }
-
-
     }
 }

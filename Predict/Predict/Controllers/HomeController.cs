@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Predict.Models;
+using Predict.Helper;
 
 namespace Predict.Controllers
 {
@@ -13,9 +9,7 @@ namespace Predict.Controllers
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
-            {            
-                Predict.Helper.SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId());
-            }
+                SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId());
             return View();
         }
 
@@ -24,7 +18,7 @@ namespace Predict.Controllers
             return View();
         }
 
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SendMessage()
         {
@@ -35,12 +29,11 @@ namespace Predict.Controllers
             {
                 Body = message,
                 Destination = "pete@salsbury.co.uk",
-                Subject = string.Format("Query from {0}", from??"Unknown")
+                Subject = string.Format("Query from {0}", from ?? "Unknown")
             };
 
-            Predict.Helper.Cache.SendEmail(emailMesesage);
+            Cache.SendEmail(emailMesesage);
             return RedirectToAction("Index", "Home");
-
         }
 
         public ActionResult Rules()

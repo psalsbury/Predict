@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
-using Predict.Migrations;
+using Microsoft.AspNet.Identity;
 using Predict.Models;
 using Predict.ViewModels;
 
@@ -13,7 +12,7 @@ namespace Predict.Controllers
 {
     public class BonusQuestionPredictionsController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public BonusQuestionPredictionsController()
         {
@@ -24,16 +23,18 @@ namespace Predict.Controllers
         public ActionResult BonusQuestionPredictions(short eventId)
         {
             var loggedInUserId = User.Identity.GetUserId();
-            var bonusQuestionPredictionsViewModel = GetBonusQuestionPredictionsViewModel(loggedInUserId, loggedInUserId, eventId);
+            var bonusQuestionPredictionsViewModel =
+                GetBonusQuestionPredictionsViewModel(loggedInUserId, loggedInUserId, eventId);
             bonusQuestionPredictionsViewModel.ReadOnly = false;
             return View(bonusQuestionPredictionsViewModel);
         }
 
-        public BonusQuestionPredictionsViewModel GetBonusQuestionPredictionsViewModel(string loggedInUserId, string playerId, short eventId)
+        public BonusQuestionPredictionsViewModel GetBonusQuestionPredictionsViewModel(string loggedInUserId,
+            string playerId, short eventId)
         {
             var bonusQuestionPredictionsViewModel = new BonusQuestionPredictionsViewModel();
-            var player = (Player)System.Web.HttpContext.Current.Session["Player"];
-            
+            var player = (Player) System.Web.HttpContext.Current.Session["Player"];
+
             bonusQuestionPredictionsViewModel.PlayerId = playerId;
 
             var isPremiumPlayer = !(loggedInUserId != playerId && !player.PremiumPlayer);
@@ -50,33 +51,31 @@ namespace Predict.Controllers
                 .ToList();
 
 
-            foreach (BonusQuestion bonusQuestion in bonusQuestions)
+            foreach (var bonusQuestion in bonusQuestions)
             {
                 var bonusQuestionPrediction =
                     bonusQuestionPredictions.FirstOrDefault(f => f.BonusQuestionId == bonusQuestion.Id);
                 if (bonusQuestionPrediction == null)
                 {
-                    bonusQuestionPrediction = new BonusQuestionPrediction()
+                    bonusQuestionPrediction = new BonusQuestionPrediction
                     {
-                         BonusQuestion = bonusQuestion,
+                        BonusQuestion = bonusQuestion,
                         CreatedDateTime = DateTime.Now,
                         ModifiedDateTime = DateTime.Now,
                         PlayerId = playerId,
                         BonusQuestionId = bonusQuestion.Id
-                     };
-                     bonusQuestionPredictions.Add(bonusQuestionPrediction);
+                    };
+                    bonusQuestionPredictions.Add(bonusQuestionPrediction);
                 }
             }
 
             bonusQuestionPredictionsViewModel.BonusQuestionPredictions = bonusQuestionPredictions;
             return bonusQuestionPredictionsViewModel;
-
         }
 
         [HttpPost]
         public ActionResult Save(BonusQuestionPredictionsViewModel bonusQuestionPredictionsViewModel)
         {
-
             var eventId = bonusQuestionPredictionsViewModel.eventId;
             var loggedInUserId = User.Identity.GetUserId();
 
@@ -86,7 +85,7 @@ namespace Predict.Controllers
                 .OrderBy(b => b.BonusQuestion.ToBeAnsweredByDateTime)
                 .ToList();
 
-            foreach (BonusQuestionPrediction bonusQuestionPrediction in bonusQuestionPredictionsViewModel
+            foreach (var bonusQuestionPrediction in bonusQuestionPredictionsViewModel
                 .BonusQuestionPredictions)
             {
                 var bonusQuestionPredictionInDb =
@@ -94,13 +93,11 @@ namespace Predict.Controllers
                 if (bonusQuestionPredictionInDb == null)
                 {
                     // A new prediction
-                    bonusQuestionPredictionInDb = new BonusQuestionPrediction()
+                    bonusQuestionPredictionInDb = new BonusQuestionPrediction
                     {
-                        BonusQuestionId = bonusQuestionPrediction.BonusQuestionId
-                        , PlayerId = loggedInUserId
-                        , PredictedAnswer = bonusQuestionPrediction.PredictedAnswer
-                        , CreatedDateTime = DateTime.Now
-                        , ModifiedDateTime = DateTime.Now
+                        BonusQuestionId = bonusQuestionPrediction.BonusQuestionId, PlayerId = loggedInUserId,
+                        PredictedAnswer = bonusQuestionPrediction.PredictedAnswer, CreatedDateTime = DateTime.Now,
+                        ModifiedDateTime = DateTime.Now
                     };
                     _context.BonusQuestionPredictions.Add(bonusQuestionPredictionInDb);
                 }
@@ -119,6 +116,7 @@ namespace Predict.Controllers
                     }
                 }
             }
+
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }

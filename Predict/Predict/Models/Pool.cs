@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace Predict.Models
 {
@@ -14,19 +11,15 @@ namespace Predict.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string PoolName { get; set; }
+        [Required] [StringLength(50)] public string PoolName { get; set; }
 
         public string AdminPlayerId { get; set; }
 
-        [ForeignKey("AdminPlayerId")]
-        public Player AdminPlayer { get; set; }
+        [ForeignKey("AdminPlayerId")] public Player AdminPlayer { get; set; }
 
         public short EventId { get; set; }
 
-        [ForeignKey("EventId")]
-        public Event Event { get; set; }
+        [ForeignKey("EventId")] public Event Event { get; set; }
 
         [StringLength(50)]
         [Display(Name = "Join Code")]
@@ -78,8 +71,7 @@ namespace Predict.Models
         [Display(Name = "Correct Result Points")]
         public int CorrectResultPoints { get; set; }
 
-        [Display(Name = "Win Margin Points")]
-        public int WinMarginPoints { get; set; }
+        [Display(Name = "Win Margin Points")] public int WinMarginPoints { get; set; }
 
         public int KoLast16Points { get; set; }
         public int KoLast8Points { get; set; }
@@ -94,7 +86,5 @@ namespace Predict.Models
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime ModifiedDateTime { get; set; }
-
     }
-
 }

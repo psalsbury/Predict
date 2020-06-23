@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Predict.Helper;
 using Predict.Models;
 using Predict.ViewModels;
-using AutoMapper;
-using System.Data.Entity;
-using Microsoft.AspNet.Identity;
 
 namespace Predict.Controllers
 {
     public class PoolsController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+
         public PoolsController()
         {
             _context = new ApplicationDbContext();
@@ -33,10 +34,11 @@ namespace Predict.Controllers
             {
                 // Normal user can see only their pools
                 var userid = User.Identity.GetUserId();
-                pools = _context.Pools.Include(b => b.AdminPlayer).Where(p => p.EventId == eventId && p.AdminPlayerId == userid).ToList();
+                pools = _context.Pools.Include(b => b.AdminPlayer)
+                    .Where(p => p.EventId == eventId && p.AdminPlayerId == userid).ToList();
             }
 
-            return View(pools);  
+            return View(pools);
         }
 
 
@@ -46,7 +48,7 @@ namespace Predict.Controllers
             var playerId = User.Identity.GetUserId();
             var poolMembershipViewModel = new PoolMembershipViewModel();
             var globalPoolId =
-                System.Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["GlobalPoolId"]);
+                Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
 
             poolMembershipViewModel.ReadOnlyPools.Add(globalPoolId);
 
@@ -54,23 +56,20 @@ namespace Predict.Controllers
                 .Where(p => p.AdminPlayerId == playerId)
                 .Where(p => p.EventId == eventId);
 
-            foreach(Pool pool in adminPools)
-            {
-                poolMembershipViewModel.ReadOnlyPools.Add(pool.Id);
-            }
+            foreach (var pool in adminPools) poolMembershipViewModel.ReadOnlyPools.Add(pool.Id);
 
-           // Admin of the site can see all pools
-           var availablePools = _context.Pools.Include(b => b.AdminPlayer).Where(p => p.EventId == eventId).ToList();
+            // Admin of the site can see all pools
+            var availablePools = _context.Pools.Include(b => b.AdminPlayer).Where(p => p.EventId == eventId).ToList();
 
-           // Normal user can see only their pools           
-           var joinedPools = _context.PoolPlayers
+            // Normal user can see only their pools           
+            var joinedPools = _context.PoolPlayers
                 .Include(b => b.Pool)
-               .Where(p => p.Pool.EventId==eventId)
-               .Where(p => p.PlayerId == playerId).ToList();
-           poolMembershipViewModel.Pools = availablePools;
-           poolMembershipViewModel.JoinedPools = joinedPools;
+                .Where(p => p.Pool.EventId == eventId)
+                .Where(p => p.PlayerId == playerId).ToList();
+            poolMembershipViewModel.Pools = availablePools;
+            poolMembershipViewModel.JoinedPools = joinedPools;
 
-           return View("PoolMembershipIndex", poolMembershipViewModel);
+            return View("PoolMembershipIndex", poolMembershipViewModel);
         }
 
 
@@ -78,56 +77,41 @@ namespace Predict.Controllers
         {
             var poolModel = new Pool
             {
-                AdminPlayerId = User.Identity.GetUserId()
-                ,EventId = eventId
-                ,CorrectScorePoints = 3
-                ,CorrectResultPoints = 1
-                ,WinMarginPoints = 0
-                ,KoLast16Points = 1
-                ,KoLast8Points = 2
-                ,KoLast4Points = 4
-                ,KoLast2Points = 6
-                ,KoLast1Points = 10
-                ,FreezePredictions = false
+                AdminPlayerId = User.Identity.GetUserId(), EventId = eventId, CorrectScorePoints = 3,
+                CorrectResultPoints = 1, WinMarginPoints = 0, KoLast16Points = 1, KoLast8Points = 2, KoLast4Points = 4,
+                KoLast2Points = 6, KoLast1Points = 10, FreezePredictions = false
             };
-            
+
             return View("EditPool", poolModel);
         }
 
 
         public ActionResult Edit(int id)
         {
-            
             var loggedInUserId = User.Identity.GetUserId();
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
             var poolModel = _context.Pools.SingleOrDefault(p => p.Id == id);
-            var isInLockDown = Predict.Helper.Cache.HasEventStarted(poolModel.EventId);
-            if (!isPoolAdmin)
-            {
-                throw new Exception("Only pool admin is allowed to edit the pool");
-            }
+            var isInLockDown = Cache.HasEventStarted(poolModel.EventId);
+            if (!isPoolAdmin) throw new Exception("Only pool admin is allowed to edit the pool");
 
             ViewBag.isInLockDown = isInLockDown;
             return View("EditPool", poolModel);
         }
 
 
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Pool poolModel)
         {
             var poolFromDb = new Pool();
-            if (poolModel.Id != 0)
-            {
-                poolFromDb = _context.Pools.Single(m => m.Id == poolModel.Id);
-            }
+            if (poolModel.Id != 0) poolFromDb = _context.Pools.Single(m => m.Id == poolModel.Id);
 
             Mapper.Map(poolModel, poolFromDb);
             poolFromDb.ModifiedDateTime = DateTime.Now;
 
             if (poolModel.Id == 0)
             {
-                poolFromDb.CreatedDateTime = DateTime.Now;              
+                poolFromDb.CreatedDateTime = DateTime.Now;
                 _context.Pools.Add(poolFromDb);
 
                 // Need to add the current player in the PoolPlayer table
@@ -139,8 +123,8 @@ namespace Predict.Controllers
                     ModifiedDateTime = DateTime.Now
                 };
                 _context.PoolPlayers.Add(poolPlayer);
-
             }
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Pools");
@@ -149,33 +133,21 @@ namespace Predict.Controllers
         public ActionResult Delete(int id)
         {
             var pool = _context.Pools.FirstOrDefault(a => a.Id == id);
-            if (pool==null)
-            {
-                return HttpNotFound();
-            }
+            if (pool == null) return HttpNotFound();
 
             var eventId = pool.EventId;
             var loggedInUserId = User.Identity.GetUserId();
-            var isInLockDown = Predict.Helper.Cache.HasEventStarted(eventId);
+            var isInLockDown = Cache.HasEventStarted(eventId);
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
 
-            if (!isPoolAdmin)
-            {
-                throw new Exception("Only pool admin is allowed to edit the pool");
-            }
+            if (!isPoolAdmin) throw new Exception("Only pool admin is allowed to edit the pool");
 
-            if(isInLockDown)
-            {
-                throw new Exception("Pool cannot be removed after the tournament has started");
-            }
+            if (isInLockDown) throw new Exception("Pool cannot be removed after the tournament has started");
 
 
             // Remove all the players from the pool
-            var poolPlayers = _context.PoolPlayers.Where(b => b.PoolId==id);
-            foreach (var poolPlayer in poolPlayers)
-            {
-                _context.PoolPlayers.Remove(poolPlayer);
-            }
+            var poolPlayers = _context.PoolPlayers.Where(b => b.PoolId == id);
+            foreach (var poolPlayer in poolPlayers) _context.PoolPlayers.Remove(poolPlayer);
 
             _context.Pools.Remove(pool);
             _context.SaveChanges();
@@ -184,7 +156,7 @@ namespace Predict.Controllers
 
         public ActionResult Players(int id)
         {
-            return RedirectToAction("PoolAdmin", "PoolPlayers", new { id });
+            return RedirectToAction("PoolAdmin", "PoolPlayers", new {id});
         }
 
 

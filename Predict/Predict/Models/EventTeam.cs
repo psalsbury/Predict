@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace Predict.Models
 {
     // Limits the teams that are available to an event
     public class EventTeam
     {
-        [Key, Column(Order = 0)]
-        public int EventId { get; set; }
+        [Key] [Column(Order = 0)] public int EventId { get; set; }
 
-        [Key, Column(Order = 1)]    
-        public int TeamId { get; set; }
+        [Key] [Column(Order = 1)] public int TeamId { get; set; }
 
-        [ForeignKey("TeamId")]
-        public Team Team { get; set; }
+        [ForeignKey("TeamId")] public Team Team { get; set; }
 
-        [StringLength(50)]
-        public string League { get; set; }
+        [StringLength(50)] public string League { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]
@@ -29,6 +22,5 @@ namespace Predict.Models
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime ModifiedDateTime { get; set; }
-
     }
 }

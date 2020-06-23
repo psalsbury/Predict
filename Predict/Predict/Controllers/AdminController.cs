@@ -1,54 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using Predict.Models;
 
 namespace Predict.Controllers
 {
     public class AdminController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+
         public AdminController()
         {
             _context = new ApplicationDbContext();
         }
+
         // GET: Admin
         public ActionResult UpdateScoring()
         {
-            if (!User.IsInRole("Admin"))
-            {
-                return HttpNotFound();
-            }
-            var eventId = System.Convert.ToInt16(Request["EventId"]);
-            if (eventId == 0)
-            {
-                return HttpNotFound();
-            }
+            if (!User.IsInRole("Admin")) return HttpNotFound();
+            var eventId = Convert.ToInt16(Request["EventId"]);
+            if (eventId == 0) return HttpNotFound();
 
             var myEvent = _context.Events.FirstOrDefault(a => a.Id == eventId);
-            if (myEvent == null)
-            {
-                return HttpNotFound();
-            }
+            if (myEvent == null) return HttpNotFound();
             return View(myEvent);
         }
+
         // GET: Admin
         public ActionResult AdminHome()
         {
-            if (!User.IsInRole("Admin"))
-            {
-                return HttpNotFound();
-            }
+            if (!User.IsInRole("Admin")) return HttpNotFound();
 
-            var eventId = System.Convert.ToInt16(Request["EventId"]);
-            if(eventId==0)
-            {
-                return HttpNotFound();
-            }
+            var eventId = Convert.ToInt16(Request["EventId"]);
+            if (eventId == 0) return HttpNotFound();
 
             var myEvent = _context.Events.FirstOrDefault(a => a.Id == eventId);
             return View(myEvent);

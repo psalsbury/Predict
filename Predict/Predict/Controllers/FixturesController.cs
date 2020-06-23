@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Predict.Models;
 using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 using AutoMapper;
+using Predict.Models;
 using Predict.ViewModels;
 
 namespace Predict.Controllers
@@ -32,17 +30,14 @@ namespace Predict.Controllers
         public ActionResult Create(short eventId)
         {
             // If not an admin of the site, then do not allow the creation of a fixture
-            if (!User.IsInRole("Admin"))
-            {
-                return HttpNotFound();
-            }
+            if (!User.IsInRole("Admin")) return HttpNotFound();
 
             var fixtureViewModel = new FixtureViewModel
             {
                 Teams = (from a in _context.Teams
-                         join c in _context.EventTeams on a.Id equals c.TeamId
-                         where c.EventId == eventId
-                         select a).ToList()              
+                    join c in _context.EventTeams on a.Id equals c.TeamId
+                    where c.EventId == eventId
+                    select a).ToList()
             };
             fixtureViewModel.EventId = eventId;
 
@@ -51,11 +46,7 @@ namespace Predict.Controllers
 
         public ActionResult Edit(int id)
         {
-
-            if (!User.IsInRole("Admin"))
-            {
-                return HttpNotFound();
-            }
+            if (!User.IsInRole("Admin")) return HttpNotFound();
 
             var fixture = _context.Fixtures
                 .Include(t => t.HomeTeam)
@@ -70,19 +61,14 @@ namespace Predict.Controllers
                     select a).ToList()
             };
 
-            Mapper.Map(fixture,fixtureViewModel);
+            Mapper.Map(fixture, fixtureViewModel);
             return View("EditFixture", fixtureViewModel);
-
         }
 
         public ActionResult Save(FixtureViewModel fixtureViewModel)
         {
-
             var fixture = new Fixture();
-            if (fixtureViewModel.Id != 0)
-            {
-                fixture = _context.Fixtures.SingleOrDefault(f => f.Id == fixtureViewModel.Id);
-            }
+            if (fixtureViewModel.Id != 0) fixture = _context.Fixtures.SingleOrDefault(f => f.Id == fixtureViewModel.Id);
 
             Mapper.Map(fixtureViewModel, fixture);
 
@@ -96,7 +82,7 @@ namespace Predict.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Fixtures", new { eventId = fixture.EventId });
+            return RedirectToAction("Index", "Fixtures", new {eventId = fixture.EventId});
         }
     }
 }

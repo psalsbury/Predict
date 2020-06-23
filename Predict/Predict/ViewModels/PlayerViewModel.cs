@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Predict.Models;
+﻿using Predict.Models;
 
 namespace Predict.ViewModels
 {
@@ -10,6 +6,5 @@ namespace Predict.ViewModels
     {
         public Player Player { get; set; }
         public ApplicationUser AspNetUser { get; set; }
-
     }
 }
