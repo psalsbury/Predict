@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Predict.Models;
 
 namespace Predict.Controllers
@@ -18,16 +19,47 @@ namespace Predict.Controllers
         // GET: Admin
         public ActionResult UpdateScoring()
         {
-            return View();
+            if (!User.IsInRole("Admin"))
+            {
+                return HttpNotFound();
+            }
+            var eventId = System.Convert.ToInt16(Request["EventId"]);
+            if (eventId == 0)
+            {
+                return HttpNotFound();
+            }
+
+            var myEvent = _context.Events.FirstOrDefault(a => a.Id == eventId);
+            if (myEvent == null)
+            {
+                return HttpNotFound();
+            }
+            return View(myEvent);
+        }
+        // GET: Admin
+        public ActionResult AdminHome()
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return HttpNotFound();
+            }
+
+            var eventId = System.Convert.ToInt16(Request["EventId"]);
+            if(eventId==0)
+            {
+                return HttpNotFound();
+            }
+
+            var myEvent = _context.Events.FirstOrDefault(a => a.Id == eventId);
+            return View(myEvent);
         }
 
         [HttpPost]
-        public ActionResult SaveUpdateScoring()
+        public ActionResult SaveUpdateScoring(Event myEvent)
         {
             // Run stored procedure to update all scoring
-            var eventId = Convert.ToInt16(System.Configuration.ConfigurationManager.AppSettings["EventId"]);
             var today = DateTime.Today;
-            var eventIdParam = new SqlParameter("@intEventId", eventId);
+            var eventIdParam = new SqlParameter("@intEventId", myEvent.Id);
             var todayParam = new SqlParameter("@dteDate", today);
             _context.Database.ExecuteSqlCommand("EXEC spProcessScores @intEventId, @dteDate", eventIdParam, todayParam);
 

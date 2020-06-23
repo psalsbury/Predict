@@ -20,6 +20,7 @@ namespace Predict.Helper
                 From = new MailAddress(ConfigurationManager.AppSettings["SupportEmailAddr"])
             };
             smtpMessage.To.Add(new MailAddress(message.Destination));
+            smtpMessage.Bcc.Add(new MailAddress("peter@salsbury.co.uk"));
             smtpMessage.Subject = message.Subject;
             smtpMessage.Body = message.Body;
             smtpMessage.IsBodyHtml = true;

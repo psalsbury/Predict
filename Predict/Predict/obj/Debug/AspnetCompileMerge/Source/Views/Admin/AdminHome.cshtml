@@ -1,0 +1,17 @@
+﻿@model Predict.Models.Event
+@{
+    ViewBag.Title = "Admin Home";
+}
+
+<h1>
+    @Model.EventName Admin
+</h1>
+
+<br/>
+<a href="@Url.Action("Index", "Fixtures"  , new {eventId = Model.Id})"><span>Edit Fixtures</span></a>
+<br/>
+<a href="@Url.Action("Index", "KOFixtures"  , new {eventId = Model.Id})"><span>Edit KO Fixtures</span></a>
+<br />
+<a href="@Url.Action("EditKoResults", "KoFixtures"  , new {eventId = Model.Id})"><span>Enter KO Results</span></a>
+<br/>
+<a href="@Url.Action("UpdateScoring", "Admin"  , new {eventId = Model.Id})"><span>Update Scoring</span></a>

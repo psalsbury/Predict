@@ -1,17 +1,17 @@
-USE Predict
+USE Predictioncomp
 GO
 
-IF (SELECT COUNT(1) FROM dbo.Events WHERE EventName = 'Think Social Comp 1') = 0
+IF (SELECT COUNT(1) FROM dbo.Events WHERE EventName = 'Prediction Round 1') = 0
 BEGIN
 
-	INSERT INTO Predict.dbo.Events
+	INSERT INTO dbo.Events
 	(
 		[EventName]
 		, [EventStartDateTime]
-		, [PlayerDeadlineDateTime]
 		, [CreatedDateTime]
 		, [ModifiedDateTime]
+		, DefaultPoolId
 	)
-	SELECT 'Think Social Comp 1', '27 June 2020 11:30:00', '27 June 2020 11:30:00', GETDATE(), GETDATE()
+	SELECT 'Prediction Round 1', '27 June 2020 11:30:00', GETDATE(), GETDATE(), 0
 
 END;

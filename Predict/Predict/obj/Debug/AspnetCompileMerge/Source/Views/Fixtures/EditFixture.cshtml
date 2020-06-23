@@ -34,7 +34,7 @@
                 @Html.ValidationMessageFor(m => m.HomeTeamId, "", new { @class = "text-danger" })
             </div>
         </div>
-    
+
         <div class="form-group">
             @Html.LabelFor(model => model.AwayTeamId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -96,11 +96,3 @@
 
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-<script src="/Content\js\plugins\datepicker\bootstrap-datepicker.min.js"></script>
-
-<script>
-    $('#FixtureDateTime').datepicker({
-        autoclose: true
-        })
-</script>

@@ -1,21 +1,7 @@
 ﻿
 @{
-    DateTime dateToUse;
-    var firstFixtureDateTime = Predict.Helper.Cache.GetFirstFixtureDate();
-    var lastFixtureDateTime = Predict.Helper.Cache.GetLastFixtureDate();
-    var nextEventDateTime = System.Convert.ToDateTime("12 Jun 2022 20:00");
-    if (lastFixtureDateTime < DateTime.Now.ToUniversalTime())
-    {
-        dateToUse = nextEventDateTime;
-    }
-    else if (firstFixtureDateTime < DateTime.Now.ToUniversalTime())
-    {
-        dateToUse = lastFixtureDateTime;
-    }
-    else
-    {
-        dateToUse = firstFixtureDateTime;
-    }
+    var nextEventDateTime = System.Convert.ToDateTime("27 Jun 2020 20:00");
+    var dateToUse = nextEventDateTime;
 }
 
 <style type="text/css">
@@ -75,7 +61,7 @@
 </style>
 
 <div align="center">
-    <img src="~/images/Euro2020.jpg" />
+    <img src="~/images/PremLeague.jpg" />
 
     <script type="text/javascript">
 

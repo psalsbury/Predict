@@ -67,7 +67,7 @@ namespace Predict.Controllers
                                 .Include(b => b.Fixture.AwayTeam)
                                 .Where(p => p.PlayerId == userId)
                                 .Where(p => p.Fixture.EventId == eventId)
-                                .OrderByDescending(b => b.Fixture.FixtureDateTime)
+                                .OrderBy(b => b.Fixture.FixtureDateTime)
                                 .ToList();
             }
 

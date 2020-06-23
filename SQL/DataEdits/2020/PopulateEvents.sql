@@ -1,16 +1,16 @@
-USE Predict
+USE predictioncomp
 GO
 
-IF (SELECT COUNT(1) FROM dbo.Events) = 0
+IF (SELECT COUNT(1) FROM dbo.Events WHERE EventName = 'Euro 2021') = 0
 BEGIN
 
-	INSERT INTO Predict.dbo.Events
+	INSERT INTO dbo.Events
 	(
 		[EventName]
 		, [EventStartDateTime]
 		, [CreatedDateTime]
 		, [ModifiedDateTime]
 	)
-	SELECT 'Euro 2020', '12 June 2020 20:00:00', GETDATE(), GETDATE()
+	SELECT 'Euro 2021', '11 June 2021 20:00:00', GETDATE(), GETDATE()
 
 END;

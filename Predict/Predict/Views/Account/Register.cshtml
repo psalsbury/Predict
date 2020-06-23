@@ -7,7 +7,7 @@
     }
 }
 
-@using (Html.BeginForm((Model.Id == null) ? "Register" : "UpdateRegister" , "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm((Model.Id == null) ? "Register" : "UpdateRegister" , "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form", id= "RegisterForm" }))
 {
     @Html.AntiForgeryToken()
     if (Model.Id == null)
@@ -16,7 +16,7 @@
     }
     else
     {
-        <h4>Update your account.</h4>
+        <h4>View your account.</h4>
     }
     <hr/>
     @Html.ValidationSummary("", new {@class = "text-danger"})
@@ -37,7 +37,14 @@
     <div class="form-group">
         @Html.LabelFor(m => m.DisplayName, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})
+            @if (Model.Id == null)
+            {
+                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" , @readonly = "readonly" })
+            }
         </div>
     </div>
 
@@ -66,15 +73,14 @@
 
     }
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
-        </div>
-    </div>
-
     if (Model.Id == null)
     {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label"})
@@ -82,23 +88,28 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
             </div>
         </div>
-    }
- 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="@((Model.Id == null) ? "Register" : "Update")"/>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnSubmit" class="btn btn-default" value="@((Model.Id == null) ? "Register" : "Update")"/>
+            </div>
         </div>
-    </div>
-    @Html.HiddenFor(m => m.Id)
+
+        @Html.HiddenFor(m => m.Id)
+    }
 }
 
-<script>
 
-    $(document).ready(function(){
-        $("#SupportTeamId").change(function () {
-            var option = $('option:selected', this).attr('dataSrcFlag');
-            $("#flagImage").attr("src", option);
+<script>
+    $(document).ready(function () {
+
+        $("#RegisterForm").submit(function (e) {
+
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+
+            return true;
+
         });
     });
 </script>

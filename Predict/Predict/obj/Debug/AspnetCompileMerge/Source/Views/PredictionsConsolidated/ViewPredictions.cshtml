@@ -4,38 +4,70 @@
     ViewBag.Title = Model.Player.DisplayName + " Predictions";
 }
 
-<div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab_1" data-toggle="tab">Group</a></li>
-        <li><a href="#tab_2" data-toggle="tab">KO</a></li>
-        <li><a href="#tab_3" data-toggle="tab">Bonus</a></li>
-        <li><a href="#tab_4" data-toggle="tab">Grp Tables</a></li>
-    </ul>
-</div>
+@if (Model.BonusQuestionPredictionsViewModel == null && Model.KoFixturePredictionViewModel == null)
+{
+    @Html.Partial("FixturePredictions", Model.FixturePredictionsViewModel)
+}
+else
+{
 
-<div class="tab-content">
-    <div class="tab-pane active" id="tab_1">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_1" data-toggle="tab">Group</a></li>
 
-        @Html.Partial("FixturePredictions", Model.FixturePredictionsViewModel)
+            @if (Model.KoFixturePredictionViewModel != null)
+            {
+                <li><a href="#tab_2" data-toggle="tab">KO</a></li>
+            }
+            @if (Model.BonusQuestionPredictionsViewModel != null)
+            {
+               <li><a href="#tab_3" data-toggle="tab">Bonus</a></li>
+            }
+            @if (Model.KoFixturePredictionViewModel != null)
+            {
+                <li><a href="#tab_4" data-toggle="tab">Grp Tables</a></li>
+            }
+        </ul>
     </div>
-<!-- /.tab-pane -->
-    <div class="tab-pane" id="tab_2">
 
-        @Html.Partial("KoFixturePredictions", Model.KoFixturePredictionViewModel)
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+
+            @Html.Partial("FixturePredictions", Model.FixturePredictionsViewModel)
+        </div>
+
+        @if (Model.KoFixturePredictionViewModel != null)
+        {
+
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+
+                @Html.Partial("KoFixturePredictions", Model.KoFixturePredictionViewModel)
+
+            </div>
+
+
+        }
+        
+        @if (Model.BonusQuestionPredictionsViewModel != null)
+        {
+            <div class="tab-pane" id="tab_3">
+
+                @Html.Partial("BonusQuestionPredictions", Model.BonusQuestionPredictionsViewModel)
+
+            </div>
+        }
+
+        @if (Model.KoFixturePredictionViewModel != null)
+        {
+
+            <div class="tab-pane" id="tab_4">
+
+                @Html.Partial("LeagueTables", Model.LeagueTablesViewModel)
+
+            </div>
+        }
 
     </div>
 
-    <div class="tab-pane" id="tab_3">
-
-        @Html.Partial("BonusQuestionPredictions", Model.BonusQuestionPredictionsViewModel)
-
-    </div>
-
-
-    <div class="tab-pane" id="tab_4">
-
-        @Html.Partial("LeagueTables", Model.LeagueTablesViewModel)
-
-    </div>
-</div>  
-
+}

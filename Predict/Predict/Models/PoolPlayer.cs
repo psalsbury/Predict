@@ -25,8 +25,6 @@ namespace Predict.Models
 
         public DateTime? AdminApprovedDateTime { get; set; }
 
-        public short FinalGoalMinutePrediction { get; set; }
-
         public short PoolPosition { get; set; }
 
         public short CorrectScore { get; set; } // Total score for all correct scores //

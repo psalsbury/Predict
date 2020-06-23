@@ -96,7 +96,7 @@ namespace Predict.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Fixtures");
+            return RedirectToAction("Index", "Fixtures", new { eventId = fixture.EventId });
         }
     }
 }

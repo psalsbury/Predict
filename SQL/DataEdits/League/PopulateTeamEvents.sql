@@ -1,6 +1,6 @@
-USE Predict
+USE Predictioncomp
 
-DECLARE @intEventId INT = 2
+DECLARE @intEventId INT = 1
 
 CREATE TABLE #tmp
 (TeamName varchar(50)
@@ -13,7 +13,7 @@ UNION ALL SELECT 'Bournemouth','Premier League'
 UNION ALL SELECT 'Brighton','Premier League'
 UNION ALL SELECT 'Burnley','Premier League'
 UNION ALL SELECT 'Chelsea','Premier League'
-UNION ALL SELECT 'Crsytal Palace','Premier League'
+UNION ALL SELECT 'Crystal Palace','Premier League'
 UNION ALL SELECT 'Everton','Premier League'
 UNION ALL SELECT 'Leicester City','Premier League'
 UNION ALL SELECT 'Liverpool','Premier League'

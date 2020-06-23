@@ -36,27 +36,37 @@ namespace Predict.Controllers
                 throw new Exception("Invalid Pool");
             }
 
+            var nbrKoPredictionsToEnter = (int) Session["nbrKoFixtures*" + predictionsConsolidated.Pool.EventId];
+            var nbrBonusQuestionsToEnter = (int)Session["nbrBonusQuestions*" + predictionsConsolidated.Pool.EventId]; ;
+
             var fixturePredictionsController = new FixturePredictionsController();
             var loggedInUserId = User.Identity.GetUserId();
             var fixturePredictionsViewModel = fixturePredictionsController.GetFixturePredictionsViewModel(loggedInUserId,playerId, predictionsConsolidated.Pool.EventId);
             fixturePredictionsViewModel.ReadOnly = true;
-
-            var koFixturePredictionsController = new KoFixturePredictionsController();
-            var kOFixturePredictionsViewModel = koFixturePredictionsController.GetKoFixturePredictionViewModel(loggedInUserId,playerId,true, predictionsConsolidated.Pool.EventId);
-            kOFixturePredictionsViewModel.ReadOnly = true;
-
-            var bonusQuestionPredictionsController = new BonusQuestionPredictionsController();
-            var bonusQuestionPredictionsViewModel = bonusQuestionPredictionsController.GetBonusQuestionPredictionsViewModel(loggedInUserId, playerId, predictionsConsolidated.Pool.EventId);
-            bonusQuestionPredictionsViewModel.ReadOnly = true;
-
-            var leagueTablesController = new LeagueTablesController();
-            var leagueTablesViewModel = leagueTablesController.GetLeagueTablesViewModel(loggedInUserId, playerId, predictionsConsolidated.Pool.EventId);
-            leagueTablesViewModel.Results = false;
-
-            predictionsConsolidated.KoFixturePredictionViewModel = kOFixturePredictionsViewModel;
             predictionsConsolidated.FixturePredictionsViewModel = fixturePredictionsViewModel;
-            predictionsConsolidated.LeagueTablesViewModel = leagueTablesViewModel;
-            predictionsConsolidated.BonusQuestionPredictionsViewModel = bonusQuestionPredictionsViewModel;
+
+            if (nbrKoPredictionsToEnter > 0)
+            {
+                var koFixturePredictionsController = new KoFixturePredictionsController();
+                var kOFixturePredictionsViewModel = koFixturePredictionsController.GetKoFixturePredictionViewModel(loggedInUserId, playerId, true, predictionsConsolidated.Pool.EventId);
+                kOFixturePredictionsViewModel.ReadOnly = true;
+                predictionsConsolidated.KoFixturePredictionViewModel = kOFixturePredictionsViewModel;
+
+                var leagueTablesController = new LeagueTablesController();
+                var leagueTablesViewModel = leagueTablesController.GetLeagueTablesViewModel(loggedInUserId, playerId, predictionsConsolidated.Pool.EventId);
+                leagueTablesViewModel.Results = false;
+                predictionsConsolidated.LeagueTablesViewModel = leagueTablesViewModel;
+            }
+
+
+            if (nbrBonusQuestionsToEnter > 0)
+            {
+                var bonusQuestionPredictionsController = new BonusQuestionPredictionsController();
+                var bonusQuestionPredictionsViewModel = bonusQuestionPredictionsController.GetBonusQuestionPredictionsViewModel(loggedInUserId, playerId, predictionsConsolidated.Pool.EventId);
+                bonusQuestionPredictionsViewModel.ReadOnly = true;
+                predictionsConsolidated.BonusQuestionPredictionsViewModel = bonusQuestionPredictionsViewModel;
+            }
+
             return View(predictionsConsolidated);
         }
     }

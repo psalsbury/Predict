@@ -1,4 +1,4 @@
-USE predict
+USE predictioncomp
 GO
 -- ================================================
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'spGetStatsKo')

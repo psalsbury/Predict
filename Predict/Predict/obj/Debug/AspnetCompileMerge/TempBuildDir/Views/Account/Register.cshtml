@@ -41,34 +41,30 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.SupportTeamId, new {@class = "col-md-2 control-label"})
-        @{
-            var defaultFlagLocation = "";
-        }
-        <div class="col-md-10">
 
-        <select name="@Html.NameFor(m => m.SupportTeamId)" id="@Html.IdFor(m => m.SupportTeamId)" class="form-control">
+    if (Model.Id == null)
+    {
 
-                @if (Model.Teams != null)
-                {
-                    foreach (var item in Model.Teams)
+        <div class="form-group">
+            @Html.LabelFor(m => m.EventId, new {@class = "col-md-2 control-label"})
+
+            <div class="col-md-10">
+
+                <select name="@Html.NameFor(m => m.EventId)" id="@Html.IdFor(m => m.EventId)" class="form-control">
+
+                    @if (Model.Events != null)
                     {
-                        if (Model != null && item.Id == Model.SupportTeamId)
+                        foreach (var item in Model.Events)
                         {
-                            defaultFlagLocation = item.FlagFileLocation;
+                            <option value="@item.Id"> @item.EventName </option>
                         }
-                        <option value="@item.Id" dataSrcFlag="@Url.Content(@item.FlagFileLocation)"
-                                selected="@(Model != null && item.Id == Model.SupportTeamId)">
-                            @item.TeamName
-                        </option>
                     }
-                }
-            </select>
-            <img id="flagImage" height="20" src="@defaultFlagLocation" />
+                </select>
+            </div>
+
         </div>
-        
-    </div>
+
+    }
 
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
@@ -97,12 +93,18 @@
     @Html.HiddenFor(m => m.Id)
 }
 
-<script>
 
-    $(document).ready(function(){
-        $("#SupportTeamId").change(function () {
-            var option = $('option:selected', this).attr('dataSrcFlag');
-            $("#flagImage").attr("src", option);
+
+<script>
+    $(document).ready(function () {
+
+        $("#RegisterForm").submit(function (e) {
+
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+
+            return true;
+
         });
     });
 </script>

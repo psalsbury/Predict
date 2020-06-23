@@ -37,9 +37,18 @@ goDaddy database
 admin
 Kcalb267da
 
+peteuser
+Kcalb267da
+
+
 ftp
 188.121.43.19
 ph16631149421
+Kcalb267ft
+
+ftp for predictioncomp
+188.121.43.19
+ph12915445439
 Kcalb267ft
 
 web.config
@@ -52,3 +61,8 @@ if the else shorthand
 condition ? consequent : alternative
 
 
+
+New to do
+
+results page
+dont show future predictions for others

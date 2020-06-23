@@ -29,12 +29,13 @@ namespace Predict.Controllers
         public ActionResult SendMessage()
         {
             var message = Request["message"];
+            var from = User.Identity.Name;
 
             var emailMesesage = new IdentityMessage
             {
                 Body = message,
                 Destination = "pete@salsbury.co.uk",
-                Subject = string.Format("Query from {0}", User.Identity.Name)
+                Subject = string.Format("Query from {0}", from??"Unknown")
             };
 
             Predict.Helper.Cache.SendEmail(emailMesesage);

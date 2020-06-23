@@ -1,4 +1,4 @@
-use predict 
+use predictioncomp
 
 exec DeleteTablesFromSchema 'dbo'
 

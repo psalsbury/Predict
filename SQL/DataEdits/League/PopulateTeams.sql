@@ -1,10 +1,10 @@
-USE Predict
+USE Predictioncomp
 GO
 
 IF (SELECT COUNT(1) FROM Teams WHERE TeamName = 'Arsenal') = 0
 BEGIN
 
-	INSERT INTO Predict.dbo.Teams
+	INSERT INTO dbo.Teams
 	(
 		[TeamName]
 		, [TeamFlag]

@@ -1,10 +1,11 @@
-﻿
+﻿@model Predict.Models.Event
 @{
     ViewBag.Title = "Update Scoring";
 }
 
 @using (Html.BeginForm("SaveUpdateScoring", "Admin"))
 {
+    @Html.HiddenFor(m => m.Id)
     <div class="form-group">
         <div>
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@

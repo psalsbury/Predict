@@ -1,4 +1,4 @@
-USE predict
+USE predictioncomp
 GO
 -- ================================================
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'spProcessScores')
@@ -117,145 +117,148 @@ BEGIN
 	FROM dbo.PoolPlayers AS PP
 	INNER JOIN CTE ON CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 	
+	IF EXISTS(SELECT 1 FROM [dbo].[EventsKo] WHERE EventId = @intEventId)
+	BEGIN
 	
-	/* Calculate the KO scores */
-	CREATE TABLE #tmpKOPredictions
-	(
-		Id INT IDENTITY(1,1)
-		, PlayerID NVARCHAR(128)		
-		, RoundOf SMALLINT
-		, TeamId INT
-	)
+		/* Calculate the KO scores */
+		CREATE TABLE #tmpKOPredictions
+		(
+			Id INT IDENTITY(1,1)
+			, PlayerID NVARCHAR(128)		
+			, RoundOf SMALLINT
+			, TeamId INT
+		)
 
-	/* Get list of unique teams in each round per player */
-	INSERT INTO #tmpKOPredictions
-	(
-		  KOFP.PlayerId
-		, KOF.RoundOf
-		, TeamId
-	)
-	SELECT KOFP.PlayerId
-		, KOF.RoundOf
-		, KOFP.Team1Id		
-	FROM dbo.KoFixturePredictions AS KOFP
-	INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
-	WHERE KOF.EventId = @intEventId
-	UNION ALL
-	SELECT KOFP.PlayerId
-		, KOF.RoundOf
-		, KOFP.Team2Id	
-	FROM dbo.KoFixturePredictions AS KOFP
-	INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
-	WHERE KOF.EventId = @intEventId
-	UNION ALL
-	SELECT KOW.PlayerId
-		, 1 
-		, KOW.TeamId
-	FROM dbo.KoWinningTeamPredictions AS KOW
-	WHERE KOW.EventId = @intEventId;
+		/* Get list of unique teams in each round per player */
+		INSERT INTO #tmpKOPredictions
+		(
+			  KOFP.PlayerId
+			, KOF.RoundOf
+			, TeamId
+		)
+		SELECT KOFP.PlayerId
+			, KOF.RoundOf
+			, KOFP.Team1Id		
+		FROM dbo.KoFixturePredictions AS KOFP
+		INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
+		WHERE KOF.EventId = @intEventId
+		UNION ALL
+		SELECT KOFP.PlayerId
+			, KOF.RoundOf
+			, KOFP.Team2Id	
+		FROM dbo.KoFixturePredictions AS KOFP
+		INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
+		WHERE KOF.EventId = @intEventId
+		UNION ALL
+		SELECT KOW.PlayerId
+			, 1 
+			, KOW.TeamId
+		FROM dbo.KoWinningTeamPredictions AS KOW
+		WHERE KOW.EventId = @intEventId;
 
-	/* De- Dupe any teams that are in the same round more than once */
-	WITH CTE AS
-	(
-		SELECT MIN(Id) MinId
-			, PlayerId
-			, RoundOf
-			, TeamId
-		FROM #tmpKOPredictions
-		GROUP BY PlayerId
-			, RoundOf
-			, TeamId
-	)
-	DELETE KOP
-	FROM #tmpKOPredictions KOP
-	INNER JOIN CTE ON CTE.PlayerID = KOP.PlayerID AND CTE.TeamId=KOP.TeamId AND CTE.RoundOf = KOP.RoundOf AND KOP.Id <> CTE.MinId;
+		/* De- Dupe any teams that are in the same round more than once */
+		WITH CTE AS
+		(
+			SELECT MIN(Id) MinId
+				, PlayerId
+				, RoundOf
+				, TeamId
+			FROM #tmpKOPredictions
+			GROUP BY PlayerId
+				, RoundOf
+				, TeamId
+		)
+		DELETE KOP
+		FROM #tmpKOPredictions KOP
+		INNER JOIN CTE ON CTE.PlayerID = KOP.PlayerID AND CTE.TeamId=KOP.TeamId AND CTE.RoundOf = KOP.RoundOf AND KOP.Id <> CTE.MinId;
 	
-	CREATE TABLE #koResults
-	(
-		RoundOf INT
-		, TeamId INT
-	)
+		CREATE TABLE #koResults
+		(
+			RoundOf INT
+			, TeamId INT
+		)
 
-	INSERT INTO #koResults
-	(
-		RoundOf
-		, TeamId
-	)
-	SELECT KOF.RoundOf
-		, KOF.Team1Id
-	FROM dbo.KoFixtures AS KOF
-	WHERE KOF.EventId = @intEventId
-	AND KOF.Team1Id IS NOT NULL
-	UNION ALL
-	SELECT KOF.RoundOf
-		, KOF.Team2Id
-	FROM dbo.KoFixtures AS KOF
-	WHERE KOF.EventId = @intEventId
-	AND KOF.Team2Id IS NOT NULL
-	UNION ALL 
-	SELECT 1
-		, EVKO.WinningTeamId
-	FROM dbo.EventsKo AS EVKO
-	WHERE EVKO.EventId = @intEventId
-	AND EVKO.WinningTeamId IS NOT NULL;
+		INSERT INTO #koResults
+		(
+			RoundOf
+			, TeamId
+		)
+		SELECT KOF.RoundOf
+			, KOF.Team1Id
+		FROM dbo.KoFixtures AS KOF
+		WHERE KOF.EventId = @intEventId
+		AND KOF.Team1Id IS NOT NULL
+		UNION ALL
+		SELECT KOF.RoundOf
+			, KOF.Team2Id
+		FROM dbo.KoFixtures AS KOF
+		WHERE KOF.EventId = @intEventId
+		AND KOF.Team2Id IS NOT NULL
+		UNION ALL 
+		SELECT 1
+			, EVKO.WinningTeamId
+		FROM dbo.EventsKo AS EVKO
+		WHERE EVKO.EventId = @intEventId
+		AND EVKO.WinningTeamId IS NOT NULL;
 
-	CREATE TABLE #tmpKO
-	(
-		PlayerID NVARCHAR(128)
-		, PoolId INT
-		, RoundOf INT
-		, TeamsCorrect INT
-		, RoundOfScore INT
-	)
+		CREATE TABLE #tmpKO
+		(
+			PlayerID NVARCHAR(128)
+			, PoolId INT
+			, RoundOf INT
+			, TeamsCorrect INT
+			, RoundOfScore INT
+		)
 
-	INSERT INTO #tmpKO
-	(
-		PlayerID
-		, PoolId
-		, RoundOf
-		, TeamsCorrect
-		, RoundOfScore
-	)
-	SELECT KOP.PlayerID
-		, PP.PoolId
-		, KOP.RoundOf
-		, COUNT(KOR.TeamId)
-		, CASE	WHEN KOP.RoundOf = 16 THEN PO.KoLast16Points
-				WHEN KOP.RoundOf = 8 THEN PO.KoLast8Points
-				WHEN KOP.RoundOf = 4 THEN PO.KoLast4Points
-				WHEN KOP.RoundOf = 2 THEN PO.KoLast2Points
-				WHEN KOP.RoundOf = 1 THEN PO.KoLast1Points
-				ELSE 0 
-			END AS RoundOfScore
-	FROM #tmpKOPredictions AS KOP
-	INNER JOIN #koResults KOR ON KOR.RoundOf = KOP.RoundOf AND KOR.TeamId = KOP.TeamId
-	INNER JOIN dbo.PoolPlayers AS PP ON PP.PlayerId = KOP.PlayerID
-	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
-	WHERE PO.EventId = @intEventId
-	GROUP BY KOP.PlayerID
-		, PP.PoolId
-		, KOP.RoundOf
-		, PO.KoLast16Points
-		, PO.KoLast8Points
-		, PO.KoLast4Points
-		, PO.KoLast2Points
-		, PO.KoLast1Points;
-
-	WITH CTE AS
-	(
-		SELECT PlayerID
+		INSERT INTO #tmpKO
+		(
+			PlayerID
 			, PoolId
-			, SUM(TeamsCorrect*RoundOfScore) AS KoScore
-		FROM #tmpKO
-		GROUP BY PlayerID
-			, PoolId
-	)
-	UPDATE PP
-	SET KoScore = CTE.KoScore
-	FROM dbo.PoolPlayers AS PP
-	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
-	INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId
-	WHERE PO.EventId = @intEventId;
+			, RoundOf
+			, TeamsCorrect
+			, RoundOfScore
+		)
+		SELECT KOP.PlayerID
+			, PP.PoolId
+			, KOP.RoundOf
+			, COUNT(KOR.TeamId)
+			, CASE	WHEN KOP.RoundOf = 16 THEN PO.KoLast16Points
+					WHEN KOP.RoundOf = 8 THEN PO.KoLast8Points
+					WHEN KOP.RoundOf = 4 THEN PO.KoLast4Points
+					WHEN KOP.RoundOf = 2 THEN PO.KoLast2Points
+					WHEN KOP.RoundOf = 1 THEN PO.KoLast1Points
+					ELSE 0 
+				END AS RoundOfScore
+		FROM #tmpKOPredictions AS KOP
+		INNER JOIN #koResults KOR ON KOR.RoundOf = KOP.RoundOf AND KOR.TeamId = KOP.TeamId
+		INNER JOIN dbo.PoolPlayers AS PP ON PP.PlayerId = KOP.PlayerID
+		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
+		WHERE PO.EventId = @intEventId
+		GROUP BY KOP.PlayerID
+			, PP.PoolId
+			, KOP.RoundOf
+			, PO.KoLast16Points
+			, PO.KoLast8Points
+			, PO.KoLast4Points
+			, PO.KoLast2Points
+			, PO.KoLast1Points;
+
+		WITH CTE AS
+		(
+			SELECT PlayerID
+				, PoolId
+				, SUM(TeamsCorrect*RoundOfScore) AS KoScore
+			FROM #tmpKO
+			GROUP BY PlayerID
+				, PoolId
+		)
+		UPDATE PP
+		SET KoScore = CTE.KoScore
+		FROM dbo.PoolPlayers AS PP
+		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
+		INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId
+		WHERE PO.EventId = @intEventId;
+	END;
 
 	/* Update each PlayerPool record with the total score and the position within the league */
 	WITH CTE AS

@@ -20,7 +20,7 @@ namespace Predict.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        public AccountController() 
         {
         }
 
@@ -179,7 +179,7 @@ namespace Predict.Controllers
             var context = new ApplicationDbContext();
             var registerViewModel = new Predict.ViewModels.RegisterViewModel
             {
-                Events = context.Events.Where(a => a.PlayerDeadlineDateTime >= DateTime.Now).ToList()
+                Events = context.Events.Where(a => a.EventStartDateTime >= DateTime.Now).ToList()
             };
             context.Dispose();
             return View(registerViewModel);
@@ -191,26 +191,35 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateRegister(Predict.ViewModels.RegisterViewModel model)
         {
- 
-            var context = new ApplicationDbContext();
-            string userId = User.Identity.GetUserId();
-            var user = context.Users.FirstOrDefault(p => p.Id == userId);
-            var player = context.Players.FirstOrDefault(p => p.Id == model.Id);
-            var passwordHasher = new PasswordHasher();
 
-            if (passwordHasher.VerifyHashedPassword(user.PasswordHash,model.Password)
-                != PasswordVerificationResult.Failed)
+            // Not implemented yet.
+            if (ModelState.IsValid)
             {
-                // password is correct 
-                player.DisplayName = model.DisplayName;
-                player.PlayerName = model.PlayerName;
-                context.SaveChanges();
+
+                var context = new ApplicationDbContext();
+                string userId = User.Identity.GetUserId();
+                var user = context.Users.FirstOrDefault(p => p.Id == userId);
+                var player = context.Players.FirstOrDefault(p => p.Id == model.Id);
+                var passwordHasher = new PasswordHasher();
+
+                if (passwordHasher.VerifyHashedPassword(user.PasswordHash, model.Password)
+                    != PasswordVerificationResult.Failed)
+                {
+                    // password is correct 
+                    player.DisplayName = model.DisplayName;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    ModelState.AddModelError("Password", "Password is incorrect");
+                    return View("Register", model);
+                }
             }
             else
-            {                
-                ModelState.AddModelError("Password", "Password is incorrect");
-                return View("Register",model);
+            {
+                return View("Register", model);
             }
+
 
             return RedirectToAction("Index", "Home");
         }
@@ -221,6 +230,7 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(Predict.ViewModels.RegisterViewModel model)
         {
+            var context = new ApplicationDbContext();
             if (ModelState.IsValid)
             {
                 if (model.Password != model.ConfirmPassword)
@@ -229,7 +239,7 @@ namespace Predict.Controllers
                     return View("Register", model);
                 }
 
-                var context = new ApplicationDbContext();
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -239,8 +249,7 @@ namespace Predict.Controllers
                     {
                         throw new Exception("Event Not Found");
                     }
-                    UserManager.AddToRole(user.Id, "Player");
-
+                   
                     var player = new Player
                     {
                         Id = user.Id
@@ -262,34 +271,49 @@ namespace Predict.Controllers
                     };
                     context.EventPlayers.Add(eventPlayer);
 
-                    var defaultPoolId = myEvent.DefaultPoolId;
-                    var globalPoolPlayer = new PoolPlayer()
+                    // If this is me, then the pool will not yet have been created
+                    if(user.Email=="pete@salsbury.co.uk")
                     {
-                        PoolId = defaultPoolId,
-                        PlayerId = user.Id,
-                        AdminApprovedDateTime = DateTime.Now,
-                        CreatedDateTime = DateTime.Now,
-                        ModifiedDateTime = DateTime.Now
-                    };
-                    context.PoolPlayers.Add(globalPoolPlayer);                    
+                        UserManager.AddToRole(user.Id, "Admin");
+                    }
+                    else
+                    {
+                        UserManager.AddToRole(user.Id, "Player");
+                        var defaultPoolId = myEvent.DefaultPoolId ?? 0;
+                        var globalPoolPlayer = new PoolPlayer()
+                        {
+                            PoolId = defaultPoolId,
+                            PlayerId = user.Id,
+                            AdminApprovedDateTime = DateTime.Now,
+                            CreatedDateTime = DateTime.Now,
+                            ModifiedDateTime = DateTime.Now
+                        };
+                        context.PoolPlayers.Add(globalPoolPlayer);                    
+                    }
                     context.SaveChanges();
-                    context.Dispose();               
+                    context.Dispose();
 
-                    // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    if (1 == 1)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    else
+                    {
+                        // Send an email with this link
+                        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                        return RedirectToAction("RegisterSendCodeNotification", "Account");
+                    }
 
-                    return RedirectToAction("RegisterSendCodeNotification", "Account");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 AddErrors(result);
-
-                // If we got this far, something failed, redisplay form
-                model.Events = context.Events.Where(a => a.PlayerDeadlineDateTime >= DateTime.Now).ToList();
             }
 
-            return View(model);
+            model.Events = context.Events.Where(a => a.EventStartDateTime >= DateTime.Now).ToList();
+            return View("Register",model);
         }
 
         //
