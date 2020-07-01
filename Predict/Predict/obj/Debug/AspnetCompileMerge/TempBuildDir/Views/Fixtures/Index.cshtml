@@ -36,7 +36,7 @@
     {
         <tr>
             <td>
-                <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20" />
+                <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20"/>
             </td>
 
             <td>
@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.AwayTeam.TeamName)
             </td>
             <td>
-                <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20" />
+                <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20"/>
             </td>
 
             <td>
@@ -62,7 +62,7 @@
             <td>
                 @if (User.IsInRole("Admin"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id})
                 }
             </td>
         </tr>
@@ -72,10 +72,10 @@
 
 <script>
 
-    $(function () {
-        $("#fixtures").DataTable( {
+    $(function() {
+        $("#fixtures").DataTable({
             "bLengthChange": false
-        } );;
+        });;
     });
 
 

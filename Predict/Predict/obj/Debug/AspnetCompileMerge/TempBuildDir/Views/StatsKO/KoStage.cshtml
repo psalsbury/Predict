@@ -30,61 +30,61 @@
     <div class="box-header with-border">
         <h3 class="box-title">@boxName</h3>
         <div class="box-tools pull-right">
-            <button id="pete1" type="button" class="btn btn-box-tool" data-widget="collapse"><i class="@button"></i></button>
+            <button id="pete1" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="@button"></i>
+            </button>
         </div>
     </div>
 
     <div class="box-body">
-        
-        
+
+
         <div class="row">
             <div class="col-6 col-md-4">
-                
 
-                    <div style="width: 300px;float:left" class="box-body chart-responsive">
-                        <div class="chart" id="chart_@firstItem.RoundOf" style="height: 300px; position: sticky;">
-                        </div>
+
+                <div style="float: left; width: 300px;" class="box-body chart-responsive">
+                    <div class="chart" id="chart_@firstItem.RoundOf" style="height: 300px; position: sticky;">
                     </div>
                 </div>
-            <div class="col-12 col-md-8">
-                    <table float="right" class="table table-bordered table-hover" id="fixtures_@firstItem.RoundOf" align="center">
-                        <tr>
-                            <th>
-                                Team
-                            </th>
-                            <th>
-                                Nbr Of Predictions
-                            </th>
-                            <th>
-                                Percent
-                            </th>
-                        </tr>
-
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @item.TeamName
-                                </td>
-                                <td>
-                                    @item.NumberOfPredictions
-                                </td>
-                                <td>
-                                    @(((double)item.NumberOfPredictions / (double)totalPredictions).ToString("0.00%"))
-                                </td>
-                            </tr>
-
-                        }
-                    </table>
-                </div>
             </div>
+            <div class="col-12 col-md-8">
+                <table float="right" class="table table-bordered table-hover" id="fixtures_@firstItem.RoundOf" align="center">
+                    <tr>
+                        <th>
+                            Team
+                        </th>
+                        <th>
+                            Nbr Of Predictions
+                        </th>
+                        <th>
+                            Percent
+                        </th>
+                    </tr>
 
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.TeamName
+                            </td>
+                            <td>
+                                @item.NumberOfPredictions
+                            </td>
+                            <td>
+                                @((item.NumberOfPredictions / (double) totalPredictions).ToString("0.00%"))
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
 
 
     </div>
 </div>
 <script>
-    $(function () {
+    $(function() {
         "use strict";
         //DONUT CHART
         var donut = new Morris.Donut({
@@ -102,7 +102,8 @@
                         {
                             dataItem = dataItem + ",";
                         }
-                        @Html.Raw(dataItem);
+                        @Html.Raw(dataItem)
+                        ;
                     }
                 }
             ],

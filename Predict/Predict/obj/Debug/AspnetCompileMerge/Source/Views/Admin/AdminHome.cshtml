@@ -8,10 +8,19 @@
 </h1>
 
 <br/>
-<a href="@Url.Action("Index", "Fixtures"  , new {eventId = Model.Id})"><span>Edit Fixtures</span></a>
+
+<a href="@Url.Action("Index", "Fixtures", new {eventId = Model.Id})">
+    <span><h2>Edit Fixtures</h2></span>
+</a>
 <br/>
-<a href="@Url.Action("Index", "KOFixtures"  , new {eventId = Model.Id})"><span>Edit KO Fixtures</span></a>
-<br />
-<a href="@Url.Action("EditKoResults", "KoFixtures"  , new {eventId = Model.Id})"><span>Enter KO Results</span></a>
+<a href="@Url.Action("Index", "KOFixtures", new {eventId = Model.Id})">
+    <span><h2>Edit KO Fixtures</h2></span>
+</a>
 <br/>
-<a href="@Url.Action("UpdateScoring", "Admin"  , new {eventId = Model.Id})"><span>Update Scoring</span></a>
+<a href="@Url.Action("EditKoResults", "KoFixtures", new {eventId = Model.Id})">
+    <span><h2>Enter KO Results</h2></span>
+</a>
+<br/>
+<a href="@Url.Action("UpdateScoring", "Admin", new {eventId = Model.Id})">
+    <span><h2>Update Scoring</h2></span>
+</a>

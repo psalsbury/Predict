@@ -7,13 +7,12 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href=hidden"~/">Home</a>
+                <a href="/Home/Index?eventid=@Model.EventId">Home</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Fixture Predictions</li>
         </ol>
     </nav>
 }
-
 
 @if (!Model.ReadOnly)
 {
@@ -37,7 +36,28 @@
         </thead>
         @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
         {
-            <tr>
+
+
+            var rowColour = "";
+            if (Model.FixturePredictions[i].CorrectScore??false)
+            {
+                rowColour = "#d9f2e6"; // Green
+            }
+            else if (Model.FixturePredictions[i].CorrectWinMargin ?? false)
+            {
+                rowColour = "#b3d9ff"; // blue
+            }
+            else if (Model.FixturePredictions[i].CorrectResult ?? false)
+            {
+                rowColour = "#ffebcc"; // amber
+            }
+            else if (Model.FixturePredictions[i].Fixture.FixtureDatePassed)
+            {
+                rowColour = "#ffcccc"; // red
+            }
+
+
+            <tr bgcolor="@rowColour">
                 <td class="hidden-xs" style="text-align: center; vertical-align: middle;" witdth="25%">
                     @Html.HiddenFor(m => m.FixturePredictions[i].FixtureId)
                     <b> @Model.EventTeams.Find(m => m.TeamId == Model.FixturePredictions[i].Fixture.HomeTeam.Id && m.EventId == Model.FixturePredictions[i].Fixture.EventId).League</b>
@@ -60,10 +80,19 @@
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
                                                 @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+
+                                                if (Model.FixturePredictions[i].Fixture.HomeResult != null)
+                                                {
+                                                    <small>
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].Fixture.HomeResult))
+                                                    </small>
+                                                }
+
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
+
                                             }
                                         </td>
                                     </tr>
@@ -84,10 +113,17 @@
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
                                                 @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+
+                                                if (Model.FixturePredictions[i].Fixture.AwayResult != null)
+                                                {
+                                                    <small>
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].Fixture.AwayResult))
+                                                    </small>
+                                                }
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
                                             }
                                         </td>
                                     </tr>

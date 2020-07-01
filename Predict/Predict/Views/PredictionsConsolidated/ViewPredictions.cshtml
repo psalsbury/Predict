@@ -4,6 +4,18 @@
     ViewBag.Title = Model.Player.DisplayName + " Predictions";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@Model.Pool.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Table/Index/@Model.Pool.Id">@Model.Pool.PoolName Table</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Player.DisplayName Predictions</li>
+    </ol>
+</nav>
+
 @if (Model.BonusQuestionPredictionsViewModel == null && Model.KoFixturePredictionViewModel == null)
 {
     @Html.Partial("FixturePredictions", Model.FixturePredictionsViewModel)

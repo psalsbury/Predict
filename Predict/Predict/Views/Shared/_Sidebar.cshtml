@@ -33,12 +33,12 @@
                             </li>
                             <li>
                                 <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})">
-                                    <i class="fa fa-table"></i> <span>Game Stats</span>
+                                    <i class="fa fa-pie-chart"></i> <span>Game Stats</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="@Url.Action("GroupGameResults", "Results", new {eventId = eventPlayer.EventId})">
-                                    <i class="fa fa-table"></i> <span>Results</span>
+                                    <i class="fa fa-soccer-ball-o"></i> <span>Results</span>
                                 </a>
                             </li>
 
@@ -52,7 +52,7 @@
                 {
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-book"></i> <span>Admin</span>
+                            <i class="fa fa-gear"></i> <span>Admin</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
@@ -63,7 +63,7 @@
                             {
                                 <li>
                                     <a href="@Url.Action("AdminHome", "Admin", new {eventId = eventPlayer.EventId})">
-                                        <i class="fa fa-table"></i> <span>@eventPlayer.Event.EventName</span>
+                                        <i class="fa fa-key"></i> <span>@eventPlayer.Event.EventName</span>
                                     </a>
                                 </li>
                             }
@@ -83,14 +83,23 @@
 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-book"></i> <span>Help</span>
+                    <i class="fa fa-question-circle"></i> <span>Help</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
+                    
                 <ul class="treeview-menu">
-                    <li>@Html.ActionLink("Rules", "Rules", "Home")</li>
-                    <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
+                    <li>
+                        <a href="@Url.Action("Rules", "Home")">
+                            <i class="fa fa-book"></i> <span>Rules</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("ContactUs", "Home")">
+                            <i class="fa fa-envelope"></i> <span>Contact Us</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

@@ -1,13 +1,14 @@
-﻿@using Predict.Models
-@model Predict.ViewModels.GroupGameResultsViewModel
+﻿@model Predict.ViewModels.GroupGameResultsViewModel
 
 @{
-    ViewBag.Title = "Group Game Results";
+    ViewBag.Title = "Fixture Results";
 }
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="~/">Home</a></li>
+        <li class="breadcrumb-item">
+            <a href="~/">Home</a>
+        </li>
         <li class="breadcrumb-item active" aria-current="page">Group Results</li>
     </ol>
 </nav>
@@ -15,37 +16,37 @@
 
     <table id="groupresults" name="groupresults" class="table table-bordered table-hover">
         <thead>
-            <tr>
+        <tr>
 
-                <th class="hidden-xs" style="vertical-align: middle;text-align:center"></th>
-                <th style="vertical-align: middle;text-align:center">Game</th>
-                <th style="vertical-align: middle;text-align:center">
-                    Fixture Date/Time
-                </th>
-            </tr>
+            <th class="hidden-xs" style="text-align: center; vertical-align: middle;"></th>
+            <th style="text-align: center; vertical-align: middle;">Game</th>
+            <th style="text-align: center; vertical-align: middle;">
+                Fixture Date/Time
+            </th>
+        </tr>
         </thead>
-        @for (int i = 0; i < Model.Fixtures.Count(); i++)
+        @for (var i = 0; i < Model.Fixtures.Count(); i++)
         {
             <tr>
-                <td  class="hidden-xs" style="vertical-align: middle;text-align:center" witdth="25%">
-                    <b> @Model.EventTeams.Find(m => m.TeamId == @Model.Fixtures[i].HomeTeam.Id && m.EventId == @Model.Fixtures[i].EventId).League</b>
+                <td class="hidden-xs" style="text-align: center; vertical-align: middle;" witdth="25%">
+                    <b> @Model.EventTeams.Find(m => m.TeamId == Model.Fixtures[i].HomeTeam.Id && m.EventId == Model.Fixtures[i].EventId).League</b>
                 </td>
 
-                <td style="vertical-align: middle;text-align:center" witdth="50%">
+                <td style="text-align: center; vertical-align: middle;" witdth="50%">
                     <div class="container-fluid">
                         <div class="row vertical-middle text-center">
                             <div class="col-sm-6 text-center">
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(@Model.Fixtures[i].HomeTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(Model.Fixtures[i].HomeTeam.FlagFileLocation)" height="20"/>
                                         </td>
-                                        <td style="text-align:left" width="60%">
+                                        <td style="text-align: left" width="60%">
                                             &nbsp
                                             @Html.DisplayFor(m => m.Fixtures[i].HomeTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @Html.DisplayFor(m => m.Fixtures[i].HomeResult, new { @class = "control-label col-md-2" })
+                                            @Html.DisplayFor(m => m.Fixtures[i].HomeResult, new {@class = "control-label col-md-2"})
                                         </td>
                                     </tr>
                                 </table>
@@ -55,14 +56,14 @@
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(@Model.Fixtures[i].AwayTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(Model.Fixtures[i].AwayTeam.FlagFileLocation)" height="20"/>
                                         </td>
-                                        <td style="text-align:left" width="60%">
+                                        <td style="text-align: left" width="60%">
                                             &nbsp
                                             @Html.DisplayFor(m => m.Fixtures[i].AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @Html.DisplayFor(m => m.Fixtures[i].AwayResult, new { @class = "control-label col-md-2" })
+                                            @Html.DisplayFor(m => m.Fixtures[i].AwayResult, new {@class = "control-label col-md-2"})
                                         </td>
                                     </tr>
                                 </table>
@@ -70,21 +71,20 @@
                         </div>
                     </div>
                 </td>
-                
-                <td style="vertical-align: middle; text-align: center" witdth="25%" class="myDate">
+
+                <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
                     @Html.Hidden("FixtureDateTime", Model.Fixtures[i].FixtureDateTime.ToLongDateString() + " " + Model.Fixtures[i].FixtureDateTime.ToShortTimeString())
 
                 </td>
 
             </tr>
-
         }
     </table>
 
 </div>
 <script>
 
-    $(function () {
+    $(function() {
         $("#fixtures").DataTable({
             "bLengthChange": false,
             "autoWidth": false
@@ -95,35 +95,9 @@
 
 
 <script>
-    $(function () {
-        $("#groupresults").DataTable({
-            "bLengthChange": false
-            , "iDisplayLength": 50
-            , "bPaginate": false
-            , "searching": false
-            , "ordering": true
-            , "autoWidth": false
-            , "bInfo": false
-            , columnDefs: [{
-                targets: [0],
-                orderData: [0, 2]
-            }, {
-                targets: [1],
-                "orderable": false
-            }, {
-                targets: [2],
-                orderData: [2, 2]
-            }]
-        });
-    });
-</script>
-
-
-
-<script>
 
     //get all td with actionclass in table
-    $("tbody tr td.myDate").each(function () {
+    $("tbody tr td.myDate").each(function() {
 
         $hiddenValue = $(this).find("input[type=hidden]").val();
 
@@ -146,6 +120,7 @@
         return da + ' ' + mo + ' ' + newDate.getHours() + ':' + pad(newDate.getMinutes(), 2);
 
     }
+
     function pad(n, width, z) {
         z = z || '0';
         n = n + '';

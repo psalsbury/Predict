@@ -36,95 +36,47 @@ namespace Predict.Helper
 
         public static object GetCachedItem(string cacheId)
         {
+            if (!MemoryCache.Default.Contains(cacheId))
+            {
+                return null;
+            }
             return MemoryCache.Default.Get(cacheId);
         }
 
         public static void SetCachedItem(string cacheId, object cachedItem)
         {
-            MemoryCache.Default.Add(cacheId, cachedItem, DateTime.Now.AddDays(1));
-        }
-
-        public static string GetEventName(int eventId)
-        {
-            var currentEvent = (Event) GetCachedItem("Event");
-            if (currentEvent == null)
-            {
-                SetGlobalCache();
-                currentEvent = (Event) GetCachedItem("Event");
-            }
-
-            return currentEvent.EventName;
+            MemoryCache.Default.Set(cacheId, cachedItem, DateTime.Now.AddDays(30));
         }
 
         public static bool HasEventStarted(short eventId)
         {
-            return false;
-        }
-
-        public static DateTime GetFirstFixtureDate(short eventId)
-        {
-            return DateTime.Now;
-        }
-
-
-        public static bool HasLastFixturePassed(short eventId)
-        {
-            var predictionsLockDown = GetCachedItem("LastFixture");
-            if (predictionsLockDown == null)
+            var myEvent = (Event) GetCachedItem("Event*" + eventId);
+            if (myEvent.EventStartDateTime < DateTime.Now)
             {
-                SetGlobalCache();
-                predictionsLockDown = GetCachedItem("LastFixture");
+                return true;
             }
-
-            var predictionsLockDownDateTime = Convert.ToDateTime(predictionsLockDown);
-            if (predictionsLockDownDateTime < DateTime.Today.ToUniversalTime()) return true;
             return false;
         }
-
-
-        //public static short GetEventId()
-        //{
-        //    var currentEvent = (Event)GetCachedItem("Event");
-        //    if (currentEvent == null)
-        //    {
-        //        SetGlobalCache();
-        //        currentEvent = (Event)GetCachedItem("Event");
-        //    }
-
-        //    return currentEvent.Id;
-        //}
-        //public static int GetGlobalPoolId()
-        //{
-        //    var globalPoolId = GetCachedItem("GlobalPoolId");
-        //    if (globalPoolId == null)
-        //    {
-        //        SetGlobalCache();
-        //        globalPoolId = GetCachedItem("GlobalPoolId");
-        //    }
-
-        //    globalPoolId = (globalPoolId ?? 1); // ?? use p, but if null use 1
-        //    return (int)globalPoolId;
-        //}
-
-        private static void SetGlobalCache()
+        
+        public static void SetEventCache()
         {
             var context = new ApplicationDbContext();
-            var eventId = Convert.ToInt16(ConfigurationManager.AppSettings["EventId"]);
-            var globalPoolId = Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
-            var predictionsLockDown = context.Fixtures.Where(e => e.EventId == eventId).Min(f => f.FixtureDateTime);
-            var lastFixture = predictionsLockDown;
-            var hasKo = context.KoFixtures.Count(e => e.EventId == eventId);
-            if (hasKo > 0)
+
+            var events = context.Events.ToList();
+            foreach(var myEvent in events)
             {
-                var lastKoFixture = context.KoFixtures.Where(e => e.EventId == eventId).Max(f => f.FixtureDateTime);
-                if (lastKoFixture > lastFixture) lastFixture = lastKoFixture;
+                SetCachedItem("Event*"+myEvent.Id,myEvent);
             }
+        }
+        public static void SetEventCache(short eventId)
+        {
+            var context = new ApplicationDbContext();
 
-
-            SetCachedItem("Event", context.Events.Single(e => e.Id == eventId));
-            SetCachedItem("GlobalPoolId", globalPoolId);
-            SetCachedItem("PredictionsLockDownDateTime", predictionsLockDown);
-            SetCachedItem("LastFixture", lastFixture);
+            var myEvent = context.Events.SingleOrDefault(a => a.Id==eventId);
+            if(myEvent!=null)
+            { 
+                SetCachedItem("Event*" + myEvent.Id, myEvent);
+            }
         }
     }
 }

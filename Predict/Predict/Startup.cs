@@ -11,6 +11,7 @@ namespace Predict
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            Helper.Cache.SetEventCache();
         }
     }
 }

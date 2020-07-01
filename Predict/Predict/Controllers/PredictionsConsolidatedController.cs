@@ -31,8 +31,7 @@ namespace Predict.Controllers
             if (predictionsConsolidated.Pool == null) throw new Exception("Invalid Pool");
 
             var nbrKoPredictionsToEnter = (int) Session["nbrKoFixtures*" + predictionsConsolidated.Pool.EventId];
-            var nbrBonusQuestionsToEnter = (int) Session["nbrBonusQuestions*" + predictionsConsolidated.Pool.EventId];
-            ;
+            var nbrBonusQuestionsToEnter = (int) Session["nbrBonusQuestions*" + predictionsConsolidated.Pool.EventId];            
 
             var fixturePredictionsController = new FixturePredictionsController();
             var loggedInUserId = User.Identity.GetUserId();
@@ -58,7 +57,6 @@ namespace Predict.Controllers
                 leagueTablesViewModel.Results = false;
                 predictionsConsolidated.LeagueTablesViewModel = leagueTablesViewModel;
             }
-
 
             if (nbrBonusQuestionsToEnter > 0)
             {

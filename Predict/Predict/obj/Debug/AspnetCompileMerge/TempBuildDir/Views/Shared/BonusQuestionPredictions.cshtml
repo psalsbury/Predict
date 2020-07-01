@@ -1,9 +1,4 @@
-﻿
-@using System.Text.RegularExpressions
-@using Predict.Models
-@using System
-@using Microsoft.AspNet.Identity
-@model Predict.ViewModels.BonusQuestionPredictionsViewModel
+﻿@model Predict.ViewModels.BonusQuestionPredictionsViewModel
 
 @{
     ViewBag.Title = "Edit Bonus Questions";
@@ -11,13 +6,15 @@
     {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="~/">Home</a></li>
+                <li class="breadcrumb-item">
+                    <a href="~/">Home</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Bonus Questions</li>
             </ol>
         </nav>
     }
 }
-    @using (Html.BeginForm("Save", "BonusQuestionPredictions"))
+@using (Html.BeginForm("Save", "BonusQuestionPredictions"))
 {
     <table id="bonusPredictions" name="bonusPredictions" class="table table-bordered table-hover">
         <thead>
@@ -34,7 +31,7 @@
             </th>
         </tr>
         </thead>
-        @for (int i = 0; i < Model.BonusQuestionPredictions.Count(); i++)
+        @for (var i = 0; i < Model.BonusQuestionPredictions.Count(); i++)
         {
             <tr>
                 <td>
@@ -44,14 +41,14 @@
                 </td>
 
                 <td>
-                @if (Model.ReadOnly || Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed)
-                {
-                    @Html.DisplayFor(m => m.BonusQuestionPredictions[i].PredictedAnswer)
-                }
-                else
-                {
-                    @Html.TextBoxFor(m => m.BonusQuestionPredictions[i].PredictedAnswer, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
-                }
+                    @if (Model.ReadOnly || Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed)
+                    {
+                        @Html.DisplayFor(m => m.BonusQuestionPredictions[i].PredictedAnswer)
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.BonusQuestionPredictions[i].PredictedAnswer, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(m => m.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime)
@@ -72,12 +69,12 @@
     {
         <div class="form-group">
 
-                <div>
-                    <input type="submit" value="Save" class="btn btn-success"/>
-                </div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-success"/>
+            </div>
 
         </div>
-     }
+    }
 }
 
 <script>

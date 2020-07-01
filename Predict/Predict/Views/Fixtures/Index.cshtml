@@ -3,9 +3,19 @@
 @{
     ViewBag.Title = "Fixture List";
 }
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Admin/AdminHome?EventId=@ViewBag.EventId">Admin Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Fixture List</li>
+    </ol>
+</nav>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { eventId = ViewBag.EventId })
 </p>
 <table class="table table-bordered table-hover" id="fixtures">
     <tr>

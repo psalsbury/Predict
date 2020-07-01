@@ -4,28 +4,47 @@
     ViewBag.Title = Model.Player.DisplayName + " Predictions";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@Model.Pool.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="#">@ViewBag.PoolName table</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Player.DisplayName Predictions</li>
+    </ol>
+</nav>
+
 @if (Model.BonusQuestionPredictionsViewModel == null && Model.KoFixturePredictionViewModel == null)
 {
     @Html.Partial("FixturePredictions", Model.FixturePredictionsViewModel)
 }
 else
 {
-
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab_1" data-toggle="tab">Group</a></li>
+            <li class="active">
+                <a href="#tab_1" data-toggle="tab">Group</a>
+            </li>
 
             @if (Model.KoFixturePredictionViewModel != null)
             {
-                <li><a href="#tab_2" data-toggle="tab">KO</a></li>
+                <li>
+                    <a href="#tab_2" data-toggle="tab">KO</a>
+                </li>
             }
             @if (Model.BonusQuestionPredictionsViewModel != null)
             {
-               <li><a href="#tab_3" data-toggle="tab">Bonus</a></li>
+                <li>
+                    <a href="#tab_3" data-toggle="tab">Bonus</a>
+                </li>
             }
             @if (Model.KoFixturePredictionViewModel != null)
             {
-                <li><a href="#tab_4" data-toggle="tab">Grp Tables</a></li>
+                <li>
+                    <a href="#tab_4" data-toggle="tab">Grp Tables</a>
+                </li>
             }
         </ul>
     </div>
@@ -38,17 +57,14 @@ else
 
         @if (Model.KoFixturePredictionViewModel != null)
         {
-
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
 
                 @Html.Partial("KoFixturePredictions", Model.KoFixturePredictionViewModel)
 
             </div>
-
-
         }
-        
+
         @if (Model.BonusQuestionPredictionsViewModel != null)
         {
             <div class="tab-pane" id="tab_3">
@@ -60,7 +76,6 @@ else
 
         @if (Model.KoFixturePredictionViewModel != null)
         {
-
             <div class="tab-pane" id="tab_4">
 
                 @Html.Partial("LeagueTables", Model.LeagueTablesViewModel)
@@ -69,5 +84,4 @@ else
         }
 
     </div>
-
 }

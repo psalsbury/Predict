@@ -10,7 +10,7 @@ namespace Predict.Controllers
 {
     public class TableController : Controller
     {
-        private const int PAGE_SIZE = 5;
+        private const int PAGE_SIZE = 25;
         private readonly ApplicationDbContext _context;
 
         public TableController()
@@ -52,10 +52,10 @@ namespace Predict.Controllers
 
             ViewBag.PoolName = pool.PoolName;
 
-
             var tableViewModels = GetTableViewModel(poolId);
 
             ViewBag.PoolId = poolId;
+            ViewBag.EventId = pool.EventId;
 
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
         }

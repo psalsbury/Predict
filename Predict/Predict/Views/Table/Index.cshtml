@@ -16,7 +16,14 @@
     tr:nth-child(even) { background-color: #f2f2f2; }
 </style>
 
-<h2>Table for @ViewBag.PoolName</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.PoolName table</li>
+    </ol>
+</nav>
 
 <table class="table">
     <thead>

@@ -48,6 +48,9 @@ namespace Predict.Controllers
             var todayParam = new SqlParameter("@dteDate", today);
             _context.Database.ExecuteSqlCommand("EXEC spProcessScores @intEventId, @dteDate", eventIdParam, todayParam);
 
+            // Update the cache for this event
+            Helper.Cache.SetEventCache(myEvent.Id);
+
             return RedirectToAction("Index", "Home");
         }
     }

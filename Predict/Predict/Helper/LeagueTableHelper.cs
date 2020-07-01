@@ -14,7 +14,6 @@ namespace Predict.Helper
 
             // Work out, based on the group predictions, the teams that would route through to the first KO round
             var leagueTables = FetchLeagueTablesByUserId(eventId, userId);
-
             var koFixtures = context.KoFixtures.Where(k => k.EventId == eventId);
             var maxRoundOf = koFixtures.Max(p => p.RoundOf);
 

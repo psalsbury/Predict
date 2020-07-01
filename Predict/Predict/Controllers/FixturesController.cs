@@ -24,6 +24,8 @@ namespace Predict.Controllers
                 .Include(b => b.AwayTeam)
                 .Where(p => p.EventId == eventId).ToList();
 
+            ViewBag.EventId = eventId;
+
             return View(fixtures);
         }
 

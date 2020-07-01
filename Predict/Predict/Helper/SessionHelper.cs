@@ -38,17 +38,23 @@ namespace Predict.Helper
         public static void SetUserSessionVariables(HttpSessionStateBase session, string userId)
         {
             var context = new ApplicationDbContext();
-
+            var forcePolRefresh = false;
             UpdatePlayerSessionVariable(context, session, userId, false);
             UpdateEventPlayersSessionVariable(context, session, userId, false);
-
             var eventPlayers = (List<EventPlayer>) session["Events"];
 
             foreach (var eventPlayer in eventPlayers)
             {
                 var eventId = eventPlayer.EventId;
 
-                // Static fixtures
+                var thisEvent = (Event) Cache.GetCachedItem("Event*" + eventPlayer.Event.Id);
+
+                if(eventPlayer.Event.ModifiedDateTime < thisEvent.ModifiedDateTime)
+                {
+                    forcePolRefresh = true;
+                }
+
+                // Static fixtures --> Thes should be cached to application, not session!!
                 UpdateFixturesSessionVar(context, session, eventId, false);
                 UpdateKoFixturesSessionVar(context, session, eventId, false);
                 UpdateBonusSessionVar(context, session, eventId, false);
@@ -61,7 +67,12 @@ namespace Predict.Helper
             }
 
             // Pool info
-            UpdatePlayerPoolInfo(context, session, userId, false);
+            UpdatePlayerPoolInfo(context, session, userId, forcePolRefresh);
+            if (forcePolRefresh)
+            {
+                UpdateEventPlayersSessionVariable(context, session, userId, true);
+            }
+
             session.Timeout = 252000; // 180 day
         }
 
@@ -75,6 +86,7 @@ namespace Predict.Helper
             string userId, bool forceRefresh)
         {
             const string sessionName = "Events";
+            var lastDate = System.Convert.ToDateTime("1 Jan 2000");
             if (session[sessionName] != null && !forceRefresh)
                 return;
 

@@ -314,5 +314,11 @@ BEGIN
 	WHERE PO.EventId = @intEventId
 	AND PPPH.Id IS NULL;
 
+	/* Update LastModifiedDateTime for this event */
+	UPDATE EV
+	SET EV.ModifiedDateTime = GETDATE()
+	FROM dbo.[Events] AS EV
+	WHERE EV.Id = @intEventId
+
 END
 GO
