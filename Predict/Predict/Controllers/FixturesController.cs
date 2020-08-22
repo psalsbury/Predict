@@ -20,6 +20,10 @@ namespace Predict.Controllers
         // GET: Fixtures
         public ActionResult Index(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
                 .Include(b => b.AwayTeam)
                 .Where(p => p.EventId == eventId).ToList();
@@ -31,6 +35,10 @@ namespace Predict.Controllers
 
         public ActionResult Create(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             // If not an admin of the site, then do not allow the creation of a fixture
             if (!User.IsInRole("Admin")) return HttpNotFound();
 
@@ -48,6 +56,10 @@ namespace Predict.Controllers
 
         public ActionResult Edit(int id)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             if (!User.IsInRole("Admin")) return HttpNotFound();
 
             var fixture = _context.Fixtures
@@ -69,6 +81,10 @@ namespace Predict.Controllers
 
         public ActionResult Save(FixtureViewModel fixtureViewModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var fixture = new Fixture();
             if (fixtureViewModel.Id != 0) fixture = _context.Fixtures.SingleOrDefault(f => f.Id == fixtureViewModel.Id);
 

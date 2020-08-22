@@ -11,8 +11,6 @@ namespace Predict.Controllers
             if (User.Identity.IsAuthenticated)
                 SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId());
 
-
-
             return View();
         }
 

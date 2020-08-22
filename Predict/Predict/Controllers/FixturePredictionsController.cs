@@ -25,6 +25,10 @@ namespace Predict.Controllers
         //[Route("FixturePredictions/FixturePredictions/{eventId}")]
         public ActionResult FixturePredictions(int eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var loggedInUserId = User.Identity.GetUserId();
             var fixturePredictionsViewModel = GetFixturePredictionsViewModel(loggedInUserId, loggedInUserId, eventId);
             return View(fixturePredictionsViewModel);
@@ -35,6 +39,10 @@ namespace Predict.Controllers
         [ActionName("ViewFixturePredictions")]
         public ActionResult FixturePredictions(int eventId, string userId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var loggedInUserId = User.Identity.GetUserId();
             var fixturePredictionsViewModel = GetFixturePredictionsViewModel(loggedInUserId, userId, eventId);
             return View("FixturePredictions", fixturePredictionsViewModel);
@@ -43,6 +51,7 @@ namespace Predict.Controllers
         public FixturePredictionsViewModel GetFixturePredictionsViewModel(string loggedInUserId, string userId,
             int eventId)
         {
+
             var fixturePredictions = new List<FixturePrediction>();
             var fixturePredictionsViewModel = new FixturePredictionsViewModel();
             var player = (Player) System.Web.HttpContext.Current.Session["Player"];
@@ -106,6 +115,10 @@ namespace Predict.Controllers
         [HttpPost]
         public ActionResult Save(FixturePredictionsViewModel fixturePredictionsViewModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var userId = User.Identity.GetUserId();
             var eventId = fixturePredictionsViewModel.EventId;
             var predictionChanged = true;

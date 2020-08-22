@@ -234,11 +234,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Api\EventPlayersController.cs" />
     <Compile Include="Controllers\Api\PlayersController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\Api\PoolsController.cs" />
     <Compile Include="Controllers\Api\TeamsController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
+    <Compile Include="Controllers\EventPlayersController.cs" />
     <Compile Include="Controllers\FixturePredictionsController.cs" />
     <Compile Include="Controllers\FixturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -416,6 +418,7 @@
     <Content Include="Views\Shared\BonusQuestionPredictions.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Admin\AdminHome.cshtml" />
+    <Content Include="Views\EventPlayers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

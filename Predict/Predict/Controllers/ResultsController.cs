@@ -19,6 +19,11 @@ namespace Predict.Controllers
         // GET: LeagueTableResults
         public ActionResult LeagueTableResults(int eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+
             var leagueTablesViewModel = new LeagueTablesViewModel();
             leagueTablesViewModel.LeagueTables = LeagueTableHelper.FetchLeagueTablesFromResults(eventId);
             leagueTablesViewModel.Results = true;
@@ -28,6 +33,10 @@ namespace Predict.Controllers
         // GET: Results
         public ActionResult GroupGameResults(int eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var groupGameResultsViewModel = new GroupGameResultsViewModel();
 
             var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
@@ -45,6 +54,10 @@ namespace Predict.Controllers
         // GET: Results
         public ActionResult KOResults(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var koFixtureController = new KoFixturesController();
             var koFixturePredictionViewModel = koFixtureController.GetKoFixturePredictionViewModel(eventId);
             koFixturePredictionViewModel.ReadOnly = true;

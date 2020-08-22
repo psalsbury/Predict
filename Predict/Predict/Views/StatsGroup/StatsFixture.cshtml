@@ -1,7 +1,7 @@
 ﻿@model Predict.ViewModels.StatsFixtureViewModel
 
 @{
-    ViewBag.Title = Model.Fixture.HomeTeam.TeamName + " vs " + Model.Fixture.AwayTeam.TeamName + " prediction summary";
+    ViewBag.Title = Model.Fixture.HomeTeam.TeamName + " vs " + Model.Fixture.AwayTeam.TeamName;
     var nbrPredictions = Model.StatFixturePredictions.Sum(s => s.NumberOfPredictions);
 
     var nbrPredictionsHomeWin = Model.StatFixturePredictions.Where(s => s.HomePrediction > s.AwayPrediction)
@@ -19,7 +19,7 @@
             <a href="/Home/Index?eventid=@Model.Fixture.EventId">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="../../StatsGroup?eventid=@Model.Fixture.EventId">Group Game Stats</a>
+            <a href="../../StatsGroup?eventid=@Model.Fixture.EventId">Game Stats</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Data</li>
     </ol>

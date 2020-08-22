@@ -18,6 +18,10 @@ namespace Predict.Controllers
         // GET: Admin
         public ActionResult UpdateScoring()
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             if (!User.IsInRole("Admin")) return HttpNotFound();
             var eventId = Convert.ToInt16(Request["EventId"]);
             if (eventId == 0) return HttpNotFound();
@@ -30,6 +34,10 @@ namespace Predict.Controllers
         // GET: Admin
         public ActionResult AdminHome()
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             if (!User.IsInRole("Admin")) return HttpNotFound();
 
             var eventId = Convert.ToInt16(Request["EventId"]);
@@ -42,6 +50,10 @@ namespace Predict.Controllers
         [HttpPost]
         public ActionResult SaveUpdateScoring(Event myEvent)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             // Run stored procedure to update all scoring
             var today = DateTime.Today;
             var eventIdParam = new SqlParameter("@intEventId", myEvent.Id);

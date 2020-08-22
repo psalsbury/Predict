@@ -1,6 +1,6 @@
-USE Predict
+USE predictioncomp
 
-DECLARE @intEventId INT = 1
+DECLARE @intEventId INT = 2
 
 CREATE TABLE #tmp
 (TeamName varchar(50)
@@ -18,23 +18,22 @@ UNION ALL SELECT 'Russia', 'B'
 UNION ALL SELECT 'Netherlands', 'C'
 UNION ALL SELECT 'Ukraine', 'C'
 UNION ALL SELECT 'Austria', 'C'
-UNION ALL SELECT 'PlayOffWinnerD', 'C'
+UNION ALL SELECT 'PlayOffD', 'C'
 UNION ALL SELECT 'England', 'D'
 UNION ALL SELECT 'Croatia', 'D'
-UNION ALL SELECT 'PlayOffWinnerC', 'D'
+UNION ALL SELECT 'PlayOffC', 'D'
 UNION ALL SELECT 'Czech Republic', 'D'
 UNION ALL SELECT 'Spain', 'E'
 UNION ALL SELECT 'Sweden', 'E'
 UNION ALL SELECT 'Poland', 'E'
-UNION ALL SELECT 'PlayOffWinnerB', 'E'
-UNION ALL SELECT 'PlayOffWinnerA', 'F'
+UNION ALL SELECT 'PlayOffB', 'E'
+UNION ALL SELECT 'PlayOffA', 'F'
 UNION ALL SELECT 'Portugal', 'F'
 UNION ALL SELECT 'France', 'F'
 UNION ALL SELECT 'Germany', 'F'
 
 
-IF (SELECT COUNT(1) FROM [dbo].[EventTeams] WHERE EventId=@intEventId) = 0
-BEGIN
+
 
 	INSERT INTO [dbo].[EventTeams]
 	(TeamId
@@ -52,4 +51,3 @@ BEGIN
 	INNER JOIN [dbo].[Teams] AS T ON T.TeamName = TMP.TeamName
 	LEFT OUTER JOIN [dbo].[EventTeams] ET ON ET.TeamId = T.Id AND ET.EventId = @intEventId
 	WHERE ET.TeamId IS NULL
-END;

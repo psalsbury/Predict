@@ -13,6 +13,10 @@ namespace Predict.Controllers
 
         public ActionResult Index(int? id, int? page)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var pageSize = 5;
             var pageNumber = page ?? 1;
 
@@ -54,11 +58,14 @@ namespace Predict.Controllers
             return View(vm);
         }
 
-
         [HttpPost]
         [Authorize]
         public ActionResult PostMessage(MessageReplyViewModel vm)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var username = User.Identity.Name;
             var fullName = "";
             var msgid = 0;
@@ -86,6 +93,10 @@ namespace Predict.Controllers
 
         public ActionResult Create()
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var vm = new MessageReplyViewModel();
 
             return View(vm);
@@ -95,6 +106,10 @@ namespace Predict.Controllers
         [Authorize]
         public ActionResult ReplyMessage(MessageReplyViewModel vm, int messageId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var username = User.Identity.Name;
             var fullName = "";
             if (!string.IsNullOrEmpty(username))
@@ -144,6 +159,10 @@ namespace Predict.Controllers
         [Authorize]
         public ActionResult DeleteMessage(int messageId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var messageToDelete = dbContext.Messages.Find(messageId);
             dbContext.Messages.Remove(messageToDelete);
             dbContext.SaveChanges();

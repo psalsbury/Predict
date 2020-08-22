@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNet.Identity
+@using Predict.Models
+@using System.Linq;
+@model IEnumerable<Predict.Models.Event>
+
+@{
+    var eventPlayers = (List<EventPlayer>)Session["Events"];
+    var playerId = User.Identity.GetUserId();
+}
+@using (Html.BeginForm("Save", "EventPlayers"))
+
+{
+    @Html.AntiForgeryToken()
+
+    <table class="table" id="EventPlayers">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventName)
+            </th>
+            <th>Playing</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventName)
+                </td>
+                <td>
+                    @{ var exists = eventPlayers.Exists(a => a.EventId == item.Id); }
+                        <input type="checkbox" value ="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists?"checked":"")>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Save" class="btn btn-default"/>
+        </div>
+    </div>
+
+}
+
+    @*<script src="~/Scripts/bootbox.js"></script>
+        <script>
+
+            $("#EventPlayers").on("click",
+                ".js-delete",
+                function () {
+                    var button = $(this);
+                    bootbox.confirm("Are you sure you want to stop playing this comp?",
+                        function (result) {
+                            if (result) {
+                                $.ajax(
+                                    {
+                                        url: "http://localhost:64432/api/EventPlayers/delete/" +
+                                            button.attr("dataEventId")
+                                            + "/" +
+                                            button.attr("dataPlayerId"),
+                                        method: "POST",
+                                        success: function () {
+                                            alert('done');
+                                        }
+                                    });
+                            }
+                        });
+                });
+
+            $("#EventPlayers").on("click",
+                ".js-approve",
+                function () {
+
+                    var button = $(this);
+                    bootbox.confirm("Are you sure you want to play this comp?",
+                        function (result) {
+                            if (result) {
+                                $.ajax(
+                                    {
+                                        url: "http://localhost:64432/api/eventPlayers/AddNewEventPlayer/" +
+                                            button.attr("dataEventId")
+                                            + "/" +
+                                            button.attr("dataPlayerId"),
+                                        method: "POST",
+                                        success: function () {
+                                            alert('done');
+                                        }
+                                    });
+                            }
+                        });
+                });
+        </script>*@
+

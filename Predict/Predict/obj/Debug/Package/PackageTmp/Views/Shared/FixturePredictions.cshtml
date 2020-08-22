@@ -14,7 +14,6 @@
     </nav>
 }
 
-
 @if (!Model.ReadOnly)
 {
     <input class="btn btn-primary" title="Click to select let the computer pick your predictions for you. You can click on 'Reset' to undo your changes if you don't like them!" type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
@@ -22,7 +21,7 @@
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
     @Html.HiddenFor(m => m.EventId)
-    <table id="predictions" name="precictions" class="table table-bordered table-hover">
+    <table id="predictions" name="predictions" class="table table-bordered table-hover">
         <thead>
         <tr>
 
@@ -37,7 +36,28 @@
         </thead>
         @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
         {
-            <tr>
+
+
+            var rowColour = "";
+            if (Model.FixturePredictions[i].CorrectScore??false)
+            {
+                rowColour = "#d9f2e6"; // Green
+            }
+            else if (Model.FixturePredictions[i].CorrectWinMargin ?? false)
+            {
+                rowColour = "#b3d9ff"; // blue
+            }
+            else if (Model.FixturePredictions[i].CorrectResult ?? false)
+            {
+                rowColour = "#ffebcc"; // amber
+            }
+            else if (Model.FixturePredictions[i].Fixture.FixtureDatePassed && Model.FixturePredictions[i].Fixture.HomeResult != null)
+            {
+                rowColour = "#ffcccc"; // red
+            }
+
+
+            <tr bgcolor="@rowColour">
                 <td class="hidden-xs" style="text-align: center; vertical-align: middle;" witdth="25%">
                     @Html.HiddenFor(m => m.FixturePredictions[i].FixtureId)
                     <b> @Model.EventTeams.Find(m => m.TeamId == Model.FixturePredictions[i].Fixture.HomeTeam.Id && m.EventId == Model.FixturePredictions[i].Fixture.EventId).League</b>
@@ -59,11 +79,27 @@
                                         <td style="text-align: left" width="20%">
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+                                                if (Model.FixturePredictions[i].HomePrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+                                                }
+                                                else if (Model.FixturePredictions[i].Fixture.HomeResult != null)
+                                                {
+                                                    <text>-</text>
+                                                }
+
+                                                if (Model.FixturePredictions[i].Fixture.HomeResult != null)
+                                                {
+                                                    <small>
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].Fixture.HomeResult))
+                                                    </small>
+                                                }
+
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
+
                                             }
                                         </td>
                                     </tr>
@@ -83,11 +119,25 @@
                                         <td style="text-align: left" width="20%">
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+                                                if (Model.FixturePredictions[i].AwayPrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+                                                }
+                                                else if (Model.FixturePredictions[i].Fixture.AwayResult != null)
+                                                {
+                                                    <text>-</text>
+                                                }
+
+                                                if (Model.FixturePredictions[i].Fixture.AwayResult != null)
+                                                {
+                                                    <small>
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].Fixture.AwayResult))
+                                                    </small>
+                                                }
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
                                             }
                                         </td>
                                     </tr>

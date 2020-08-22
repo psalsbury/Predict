@@ -21,7 +21,7 @@
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
     @Html.HiddenFor(m => m.EventId)
-    <table id="predictions" name="precictions" class="table table-bordered table-hover">
+    <table id="predictions" name="predictions" class="table table-bordered table-hover">
         <thead>
         <tr>
 
@@ -51,7 +51,7 @@
             {
                 rowColour = "#ffebcc"; // amber
             }
-            else if (Model.FixturePredictions[i].Fixture.FixtureDatePassed)
+            else if (Model.FixturePredictions[i].Fixture.FixtureDatePassed && Model.FixturePredictions[i].Fixture.HomeResult != null)
             {
                 rowColour = "#ffcccc"; // red
             }
@@ -79,7 +79,14 @@
                                         <td style="text-align: left" width="20%">
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+                                                if (Model.FixturePredictions[i].HomePrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+                                                }
+                                                else if (Model.FixturePredictions[i].Fixture.HomeResult != null)
+                                                {
+                                                    <text>-</text>
+                                                }
 
                                                 if (Model.FixturePredictions[i].Fixture.HomeResult != null)
                                                 {
@@ -112,7 +119,14 @@
                                         <td style="text-align: left" width="20%">
                                             @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
                                             {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+                                                if (Model.FixturePredictions[i].AwayPrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+                                                }
+                                                else if (Model.FixturePredictions[i].Fixture.AwayResult != null)
+                                                {
+                                                    <text>-</text>
+                                                }
 
                                                 if (Model.FixturePredictions[i].Fixture.AwayResult != null)
                                                 {

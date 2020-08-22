@@ -19,8 +19,7 @@
         var poolInfoViewModels = ((List<PoolInfoViewModel>)Session["PoolInfo"]).Where(a => a.EventId == eventId);
 
         <text>
-            <h2>@eventPlayer.Event.EventName - Home Page</h2>
-
+            <h3>@eventPlayer.Event.EventName - Home</h3>
         </text>
 
         var nbrFixturePredictionsToEnter = (int)Session["nbrFixtures*" + eventId];
@@ -73,6 +72,7 @@
 
             @if (nbrFixturePredictionsToEnter > 0)
             {
+
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-@fixturePredictionBox">
@@ -83,7 +83,7 @@
                             <p>Group games predicted</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="ion ion-ios-football-outline"></i>
                         </div>
                         <a href="~/FixturePredictions/FixturePredictions/@eventId" class="small-box-footer">
                             Enter them here <i class="fa fa-arrow-circle-right"></i>
@@ -131,10 +131,29 @@
                     </div>
                 </div>
             }
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                    <p style="font-size: 30px">
+                            Game Info
+                    </p>
+                        <p>See whos predicted what</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})" class="small-box-footer">
+                        See them here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                        
+                </div>
+            </div>  
+
         </div>
 
 
-        <!-- End of reminder widgets -->
+
         foreach (var poolInfoViewModel in poolInfoViewModels)
         {
             var collapsedBox = "";
@@ -146,130 +165,80 @@
 
             }
 
-            <!-- Start of pool info widgets -->
-
-            <div class="box box-info @collapsedBox">
+            <div class="box box-primary @collapsedBox">
                 <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <b>@poolInfoViewModel.PoolName </b>Details
+                    <h3 class="box-title"><b>@poolInfoViewModel.PoolName</b> Details
+                    
                         @if (poolInfoViewModel.IsAdmin)
                         {
                             @:<b>(@poolInfoViewModel.PlayersToApprove to approve)</b>
                         }
                     </h3>
 
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa @image"></i>
                         </button>
                     </div>
-
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="info-box">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item">
                             <span class="info-box-icon bg-yellow">
                                 <i class="ion ion-ios-people-outline"></i>
                             </span>
-
                             <div class="info-box-content">
-                                <span class="info-box-text">Nbr of Members</span>
-                                <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="info-box">
+
+                                    <span class="info-box-text">Nbr of Members</span>
+                                    <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+
+                                </div>
+                        </li>
+
+                        <!-- /.item -->
+                        <li class="item">
                             <span class="info-box-icon bg-blue">
-                                <a href="@Url.Action("Index", "Table", new {poolId = eventPlayer.Event.DefaultPoolId})">
-                                    <i class="ion ion-ios-football-outline"></i>
-                                </a>
+                                <i class="ion ion-ios-football-outline"></i>
                             </span>
-
                             <div class="info-box-content">
-                                <span class="info-box-text">Position</span>
-                                @if (poolInfoViewModel.PoolPosition == 0)
-                                {
-                                    <span class="info-box-number">(not started)</span>
-                                }
-                                else
-                                {
-                                    <span class="info-box-number">@poolInfoViewModel.PoolPosition</span>
-                                }
-                                <span><a href="@Url.Action("Index", "Table", new {poolId = eventPlayer.Event.DefaultPoolId})">View table</a></span>
+                                <a href="~/Table?poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                    <span class="info-box-text">Position</span>
 
+                                    <span class="label label-info pull-right">View Table</span>
 
+                                    @if (poolInfoViewModel.PoolPosition == 0)
+                                    {
+                                        <span class="info-box-number">(not started)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="info-box-number">@poolInfoViewModel.PoolPosition</span>
+                                    }
+
+                                </a>
                             </div>
-                            <!-- /.info-box-content -->
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="info-box">
+                         
+                        </li>
+                        <!-- /.item -->
+                        <li class="item">
                             <span class="info-box-icon bg-red">
                                 <i class="ion ion-ios-circle-outline"></i>
                             </span>
-
                             <div class="info-box-content">
-                                <span class="info-box-text">Total Score</span>
+
+                                <span class="info-box-text">total Score</span>
                                 <span class="info-box-number">@poolInfoViewModel.TotalScore</span>
+
                             </div>
-                            <!-- /.info-box-content -->
-                        </div>
-
-                    </div>
-
-                    @if (!poolInfoViewModel.MemberInfo.IsNullOrWhiteSpace())
-                    {
-                        <div class="col-md-12">
-                            <b>Member Information</b>
-                            <textarea class="form-control" readonly>@poolInfoViewModel.MemberInfo</textarea>
-                        </div>
-                    }
-
-                    @if (poolInfoViewModel.IsAdmin)
-                    {
-                        @:<div class="col-md-12"><a href="PoolPlayers/PoolAdmin/@poolInfoViewModel.PoolId">You have @poolInfoViewModel.PlayersToApprove players to approve</a></div>
-                    }
+                        </li>
+                        <!-- /.item -->
+                    </ul>
                 </div>
-
             </div>
+
             firstPass = false;
         }
+
     }
 }
-
-
-<script>
-    $(function () {
-
-        // LINE CHART
-        var line = new Morris.Line({
-            element: 'line-chart',
-            resize: true,
-            data: [
-                { y: '2011 Q1', item1: 2666 },
-                { y: '2011 Q2', item1: 2778 },
-                { y: '2011 Q3', item1: 4912 },
-                { y: '2011 Q4', item1: 3767 },
-                { y: '2012 Q1', item1: 6810 },
-                { y: '2012 Q2', item1: 5670 },
-                { y: '2012 Q3', item1: 4820 },
-                { y: '2012 Q4', item1: 15073 },
-                { y: '2013 Q1', item1: 10687 },
-                { y: '2013 Q2', item1: 8432 }
-            ],
-            xkey: 'y',
-            ykeys: ['item1'],
-            labels: ['Item 1'],
-            lineColors: ['#3c8dbc'],
-            hideHover: 'auto'
-        });
-
-
-    });
-</script>

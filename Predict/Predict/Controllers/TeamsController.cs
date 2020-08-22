@@ -16,6 +16,10 @@ namespace Predict.Controllers
         //GET : Teams
         public ActionResult Index()
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var teams = _context.Teams.ToList();
             return View(teams);
         }

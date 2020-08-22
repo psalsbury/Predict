@@ -19,6 +19,10 @@ namespace Predict.Controllers
         // GET: StatsKO
         public ActionResult Index(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var statsKoViewModel = new StatsKoViewModel
             {
                 StatsKoRoundOfs = _context.Database.SqlQuery<StatsKoRoundOf>("spGetStatsKo @intEventId"

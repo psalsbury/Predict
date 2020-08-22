@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Runtime.Caching;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
+using System.Collections.Generic;
 
 namespace Predict.Helper
 {
@@ -48,13 +49,25 @@ namespace Predict.Helper
             MemoryCache.Default.Set(cacheId, cachedItem, DateTime.Now.AddDays(30));
         }
 
+        public static Event GetCachedEvent(int eventId)
+        {
+            var myEvents = (List<Event>)GetCachedItem("Events");
+            var myEvent = myEvents.FirstOrDefault(e => e.Id == eventId);
+            return myEvent;
+        }
+
         public static bool HasEventStarted(short eventId)
         {
-            var myEvent = (Event) GetCachedItem("Event*" + eventId);
-            if (myEvent.EventStartDateTime < DateTime.Now)
+            var myEvents = (List<Event>)GetCachedItem("Events");
+            var myEvent = myEvents.FirstOrDefault(e => e.Id == eventId);
+            if (myEvent != null)
             {
-                return true;
+                if (myEvent.EventStartDateTime < DateTime.Now)
+                {
+                    return true;
+                }
             }
+
             return false;
         }
         
@@ -63,20 +76,20 @@ namespace Predict.Helper
             var context = new ApplicationDbContext();
 
             var events = context.Events.ToList();
-            foreach(var myEvent in events)
-            {
-                SetCachedItem("Event*"+myEvent.Id,myEvent);
-            }
+            SetCachedItem("Events",events);
         }
         public static void SetEventCache(short eventId)
         {
-            var context = new ApplicationDbContext();
+            var myEvents = (List<Event>)GetCachedItem("Events");
 
-            var myEvent = context.Events.SingleOrDefault(a => a.Id==eventId);
-            if(myEvent!=null)
-            { 
-                SetCachedItem("Event*" + myEvent.Id, myEvent);
+            var context = new ApplicationDbContext();
+            var myNewEvent = context.Events.SingleOrDefault(a => a.Id == eventId);
+            if (myNewEvent != null)
+            {
+                var myOriginalEventIndex = myEvents.FindIndex(e => e.Id == eventId);
+                myEvents[myOriginalEventIndex] = myNewEvent;
             }
+            SetCachedItem("Events", myEvents);
         }
     }
 }

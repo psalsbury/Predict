@@ -24,6 +24,10 @@ namespace Predict.Controllers
         // GET: Pools
         public ActionResult Index(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             List<Pool> pools;
             if (User.IsInRole("Admin"))
             {
@@ -45,6 +49,10 @@ namespace Predict.Controllers
         // GET: Pools
         public ActionResult PoolMembershipIndex(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var playerId = User.Identity.GetUserId();
             var poolMembershipViewModel = new PoolMembershipViewModel();
             var globalPoolId =
@@ -75,6 +83,10 @@ namespace Predict.Controllers
 
         public ActionResult New(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var poolModel = new Pool
             {
                 AdminPlayerId = User.Identity.GetUserId(), EventId = eventId, CorrectScorePoints = 3,
@@ -88,6 +100,10 @@ namespace Predict.Controllers
 
         public ActionResult Edit(int id)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var loggedInUserId = User.Identity.GetUserId();
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
             var poolModel = _context.Pools.SingleOrDefault(p => p.Id == id);
@@ -103,6 +119,10 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(Pool poolModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var poolFromDb = new Pool();
             if (poolModel.Id != 0) poolFromDb = _context.Pools.Single(m => m.Id == poolModel.Id);
 
@@ -132,6 +152,10 @@ namespace Predict.Controllers
 
         public ActionResult Delete(int id)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var pool = _context.Pools.FirstOrDefault(a => a.Id == id);
             if (pool == null) return HttpNotFound();
 
@@ -142,8 +166,7 @@ namespace Predict.Controllers
 
             if (!isPoolAdmin) throw new Exception("Only pool admin is allowed to edit the pool");
 
-            if (isInLockDown) throw new Exception("Pool cannot be removed after the tournament has started");
-
+            if (isInLockDown) throw new Exception("Pool cannot be removed after the comp has started");
 
             // Remove all the players from the pool
             var poolPlayers = _context.PoolPlayers.Where(b => b.PoolId == id);

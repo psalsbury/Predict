@@ -47,7 +47,7 @@ namespace Predict.Helper
             {
                 var eventId = eventPlayer.EventId;
 
-                var thisEvent = (Event) Cache.GetCachedItem("Event*" + eventPlayer.Event.Id);
+                var thisEvent = Cache.GetCachedEvent(eventPlayer.Event.Id);
 
                 if(eventPlayer.Event.ModifiedDateTime < thisEvent.ModifiedDateTime)
                 {
@@ -81,7 +81,7 @@ namespace Predict.Helper
             session.Clear();
         }
 
-        private static void UpdateEventPlayersSessionVariable(ApplicationDbContext context,
+        public static void UpdateEventPlayersSessionVariable(ApplicationDbContext context,
             HttpSessionStateBase session,
             string userId, bool forceRefresh)
         {

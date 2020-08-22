@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Predict.Models.Fixture>
 
 @{
-    ViewBag.Title = "Group Games Stats";
+    ViewBag.Title = "Games Stats";
 }
 
 <nav aria-label="breadcrumb">
@@ -9,7 +9,7 @@
         <li class="breadcrumb-item">
             <a href="~/">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Group Game Stats</li>
+        <li class="breadcrumb-item active" aria-current="page">Game Stats</li>
     </ol>
 </nav>
 
@@ -70,7 +70,7 @@
                 @Html.Hidden("FixtureDateTime", item.FixtureDateTime.ToLongDateString() + " " + item.FixtureDateTime.ToShortTimeString())
             </td>
             <td>
-                <a href="StatsGroup/StatsFixture/@item.Id" class="btn btn-primary btn active" role="button" aria-pressed="true">View Stats</a>
+                <a href="StatsGroup/StatsFixture/@item.Id" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
             </td>
 
         </tr>

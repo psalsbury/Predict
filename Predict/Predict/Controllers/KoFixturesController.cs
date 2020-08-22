@@ -21,12 +21,20 @@ namespace Predict.Controllers
         // GET: KOFixtures
         public ActionResult Index(int eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var fixtures = _context.KoFixtures.Where(p => p.EventId == eventId).ToList();
             return View(fixtures);
         }
 
         public ActionResult Save(KoFixtureViewModel koFixtureViewModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var koFixture = new KoFixture();
             if (koFixtureViewModel.Id != 0)
                 koFixture = _context.KoFixtures.SingleOrDefault(f => f.Id == koFixtureViewModel.Id);
@@ -46,6 +54,10 @@ namespace Predict.Controllers
 
         public ActionResult Create(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             // If not an admin of the site, then do not allow the creation of a fixture
             if (!User.IsInRole("Admin")) return HttpNotFound();
             var koFixtureViewModel = PrepareViewModel(eventId);
@@ -56,6 +68,10 @@ namespace Predict.Controllers
 
         public ActionResult SaveKoResults(KoFixturePredictionViewModel koFixturePredictionViewModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var eventId = koFixturePredictionViewModel.EventId;
 
             var koFixtures = _context.KoFixtures
@@ -112,12 +128,16 @@ namespace Predict.Controllers
         public ActionResult EditKoResults(short eventId)
         {
             // I WANT TO REUSE THE KO FIXTURE PREDICTION CONTROLLER, SO WILL SIMULATE PREDICTIONS
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
 
             return View("KoFixturePredictions", GetKoFixturePredictionViewModel(eventId));
         }
 
         public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(short eventId)
         {
+
             var koFixturePredictionViewModel = new KoFixturePredictionViewModel
             {
                 FirstStageAutoFill = new Dictionary<int, int>(),
@@ -177,6 +197,10 @@ namespace Predict.Controllers
 
         public ActionResult EditKoFixture(int id, short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             if (!User.IsInRole("Admin")) return HttpNotFound();
 
             var koFixtureViewModel = PrepareViewModel(eventId);
@@ -189,6 +213,10 @@ namespace Predict.Controllers
 
         public ActionResult DeleteKoFixture(int id)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var koFixture = _context.KoFixtures.SingleOrDefault(f => f.Id == id);
             if (!User.IsInRole("Admin") | (koFixture == null)) return HttpNotFound();
             _context.KoFixtures.Remove(koFixture);
@@ -199,7 +227,7 @@ namespace Predict.Controllers
 
         private KoFixtureViewModel PrepareViewModel(short eventId)
         {
-            ;
+
             var koFixtureViewModel = new KoFixtureViewModel
             {
                 Teams = (from a in _context.Teams

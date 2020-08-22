@@ -19,8 +19,7 @@
         var poolInfoViewModels = ((List<PoolInfoViewModel>)Session["PoolInfo"]).Where(a => a.EventId == eventId);
 
         <text>
-            <h2>@eventPlayer.Event.EventName - Home Page</h2>
-
+            <h3>@eventPlayer.Event.EventName - Home</h3>
         </text>
 
         var nbrFixturePredictionsToEnter = (int)Session["nbrFixtures*" + eventId];
@@ -73,6 +72,7 @@
 
             @if (nbrFixturePredictionsToEnter > 0)
             {
+
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-@fixturePredictionBox">
@@ -83,7 +83,7 @@
                             <p>Group games predicted</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="ion ion-ios-football-outline"></i>
                         </div>
                         <a href="~/FixturePredictions/FixturePredictions/@eventId" class="small-box-footer">
                             Enter them here <i class="fa fa-arrow-circle-right"></i>
@@ -131,6 +131,25 @@
                     </div>
                 </div>
             }
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                    <p style="font-size: 30px">
+                            Game Info
+                    </p>
+                        <p>See whos predicted what</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})" class="small-box-footer">
+                        See them here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                        
+                </div>
+            </div>  
+
         </div>
 
 
@@ -160,7 +179,6 @@
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa @image"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
                 <!-- /.box-header -->

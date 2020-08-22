@@ -17,6 +17,10 @@ namespace Predict.Controllers
         // GET: Players
         public ActionResult Index()
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var players = _context.Players.Include(p => p.AspNetUser).ToList();
             return View(players);
         }

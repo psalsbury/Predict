@@ -21,11 +21,19 @@ namespace Predict.Controllers
 
         public ActionResult ReadOnly(KoFixturePredictionViewModel koFixturePredictionViewModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Save(KoFixturePredictionViewModel koFixturePredictionViewModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var userId = User.Identity.GetUserId();
             var eventId = koFixturePredictionViewModel.EventId;
 
@@ -132,6 +140,7 @@ namespace Predict.Controllers
         private static KoFixturePrediction ReturnNewKoFixturePrediction(int? team1Id, int? team2Id, int koFixtureId,
             string userId)
         {
+
             var koFixturePrediction = new KoFixturePrediction
             {
                 CreatedDateTime = DateTime.Now,
@@ -151,6 +160,10 @@ namespace Predict.Controllers
         [Route("KoFixturePredictions/{userId}")]
         public ActionResult KoFixturePredictions(string userId, short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var loggedInUserId = User.Identity.GetUserId();
             var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId, false, eventId);
 
@@ -161,6 +174,10 @@ namespace Predict.Controllers
         [Route("KoFixturePredictions/{userId}")]
         public ActionResult KoFixturePredictionsGrouped(string userId, short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var loggedInUserId = User.Identity.GetUserId();
             var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId, false, eventId);
 
@@ -170,6 +187,8 @@ namespace Predict.Controllers
         public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId, string userId,
             bool readOnly, short eventId)
         {
+
+
             var isInLockDown = Cache.HasEventStarted(eventId);
             var player = (Player) System.Web.HttpContext.Current.Session["Player"];
 

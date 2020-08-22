@@ -22,6 +22,10 @@ namespace Predict.Controllers
         // GET: BonusQuestionPredictions
         public ActionResult BonusQuestionPredictions(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var loggedInUserId = User.Identity.GetUserId();
             var bonusQuestionPredictionsViewModel =
                 GetBonusQuestionPredictionsViewModel(loggedInUserId, loggedInUserId, eventId);
@@ -32,6 +36,7 @@ namespace Predict.Controllers
         public BonusQuestionPredictionsViewModel GetBonusQuestionPredictionsViewModel(string loggedInUserId,
             string playerId, short eventId)
         {
+
             var bonusQuestionPredictionsViewModel = new BonusQuestionPredictionsViewModel();
             var player = (Player) System.Web.HttpContext.Current.Session["Player"];
 
@@ -76,6 +81,10 @@ namespace Predict.Controllers
         [HttpPost]
         public ActionResult Save(BonusQuestionPredictionsViewModel bonusQuestionPredictionsViewModel)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var eventId = bonusQuestionPredictionsViewModel.eventId;
             var loggedInUserId = User.Identity.GetUserId();
 

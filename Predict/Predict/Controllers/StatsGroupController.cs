@@ -19,6 +19,10 @@ namespace Predict.Controllers
         // GET: StatsGroup
         public ActionResult Index(short eventId)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
                 .Include(b => b.AwayTeam)
                 .Where(p => p.EventId == eventId).ToList();
@@ -26,9 +30,13 @@ namespace Predict.Controllers
             return View(fixtures);
         }
 
-
+        // GET: StatsFixture
         public ActionResult StatsFixture(int id)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var statsFixtureViewModel = new StatsFixtureViewModel
             {
                 Fixture = _context.Fixtures

@@ -19,6 +19,11 @@ namespace Predict.Controllers
         // GET: PredictionsConsolidated
         public ActionResult ViewPredictions(string playerId, int poolId)
         {
+
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var predictionsConsolidated = new PredictionsConsolidatedViewModel
             {
                 PlayerId = playerId

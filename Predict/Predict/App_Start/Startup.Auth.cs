@@ -33,7 +33,8 @@ namespace Predict
                         SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                             TimeSpan.FromMinutes(30),
                             (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
+                },
+                ExpireTimeSpan = TimeSpan.FromMinutes(10080) // 1 week
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 

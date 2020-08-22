@@ -48,6 +48,12 @@
                     </li>
                 }
 
+                <li class="@Url.IsLinkActive("Index", "EventPlayers")">
+                    <a href="@Url.Action("Index", "EventPlayers")">
+                        <i class="fa fa-sign-in"></i> <span>Your Comps</span>
+                    </a>
+                </li>
+
                 if (User.IsInRole("Admin"))
                 {
                     <li class="treeview">
@@ -60,7 +66,7 @@
                         <ul class="treeview-menu">
 
                             @foreach (var eventPlayer in eventPlayers)
-                            {
+                    {
                                 <li>
                                     <a href="@Url.Action("AdminHome", "Admin", new {eventId = eventPlayer.EventId})">
                                         <i class="fa fa-key"></i> <span>@eventPlayer.Event.EventName</span>

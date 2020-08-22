@@ -21,6 +21,10 @@ namespace Predict.Controllers
         [Route("PoolAdmin/{poolId}")]
         public ActionResult PoolAdmin(int id)
         {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var loggedInUserId = User.Identity.GetUserId();
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
 
