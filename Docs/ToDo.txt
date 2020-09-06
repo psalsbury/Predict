@@ -1,4 +1,4 @@
-position history screen
+if enter wrong password for 2nd password when registering, the events dropdown has no entries
 
 use correct timezone on the bonus questions page
 

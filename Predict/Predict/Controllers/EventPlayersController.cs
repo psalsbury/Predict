@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -26,6 +27,7 @@ namespace Predict.Controllers
             return View(myEvents);
         }
 
+        [ValidateAntiForgeryToken]
         public ActionResult Save()
         {
             var playerId = User.Identity.GetUserId();
@@ -38,16 +40,36 @@ namespace Predict.Controllers
                 var playingIn = Request["event_" + myEvent.Id];
                 if (playingIn == null && myEventPlayer != null)
                 {
-                    _context.EventPlayers.Remove(myEventPlayer);
+                    // User has selected NOT to be in this event and the record exists
+                    if (myEventPlayer.Enabled == true)
+                    {
+                        myEventPlayer.Enabled = false;
+                        myEventPlayer.ModifiedDateTime = DateTime.Today;
+                        _context.EventPlayers.AddOrUpdate(myEventPlayer);
+                    }
+                }
+                else if (playingIn != "" && myEventPlayer != null)
+                {
+                    // User has selected to be in this event and the record exists
+                    if (myEventPlayer.Enabled == false)
+                    {
+                        myEventPlayer.Enabled = true;
+                        myEventPlayer.ModifiedDateTime = DateTime.Today;
+                        _context.EventPlayers.AddOrUpdate(myEventPlayer);
+
+                    }
                 }
                 else if (playingIn != "" && myEventPlayer == null)
-                {    
+                {
+                    // User has selected to be in this event and the record does not exist
                     myEventPlayer = new EventPlayer
                     {
                         EventId = myEvent.Id,
                         PlayerId = playerId,
                         CreatedDateTime = DateTime.Today,
-                        ModifiedDateTime = DateTime.Today
+                        ModifiedDateTime = DateTime.Today,
+                        Enabled = true
+
                     };
                     _context.EventPlayers.Add(myEventPlayer);                                       
                 }
@@ -55,6 +77,7 @@ namespace Predict.Controllers
             }
             
             Helper.SessionHelper.UpdateEventPlayersSessionVariable(_context, Session,playerId,true);
+            Helper.SessionHelper.SetUserSessionVariables(Session, playerId,true);
             return RedirectToAction("Index", "Home");
         }
     }

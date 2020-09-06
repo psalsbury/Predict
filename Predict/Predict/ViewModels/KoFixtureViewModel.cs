@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Predict.Helper;
 using Predict.Models;
 
 namespace Predict.ViewModels
 {
     public class KoFixtureViewModel
     {
-        public List<Team> Teams { get; set; }
+        public List<EventTeam> EventTeams { get; set; }
         public IList<string> Leagues { get; set; }
         public IList<short> RoundOfs { get; set; }
 

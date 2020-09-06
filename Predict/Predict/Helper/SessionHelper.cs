@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -9,11 +10,12 @@ using Predict.ViewModels;
 namespace Predict.Helper
 {
     public static class SessionHelper
-    {
+    {        
+
         // this class is for session variable
         public static object GetPlayerSessionData(HttpSessionStateBase session, string sessionKey, string userId)
         {
-            if (session[sessionKey] == null) SetUserSessionVariables(session, userId);
+            if (session[sessionKey] == null) SetUserSessionVariables(session, userId,false);
             return session[sessionKey];
         }
 
@@ -35,13 +37,24 @@ namespace Predict.Helper
             UpdateFixturePredictionsSessionVar(context, session, eventId, userId, true);
         }
 
-        public static void SetUserSessionVariables(HttpSessionStateBase session, string userId)
+        public static void RefreshBonusQuestionPredictions(HttpSessionStateBase session, string userId, short eventId)
         {
+            var context = new ApplicationDbContext();
+            UpdateBonusPredictionsSessionVar(context, session, eventId, userId, true);
+        }
+
+        public static void SetUserSessionVariables(HttpSessionStateBase session, string userId, bool forceRefresh)
+        {
+            if(session["Player"] != null && forceRefresh==false)
+            {
+                return;
+            }
+
             var context = new ApplicationDbContext();
             var forcePolRefresh = false;
             UpdatePlayerSessionVariable(context, session, userId, false);
             UpdateEventPlayersSessionVariable(context, session, userId, false);
-            var eventPlayers = (List<EventPlayer>) session["Events"];
+            var eventPlayers = ((List<EventPlayer>) session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
 
             foreach (var eventPlayer in eventPlayers)
             {
@@ -54,7 +67,7 @@ namespace Predict.Helper
                     forcePolRefresh = true;
                 }
 
-                // Static fixtures --> Thes should be cached to application, not session!!
+                // Static fixtures --> These should be cached to application, not session!!
                 UpdateFixturesSessionVar(context, session, eventId, false);
                 UpdateKoFixturesSessionVar(context, session, eventId, false);
                 UpdateBonusSessionVar(context, session, eventId, false);
@@ -86,13 +99,13 @@ namespace Predict.Helper
             string userId, bool forceRefresh)
         {
             const string sessionName = "Events";
-            var lastDate = System.Convert.ToDateTime("1 Jan 2000");
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
             var eventPlayers = context.EventPlayers
                 .Include(t => t.Event)
-                .Where(e => e.PlayerId == userId).ToList();
+                .Where(e => e.PlayerId == userId && e.Enabled==true)              
+                .ToList();
 
             session[sessionName] = eventPlayers;
         }
@@ -130,7 +143,7 @@ namespace Predict.Helper
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
-            var nbrFixtures = context.Fixtures.Count(e => e.EventId == eventId);
+            var nbrFixtures = context.EventFixtures.Count(e => e.EventId == eventId);
             session[sessionName] = nbrFixtures;
         }
 
@@ -167,7 +180,7 @@ namespace Predict.Helper
                 return;
 
             var nbrFixturePredictions = (from a in context.FixturePredictions
-                join c in context.Fixtures on a.FixtureId equals c.Id
+                join c in context.EventFixtures on a.FixtureId equals c.FixtureId
                 where c.EventId == eventId
                       && a.PlayerId == userId
                 select a).Count();

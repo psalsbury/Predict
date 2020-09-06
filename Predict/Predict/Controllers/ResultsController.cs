@@ -39,14 +39,13 @@ namespace Predict.Controllers
 
             var groupGameResultsViewModel = new GroupGameResultsViewModel();
 
-            var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
-                .Include(b => b.AwayTeam)
+            var eventFixtures = _context.EventFixtures
+                .Include(b => b.Fixture.HomeTeam)
+                .Include(b => b.Fixture.AwayTeam)
                 .Where(p => p.EventId == eventId).ToList()
-                .OrderBy(p => p.FixtureDateTime).ToList();
+                .OrderBy(p => p.Fixture.FixtureDateTime).ToList();
 
-            groupGameResultsViewModel.Fixtures = fixtures;
-            groupGameResultsViewModel.EventTeams = _context.EventTeams.Where(p => p.EventId == eventId).ToList();
-            ;
+            groupGameResultsViewModel.EventFixtures = eventFixtures;        
 
             return View(groupGameResultsViewModel);
         }

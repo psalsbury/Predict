@@ -13,6 +13,9 @@ namespace Predict.Models
 
         [Key] [Column(Order = 1)] public string PlayerId { get; set; }
 
+        [Column(TypeName = "bit")]
+        public Boolean Enabled { get; set; }
+
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateTime { get; set; }

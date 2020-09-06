@@ -11,10 +11,6 @@ namespace Predict.Models
         [Key]
         public int Id { get; set; }
 
-        [Required] public short EventId { get; set; }
-
-        [ForeignKey("EventId")] public Event Event { get; set; }
-
         [Required]
         [Column(TypeName = "DateTime2")]
         [Display(Name = "Fixture Date & Time")]
@@ -31,6 +27,14 @@ namespace Predict.Models
         [Display(Name = "Home Result")] public short? HomeResult { get; set; }
 
         [Display(Name = "Away Result")] public short? AwayResult { get; set; }
+
+        [Required]
+        public short LeagueId { get; set; }
+
+        [ForeignKey("LeagueId")]
+        public League League { get; set; }
+
+        public int? RapidApiFixtureId { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]

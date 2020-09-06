@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
+
+namespace Predict.Models
+{
+    public class League
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public short Id { get; set; }
+
+        [Required]
+        [StringLength(25)]
+        public string LeagueName { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string ShortLeagueName { get; set; }
+
+        public int? RapidApiLeagueId { get; set; }
+
+        [Required]
+        [Column(TypeName = "datetime2")]
+        public DateTime CreatedDateTime { get; set; }
+
+        [Required]
+        [Column(TypeName = "datetime2")]
+        public DateTime ModifiedDateTime { get; set; }
+    }
+}

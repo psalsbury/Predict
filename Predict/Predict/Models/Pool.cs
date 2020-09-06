@@ -73,11 +73,13 @@ namespace Predict.Models
 
         [Display(Name = "Win Margin Points")] public int WinMarginPoints { get; set; }
 
-        public int KoLast16Points { get; set; }
-        public int KoLast8Points { get; set; }
-        public int KoLast4Points { get; set; }
-        public int KoLast2Points { get; set; }
-        public int KoLast1Points { get; set; }
+        public int? KoLast16Points { get; set; }
+        public int? KoLast8Points { get; set; }
+        public int? KoLast4Points { get; set; }
+        public int? KoLast2Points { get; set; }
+        public int? KoLast1Points { get; set; }
+
+        public bool DefaultPoolForEvent { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]

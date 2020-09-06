@@ -4,6 +4,8 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using Microsoft.Ajax.Utilities;
+using Predict.Helper;
 using Predict.Models;
 using Predict.ViewModels;
 
@@ -150,10 +152,7 @@ namespace Predict.Controllers
             var koFixtures = _context.KoFixtures.Where(f => f.EventId == eventId);
             var koEvent = _context.EventKos.FirstOrDefault(f => f.EventId == eventId);
 
-            var teams = (from a in _context.Teams
-                join c in _context.EventTeams on a.Id equals c.TeamId
-                where c.EventId == eventId
-                select a).ToList();
+            var eventTeams = Helper.LeagueTableHelper.GetEventTeams(_context, eventId);
 
             if (koEvent?.WinningTeamId != null)
             {
@@ -178,7 +177,7 @@ namespace Predict.Controllers
             koFixturePredictionViewModel.MaxCols = 0;
             koFixturePredictionViewModel.MaxRows = 0;
 
-            koFixturePredictionViewModel.Teams = teams;
+            koFixturePredictionViewModel.EventTeams = eventTeams;
 
             int maxRoundOf = koFixtures.Max(p => p.RoundOf);
             koFixturePredictionViewModel.MaxRows = maxRoundOf * 2 - 1;
@@ -230,16 +229,23 @@ namespace Predict.Controllers
 
             var koFixtureViewModel = new KoFixtureViewModel
             {
-                Teams = (from a in _context.Teams
-                    join c in _context.EventTeams on a.Id equals c.TeamId
-                    where c.EventId == eventId
-                    select a).ToList(),
-                RoundOfs = new List<short>()
+                RoundOfs = new List<short>(),
+                EventTeams = Helper.LeagueTableHelper.GetEventTeams(_context,eventId)
+                
             };
             for (var power = 0; power <= 4; power++)
                 koFixtureViewModel.RoundOfs.Add((short) Math.Pow(2, power));
 
-            koFixtureViewModel.Leagues = _context.EventTeams.Select(m => m.League).Distinct().ToList();
+            var leagueNames = new List<string>();
+            foreach (EventTeam eventTeam in koFixtureViewModel.EventTeams)
+            {
+                var leagueName = eventTeam.LeagueName;
+                if (!leagueNames.Exists(a => a == leagueName))
+                {
+                    leagueNames.Add(leagueName);
+                }
+            }
+            koFixtureViewModel.Leagues = leagueNames;
             koFixtureViewModel.EventId = eventId;
 
             return koFixtureViewModel;

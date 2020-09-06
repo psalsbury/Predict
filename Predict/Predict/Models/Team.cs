@@ -7,13 +7,11 @@ namespace Predict.Models
 {
     public class Team
     {
-        private readonly string _animatedFlagLocation;
         private readonly string _flagFileLocation;
 
         public Team()
         {
             _flagFileLocation = ConfigurationManager.AppSettings["FlagFileLocation"];
-            _animatedFlagLocation = ConfigurationManager.AppSettings["AnimatedFlagFileLocation"];
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,11 +22,9 @@ namespace Predict.Models
 
         [Required] [StringLength(100)] public string TeamFlag { get; set; }
 
-        public string AnimatedTeamFlag { get; set; }
-
         public string FlagFileLocation => _flagFileLocation + "/" + TeamFlag;
 
-        public string AnimatedFlagFileLocation => _animatedFlagLocation + "/" + AnimatedTeamFlag;
+        public int? RapidApiTeamId { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]

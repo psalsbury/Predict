@@ -4,7 +4,7 @@ namespace Predict.Helper
 {
     public class LeagueTable
     {
-        public string League { get; set; }
+        public short LeagueId { get; set; }
         public List<LeagueTableTeam> LeagueTableTeams { get; set; }
     }
 }

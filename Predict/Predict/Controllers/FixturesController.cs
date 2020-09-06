@@ -24,9 +24,9 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
-                .Include(b => b.AwayTeam)
-                .Where(p => p.EventId == eventId).ToList();
+            var fixtures = _context.Fixtures
+                .Include(b => b.HomeTeam)
+                .Include(b => b.AwayTeam).ToList();
 
             ViewBag.EventId = eventId;
 
@@ -45,8 +45,6 @@ namespace Predict.Controllers
             var fixtureViewModel = new FixtureViewModel
             {
                 Teams = (from a in _context.Teams
-                    join c in _context.EventTeams on a.Id equals c.TeamId
-                    where c.EventId == eventId
                     select a).ToList()
             };
             fixtureViewModel.EventId = eventId;
@@ -70,8 +68,6 @@ namespace Predict.Controllers
             var fixtureViewModel = new FixtureViewModel
             {
                 Teams = (from a in _context.Teams
-                    join c in _context.EventTeams on a.Id equals c.TeamId
-                    where c.EventId == fixture.EventId
                     select a).ToList()
             };
 
@@ -100,7 +96,7 @@ namespace Predict.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Fixtures", new {eventId = fixture.EventId});
+            return RedirectToAction("Index", "Fixtures");
         }
     }
 }

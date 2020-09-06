@@ -69,36 +69,38 @@ namespace Predict.Controllers
 
             // Get the existing predictions
             var predictionsExist =
-                _context.FixturePredictions.Any(p => p.PlayerId == userId && p.Fixture.EventId == eventId);
+                _context.FixturePredictions.Any(p => p.PlayerId == userId && p.EventId == eventId);
             if (predictionsExist)
                 fixturePredictions = _context.FixturePredictions
-                    .Include(b => b.Fixture)
-                    .Include(b => b.Fixture.HomeTeam)
-                    .Include(b => b.Fixture.AwayTeam)
+                    .Include(b => b.EventFixture)
+                    .Include(b => b.EventFixture.Fixture)
+                    .Include(b => b.EventFixture.Fixture.League)
+                    .Include(b => b.EventFixture.Fixture.HomeTeam)
+                    .Include(b => b.EventFixture.Fixture.AwayTeam) 
                     .Where(p => p.PlayerId == userId)
-                    .Where(p => p.Fixture.EventId == eventId)
-                    .OrderBy(b => b.Fixture.FixtureDateTime)
+                    .Where(p => p.EventId == eventId)
+                    .OrderBy(b => b.EventFixture.Fixture.FixtureDateTime)
                     .ToList();
 
             // Get the list of fixtures
-            var fixtures = _context.Fixtures
-                .Include(t => t.HomeTeam)
-                .Include(t => t.AwayTeam)
+            var eventFixtures = _context.EventFixtures
+                .Include(t => t.Fixture.HomeTeam)
+                .Include(t => t.Fixture.AwayTeam)
+                .Include(t => t.Fixture)
+                .Include(t => t.Fixture.League)
                 .Where(p => p.EventId == eventId)
                 .ToList();
 
-            var eventTeams = _context.EventTeams.Where(p => p.EventId == eventId).ToList();
-
             // generate all the missing ones
-            foreach (var fixture in fixtures)
+            foreach (var eventFixture in eventFixtures)
             {
-                var fixturePrediction = fixturePredictions.FirstOrDefault(f => f.Fixture.Id == fixture.Id);
+                var fixturePrediction = fixturePredictions.FirstOrDefault(f => f.EventFixture.Fixture.Id == eventFixture.Fixture.Id);
                 if (fixturePrediction == null)
                 {
                     fixturePrediction = new FixturePrediction
                     {
-                        Fixture = fixture,
-                        FixtureId = fixture.Id,
+                        EventFixture = eventFixture,
+                        FixtureId = eventFixture.Fixture.Id,
                         PlayerId = userId
                     };
                     fixturePredictions.Add(fixturePrediction);
@@ -106,13 +108,13 @@ namespace Predict.Controllers
             }
 
             fixturePredictionsViewModel.FixturePredictions = fixturePredictions;
-            fixturePredictionsViewModel.EventTeams = eventTeams;
             fixturePredictionsViewModel.UserId = userId;
 
             return fixturePredictionsViewModel;
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(FixturePredictionsViewModel fixturePredictionsViewModel)
         {
             // If user is not logged in redirect to the home page
@@ -125,14 +127,16 @@ namespace Predict.Controllers
 
             // Get existing predictions and update or delete
             var fixturePredictionsInDb = _context.FixturePredictions
-                .Include(b => b.Fixture)
-                .Include(b => b.Fixture.HomeTeam)
-                .Include(b => b.Fixture.AwayTeam)
+                .Include(b => b.EventFixture)
+                .Include(b => b.EventFixture.Fixture)
+                .Include(b => b.EventFixture.Fixture.HomeTeam)
+                .Include(b => b.EventFixture.Fixture.AwayTeam)
                 .Where(p => p.PlayerId == userId)
-                .Where(p => p.Fixture.EventId == eventId)
+                .Where(p => p.EventId == eventId)
                 .ToList();
 
-            var fixtures = _context.Fixtures
+            var eventFixtures = _context.EventFixtures
+                .Include(b => b.Fixture)
                 .Where(f => f.EventId == eventId);
 
             // loop through the existing predictions from the database
@@ -142,7 +146,7 @@ namespace Predict.Controllers
                 var fixturePredictionSubmitted =
                     fixturePredictionsViewModel.FixturePredictions.Find(m =>
                         m.FixtureId == fixturePredictionInDb.FixtureId);
-                if (fixturePredictionSubmitted != null && !fixturePredictionInDb.Fixture.FixtureDatePassed)
+                if (fixturePredictionSubmitted != null && !fixturePredictionInDb.EventFixture.Fixture.FixtureDatePassed)
                     if (fixturePredictionSubmitted.HomePrediction == null ||
                         fixturePredictionSubmitted.AwayPrediction == null)
                         _context.FixturePredictions.Remove(fixturePredictionInDb);
@@ -151,8 +155,8 @@ namespace Predict.Controllers
             // Now loop through all those submitted, find the one from the db and update, or create a new one
             foreach (var fixturePredictionSubmitted in fixturePredictionsViewModel.FixturePredictions)
             {
-                var fixture = fixtures.FirstOrDefault(f => f.Id == fixturePredictionSubmitted.FixtureId);
-                if (fixture != null && !fixture.FixtureDatePassed)
+                var eventFixture = eventFixtures.FirstOrDefault(f => f.Fixture.Id == fixturePredictionSubmitted.FixtureId);
+                if (eventFixture != null && !eventFixture.Fixture.FixtureDatePassed)
                     if (fixturePredictionSubmitted.HomePrediction != null &&
                         fixturePredictionSubmitted.AwayPrediction != null)
                     {
@@ -166,6 +170,7 @@ namespace Predict.Controllers
                             fixturePredictionInDb = new FixturePrediction
                             {
                                 PlayerId = userId,
+                                EventId =  eventId,
                                 FixtureId = fixturePredictionSubmitted.FixtureId,
                                 CreatedDateTime = DateTime.Now,
                                 HomePrediction = fixturePredictionSubmitted.HomePrediction,
@@ -193,7 +198,7 @@ namespace Predict.Controllers
             _context.SaveChanges();
             SessionHelper.RefreshFixturePredictions(Session, userId, eventId);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {EventId = fixturePredictionsViewModel.EventId });
         }
     }
 }

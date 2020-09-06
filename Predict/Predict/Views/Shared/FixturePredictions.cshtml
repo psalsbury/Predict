@@ -16,7 +16,7 @@
 
 @if (!Model.ReadOnly)
 {
-    <input class="btn btn-primary" title="Click to select let the computer pick your predictions for you. You can click on 'Reset' to undo your changes if you don't like them!" type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
+    <input class="btn btn-primary" title="Click to select let the computer pick your predictions for you." type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
 }
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
@@ -51,7 +51,7 @@
             {
                 rowColour = "#ffebcc"; // amber
             }
-            else if (Model.FixturePredictions[i].Fixture.FixtureDatePassed && Model.FixturePredictions[i].Fixture.HomeResult != null)
+            else if (Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
             {
                 rowColour = "#ffcccc"; // red
             }
@@ -60,7 +60,7 @@
             <tr bgcolor="@rowColour">
                 <td class="hidden-xs" style="text-align: center; vertical-align: middle;" witdth="25%">
                     @Html.HiddenFor(m => m.FixturePredictions[i].FixtureId)
-                    <b> @Model.EventTeams.Find(m => m.TeamId == Model.FixturePredictions[i].Fixture.HomeTeam.Id && m.EventId == Model.FixturePredictions[i].Fixture.EventId).League</b>
+                    <b> @Model.FixturePredictions[i].EventFixture.Fixture.League.ShortLeagueName </b>
                 </td>
 
                 <td style="text-align: center; vertical-align: middle;" witdth="50%">
@@ -70,28 +70,28 @@
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.FixturePredictions[i].Fixture.HomeTeam.FlagFileLocation)" height="20"/>
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20"/>
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
-                                            @Html.DisplayFor(m => m.FixturePredictions[i].Fixture.HomeTeam.TeamName)
+                                            @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
+                                            @if (Model.ReadOnly || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
                                                 if (Model.FixturePredictions[i].HomePrediction != null)
                                                 {
                                                     @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
                                                 }
-                                                else if (Model.FixturePredictions[i].Fixture.HomeResult != null)
+                                                else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
                                                 {
                                                     <text>-</text>
                                                 }
 
-                                                if (Model.FixturePredictions[i].Fixture.HomeResult != null)
+                                                if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
                                                 {
                                                     <small>
-                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].Fixture.HomeResult))
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeResult))
                                                     </small>
                                                 }
 
@@ -110,28 +110,28 @@
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.FixturePredictions[i].Fixture.AwayTeam.FlagFileLocation)" height="20"/>
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20"/>
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
-                                            @Html.DisplayFor(m => m.FixturePredictions[i].Fixture.AwayTeam.TeamName)
+                                            @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.ReadOnly || Model.FixturePredictions[i].Fixture.FixtureDatePassed)
+                                            @if (Model.ReadOnly || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
                                                 if (Model.FixturePredictions[i].AwayPrediction != null)
                                                 {
                                                     @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
                                                 }
-                                                else if (Model.FixturePredictions[i].Fixture.AwayResult != null)
+                                                else if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
                                                 {
                                                     <text>-</text>
                                                 }
 
-                                                if (Model.FixturePredictions[i].Fixture.AwayResult != null)
+                                                if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
                                                 {
                                                     <small>
-                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].Fixture.AwayResult))
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayResult))
                                                     </small>
                                                 }
                                             }
@@ -148,7 +148,7 @@
                 </td>
 
                 <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
-                    @Html.Hidden("FixtureDateTime", Model.FixturePredictions[i].Fixture.FixtureDateTime.ToLongDateString() + " " + Model.FixturePredictions[i].Fixture.FixtureDateTime.ToShortTimeString())
+                    @Html.Hidden("FixtureDateTime", Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToLongDateString() + " " + Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToShortTimeString())
 
                 </td>
             </tr>
@@ -199,26 +199,26 @@
         function LuckyDip() {
             bootbox.confirm("Lucky dip, are you sure?",
                 function(result) {
-
-
-                    @{
-                        var position = 0;
-                        foreach (var fixturePrediction in Model.FixturePredictions)
-                        {
-                            var fixtureDateTime = fixturePrediction.Fixture.FixtureDateTime;
-                            var now = DateTime.Now.ToUniversalTime();
-
-                            var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
-                            if (diffInSeconds > 0)
+                    if (result) {            
+                        @{
+                            var position = 0;
+                            foreach (var fixturePrediction in Model.FixturePredictions)
                             {
-                                <text>
-                                    $('#FixturePredictions_@(position)__HomePrediction')
-                                        .val(Math.round(Math.random() * 3));
-                                    $('#FixturePredictions_@(position)__AwayPrediction')
-                                        .val(Math.round(Math.random() * 3));
-                                </text>
+                                var fixtureDateTime = fixturePrediction.EventFixture.Fixture.FixtureDateTime;
+                                var now = DateTime.Now.ToUniversalTime();
+
+                                var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
+                                if (diffInSeconds > 0)
+                                {
+                                    <text>
+                                        $('#FixturePredictions_@(position)__HomePrediction')
+                                            .val(Math.round(Math.random() * 3));
+                                        $('#FixturePredictions_@(position)__AwayPrediction')
+                                            .val(Math.round(Math.random() * 3));
+                                    </text>
+                                }
+                                position = position + 1;
                             }
-                            position = position + 1;
                         }
                     }
                 });
@@ -227,25 +227,27 @@
         function ClearPredictions() {
             bootbox.confirm("Clear your predictions, are you sure?",
                 function(result) {
-
-                    @{
-                        position = 0;
-                        foreach (var fixturePrediction in Model.FixturePredictions)
-                        {
-                            var fixtureDateTime = fixturePrediction.Fixture.FixtureDateTime;
-                            var now = DateTime.Now.ToUniversalTime();
-
-                            var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
-                            if (diffInSeconds > 0)
+                    if (result)
+                    {
+                        @{
+                            position = 0;
+                            foreach (var fixturePrediction in Model.FixturePredictions)
                             {
-                                <text>
-                                    $('#FixturePredictions_@(position)__HomePrediction')
-                                        .val("");
-                                    $('#FixturePredictions_@(position)__AwayPrediction')
-                                        .val("");
-                                </text>
+                                var fixtureDateTime = fixturePrediction.EventFixture.Fixture.FixtureDateTime;
+                                var now = DateTime.Now.ToUniversalTime();
+
+                                var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
+                                if (diffInSeconds > 0)
+                                {
+                                    <text>
+                                        $('#FixturePredictions_@(position)__HomePrediction')
+                                            .val("");
+                                        $('#FixturePredictions_@(position)__AwayPrediction')
+                                            .val("");
+                                    </text>
+                                }
+                                position = position + 1;
                             }
-                            position = position + 1;
                         }
                     }
                 });

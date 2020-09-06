@@ -16,6 +16,18 @@ namespace Predict
             );
 
             routes.MapRoute(
+                "EnterKOFixturePredictionsGrouped", // Route name
+                "KoFixturePredictions/KoFixturePredictionsGrouped/{eventId}", // URL with parameters
+                new { controller = "KoFixturePredictions", action = "KoFixturePredictionsGrouped" } // Parameter default
+            );
+
+            routes.MapRoute(
+                "BonusQuestionPredictions", // Route name
+                "BonusQuestionPredictions/BonusQuestionPredictions/{eventId}", // URL with parameters
+                new { controller = "BonusQuestionPredictions", action = "BonusQuestionPredictions" } // Parameter default
+            );
+
+            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
                 new {controller = "Home", action = "Index", id = UrlParameter.Optional}

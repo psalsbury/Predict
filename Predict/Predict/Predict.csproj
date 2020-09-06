@@ -241,6 +241,7 @@
     <Compile Include="Controllers\Api\TeamsController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
     <Compile Include="Controllers\EventPlayersController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FixturePredictionsController.cs" />
     <Compile Include="Controllers\FixturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -264,20 +265,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\EventTeam.cs" />
     <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\LeagueTable.cs" />
     <Compile Include="Helper\LeagueTableHelper.cs" />
     <Compile Include="Helper\LeagueTableTeam.cs" />
-    <Compile Include="Migrations\202006210944275_InitialMigration.cs" />
-    <Compile Include="Migrations\202006210944275_InitialMigration.Designer.cs">
-      <DependentUpon>202006210944275_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202009060909521_InitialMigration.cs" />
+    <Compile Include="Migrations\202009060909521_InitialMigration.Designer.cs">
+      <DependentUpon>202009060909521_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
     <Compile Include="Models\BonusQuestionPrediction.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventFixture.cs" />
     <Compile Include="Models\EventKO.cs" />
     <Compile Include="Models\EventPlayer.cs" />
     <Compile Include="Models\Fixture.cs" />
@@ -286,6 +289,7 @@
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
     <Compile Include="Models\KoWinningTeamPrediction.cs" />
+    <Compile Include="Models\League.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Player.cs" />
@@ -294,7 +298,6 @@
     <Compile Include="Models\PoolPlayerPositionHistory.cs" />
     <Compile Include="Models\Reply.cs" />
     <Compile Include="Models\Team.cs" />
-    <Compile Include="Models\EventTeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BonusQuestionPredictionsViewModel.cs" />
@@ -419,15 +422,14 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Admin\AdminHome.cshtml" />
     <Content Include="Views\EventPlayers\Index.cshtml" />
+    <Content Include="Views\Events\EventsIndex.cshtml" />
+    <Content Include="Views\Events\EditEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\AnimatedFlags\" />
     <Folder Include="Images\Flags\" />
-    <Folder Include="Views\BonusQuestionPredictions\" />
     <Folder Include="Views\FixturePredictions\" />
-    <Folder Include="Views\KOFixturePredictions\" />
-    <Folder Include="Views\LeagueTables\" />
     <Folder Include="Views\PosnHistory\" />
   </ItemGroup>
   <ItemGroup>
@@ -444,8 +446,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006210944275_InitialMigration.resx">
-      <DependentUpon>202006210944275_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009060909521_InitialMigration.resx">
+      <DependentUpon>202009060909521_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

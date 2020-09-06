@@ -16,20 +16,21 @@
 }
 @using (Html.BeginForm("Save", "BonusQuestionPredictions"))
 {
+    @Html.HiddenFor(m => m.EventId);
     <table id="bonusPredictions" name="bonusPredictions" class="table table-bordered table-hover">
         <thead>
-        <tr>
+            <tr>
 
-            <th>
-                Question
-            </th>
-            <th>
-                Answer
-            </th>
-            <th>
-                Deadline for Answer
-            </th>
-        </tr>
+                <th>
+                    Question
+                </th>
+                <th>
+                    Answer
+                </th>
+                <th>
+                    Deadline for Answer
+                </th>
+            </tr>
         </thead>
         @for (var i = 0; i < Model.BonusQuestionPredictions.Count(); i++)
         {
@@ -47,7 +48,7 @@
                     }
                     else
                     {
-                        @Html.TextBoxFor(m => m.BonusQuestionPredictions[i].PredictedAnswer, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                        @Html.TextBoxFor(m => m.BonusQuestionPredictions[i].PredictedAnswer, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
                     }
                 </td>
                 <td>
@@ -70,7 +71,7 @@
         <div class="form-group">
 
             <div>
-                <input type="submit" value="Save" class="btn btn-success"/>
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
 
         </div>

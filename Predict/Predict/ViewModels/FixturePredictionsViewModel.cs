@@ -7,8 +7,6 @@ namespace Predict.ViewModels
     {
         public List<FixturePrediction> FixturePredictions { get; set; }
 
-        public List<EventTeam> EventTeams { get; set; }
-
         public string UserId { get; set; }
 
         public short EventId { get; set; }

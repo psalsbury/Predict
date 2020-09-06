@@ -79,13 +79,14 @@ namespace Predict.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(BonusQuestionPredictionsViewModel bonusQuestionPredictionsViewModel)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var eventId = bonusQuestionPredictionsViewModel.eventId;
+            var eventId = bonusQuestionPredictionsViewModel.EventId;
             var loggedInUserId = User.Identity.GetUserId();
 
             var bonusQuestionPredictionsInDb = _context.BonusQuestionPredictions
@@ -99,35 +100,38 @@ namespace Predict.Controllers
             {
                 var bonusQuestionPredictionInDb =
                     bonusQuestionPredictionsInDb.FirstOrDefault(b => b.Id == bonusQuestionPrediction.Id);
-                if (bonusQuestionPredictionInDb == null)
+                if (bonusQuestionPredictionInDb == null && !bonusQuestionPrediction.PredictedAnswer.IsNullOrWhiteSpace())
                 {
                     // A new prediction
                     bonusQuestionPredictionInDb = new BonusQuestionPrediction
                     {
-                        BonusQuestionId = bonusQuestionPrediction.BonusQuestionId, PlayerId = loggedInUserId,
-                        PredictedAnswer = bonusQuestionPrediction.PredictedAnswer, CreatedDateTime = DateTime.Now,
-                        ModifiedDateTime = DateTime.Now
+                        BonusQuestionId = bonusQuestionPrediction.BonusQuestionId
+                        , PlayerId = loggedInUserId
+                        , PredictedAnswer = bonusQuestionPrediction.PredictedAnswer
+                        , CreatedDateTime = DateTime.Now
+                        , ModifiedDateTime = DateTime.Now
                     };
                     _context.BonusQuestionPredictions.Add(bonusQuestionPredictionInDb);
                 }
-                else
+                else if (bonusQuestionPredictionInDb != null &&
+                         bonusQuestionPrediction.PredictedAnswer.IsNullOrWhiteSpace())
                 {
-                    // An existing prediction
-                    if (bonusQuestionPrediction.PredictedAnswer.IsNullOrWhiteSpace())
-                    {
-                        _context.BonusQuestionPredictions.Remove(bonusQuestionPredictionInDb);
-                    }
-                    else
-                    {
+                    // An existing prediction that needs to be deleted
+                    _context.BonusQuestionPredictions.Remove(bonusQuestionPredictionInDb);
+                }
+                else if (bonusQuestionPredictionInDb != null &&
+                         !bonusQuestionPrediction.PredictedAnswer.IsNullOrWhiteSpace())
+                {
+                    // An existing prediction that needs to be updated
                         bonusQuestionPredictionInDb.PredictedAnswer = bonusQuestionPrediction.PredictedAnswer;
                         bonusQuestionPredictionInDb.ModifiedDateTime = DateTime.Now;
                         _context.BonusQuestionPredictions.AddOrUpdate(bonusQuestionPredictionInDb);
-                    }
-                }
-            }
+                 }
+             }
 
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            Helper.SessionHelper.RefreshBonusQuestionPredictions( Session, loggedInUserId, bonusQuestionPredictionsViewModel.EventId);
+            return RedirectToAction("Index", "Home", new { EventId = bonusQuestionPredictionsViewModel.EventId });
         }
     }
 }

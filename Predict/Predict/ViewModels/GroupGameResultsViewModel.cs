@@ -5,8 +5,6 @@ namespace Predict.ViewModels
 {
     public class GroupGameResultsViewModel
     {
-        public List<Fixture> Fixtures { get; set; }
-
-        public List<EventTeam> EventTeams { get; set; }
+        public List<EventFixture> EventFixtures { get; set; }
     }
 }

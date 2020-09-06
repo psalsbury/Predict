@@ -23,11 +23,12 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var fixtures = _context.Fixtures.Include(b => b.HomeTeam)
-                .Include(b => b.AwayTeam)
+            var eventFixtures = _context.EventFixtures
+                .Include(b => b.Fixture.HomeTeam)
+                .Include(b => b.Fixture.AwayTeam)
                 .Where(p => p.EventId == eventId).ToList();
 
-            return View(fixtures);
+            return View(eventFixtures);
         }
 
         // GET: StatsFixture

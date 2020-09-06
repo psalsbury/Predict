@@ -1,0 +1,49 @@
+﻿
+@using Microsoft.AspNet.Identity
+@using Predict.Models
+@using System.Linq;
+@model IEnumerable<Predict.Models.Event>
+
+@{
+    var playerId = User.Identity.GetUserId();
+}
+@using (Html.BeginForm("SaveEvent", "Events"))
+
+{
+    @Html.AntiForgeryToken()
+
+    <p>
+        @Html.ActionLink("Create New Event", "AddEvent", new { eventId = ViewBag.EventId })
+    </p>
+
+    <table class="table" id="Events">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventName)
+            </th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDateTime)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "EditEvent", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+

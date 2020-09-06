@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Predict.Helper;
 using Predict.Models;
 
 namespace Predict.ViewModels
@@ -16,7 +17,7 @@ namespace Predict.ViewModels
         public short EventId { get; set; }
         public List<KoFixturePrediction> KoFixturePredictions { get; set; }
         public KoWinningTeamPrediction KoWinningTeam { get; set; }
-        public List<Team> Teams { get; set; }
+        public List<EventTeam> EventTeams { get; set; }
         public int MaxRows { get; set; }
         public int MaxCols { get; set; }
         public bool ReadOnly { get; set; }

@@ -7,7 +7,7 @@ namespace Predict.ViewModels
     {
         public List<BonusQuestionPrediction> BonusQuestionPredictions { get; set; }
         public string PlayerId { get; set; }
-        public short eventId { get; set; }
+        public short EventId { get; set; }
         public bool ReadOnly { get; set; }
         public bool IsPremiumPlayer { get; set; }
     }

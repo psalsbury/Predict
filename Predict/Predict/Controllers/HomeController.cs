@@ -9,7 +9,7 @@ namespace Predict.Controllers
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
-                SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId());
+                SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(),false);
 
             return View();
         }

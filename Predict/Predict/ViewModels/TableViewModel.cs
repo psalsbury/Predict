@@ -12,6 +12,7 @@
         public string TeamFlag { get; set; }
         public int CorrectScore { get; set; }
         public int CorrectResult { get; set; }
+        public int WinMargin { get; set; }
         public int KoScore { get; set; }
         public int TotalScore { get; set; }
     }
@@ -23,6 +24,7 @@
         public string PoolName { get; set; }
         public int CorrectScore { get; set; }
         public int CorrectResult { get; set; }
+        public int WinMargin { get; set; }
         public int KoScore { get; set; }
         public int TotalScore { get; set; }
         public int NbrPlayers { get; set; }

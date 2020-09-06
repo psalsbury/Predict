@@ -28,6 +28,7 @@ namespace Predict.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [ValidateAntiForgeryToken]
         public ActionResult Save(KoFixturePredictionViewModel koFixturePredictionViewModel)
         {
             // If user is not logged in redirect to the home page
@@ -134,7 +135,7 @@ namespace Predict.Controllers
             _context.SaveChanges();
             SessionHelper.RefreshKoPredictions(Session, userId, eventId);
             SessionHelper.RefreshWinningTeamPredictions(Session, userId, eventId);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { EventId = koFixturePredictionViewModel.EventId });
         }
 
         private static KoFixturePrediction ReturnNewKoFixturePrediction(int? team1Id, int? team2Id, int koFixtureId,
@@ -170,24 +171,23 @@ namespace Predict.Controllers
             return View(koFixturePredictionViewModel);
         }
 
-        // GET: KOFixturePredictions
-        [Route("KoFixturePredictions/{userId}")]
-        public ActionResult KoFixturePredictionsGrouped(string userId, short eventId)
+        // GET: KOFixturePredictionsGrouped
+       // [Route("KoFixturePredictionsGrouped/{eventId}")]
+        public ActionResult KoFixturePredictionsGrouped(short eventId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
             var loggedInUserId = User.Identity.GetUserId();
-            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId, false, eventId);
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, loggedInUserId, false, eventId);
 
             return View(koFixturePredictionViewModel);
         }
-
+            
         public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId, string userId,
             bool readOnly, short eventId)
         {
-
 
             var isInLockDown = Cache.HasEventStarted(eventId);
             var player = (Player) System.Web.HttpContext.Current.Session["Player"];
@@ -198,19 +198,17 @@ namespace Predict.Controllers
 
             var koFixturePredictionViewModel = new KoFixturePredictionViewModel
             {
+                EventId = eventId,
                 KoFixturePredictions = _context.KoFixturePredictions
                     .Include(b => b.KoFixture)
                     .Where(p => p.PlayerId == userId)
                     .Where(p => p.KoFixture.EventId == eventId)
                     .ToList(),
-                Teams = (from a in _context.Teams
-                    join c in _context.EventTeams on a.Id equals c.TeamId
-                    where c.EventId == eventId
-                    select a).ToList(),
                 KoWinningTeam = _context.KoWinningTeamPredictions
                     .Include(b => b.Team)
                     .FirstOrDefault(e => e.EventId == eventId && e.PlayerId == userId)
             };
+            koFixturePredictionViewModel.EventTeams = LeagueTableHelper.GetEventTeams(_context, eventId);
 
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
             koFixturePredictionViewModel.IsPremiumPlayer = isPremiumPlayer;

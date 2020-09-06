@@ -9,46 +9,19 @@
 
             @if (Request.IsAuthenticated)
             {
-                var eventPlayers = (List<EventPlayer>) Session["Events"];
+                var eventPlayers = ((List<EventPlayer>) Session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
 
                 foreach (var eventPlayer in eventPlayers)
                 {
-                    <li class="treeview">
-                        <a href="#">
+                    <li>
+                        <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
                             <i class="fa fa-trophy"></i> <span>@eventPlayer.Event.EventName</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
                         </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
-                                    <i class="fa fa-home"></i> <span>Home Page</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Index", "Table", new {poolId = eventPlayer.Event.DefaultPoolId})">
-                                    <i class="fa fa-table"></i> <span>Table</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})">
-                                    <i class="fa fa-pie-chart"></i> <span>Game Stats</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("GroupGameResults", "Results", new {eventId = eventPlayer.EventId})">
-                                    <i class="fa fa-soccer-ball-o"></i> <span>Results</span>
-                                </a>
-                            </li>
-
-
-                        </ul>
-
                     </li>
+
                 }
 
-                <li class="@Url.IsLinkActive("Index", "EventPlayers")">
+                <li>
                     <a href="@Url.Action("Index", "EventPlayers")">
                         <i class="fa fa-sign-in"></i> <span>Your Comps</span>
                     </a>
@@ -56,6 +29,13 @@
 
                 if (User.IsInRole("Admin"))
                 {
+                    
+                    <li>
+                        <a href="@Url.Action("EventsIndex", "Events")">
+                            <i class="fa fa-sign-in"></i> <span>Event Management</span>
+                        </a>
+                    </li>
+
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-gear"></i> <span>Admin</span>
@@ -79,7 +59,7 @@
             }
             else
             {
-                <li class="@Url.IsLinkActive("Index", "Home")">
+                <li>
                     <a href="@Url.Action("Index", "Home")">
                         <i class="fa fa-home"></i> <span>Home</span>
                     </a>

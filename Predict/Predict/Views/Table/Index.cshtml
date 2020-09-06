@@ -76,7 +76,7 @@
                 @tableViewModel.CorrectScore.ToString()
             </td>
             <td STYLE="text-align: center">
-                @tableViewModel.CorrectResult.ToString()
+                @((tableViewModel.CorrectResult + @tableViewModel.WinMargin).ToString())
             </td>
             <td STYLE="text-align: center">
                 @tableViewModel.KoScore.ToString()

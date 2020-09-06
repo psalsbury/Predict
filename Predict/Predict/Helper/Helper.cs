@@ -62,7 +62,7 @@ namespace Predict.Helper
             var myEvent = myEvents.FirstOrDefault(e => e.Id == eventId);
             if (myEvent != null)
             {
-                if (myEvent.EventStartDateTime < DateTime.Now)
+                if (myEvent.StartDateTime < DateTime.Now)
                 {
                     return true;
                 }
@@ -81,7 +81,6 @@ namespace Predict.Helper
         public static void SetEventCache(short eventId)
         {
             var myEvents = (List<Event>)GetCachedItem("Events");
-
             var context = new ApplicationDbContext();
             var myNewEvent = context.Events.SingleOrDefault(a => a.Id == eventId);
             if (myNewEvent != null)

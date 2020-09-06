@@ -156,7 +156,7 @@ namespace Predict.Controllers
             var context = new ApplicationDbContext();
             var registerViewModel = new RegisterViewModel
             {
-                Events = context.Events.Where(a => a.EventStartDateTime >= DateTime.Now).ToList()
+                Events = context.Events.Where(a => a.StartDateTime >= DateTime.Now).ToList()
             };
             context.Dispose();
             return View(registerViewModel);
@@ -210,12 +210,14 @@ namespace Predict.Controllers
             {
                 if (model.Password != model.ConfirmPassword)
                 {
+                    //pjs
                     ModelState.AddModelError("Password", "The password and confirmation password do not match.");
+                    model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.Now).ToList();
                     return View("Register", model);
                 }
 
 
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email,EmailConfirmed = true};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -224,13 +226,12 @@ namespace Predict.Controllers
 
                     var player = new Player
                     {
-                        Id = user.Id, DisplayName = model.DisplayName, PlayerName = model.DisplayName // both the same//
-                        ,
-                        CreatedDateTime = DateTime.Now, ModifiedDateTime = DateTime.Now
+                        Id = user.Id, DisplayName = model.DisplayName
+                        , PlayerName = model.DisplayName // both the same//
+                        , CreatedDateTime = DateTime.Now
+                        , ModifiedDateTime = DateTime.Now
                     };
                     context.Players.Add(player);
-
-                    // Add the global PoolIs
 
                     var eventPlayer = new EventPlayer
                     {
@@ -249,7 +250,12 @@ namespace Predict.Controllers
                     else
                     {
                         UserManager.AddToRole(user.Id, "Player");
-                        var defaultPoolId = myEvent.DefaultPoolId ?? 0;
+
+                    }
+
+                    var defaultPoolId = myEvent.DefaultPoolId ?? 0;
+                    if (defaultPoolId > 0)
+                    {
                         var globalPoolPlayer = new PoolPlayer
                         {
                             PoolId = defaultPoolId,
@@ -285,7 +291,7 @@ namespace Predict.Controllers
                 AddErrors(result);
             }
 
-            model.Events = context.Events.Where(a => a.EventStartDateTime >= DateTime.Now).ToList();
+            model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.Now).ToList();
             return View("Register", model);
         }
 

@@ -11,9 +11,15 @@ namespace Predict.Models
         [Key]
         public long Id { get; set; }
 
-        [Required] public int FixtureId { get; set; }
+        [Required]
+        [ForeignKey("EventFixture"), Column(Order = 0)]
+        public short EventId { get; set; }
+        
+        [Required]
+        [ForeignKey("EventFixture"), Column(Order = 1)]
+        public int FixtureId { get; set; }
 
-        [ForeignKey("FixtureId")] public Fixture Fixture { get; set; }
+        public EventFixture EventFixture { get; set; }
 
         [Required] [StringLength(128)] public string PlayerId { get; set; }
 

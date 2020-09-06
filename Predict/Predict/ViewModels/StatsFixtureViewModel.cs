@@ -7,6 +7,7 @@ namespace Predict.ViewModels
     {
         public Fixture Fixture { get; set; }
         public List<StatFixturePrediction> StatFixturePredictions { get; set; }
+        public short EventId { get; set; }
     }
 
     public class StatFixturePrediction
