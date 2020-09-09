@@ -1,11 +1,5 @@
 USE predictioncomp
 
-DECLARE @intEventId INT
-
-SELECT @intEventId = Id
-FROM dbo.Events
-WHERE EventName = 'Euro 2021'
-
 CREATE TABLE #tmp
 (
 	TeamName1 varchar(50)

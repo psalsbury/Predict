@@ -51,9 +51,9 @@ namespace Predict.Helper
             }
 
             var context = new ApplicationDbContext();
-            var forcePolRefresh = false;
-            UpdatePlayerSessionVariable(context, session, userId, false);
-            UpdateEventPlayersSessionVariable(context, session, userId, false);
+            var forcePoolRefresh = forceRefresh;
+            UpdatePlayerSessionVariable(context, session, userId, forceRefresh);
+            UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
             var eventPlayers = ((List<EventPlayer>) session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
 
             foreach (var eventPlayer in eventPlayers)
@@ -64,26 +64,26 @@ namespace Predict.Helper
 
                 if(eventPlayer.Event.ModifiedDateTime < thisEvent.ModifiedDateTime)
                 {
-                    forcePolRefresh = true;
+                    forcePoolRefresh = true;
                 }
 
                 // Static fixtures --> These should be cached to application, not session!!
-                UpdateFixturesSessionVar(context, session, eventId, false);
-                UpdateKoFixturesSessionVar(context, session, eventId, false);
-                UpdateBonusSessionVar(context, session, eventId, false);
+                UpdateFixturesSessionVar(context, session, eventId, forceRefresh);
+                UpdateKoFixturesSessionVar(context, session, eventId, forceRefresh);
+                UpdateBonusSessionVar(context, session, eventId, forceRefresh);
 
                 //Predictions
-                UpdateFixturePredictionsSessionVar(context, session, eventId, userId, false);
-                UpdateKoPredictionsSessionVar(context, session, eventId, userId, false);
-                UpdateWinningTeamPredictions(context, session, eventId, userId, false);
-                UpdateBonusPredictionsSessionVar(context, session, eventId, userId, false);
+                UpdateFixturePredictionsSessionVar(context, session, eventId, userId, forceRefresh);
+                UpdateKoPredictionsSessionVar(context, session, eventId, userId, forceRefresh);
+                UpdateWinningTeamPredictions(context, session, eventId, userId, forceRefresh);
+                UpdateBonusPredictionsSessionVar(context, session, eventId, userId, forceRefresh);
             }
 
             // Pool info
-            UpdatePlayerPoolInfo(context, session, userId, forcePolRefresh);
-            if (forcePolRefresh)
+            UpdatePlayerPoolInfo(context, session, userId, forcePoolRefresh);
+            if (forcePoolRefresh)
             {
-                UpdateEventPlayersSessionVariable(context, session, userId, true);
+                UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
             }
 
             session.Timeout = 252000; // 180 day

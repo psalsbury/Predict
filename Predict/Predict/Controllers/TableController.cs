@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,38 +13,27 @@ namespace Predict.Controllers
     {
         private const int PAGE_SIZE = 25;
         private readonly ApplicationDbContext _context;
-
+        
         public TableController()
         {
             _context = new ApplicationDbContext();
         }
 
-        // GET: Table
-
-        // 3 action sREsults, bestPools, bestTeams, and one for the others. The others will all be the same view i.e. 1 object per player
-
-        //[Route("FindPlayer/{poolId}/{playerId}")]
-        [Route("Table/FindPlayer/{poolId}/{playerId}")]
-        public ActionResult FindPlayer(int poolId, string playerId)
+        [HttpGet]
+        public ActionResult FindPlayer(short eventId, int poolId, string playerId)
         {
-            //poolId = 1;
-            //var playerId = "1c6a9081-e07f-4142-beae-1dc806ae31ee";
-            var tableViewModels = GetTableViewModel(poolId);
-            var posn = tableViewModels.FindIndex(p => p.PlayerId == playerId);
-            var pageNumber = posn / PAGE_SIZE + 1;
+            var tableViewModels = GetTableViewModel(eventId, poolId);
+            var position = tableViewModels.FindIndex(p => p.PlayerId == playerId);
+            var pageNumber = position / PAGE_SIZE + 1;
             ViewBag.FindPlayer = playerId;
 
-            return View("Index", tableViewModels.ToPagedList(pageNumber, PAGE_SIZE));
+            return View("ShowTable", tableViewModels.ToPagedList(pageNumber, PAGE_SIZE));
         }
 
-        [Route("index /{tableTypeId ?}/{poolId?}/{page?}/{playerId?}")]
-        public ActionResult Index(int poolId, int? page)
+        [HttpGet]
+        public ActionResult ShowTable(short eventId, int poolId, int? page)
         {
-            // tableTypeId 1 = Normal or global pool
-            // tableTypeId 2 = Pools Best, based on global league scoring
-            // tableTypeId 3 = Teams Best, based on global league scoring
-
-            var pageNumber = page ?? 1;
+            var pageNumber = page??1;
             var pageSize = PAGE_SIZE;
 
             var pool = _context.Pools.FirstOrDefault(p => p.Id == poolId);
@@ -52,18 +42,19 @@ namespace Predict.Controllers
 
             ViewBag.PoolName = pool.PoolName;
 
-            var tableViewModels = GetTableViewModel(poolId);
+            var tableViewModels = GetTableViewModel(eventId, poolId);
 
             ViewBag.PoolId = poolId;
-            ViewBag.EventId = pool.EventId;
+            ViewBag.EventId = eventId;
 
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
         }
 
-        private List<TableViewModel> GetTableViewModel(int poolId)
+        private List<TableViewModel> GetTableViewModel(short eventId,int poolId)
         {
             var tableViewModels = _context.Database.SqlQuery<TableViewModel>(
-                "spGetTable @intPoolId"
+                "spGetTable @intEventId, @intPoolId"
+                , new SqlParameter("@intEventId", eventId)
                 , new SqlParameter("@intPoolId", poolId)).ToList();
             return tableViewModels;
         }

@@ -13,7 +13,7 @@ namespace Predict.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202009060909521_InitialMigration"; }
+            get { return "202009092155480_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source

@@ -5,6 +5,7 @@ namespace Predict.ViewModels
     public class PredictionsConsolidatedViewModel
     {
         public string PlayerId { get; set; }
+        public short EventId { get; set; }
         public Player Player { get; set; }
         public Pool Pool { get; set; }
         public KoFixturePredictionViewModel KoFixturePredictionViewModel { get; set; }

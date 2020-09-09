@@ -17,7 +17,7 @@ namespace Predict.Controllers
         }
 
         // GET: PredictionsConsolidated
-        public ActionResult ViewPredictions(string playerId, int poolId)
+        public ActionResult ViewPredictions(string playerId, int poolId, short eventId)
         {
 
             // If user is not logged in redirect to the home page
@@ -27,6 +27,7 @@ namespace Predict.Controllers
             var predictionsConsolidated = new PredictionsConsolidatedViewModel
             {
                 PlayerId = playerId
+                , EventId = eventId
             };
 
             predictionsConsolidated.Player = _context.Players.FirstOrDefault(p => p.Id == playerId);
@@ -35,14 +36,14 @@ namespace Predict.Controllers
             predictionsConsolidated.Pool = _context.Pools.FirstOrDefault(p => p.Id == poolId);
             if (predictionsConsolidated.Pool == null) throw new Exception("Invalid Pool");
 
-            var nbrKoPredictionsToEnter = (int) Session["nbrKoFixtures*" + predictionsConsolidated.Pool.EventId];
-            var nbrBonusQuestionsToEnter = (int) Session["nbrBonusQuestions*" + predictionsConsolidated.Pool.EventId];            
+            var nbrKoPredictionsToEnter = (int) Session["nbrKoFixtures*" + eventId];
+            var nbrBonusQuestionsToEnter = (int) Session["nbrBonusQuestions*" + eventId];            
 
             var fixturePredictionsController = new FixturePredictionsController();
             var loggedInUserId = User.Identity.GetUserId();
             var fixturePredictionsViewModel =
-                fixturePredictionsController.GetFixturePredictionsViewModel(loggedInUserId, playerId,
-                    predictionsConsolidated.Pool.EventId);
+                fixturePredictionsController.GetFixturePredictionsViewModel(loggedInUserId, playerId, eventId);
+
             fixturePredictionsViewModel.ReadOnly = true;
             predictionsConsolidated.FixturePredictionsViewModel = fixturePredictionsViewModel;
 
@@ -50,15 +51,13 @@ namespace Predict.Controllers
             {
                 var koFixturePredictionsController = new KoFixturePredictionsController();
                 var kOFixturePredictionsViewModel =
-                    koFixturePredictionsController.GetKoFixturePredictionViewModel(loggedInUserId, playerId, true,
-                        predictionsConsolidated.Pool.EventId);
+                    koFixturePredictionsController.GetKoFixturePredictionViewModel(loggedInUserId, playerId, true, eventId);
                 kOFixturePredictionsViewModel.ReadOnly = true;
                 predictionsConsolidated.KoFixturePredictionViewModel = kOFixturePredictionsViewModel;
 
                 var leagueTablesController = new LeagueTablesController();
                 var leagueTablesViewModel =
-                    leagueTablesController.GetLeagueTablesViewModel(loggedInUserId, playerId,
-                        predictionsConsolidated.Pool.EventId);
+                    leagueTablesController.GetLeagueTablesViewModel(loggedInUserId, playerId, eventId);
                 leagueTablesViewModel.Results = false;
                 predictionsConsolidated.LeagueTablesViewModel = leagueTablesViewModel;
             }
@@ -67,8 +66,7 @@ namespace Predict.Controllers
             {
                 var bonusQuestionPredictionsController = new BonusQuestionPredictionsController();
                 var bonusQuestionPredictionsViewModel =
-                    bonusQuestionPredictionsController.GetBonusQuestionPredictionsViewModel(loggedInUserId, playerId,
-                        predictionsConsolidated.Pool.EventId);
+                    bonusQuestionPredictionsController.GetBonusQuestionPredictionsViewModel(loggedInUserId, playerId, eventId);
                 bonusQuestionPredictionsViewModel.ReadOnly = true;
                 predictionsConsolidated.BonusQuestionPredictionsViewModel = bonusQuestionPredictionsViewModel;
             }

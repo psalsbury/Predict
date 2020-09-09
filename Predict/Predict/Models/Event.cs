@@ -8,6 +8,7 @@ namespace Predict.Models
     public class Event
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public short Id { get; set; }
 
         [Required]
@@ -17,7 +18,7 @@ namespace Predict.Models
         [StringLength(100)]
         public string EventDescription { get; set; }
 
-        public int? DefaultPoolId { get; set; }
+        public int DefaultPoolId { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime StartDateTime { get; set; }

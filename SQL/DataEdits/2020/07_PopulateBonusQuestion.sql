@@ -20,7 +20,7 @@ BEGIN
 		, [ModifiedDateTime]
 	)
 	SELECT @intEventId
-			, 'Time of the first goal in the Euro 2020 Final'
+			, 'Time of the first goal in the Euro 2021 Final'
 			, 6
 			, '11 July 2021 20:00'
 			, GETDATE()

@@ -12,9 +12,11 @@ namespace Predict.Models
 
         public int PoolId { get; set; }
 
+        public short EventId { get; set; }
+
         public string PlayerId { get; set; }
 
-        [ForeignKey("PoolId, PlayerId")] public PoolPlayer PoolPlayer { get; set; }
+        [ForeignKey("PoolId, PlayerId, EventId")] public PoolPlayer PoolPlayer { get; set; }
 
         [Column(TypeName = "Date")] public DateTime PositionDate { get; set; }
 

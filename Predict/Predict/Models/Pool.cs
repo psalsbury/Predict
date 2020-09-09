@@ -17,10 +17,6 @@ namespace Predict.Models
 
         [ForeignKey("AdminPlayerId")] public Player AdminPlayer { get; set; }
 
-        public short EventId { get; set; }
-
-        [ForeignKey("EventId")] public Event Event { get; set; }
-
         [StringLength(50)]
         [Display(Name = "Join Code")]
         public string JoinCode { get; set; }

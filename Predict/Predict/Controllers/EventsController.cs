@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
@@ -50,17 +51,21 @@ namespace Predict.Controllers
             return View(myEvent);
         }
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SaveEvent(Event passedInEvent)
         {
             if (!CheckUserIsValid()) return HttpNotFound();
 
+            var playerId = User.Identity.GetUserId();
+            var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
             Event myEvent;
             if (passedInEvent.Id==0)
             {
                 myEvent = new Event
                 {
                     CreatedDateTime = DateTime.Now
+                    ,DefaultPoolId = globalPoolId
                 };
             }
             else
@@ -74,40 +79,29 @@ namespace Predict.Controllers
             _context.Events.AddOrUpdate(myEvent);
             _context.SaveChanges();
 
-            // If no default pool has been created, then add one
-            if(myEvent.DefaultPoolId == 0)
+            // Ensure the current user is entered into the new event
+           var eventPlayer = _context.EventPlayers.FirstOrDefault(f => f.EventId == myEvent.Id && f.PlayerId == playerId);
+
+            if (eventPlayer == null)
             {
-                var pool = new Pool
-                {
-                    PoolName = "Global Pool",
-                    CreatedDateTime = DateTime.Now,
-                    ModifiedDateTime = DateTime.Now,
-                    CorrectScorePoints = 5,
-                    CorrectResultPoints = 2,
-                    WinMarginPoints = 1,
-                    EmailNotifications = false,
-                    DefaultPoolForEvent = true,
-                    AdminPlayerId = User.Identity.GetUserId(),
-                    EventId = myEvent.Id
-                };
-                _context.Pools.Add(pool);
-                _context.SaveChanges();
-
-                var poolPlayer = new PoolPlayer
+                eventPlayer = new EventPlayer
                 {
                     CreatedDateTime = DateTime.Now,
-                    ModifiedDateTime = DateTime.Now,
                     PlayerId = User.Identity.GetUserId(),
-                    PoolId = pool.Id,
-                    AdminApprovedDateTime = DateTime.Now
+                    EventId = myEvent.Id,
                 };
-                _context.PoolPlayers.Add(poolPlayer);
 
-                myEvent.DefaultPoolId = pool.Id;
-                _context.SaveChanges();
             }
 
-            return View(myEvent);
+            eventPlayer.ModifiedDateTime = DateTime.Now;
+            eventPlayer.Enabled = true;
+            _context.EventPlayers.AddOrUpdate(eventPlayer);
+            _context.SaveChanges();
+
+            // update the application cache for events
+            Helper.Cache.SetEventCache();
+
+            return RedirectToAction("EventsIndex", "Events");
         }
 
     }

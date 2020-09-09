@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
@@ -27,6 +28,7 @@ namespace Predict.Controllers
             return View(myEvents);
         }
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()
         {
@@ -44,9 +46,15 @@ namespace Predict.Controllers
                     if (myEventPlayer.Enabled == true)
                     {
                         myEventPlayer.Enabled = false;
-                        myEventPlayer.ModifiedDateTime = DateTime.Today;
+                        myEventPlayer.ModifiedDateTime = DateTime.Now;
+
+                        // disable all entries to pools for this event
+                        var poolPlayers = _context.PoolPlayers.Where(f => f.PlayerId == playerId && f.EventId == myEvent.Id).ToList();
+                        poolPlayers.ForEach(a => a.Enabled = false);
+                        poolPlayers.ForEach(a => a.ModifiedDateTime= DateTime.Now);
                         _context.EventPlayers.AddOrUpdate(myEventPlayer);
                     }
+
                 }
                 else if (playingIn != "" && myEventPlayer != null)
                 {
@@ -54,9 +62,8 @@ namespace Predict.Controllers
                     if (myEventPlayer.Enabled == false)
                     {
                         myEventPlayer.Enabled = true;
-                        myEventPlayer.ModifiedDateTime = DateTime.Today;
+                        myEventPlayer.ModifiedDateTime = DateTime.Now;
                         _context.EventPlayers.AddOrUpdate(myEventPlayer);
-
                     }
                 }
                 else if (playingIn != "" && myEventPlayer == null)
@@ -66,12 +73,39 @@ namespace Predict.Controllers
                     {
                         EventId = myEvent.Id,
                         PlayerId = playerId,
-                        CreatedDateTime = DateTime.Today,
-                        ModifiedDateTime = DateTime.Today,
+                        CreatedDateTime = DateTime.Now,
+                        ModifiedDateTime = DateTime.Now,
                         Enabled = true
 
                     };
                     _context.EventPlayers.Add(myEventPlayer);                                       
+                }
+
+                if (playingIn != "")
+                {
+                    // Make sure the player has an enabled record for the default pool
+                    var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
+                    var myPoolPlayer =_context.PoolPlayers.FirstOrDefault(f => f.EventId == myEvent.Id && f.PlayerId == playerId && f.PoolId== globalPoolId);
+                    if (myPoolPlayer == null)
+                    {
+                        myPoolPlayer = new PoolPlayer()
+                        {
+                            CreatedDateTime = DateTime.Now
+                            , ModifiedDateTime = DateTime.Now
+                            , EventId = myEvent.Id
+                            , PlayerId = playerId
+                            , PoolId = globalPoolId
+                            , AdminApprovedDateTime = DateTime.Now
+                            , PoolPosition = 1
+                            , Enabled =true
+                        };
+                    }
+                    else
+                    {
+                        myPoolPlayer.Enabled = true;
+                        myPoolPlayer.ModifiedDateTime = DateTime.Now;
+                    }
+                    _context.PoolPlayers.AddOrUpdate(myPoolPlayer);
                 }
                 _context.SaveChanges();
             }

@@ -201,6 +201,8 @@ namespace Predict.Controllers
                 EventId = eventId,
                 KoFixturePredictions = _context.KoFixturePredictions
                     .Include(b => b.KoFixture)
+                    .Include(b => b.Team1)
+                    .Include(b => b.Team2)
                     .Where(p => p.PlayerId == userId)
                     .Where(p => p.KoFixture.EventId == eventId)
                     .ToList(),

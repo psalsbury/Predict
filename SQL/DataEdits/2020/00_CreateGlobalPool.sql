@@ -3,12 +3,6 @@ GO
 
 /* BEFORE THIS IS RUN, CREATE PETE@SALSBURY.CO.UK USER */
 
-DECLARE @intEventId INT
-
-SELECT @intEventId = Id
-FROM dbo.Events
-WHERE EventName = 'Euro 2021'
-
 DECLARE @strAdminUserId NVARCHAR(128)
 DECLARE @intDefaultPoolId INT
 
@@ -16,14 +10,13 @@ SELECT  @strAdminUserId = Id
 FROM [dbo].[AspNetUsers]
 WHERE Email = 'pete@salsbury.co.uk'
 
-IF (SELECT COUNT(1) FROM dbo.Events WHERE DefaultPoolId IS NULL AND Id = @intEventId AND @strAdminUserId IS NOT NULL) = 1
+IF (SELECT COUNT(1) FROM dbo.[Pools] WHERE PoolName = 'Global Pool') = 0
 BEGIN
 
 	INSERT INTO [dbo].[Pools]
 	(
 		PoolName
 		, AdminPlayerId
-		, EventId
 		, JoinCode
 		, InitialInfo
 		, MemberInfo
@@ -48,7 +41,6 @@ BEGIN
 	)
 	SELECT	'Global Pool'
 		, @strAdminUserId
-		, @intEventId
 		, NULL	-- JoinCode
 		, NULL	-- InitialInfo
 		, NULL	-- MemberInfo
@@ -71,38 +63,4 @@ BEGIN
 		, GETDATE()	-- CreatedDateTime
 		, GETDATE()	--ModifiedDateTime
 
-		SELECT @intDefaultPoolId = SCOPE_IDENTITY();
-
-		UPDATE dbo.Events
-		SET DefaultPoolId = @intDefaultPoolId
-		WHERE Id = @intEventId;
-
-		INSERT INTO [dbo].[PoolPlayers]
-		(
-			PoolId
-			, PlayerId
-			, AdminApprovedDateTime
-			, PoolPosition
-			, CorrectScore
-			, CorrectResult
-			, WinMargin
-			, KoScore
-			, BonusScore
-			, TotalScore
-			, CreatedDateTime
-			, ModifiedDateTime
-		)
-		SELECT @intDefaultPoolId	-- PoolId
-			, @strAdminUserId		-- PlayerId
-			, GETDATE()				-- AdminApprovedDateTime
-			, 0						-- PoolPosition
-			, 0						-- CorrectScore
-			, 0						-- CorrectResult
-			, 0						-- WinMargin
-			, 0						-- KoScore
-			, 0						-- BonusScore
-			, 0						-- TotalScore
-			, GETDATE()				-- CreatedDateTime
-			, GETDATE()				-- ModifiedDateTime
-	
 END;

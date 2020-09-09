@@ -9,7 +9,7 @@
 
             @if (Request.IsAuthenticated)
             {
-                var eventPlayers = ((List<EventPlayer>) Session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
+                var eventPlayers = ((List<EventPlayer>)Session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
 
                 foreach (var eventPlayer in eventPlayers)
                 {
@@ -29,10 +29,10 @@
 
                 if (User.IsInRole("Admin"))
                 {
-                    
+
                     <li>
                         <a href="@Url.Action("EventsIndex", "Events")">
-                            <i class="fa fa-sign-in"></i> <span>Event Management</span>
+                            <i class="fa fa-sign-in"></i> <span>Comp Management</span>
                         </a>
                     </li>
 
@@ -46,7 +46,7 @@
                         <ul class="treeview-menu">
 
                             @foreach (var eventPlayer in eventPlayers)
-                    {
+                            {
                                 <li>
                                     <a href="@Url.Action("AdminHome", "Admin", new {eventId = eventPlayer.EventId})">
                                         <i class="fa fa-key"></i> <span>@eventPlayer.Event.EventName</span>
@@ -74,7 +74,7 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
-                    
+
                 <ul class="treeview-menu">
                     <li>
                         <a href="@Url.Action("Rules", "Home")">

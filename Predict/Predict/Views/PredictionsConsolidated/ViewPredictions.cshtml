@@ -1,16 +1,16 @@
 ﻿@model Predict.ViewModels.PredictionsConsolidatedViewModel
 
 @{
-    ViewBag.Title = Model.Player.DisplayName + " Predictions";
+    ViewBag.Title = Model.Player.DisplayName + "'s Predictions";
 }
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/Home/Index?eventid=@Model.Pool.EventId">Home</a>
+            <a href="/Home/Index?eventid=@Model.EventId">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/Table/Index?poolid=@Model.Pool.Id">Table</a>
+            <a href="/Table/Index?eventid=@Model.EventId&poolid=@Model.Pool.Id">Table</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Predictions</li>
     </ol>

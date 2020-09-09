@@ -70,7 +70,7 @@
                 @tableViewModel.PoolPosition.ToString()
             </td>
             <td>
-                @Html.ActionLink(tableViewModel.DisplayName, "ViewPredictions", "PredictionsConsolidated", new {playerId = tableViewModel.PlayerId, poolId = tableViewModel.PoolId}, null)
+                @Html.ActionLink(tableViewModel.DisplayName, "ViewPredictions", "PredictionsConsolidated", new {playerId = tableViewModel.PlayerId, poolId = tableViewModel.PoolId, eventId = tableViewModel.EventId }, null)
             </td>
             <td STYLE="text-align: center">
                 @tableViewModel.CorrectScore.ToString()

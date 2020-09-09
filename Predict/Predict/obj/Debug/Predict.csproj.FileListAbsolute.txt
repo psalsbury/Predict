@@ -78,6 +78,7 @@ C:\Projects\Predict\Predict\Predict\bin\Newtonsoft.Json.dll
 C:\Projects\Predict\Predict\Predict\bin\Owin.dll
 C:\Projects\Predict\Predict\Predict\bin\PagedList.dll
 C:\Projects\Predict\Predict\Predict\bin\PagedList.Mvc.dll
+C:\Projects\Predict\Predict\Predict\bin\RestSharp.dll
 C:\Projects\Predict\Predict\Predict\bin\RouteJs.dll
 C:\Projects\Predict\Predict\Predict\bin\RouteJs.Mvc5.dll
 C:\Projects\Predict\Predict\Predict\bin\System.Net.Http.Formatting.dll
@@ -96,9 +97,15 @@ C:\Projects\Predict\Predict\Predict\bin\WebGrease.dll
 C:\Projects\Predict\Predict\Predict\bin\WebHelpers.Mvc5.dll
 C:\Projects\Predict\Predict\Predict\bin\AutoMapper.pdb
 C:\Projects\Predict\Predict\Predict\bin\AutoMapper.xml
+C:\Projects\Predict\Predict\Predict\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Projects\Predict\Predict\Predict\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Projects\Predict\Predict\Predict\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Projects\Predict\Predict\Predict\bin\Microsoft.Owin.xml
+C:\Projects\Predict\Predict\Predict\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Projects\Predict\Predict\Predict\bin\Newtonsoft.Json.xml
 C:\Projects\Predict\Predict\Predict\bin\PagedList.xml
 C:\Projects\Predict\Predict\Predict\bin\PagedList.Mvc.xml
+C:\Projects\Predict\Predict\Predict\bin\RestSharp.xml
 C:\Projects\Predict\Predict\Predict\bin\System.Net.Http.Formatting.xml
 C:\Projects\Predict\Predict\Predict\bin\System.ValueTuple.xml
 C:\Projects\Predict\Predict\Predict\bin\System.Web.Http.xml
@@ -114,11 +121,6 @@ C:\Projects\Predict\Predict\Predict\bin\Antlr3.Runtime.pdb
 C:\Projects\Predict\Predict\Predict\bin\WebHelpers.Mvc5.xml
 C:\Projects\Predict\Predict\Predict\bin\EntityFramework.xml
 C:\Projects\Predict\Predict\Predict\bin\EntityFramework.SqlServer.xml
-C:\Projects\Predict\Predict\Predict\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Projects\Predict\Predict\Predict\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Projects\Predict\Predict\Predict\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Projects\Predict\Predict\Predict\bin\Microsoft.Owin.xml
-C:\Projects\Predict\Predict\Predict\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Projects\Predict\Predict\Predict\bin\Microsoft.Owin.Security.xml
 C:\Projects\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Facebook.xml
 C:\Projects\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Cookies.xml
@@ -135,6 +137,7 @@ C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.CoreCompileInputs.c
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.pdb
+C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache
+C:\Projects\Predict\Predict\Predict\bin\System.Diagnostics.DiagnosticSource.dll
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.Migrations.InitialMigration.resources
 C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csproj.GenerateResource.cache
-C:\Projects\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache

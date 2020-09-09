@@ -31,6 +31,9 @@ namespace Predict.Models
         [Required]
         public short LeagueId { get; set; }
 
+        [Required]
+        public bool ResultProcessed { get; set; } // if the result has been processed and predictions updated with the score
+
         [ForeignKey("LeagueId")]
         public League League { get; set; }
 

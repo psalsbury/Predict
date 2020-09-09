@@ -30,6 +30,7 @@ namespace Predict.Models
         public DbSet<Team> Teams { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventPlayer> EventPlayers { get; set; }
+        public DbSet<EventPool> EventPools { get; set; }
 
         public DbSet<EventKo> EventKos { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
@@ -48,8 +49,7 @@ namespace Predict.Models
         public DbSet<KoFixturePrediction> KoFixturePredictions { get; set; }
         public DbSet<KoWinningTeamPrediction> KoWinningTeamPredictions { get; set; }
 
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<Reply> Replies { get; set; }
+        public DbSet<SiteSetting> SiteSettings { get; set; }
 
         public static ApplicationDbContext Create()
         {

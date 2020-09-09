@@ -222,25 +222,44 @@ namespace Predict.Controllers
                 if (result.Succeeded)
                 {
                     var myEvent = context.Events.FirstOrDefault(a => a.Id == model.EventId);
-                    if (myEvent == null) throw new Exception("Event Not Found");
 
                     var player = new Player
                     {
-                        Id = user.Id, DisplayName = model.DisplayName
+                        Id = user.Id
+                        , DisplayName = model.DisplayName
                         , PlayerName = model.DisplayName // both the same//
                         , CreatedDateTime = DateTime.Now
                         , ModifiedDateTime = DateTime.Now
                     };
                     context.Players.Add(player);
 
-                    var eventPlayer = new EventPlayer
+                    if (myEvent != null)
                     {
-                        EventId = model.EventId,
-                        PlayerId = user.Id,
-                        CreatedDateTime = DateTime.Now,
-                        ModifiedDateTime = DateTime.Now
-                    };
-                    context.EventPlayers.Add(eventPlayer);
+                        var eventPlayer = new EventPlayer
+                        {
+                            EventId = model.EventId,
+                            PlayerId = user.Id,
+                            CreatedDateTime = DateTime.Now,
+                            ModifiedDateTime = DateTime.Now
+                        };
+                        context.EventPlayers.Add(eventPlayer);
+
+                        var defaultPoolId = myEvent.DefaultPoolId;
+                        if (defaultPoolId > 0)
+                        {
+                            var globalPoolPlayer = new PoolPlayer
+                            {
+                                PoolId = defaultPoolId,
+                                PlayerId = user.Id,
+                                EventId = model.EventId,
+                                AdminApprovedDateTime = DateTime.Now,
+                                CreatedDateTime = DateTime.Now,
+                                ModifiedDateTime = DateTime.Now
+                            };
+                            context.PoolPlayers.Add(globalPoolPlayer);
+                        }
+
+                    }
 
                     // If this is me, then the pool will not yet have been created
                     if (user.Email == "pete@salsbury.co.uk")
@@ -250,21 +269,6 @@ namespace Predict.Controllers
                     else
                     {
                         UserManager.AddToRole(user.Id, "Player");
-
-                    }
-
-                    var defaultPoolId = myEvent.DefaultPoolId ?? 0;
-                    if (defaultPoolId > 0)
-                    {
-                        var globalPoolPlayer = new PoolPlayer
-                        {
-                            PoolId = defaultPoolId,
-                            PlayerId = user.Id,
-                            AdminApprovedDateTime = DateTime.Now,
-                            CreatedDateTime = DateTime.Now,
-                            ModifiedDateTime = DateTime.Now
-                        };
-                        context.PoolPlayers.Add(globalPoolPlayer);
                     }
 
                     context.SaveChanges();

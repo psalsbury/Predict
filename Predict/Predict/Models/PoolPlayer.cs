@@ -14,6 +14,13 @@ namespace Predict.Models
         [StringLength(128)]
         public string PlayerId { get; set; }
 
+        [Key]
+        [Column(Order = 2)]
+        public short EventId { get; set; }
+
+        [ForeignKey("EventId")]
+        public Event Event { get; set; }
+
         [ForeignKey("PlayerId")] public Player Player { get; set; }
 
         [ForeignKey("PoolId")] public Pool Pool { get; set; }
@@ -33,6 +40,9 @@ namespace Predict.Models
         public short BonusScore { get; set; } // Total score for all bonus scores //
 
         public short TotalScore { get; set; } // Total score (all scores added from above) //
+
+        [Column(TypeName = "bit")]
+        public bool Enabled { get; set; }
 
         [Required] public DateTime CreatedDateTime { get; set; }
 

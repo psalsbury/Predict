@@ -16,27 +16,151 @@ namespace Predict.Helper
 
             // Work out, based on the group predictions, the teams that would route through to the first KO round
             var leagueTables = FetchLeagueTablesByUserId(eventId, userId);
+
+            var thirdPlacedTeams = new List<LeagueTableTeamThirdPlaceHelper>();
+            var thirdPlaceDictionary = new Dictionary<string, string>(); // koId, TeamId
+            foreach (LeagueTable leagueTable in leagueTables)
+            {
+                var leagueTableTeam = new LeagueTableTeamThirdPlaceHelper(leagueTable.LeagueTableTeams.Find(t => t.Position == 3));
+                leagueTableTeam.LeagueId = leagueTable.LeagueId;
+                leagueTableTeam.LeagueName = leagueTable.LeagueName;
+                thirdPlacedTeams.Add(leagueTableTeam);
+            };
+
+            var thirdPlacedTeamsOrdered = thirdPlacedTeams.OrderByDescending(p => p.Points)
+                .ThenByDescending(p => p.GoalDifference)
+                .ThenByDescending(p => p.GoalsFor);
+
+            var strFirstFour = (thirdPlacedTeamsOrdered.ElementAt(0).LeagueName
+                                + thirdPlacedTeamsOrdered.ElementAt(1).LeagueName
+                                + thirdPlacedTeamsOrdered.ElementAt(2).LeagueName
+                                + thirdPlacedTeamsOrdered.ElementAt(3).LeagueName);
+
+            strFirstFour = String.Concat(strFirstFour.OrderBy(c => c));
+
+            // First string is the group where the first placed team where play the 3rd places team from the second string
+            if (strFirstFour == "ABCD")
+            {
+                thirdPlaceDictionary.Add("B", "A");
+                thirdPlaceDictionary.Add("C", "D");
+                thirdPlaceDictionary.Add("E", "B");
+                thirdPlaceDictionary.Add("F", "C");
+            }
+            else if (strFirstFour == "ABCE")
+            {
+                thirdPlaceDictionary.Add("B", "A");
+                thirdPlaceDictionary.Add("C", "E");
+                thirdPlaceDictionary.Add("E", "B");
+                thirdPlaceDictionary.Add("F", "C");
+            }
+            else if (strFirstFour == "ABCF")
+            {
+                thirdPlaceDictionary.Add("B", "A");
+                thirdPlaceDictionary.Add("C", "F");
+                thirdPlaceDictionary.Add("E", "B");
+                thirdPlaceDictionary.Add("F", "C");
+            }
+            else if (strFirstFour == "ABDE")
+            {
+                thirdPlaceDictionary.Add("B", "D");
+                thirdPlaceDictionary.Add("C", "E");
+                thirdPlaceDictionary.Add("E", "A");
+                thirdPlaceDictionary.Add("F", "B");
+            }
+            else if (strFirstFour == "ABDF")
+            {
+                thirdPlaceDictionary.Add("B", "D");
+                thirdPlaceDictionary.Add("C", "F");
+                thirdPlaceDictionary.Add("E", "A");
+                thirdPlaceDictionary.Add("F", "B");
+            }
+            else if (strFirstFour == "ABEF")
+            {
+                thirdPlaceDictionary.Add("B", "E");
+                thirdPlaceDictionary.Add("C", "F");
+                thirdPlaceDictionary.Add("E", "B");
+                thirdPlaceDictionary.Add("F", "A");
+            }
+            else if (strFirstFour == "ACDE")
+            {
+                thirdPlaceDictionary.Add("B", "E");
+                thirdPlaceDictionary.Add("C", "D");
+                thirdPlaceDictionary.Add("E", "C");
+                thirdPlaceDictionary.Add("F", "A");
+            }
+            else if (strFirstFour == "ACDF")
+            {
+                thirdPlaceDictionary.Add("B", "F");
+                thirdPlaceDictionary.Add("C", "D");
+                thirdPlaceDictionary.Add("E", "C");
+                thirdPlaceDictionary.Add("F", "A");
+            }
+            else if (strFirstFour == "ACEF")
+            {
+                thirdPlaceDictionary.Add("B", "E");
+                thirdPlaceDictionary.Add("C", "F");
+                thirdPlaceDictionary.Add("E", "C");
+                thirdPlaceDictionary.Add("F", "A");
+            }
+            else if (strFirstFour == "ADEF")
+            {
+                thirdPlaceDictionary.Add("B", "E");
+                thirdPlaceDictionary.Add("C", "F");
+                thirdPlaceDictionary.Add("E", "D");
+                thirdPlaceDictionary.Add("F", "A");
+            }
+            else if (strFirstFour == "BCDE")
+            {
+                thirdPlaceDictionary.Add("B", "E");
+                thirdPlaceDictionary.Add("C", "D");
+                thirdPlaceDictionary.Add("E", "B");
+                thirdPlaceDictionary.Add("F", "C");
+            }
+            else if (strFirstFour == "BCDF")
+            {
+                thirdPlaceDictionary.Add("B", "F");
+                thirdPlaceDictionary.Add("C", "D");
+                thirdPlaceDictionary.Add("E", "C");
+                thirdPlaceDictionary.Add("F", "B");
+            }
+            else if (strFirstFour == "BCEF")
+            {
+                thirdPlaceDictionary.Add("B", "F");
+                thirdPlaceDictionary.Add("C", "E");
+                thirdPlaceDictionary.Add("E", "C");
+                thirdPlaceDictionary.Add("F", "B");
+            }
+            else if (strFirstFour == "BDEF")
+            {
+                thirdPlaceDictionary.Add("B", "F");
+                thirdPlaceDictionary.Add("C", "E");
+                thirdPlaceDictionary.Add("E", "D");
+                thirdPlaceDictionary.Add("F", "B");
+            }
+
+            else if (strFirstFour == "CDEF")
+            {
+                thirdPlaceDictionary.Add("B", "F");
+                thirdPlaceDictionary.Add("C", "E");
+                thirdPlaceDictionary.Add("E", "D");
+                thirdPlaceDictionary.Add("F", "C");
+            }
+
             var koFixtures = context.KoFixtures.Where(k => k.EventId == eventId);
             var maxRoundOf = koFixtures.Max(p => p.RoundOf);
 
             foreach (var koFixture in koFixtures.Where(k => k.RoundOf == maxRoundOf).OrderBy(p => p.Position))
             {
-                var team1FromLeagueId = koFixture.Team1FromLeagueId; // comma delimeterd list
-                List<short> team1FromLeagueIdArray = team1FromLeagueId.Split(',').Select(short.Parse).ToList();
-                var firstTeam1FromLeagueId = team1FromLeagueIdArray.First();
+                var team1FromLeagueId = koFixture.Team1FromLeagueId ?? 0; 
                 var team1FromLeaguePosition = koFixture.Team1FromLeaguePosition ?? default(int);
 
-                var team2FromLeagueId = koFixture.Team2FromLeagueId; // comma delimeterd list
-                List<short> team2FromLeagueIdArray = team2FromLeagueId.Split(',').Select(short.Parse).ToList();
-                var firstTeam2FromLeagueId = team2FromLeagueIdArray.First();
+                var team2FromLeagueId = koFixture.Team2FromLeagueId ?? 0; 
                 var team2FromLeaguePosition = koFixture.Team2FromLeaguePosition ?? default(int);
 
-                var team1 = team1FromLeagueIdArray.Count() == 1
-                    ? GetTeamFromPosition(leagueTables, firstTeam1FromLeagueId, team1FromLeaguePosition)
-                    : GetBestPlacedThirdPosition(leagueTables, team1FromLeagueIdArray, team1FromLeaguePosition);
-                var team2 = team2FromLeagueId.Split(',').Count() == 1
-                    ? GetTeamFromPosition(leagueTables, firstTeam2FromLeagueId, team2FromLeaguePosition)
-                    : GetBestPlacedThirdPosition(leagueTables, team2FromLeagueIdArray, team2FromLeaguePosition);
+                var team1 = GetTeamFromPosition(leagueTables, team1FromLeagueId, team1FromLeaguePosition);
+                var team2 = team2FromLeagueId > 0
+                    ? GetTeamFromPosition(leagueTables, team2FromLeagueId, team2FromLeaguePosition)
+                    : GetBestPlacedThirdPosition(leagueTables,thirdPlaceDictionary, team1FromLeagueId);
 
                 resultingDictionary.Add((koFixture.Position - 1) * 2 + 1, team1.TeamId);
                 resultingDictionary.Add((koFixture.Position - 1) * 2 + 2, team2.TeamId);
@@ -52,15 +176,15 @@ namespace Predict.Helper
             return teamLeagueTable.LeagueTableTeams.Find(t => t.Position == position);
         }
 
-        public static LeagueTableTeam GetBestPlacedThirdPosition(List<LeagueTable> leagueTables, List<short> leagueIds,
-            int position)
+        public static LeagueTableTeam GetBestPlacedThirdPosition(List<LeagueTable> leagueTables, Dictionary<string, string> thirdPlaceDictionary, int team1FromLeagueId)
         {
-            //TODO This will all need updating once the qualifing is understood
-            var nbrLeagues = leagueIds.Count;
-            var firstLeague = leagueIds.First();
+            
+            var firstPlaceTeamLeagueShortName = leagueTables.First(a => a.LeagueId == team1FromLeagueId).LeagueName;
+            var leagueShortNameToGet3rdPlaceTeamFrom = thirdPlaceDictionary[firstPlaceTeamLeagueShortName];
+            var leagueIdToGet3rdPlaceTeamFrom = leagueTables.First(a => a.LeagueName == leagueShortNameToGet3rdPlaceTeamFrom).LeagueId;
 
-            var teamLeagueTable = leagueTables.Find(l => l.LeagueId == firstLeague);
-            return teamLeagueTable.LeagueTableTeams.Find(t => t.Position == position);
+            var teamLeagueTable = leagueTables.Find(l => l.LeagueId == leagueIdToGet3rdPlaceTeamFrom);
+            return teamLeagueTable.LeagueTableTeams.Find(t => t.Position == 3);
         }
 
         public static Dictionary<int, int> FetchAllTeamsInOrder(int eventId, string userId)
@@ -238,6 +362,7 @@ namespace Predict.Helper
                     var leagueTable = new LeagueTable
                     {
                         LeagueId = leagueId
+                        , LeagueName = eventTeam.ShortLeagueName
                         , LeagueTableTeams = new List<LeagueTableTeam>()
                     };
                     leagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.TeamName, eventTeam.TeamId,

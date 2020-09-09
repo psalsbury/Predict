@@ -18,13 +18,11 @@ namespace Predict.Models
         public short Position { get; set; }
 
 
-        [StringLength(50)]
-        public string Team1FromLeagueId { get; set; }  // comma delimetered list //
+        public short? Team1FromLeagueId { get; set; } // if 0 in the db then custom rules apply
         public int? Team1FromLeaguePosition { get; set; }
         public int? Team1FromKoFixtureId { get; set; }
 
-        [StringLength(50)]
-        public string Team2FromLeagueId { get; set; } // comma delimetered list //
+        public short? Team2FromLeagueId { get; set; } // if 0 in the db then custom rules apply
         public int? Team2FromLeaguePosition { get; set; }
         public int? Team2FromKoFixtureId { get; set; }
 
