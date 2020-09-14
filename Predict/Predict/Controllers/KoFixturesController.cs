@@ -21,13 +21,13 @@ namespace Predict.Controllers
         }
 
         // GET: KOFixtures
-        public ActionResult Index(int eventId)
+        public ActionResult Index(int Id)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var fixtures = _context.KoFixtures.Where(p => p.EventId == eventId).ToList();
+            var fixtures = _context.KoFixtures.Where(p => p.EventId == Id).ToList();
             return View(fixtures);
         }
 

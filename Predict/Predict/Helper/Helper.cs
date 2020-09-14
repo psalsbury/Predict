@@ -57,6 +57,31 @@ namespace Predict.Helper
             return myEvent;
         }
 
+        public static DateTime GetNextEventStartDate()
+        {
+            var nextDateTime = DateTime.Today.AddDays(365);
+            var myEvents = (List<Event>)GetCachedItem("Events");
+            foreach (Event myEvent in myEvents)
+            {
+                if (myEvent.StartDateTime.ToUniversalTime() > DateTime.Now.ToUniversalTime())
+                {
+                    if (nextDateTime == DateTime.Today.AddDays(365))
+                    {
+                        nextDateTime = myEvent.StartDateTime;
+                    }
+                    else
+                    {
+                        if (myEvent.StartDateTime < nextDateTime)
+                        {
+                            nextDateTime = myEvent.StartDateTime;
+                        }
+                    }
+                }
+
+            }
+            return nextDateTime;
+        }
+
         public static bool HasEventStarted(short eventId)
         {
             var myEvents = (List<Event>)GetCachedItem("Events");

@@ -9,6 +9,7 @@ using Predict.Models;
 using RestSharp;
 using RestSharp.Serialization.Json;
 using Fixture = Predict.RapidAPIFixturesByLeague.Fixture;
+using System.Web.UI.WebControls;
 
 namespace Predict.Helper
 {
@@ -61,7 +62,8 @@ namespace Predict.Helper
                     LeagueName = leagueName,
                     ShortLeagueName = shortLeagueName,
                     CreatedDateTime = DateTime.Now,
-                    ModifiedDateTime = DateTime.Now
+                    ModifiedDateTime = DateTime.Now,
+                    RapidApiLeagueId = rapidApiLeagueId
                 };
                 context.Leagues.Add(league);
                 context.SaveChanges();
@@ -93,17 +95,31 @@ namespace Predict.Helper
                     context.SaveChanges();
 
                 var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
-                if (fixture == null)
+                if(rapidApiFixture.status == "Match Postponed")
                 {
-                    fixture = new Models.Fixture
+                    if (fixture != null)
                     {
-                        RapidApiFixtureId = rapidApiFixtureId,
-                        HomeTeamId = homeTeam.Id,
-                        AwayTeamId = awayTeam.Id,
-                        CreatedDateTime = DateTime.Now,
-                        ModifiedDateTime = DateTime.Now
-                    };
+                        if(fixture.HomeResult!=null)
+                            newResultFound = true;
+
+                        context.Fixtures.Remove(fixture);
+                    }
                 }
+                else
+                {
+                    if (fixture == null)
+                    {
+                        fixture = new Models.Fixture
+                        {
+                            RapidApiFixtureId = rapidApiFixtureId,
+                            HomeTeamId = homeTeam.Id,
+                            AwayTeamId = awayTeam.Id,
+                            CreatedDateTime = DateTime.Now,
+                            ModifiedDateTime = DateTime.Now
+                        };
+                    }
+                }
+
 
                 if (fixture.HomeResult == null && rapidApiFixture.score.fulltime != null)
                 {

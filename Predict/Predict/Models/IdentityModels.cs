@@ -22,7 +22,7 @@ namespace Predict.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base(Environment.MachineName == "THINKPAD" ? "DefaultConnection" : "GoDaddyConnection", false)
+            : base(Environment.MachineName == "PETESDELL" ? "DefaultConnection" : "GoDaddyConnection", false)
         {
         }
 

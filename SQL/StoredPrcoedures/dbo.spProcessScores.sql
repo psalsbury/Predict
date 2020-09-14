@@ -18,6 +18,8 @@ CREATE PROCEDURE dbo.spProcessScores
 AS
 BEGIN
 
+	DECLARE @dteDate DATE = '14 SEP 2020'
+
 	SET NOCOUNT ON;
 
 	CREATE TABLE #tmpEventPools
@@ -332,14 +334,16 @@ BEGIN
 
 	INSERT INTO dbo.PoolPlayerPositionHistory
 	(
-		PoolId
+		EventId
+		, PoolId
 		, PlayerId
 		, PositionDate
 		, PoolPosition
 		, CreatedDateTime
 		, ModifiedDateTime
 	)
-	SELECT PP.PoolId
+	SELECT PP.EventId
+		, PP.PoolId
 		, PP.PlayerId
 		, @dteDate
 		, PP.PoolPosition

@@ -70,7 +70,7 @@
                 @Html.Hidden("FixtureDateTime", item.Fixture.FixtureDateTime.ToLongDateString() + " " + item.Fixture.FixtureDateTime.ToShortTimeString())
             </td>
             <td>
-                <a href="StatsGroup/StatsFixture/@item.FixtureId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
+                <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
             </td>
 
         </tr>

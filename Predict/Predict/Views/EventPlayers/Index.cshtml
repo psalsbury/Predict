@@ -27,10 +27,13 @@
                 </td>
                 <td>
                     @{ var exists = eventPlayers.Exists(a => a.EventId == item.Id); }
-                    <input type="checkbox" value ="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists?"checked":"")>
+                    <input type="checkbox" value ="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists ? "checked" : "")>
                 </td>
                 <td>
-                    <input class="btn btn-primary" value="Home" title="Visit Home Page" type="button" onclick="javascript:window.location='/?eventid=@item.Id'">
+                    @if (exists)
+                    { 
+                     <input  class="btn btn-primary" value="Home" title="Visit Home Page" type="button" onclick="javascript:window.location='/?eventid=@item.Id'">
+                    }
                 </td>
             </tr>
         }

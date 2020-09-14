@@ -1,5 +1,5 @@
 ﻿@{
-    var nextEventDateTime = Convert.ToDateTime("27 Jun 2020 20:00");
+    var nextEventDateTime = Predict.Helper.Cache.GetNextEventStartDate();
     var dateToUse = nextEventDateTime;
 }
 
@@ -62,7 +62,9 @@
 </style>
 
 <div align="center">
-    <img src="~/images/PremLeague.jpg"/>
+    <img src="~/images/BIGBALL.png"/>
+
+    <h1>Next Comp Starts In..</h1>
 
     <script type="text/javascript">
 

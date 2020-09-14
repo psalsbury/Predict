@@ -32,7 +32,7 @@ namespace Predict.Controllers
         }
 
         // GET: StatsFixture
-        public ActionResult StatsFixture(int id)
+        public ActionResult StatsFixture(int id, short eventId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -50,6 +50,7 @@ namespace Predict.Controllers
                     , new SqlParameter("@intFixtureId", id)
                 ).ToList()
             };
+            statsFixtureViewModel.EventId = eventId;
 
             return View(statsFixtureViewModel);
         }
