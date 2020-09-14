@@ -10,25 +10,59 @@ GO
 -- Create date: 17 Feb 2019
 -- Description:	Calculate all the scores
 -- =============================================
--- EXEC dbo.spProcessScores 1, '20 jan 2020'
+-- EXEC dbo.spProcessScores '20 jan 2020'
 CREATE PROCEDURE dbo.spProcessScores 
 (
-	@intEventId INT 
-	, @dteDate DATE
+	@dteDate DATE
 )
 AS
 BEGIN
 
 	SET NOCOUNT ON;
+
+	CREATE TABLE #tmpEventPools
+	(
+		EventID INT
+		, PoolId INT
+	)
+
+	CREATE TABLE #tmpEvents
+	(
+		EventID INT
+	)
 	
+	INSERT INTO #tmpEventPools
+	(
+		EventID 
+		, PoolId 
+	)
+	SELECT DISTINCT EF.EventID
+		, EP.PoolId
+	FROM [dbo].[Fixtures] AS F
+	INNER JOIN [dbo].[EventFixtures] AS EF ON EF.FixtureId = F.Id
+	INNER JOIN [dbo].[EventPools] AS EP ON EP.EventId = EF.EventId
+	WHERE F.ResultProcessed = 1
+
+	UNION 
+
+	SELECT DISTINCT KO.EventID
+		, EP.PoolId
+	FROM [dbo].[KoFixtures] AS KO
+	INNER JOIN [dbo].[EventPools] AS EP ON EP.EventId = KO.EventId
+	WHERE KO.ResultProcessed = 1
+
+	INSERT INTO #tmpEvents
+	(EventId)
+	SELECT DISTINCT EventID
+	FROM #tmpEventPools;
+
 	/* Clear down the fixture prediction row */
 	UPDATE FP
 	SET [CorrectScore] = NULL
 		, [CorrectResult] = NULL
 		, [CorrectWinMargin] = NULL
 	FROM dbo.FixturePredictions AS FP
-	INNER JOIN dbo.Fixtures AS FI ON FI.Id = FP.FixtureId
-	WHERE FI.EventId = @intEventId;
+	INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = FP.EventId;
 
 	/* Clear down all the pool scores */
 	UPDATE PP
@@ -40,8 +74,7 @@ BEGIN
 		, TotalScore = 0
 		, ModifiedDateTime = GETDATE()
 	FROM PoolPlayers AS PP
-	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
-	WHERE PO.EventId = @intEventId;
+	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId;
 		
 	/* Calculate the group scores */
 	UPDATE FP
@@ -65,10 +98,10 @@ BEGIN
 								END
 		, FP.ModifiedDateTime = GETDATE()
 	FROM dbo.FixturePredictions AS FP
-	INNER JOIN dbo.Fixtures AS FX WITH (NOLOCK) ON FX.Id = FP.FixtureId
+	INNER JOIN dbo.Fixtures AS FX ON FX.Id = FP.FixtureId
+	INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = FP.EventId
 	WHERE FX.HomeResult IS NOT NULL 
-	AND FX.AwayResult IS NOT NULL
-	AND FX.EventId = @intEventId;
+	AND FX.AwayResult IS NOT NULL;
 
 	CREATE TABLE #FixturePredictionScores
 	(
@@ -93,9 +126,8 @@ BEGIN
 			, CASE WHEN FP.CorrectResult = 1 THEN PO.CorrectResultPoints ELSE 0 END AS CorrectResult
 			, CASE WHEN FP.CorrectWinMargin = 1 THEN PO.WinMarginPoints ELSE 0 END AS CorrectWinMarginPoints
 	FROM dbo.FixturePredictions AS FP 
-	INNER JOIN dbo.PoolPlayers AS PP ON PP.PlayerId = FP.PlayerId
-	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
-	WHERE PO.EventId = @intEventId;
+	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = FP.EventId
+	INNER JOIN dbo.Pools AS PO ON PO.Id = TMP.PoolId;
 
 	/* Update the PoolPlayer table with a summary of the fixture scores for each player/pool */
 	WITH CTE AS
@@ -117,7 +149,7 @@ BEGIN
 	FROM dbo.PoolPlayers AS PP
 	INNER JOIN CTE ON CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 	
-	IF EXISTS(SELECT 1 FROM [dbo].[EventsKo] WHERE EventId = @intEventId)
+	IF EXISTS(SELECT 1 FROM [dbo].[EventsKo] WHERE EventId IN (SELECT EventID FROM #tmpEvents))
 	BEGIN
 	
 		/* Calculate the KO scores */
@@ -141,20 +173,24 @@ BEGIN
 			, KOFP.Team1Id		
 		FROM dbo.KoFixturePredictions AS KOFP
 		INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
-		WHERE KOF.EventId = @intEventId
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOF.EventId
+
 		UNION ALL
+
 		SELECT KOFP.PlayerId
 			, KOF.RoundOf
 			, KOFP.Team2Id	
 		FROM dbo.KoFixturePredictions AS KOFP
 		INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
-		WHERE KOF.EventId = @intEventId
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOF.EventId
+
 		UNION ALL
+		
 		SELECT KOW.PlayerId
 			, 1 
 			, KOW.TeamId
 		FROM dbo.KoWinningTeamPredictions AS KOW
-		WHERE KOW.EventId = @intEventId;
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOW.EventId;
 
 		/* De- Dupe any teams that are in the same round more than once */
 		WITH CTE AS
@@ -186,19 +222,19 @@ BEGIN
 		SELECT KOF.RoundOf
 			, KOF.Team1Id
 		FROM dbo.KoFixtures AS KOF
-		WHERE KOF.EventId = @intEventId
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOF.EventId
 		AND KOF.Team1Id IS NOT NULL
 		UNION ALL
 		SELECT KOF.RoundOf
 			, KOF.Team2Id
 		FROM dbo.KoFixtures AS KOF
-		WHERE KOF.EventId = @intEventId
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOF.EventId
 		AND KOF.Team2Id IS NOT NULL
 		UNION ALL 
 		SELECT 1
 			, EVKO.WinningTeamId
 		FROM dbo.EventsKo AS EVKO
-		WHERE EVKO.EventId = @intEventId
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = EVKO.EventId
 		AND EVKO.WinningTeamId IS NOT NULL;
 
 		CREATE TABLE #tmpKO
@@ -233,7 +269,7 @@ BEGIN
 		INNER JOIN #koResults KOR ON KOR.RoundOf = KOP.RoundOf AND KOR.TeamId = KOP.TeamId
 		INNER JOIN dbo.PoolPlayers AS PP ON PP.PlayerId = KOP.PlayerID
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
-		WHERE PO.EventId = @intEventId
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = PP.EventId
 		GROUP BY KOP.PlayerID
 			, PP.PoolId
 			, KOP.RoundOf
@@ -257,7 +293,7 @@ BEGIN
 		FROM dbo.PoolPlayers AS PP
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
 		INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId
-		WHERE PO.EventId = @intEventId;
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = PP.EventId;
 	END;
 
 	/* Update each PlayerPool record with the total score and the position within the league */
@@ -266,21 +302,22 @@ BEGIN
 		SELECT PP.PoolId
 			, PP.PlayerId
 			, PP.CorrectScore+PP.CorrectResult+PP.WinMargin+PP.KoScore+PP.BonusScore AS TotalScore
-			, ROW_NUMBER() OVER(PARTITION BY PO.EventId, PP.PoolId
+			, ROW_NUMBER() OVER(PARTITION BY PP.EventId, PP.PoolId
 					ORDER BY PP.CorrectScore+PP.CorrectResult+PP.WinMargin+PP.KoScore+PP.BonusScore DESC
 							, PP.CorrectScore DESC
 							, PP.KoScore DESC
 							, PL.CreatedDateTime) AS PoolPosition
 		FROM dbo.PoolPlayers AS PP
+		INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 		INNER JOIN dbo.Players AS PL ON PL.Id = PP.PlayerId
-		WHERE PO.EventId = @intEventId
 	)
 	UPDATE PP
 	SET PP.PoolPosition = CTE.PoolPosition
 		, PP.TotalScore = CTE.TotalScore
 		, PP.ModifiedDateTime = GETDATE()
 	FROM dbo.PoolPlayers AS PP
+	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN CTE ON CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 
 	/* Update the position history */
@@ -289,9 +326,9 @@ BEGIN
 		, PPPH.ModifiedDateTime = GETDATE()
 	FROM dbo.PoolPlayerPositionHistory AS PPPH
 	INNER JOIN dbo.PoolPlayers AS PP ON PP.PoolId = PPPH.PoolId AND PP.PlayerId = PPPH.PlayerId
+	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 	WHERE PPPH.PositionDate = @dteDate
-	AND PO.EventId = @intEventId
 
 	INSERT INTO dbo.PoolPlayerPositionHistory
 	(
@@ -309,16 +346,16 @@ BEGIN
 		, GETDATE()
 		, GETDATE()
 	FROM dbo.PoolPlayers AS PP
+	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 	LEFT OUTER JOIN dbo.PoolPlayerPositionHistory AS PPPH ON PPPH.PlayerId = PP.PlayerId AND PPPH.PoolId = PP.PoolId AND PPPH.PositionDate = @dteDate
-	WHERE PO.EventId = @intEventId
-	AND PPPH.Id IS NULL;
+	WHERE PPPH.PlayerId IS NULL;
 
 	/* Update LastModifiedDateTime for this event */
 	UPDATE EV
 	SET EV.ModifiedDateTime = GETDATE()
 	FROM dbo.[Events] AS EV
-	WHERE EV.Id = @intEventId
+	INNER JOIN #tmpEvents AS TMP ON TMP.EventId = EV.Id;
 
 END
 GO

@@ -22,7 +22,7 @@ namespace Predict.Models
 
         [Required] [StringLength(100)] public string TeamFlag { get; set; }
 
-        public string FlagFileLocation => _flagFileLocation + "/" + TeamFlag;
+        public string FlagFileLocation => TeamFlag.Contains("http") ? TeamFlag : _flagFileLocation + "/" + TeamFlag;
 
         public int? RapidApiTeamId { get; set; }
 

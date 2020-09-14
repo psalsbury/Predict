@@ -13,11 +13,11 @@ namespace Predict.Models
         [Key] [Column(Order = 0)]
         public short EventId { get; set; }
 
-        [ForeignKey("EventId")]
-        public Event Event { get; set; }
-
         [Key] [Column(Order = 1)]
         public int PoolId { get; set; }
+
+        [ForeignKey("EventId")]
+        public Event Event { get; set; }
 
         [ForeignKey("PoolId")]
         public Pool Pool { get; set; }

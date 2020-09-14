@@ -233,6 +233,7 @@
     <Compile Include="Controllers\Api\PoolsController.cs" />
     <Compile Include="Controllers\Api\TeamsController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
+    <Compile Include="Controllers\EventFixturesController.cs" />
     <Compile Include="Controllers\EventPlayersController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FixturePredictionsController.cs" />
@@ -264,9 +265,9 @@
     <Compile Include="Helper\LeagueTable.cs" />
     <Compile Include="Helper\LeagueTableHelper.cs" />
     <Compile Include="Helper\LeagueTableTeam.cs" />
-    <Compile Include="Migrations\202009092155480_InitialMigration.cs" />
-    <Compile Include="Migrations\202009092155480_InitialMigration.Designer.cs">
-      <DependentUpon>202009092155480_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202009111241249_InitialMigration.cs" />
+    <Compile Include="Migrations\202009111241249_InitialMigration.Designer.cs">
+      <DependentUpon>202009111241249_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="RapidApi\RapidAPIFixturesByLeague.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BonusQuestionPredictionsViewModel.cs" />
+    <Compile Include="ViewModels\EventFixturesViewModel.cs" />
     <Compile Include="ViewModels\FixturePredictionsViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
     <Compile Include="ViewModels\GroupGameResultsViewModel.cs" />
@@ -390,7 +392,6 @@
     <Content Include="Views\Shared\FixturePredictions.cshtml" />
     <Content Include="Views\Fixtures\Index.cshtml" />
     <Content Include="Views\PoolPlayers\PoolAdmin.cshtml" />
-    <Content Include="Views\Admin\UpdateScoring.cshtml" />
     <Content Include="Views\KOFixtures\Index.cshtml" />
     <Content Include="Views\KOFixtures\EditKoFixture.cshtml" />
     <Content Include="Views\Shared\KoFixturePredictions.cshtml" />
@@ -416,6 +417,7 @@
     <Content Include="Views\EventPlayers\Index.cshtml" />
     <Content Include="Views\Events\EventsIndex.cshtml" />
     <Content Include="Views\Events\EditEvent.cshtml" />
+    <Content Include="Views\EventFixtures\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -439,8 +441,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009092155480_InitialMigration.resx">
-      <DependentUpon>202009092155480_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009111241249_InitialMigration.resx">
+      <DependentUpon>202009111241249_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

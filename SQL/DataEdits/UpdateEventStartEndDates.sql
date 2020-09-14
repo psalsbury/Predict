@@ -1,12 +1,11 @@
 USE predictioncomp
 
-select *
-from events
 
 CREATE TABLE #tmp
-(EventId INT
-,StartDateTime DATETIME2
-,EndDateTime DATETIME2
+(
+	EventId INT
+	,StartDateTime DATETIME2
+	,EndDateTime DATETIME2
 )
 
 INSERT INTO #tmp
@@ -15,7 +14,9 @@ SELECT E.Id
 	, MIN(F.FixtureDateTime) AS MinDate
 	, MAX(F.FixtureDateTime) AS MaxDate
 FROM Events E
-INNER JOIN [dbo].[Fixtures] AS F ON F.EventId =E.Id
+INNER JOIN EventFixtures AS EF ON EF.EventId = E.Id
+INNER JOIN [dbo].[Fixtures] AS F ON F.Id = EF.FixtureId
+WHERE E.Id = @intEventId
 GROUP BY E.Id;
 
 WITH CTE AS
@@ -39,6 +40,4 @@ SET E.StartDateTime = T.StartDateTime
 FROM Events E
 INNER JOIN #tmp T ON T.EventId = E.Id
 
-select *
-from events
 

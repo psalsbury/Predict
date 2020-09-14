@@ -20,6 +20,10 @@ namespace Predict.Models
 
         public int DefaultPoolId { get; set; }
 
+        public string CreatedByPlayerId { get; set; }
+
+        [ForeignKey("CreatedByPlayerId")] public Player CreatedByPlayer { get; set; }
+
         [Column(TypeName = "datetime2")]
         public DateTime StartDateTime { get; set; }
 

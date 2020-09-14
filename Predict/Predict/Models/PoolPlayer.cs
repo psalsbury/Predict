@@ -7,24 +7,25 @@ namespace Predict.Models
     // This table links a player to a pool. (A pool is linked to 1 event)
     public class PoolPlayer
     {
-        [Key] [Column(Order = 0)] public int PoolId { get; set; }
-
-        [Key]
-        [Column(Order = 1)]
-        [StringLength(128)]
-        public string PlayerId { get; set; }
-
-        [Key]
-        [Column(Order = 2)]
+        [Key, Column(Order = 0)]
+        [ForeignKey("Event")]
         public short EventId { get; set; }
 
-        [ForeignKey("EventId")]
+        [Key, Column(Order = 1)]
+        [ForeignKey("Pool")]
+        public int PoolId { get; set; }
+
+        [Key, Column(Order = 2)]
+        [StringLength(128)]
+        [ForeignKey("Player")]
+        public string PlayerId { get; set; }
+       
         public Event Event { get; set; }
-
-        [ForeignKey("PlayerId")] public Player Player { get; set; }
-
-        [ForeignKey("PoolId")] public Pool Pool { get; set; }
-
+        
+        public Player Player { get; set; }
+        
+        public Pool Pool { get; set; }
+        
         public DateTime? AdminApprovedDateTime { get; set; }
 
         public short PoolPosition { get; set; }

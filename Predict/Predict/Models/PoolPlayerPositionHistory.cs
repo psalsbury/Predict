@@ -7,18 +7,20 @@ namespace Predict.Models
     [Table("PoolPlayerPositionHistory")]
     public class PoolPlayerPositionHistory
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
 
-        public int PoolId { get; set; }
-
+        [Key, Column(Order = 0)]
         public short EventId { get; set; }
 
+        [Key, Column(Order = 1)]
+        public int PoolId { get; set; }
+
+        [Key, Column(Order = 2)]
         public string PlayerId { get; set; }
 
-        [ForeignKey("PoolId, PlayerId, EventId")] public PoolPlayer PoolPlayer { get; set; }
+        [Key, Column(Order = 3, TypeName = "Date")]
+        public DateTime PositionDate { get; set; }
 
-        [Column(TypeName = "Date")] public DateTime PositionDate { get; set; }
+        [ForeignKey("EventId, PoolId, PlayerId")] public PoolPlayer PoolPlayer { get; set; }
 
         public short PoolPosition { get; set; }
 

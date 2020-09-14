@@ -12,7 +12,7 @@ check that if after the deadline the points etc on the edit pool screen are not 
 
 error when updating account details without password
 
-restrict leagues to 3
+restrict pools to 3
 
 add leagues that are entered as menu options if autorised to be in league
 

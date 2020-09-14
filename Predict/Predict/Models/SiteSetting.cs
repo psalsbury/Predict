@@ -10,8 +10,8 @@ namespace Predict.Models
     {
         [Key]
         [Required]
-        [StringLength(25)]
-        public string SittingName { get; set; }
+        [StringLength(100)]
+        public string SettingName { get; set; }
 
         [Required]
         [StringLength(200)]

@@ -36,6 +36,9 @@ namespace Predict.Models
         public Team Team2 { get; set; }
 
         [Required]
+        public bool ResultProcessed { get; set; } // if the result has been processed and predictions updated with the score
+
+        [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateTime { get; set; }
 

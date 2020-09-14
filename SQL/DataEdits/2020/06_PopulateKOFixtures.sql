@@ -46,6 +46,7 @@ INSERT INTO [dbo].[KoFixtures]
 	, Team1FromLeaguePosition
 	, Team2FromLeagueId
 	, Team2FromLeaguePosition
+	, ResultProcessed
 	, CreatedDateTime
 	, ModifiedDateTime
 )
@@ -57,6 +58,7 @@ SELECT @intEventId
 	, TMP.Team1FromLeaguePosition
 	, ISNULL(L2.Id,0)
 	, TMP.Team2FromLeaguePosition
+	, 0
 	,GETDATE() 
 	,GETDATE()
 FROM #TMP TMP
@@ -77,13 +79,14 @@ INSERT INTO [dbo].[KoFixtures]
 	, Position
 	, [Team1FromKoFixtureId]
 	, [Team2FromKoFixtureId]
+	, ResultProcessed
 	, CreatedDateTime
 	, ModifiedDateTime
 )
-SELECT @intEventId, '2 July 2021 00:00:00'			 ,8,1,  @intMinId+1,@intMinId+2 ,GETDATE() ,GETDATE()
-UNION ALL SELECT @intEventId, '2 July 2021 00:00:00' ,8,2,  @intMinId+3,@intMinId+4 ,GETDATE() ,GETDATE()
-UNION ALL SELECT @intEventId, '3 July 2021 00:00:00' ,8,3,  @intMinId+5,@intMinId+6 ,GETDATE() ,GETDATE()
-UNION ALL SELECT @intEventId, '3 July 2021 00:00:00' ,8,4,  @intMinId+7,@intMinId+8 ,GETDATE() ,GETDATE()
+SELECT @intEventId, '2 July 2021 00:00:00'			 ,8,1,  @intMinId+1,@intMinId+2 ,1, GETDATE() ,GETDATE()
+UNION ALL SELECT @intEventId, '2 July 2021 00:00:00' ,8,2,  @intMinId+3,@intMinId+4 ,1, GETDATE() ,GETDATE()
+UNION ALL SELECT @intEventId, '3 July 2021 00:00:00' ,8,3,  @intMinId+5,@intMinId+6 ,1, GETDATE() ,GETDATE()
+UNION ALL SELECT @intEventId, '3 July 2021 00:00:00' ,8,4,  @intMinId+7,@intMinId+8 ,1, GETDATE() ,GETDATE()
 
 SELECT @intMinId = MIN(Id)-1
 FROM [dbo].[KoFixtures]
@@ -98,11 +101,12 @@ INSERT INTO [dbo].[KoFixtures]
 	, Position
 	, [Team1FromKoFixtureId]
 	, [Team2FromKoFixtureId]
+	, ResultProcessed
 	, CreatedDateTime
 	, ModifiedDateTime
 )
-SELECT @intEventId, '6 July 2021 00:00:00' ,4,1,  @intMinId+1,@intMinId+2 ,GETDATE() ,GETDATE()
-UNION ALL SELECT @intEventId, '7 July 2021 00:00:00' ,4,2,  @intMinId+3,@intMinId+4 ,GETDATE() ,GETDATE()
+SELECT @intEventId, '6 July 2021 00:00:00' ,4,1,  @intMinId+1,@intMinId+2 ,1, GETDATE() ,GETDATE()
+UNION ALL SELECT @intEventId, '7 July 2021 00:00:00' ,4,2,  @intMinId+3,@intMinId+4 ,1, GETDATE() ,GETDATE()
 
 SELECT @intMinId = MIN(Id)-1
 FROM [dbo].[KoFixtures]
@@ -117,8 +121,8 @@ INSERT INTO [dbo].[KoFixtures]
 	, Position
 	, [Team1FromKoFixtureId]
 	, [Team2FromKoFixtureId]
+	, ResultProcessed
 	, CreatedDateTime
 	, ModifiedDateTime
 )
-SELECT @intEventId, '11 July 2021 00:00:00' ,2,1,  @intMinId+1,@intMinId+2 ,GETDATE() ,GETDATE()
-
+SELECT @intEventId, '11 July 2021 00:00:00' ,2,1,  @intMinId+1,@intMinId+2 ,1, GETDATE() ,GETDATE()

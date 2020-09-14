@@ -18,7 +18,7 @@ namespace Predict.Controllers
         }
 
         // GET: Fixtures
-        public ActionResult Index(short eventId)
+        public ActionResult Index()
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -27,8 +27,6 @@ namespace Predict.Controllers
             var fixtures = _context.Fixtures
                 .Include(b => b.HomeTeam)
                 .Include(b => b.AwayTeam).ToList();
-
-            ViewBag.EventId = eventId;
 
             return View(fixtures);
         }
@@ -47,7 +45,6 @@ namespace Predict.Controllers
                 Teams = (from a in _context.Teams
                     select a).ToList()
             };
-            fixtureViewModel.EventId = eventId;
 
             return View("EditFixture", fixtureViewModel);
         }

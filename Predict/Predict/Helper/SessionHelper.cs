@@ -104,7 +104,8 @@ namespace Predict.Helper
 
             var eventPlayers = context.EventPlayers
                 .Include(t => t.Event)
-                .Where(e => e.PlayerId == userId && e.Enabled==true)              
+                .Where(e => e.PlayerId == userId && e.Enabled==true)   
+                .OrderBy(a => a.Event.StartDateTime)
                 .ToList();
 
             session[sessionName] = eventPlayers;

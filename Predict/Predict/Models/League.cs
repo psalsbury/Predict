@@ -17,7 +17,7 @@ namespace Predict.Models
         public string LeagueName { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(15)]
         public string ShortLeagueName { get; set; }
 
         public int? RapidApiLeagueId { get; set; }

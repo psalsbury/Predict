@@ -3,79 +3,94 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using Predict.RapidAPIFixturesByLeague;
 using Predict.Models;
 using RestSharp;
 using RestSharp.Serialization.Json;
 using Fixture = Predict.RapidAPIFixturesByLeague.Fixture;
 
-namespace Predict.RapidApi
+namespace Predict.Helper
 {
-    public class RapidApi
+    public static class RapidApi
     {
-
-        private readonly ApplicationDbContext _context;
-
-        public RapidApi()
+        
+        public static void UpdatePremierLeague()
         {
-            _context = new ApplicationDbContext();
+            var rapidApiLeagueId = 2790;
+            var leagueName = "Premier League 2020/21";
+            var shortLeagueName = "Premier League";
+            FixturesByLeague(rapidApiLeagueId, leagueName, shortLeagueName);
         }
 
-        public void FixturesByLeague(int rapidApiLeagueId, string leagueName, string shortLeagueName)
+        public static void FixturesByLeague(int rapidApiLeagueId, string leagueName, string shortLeagueName)
         {
-            rapidApiLeagueId = 2790;
-            leagueName = "Premier League 2020/21";
-            shortLeagueName = "Premier League";
-
+            var context = new ApplicationDbContext();
             var client = new RestClient("https://api-football-v1.p.rapidapi.com/v2/fixtures/league/"+ rapidApiLeagueId + "?timezone=Europe%2FLondon");
             var request = new RestRequest(Method.GET);
             request.AddHeader("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
             request.AddHeader("x-rapidapi-key", "d2f34fda45msh6212d84073d1f56p1b7dd9jsn619a512aa3fb");
             IRestResponse response = client.Execute(request);
 
+            // Update setting value
+            var siteSettingName = "RapidApi_Fixtures_By_League_" + rapidApiLeagueId + "_" +
+                                  DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString();
+            var siteSettingValue = GetSiteSetting(context, siteSettingName);
+            if (siteSettingValue.IsNullOrWhiteSpace())
+            {
+                siteSettingValue = "1";
+            }
+            else
+            {
+                siteSettingValue = (System.Convert.ToInt32(siteSettingValue) + 1).ToString();
+            }
+            SaveSiteSetting(context, siteSettingName,siteSettingValue);                
+
             var pete = new JsonSerializer();
             var pete2 = pete.Deserialize<Root>(response);
 
-            var fixtures = _context.Fixtures.ToList();
-            var teams = _context.Teams.ToList();
+            var fixtures = context.Fixtures.ToList();
+            var teams = context.Teams.ToList();
             var newResultFound = false;
 
-            var league = _context.Leagues.FirstOrDefault(f => f.RapidApiLeagueId == rapidApiLeagueId);
+            var league = context.Leagues.FirstOrDefault(f => f.RapidApiLeagueId == rapidApiLeagueId);
             if (league == null)
             {
-                league = new Models.League();
-                league.LeagueName = leagueName;
-                league.ShortLeagueName = shortLeagueName;
-                league.CreatedDateTime = DateTime.Now;
-                league.ModifiedDateTime = DateTime.Now;
-                _context.Leagues.Add(league);
-                _context.SaveChanges();
+                league = new Models.League
+                {
+                    LeagueName = leagueName,
+                    ShortLeagueName = shortLeagueName,
+                    CreatedDateTime = DateTime.Now,
+                    ModifiedDateTime = DateTime.Now
+                };
+                context.Leagues.Add(league);
+                context.SaveChanges();
             }
 
             foreach (Fixture rapidApiFixture in pete2.api.fixtures)
             {
                 var rapidApiFixtureId = rapidApiFixture.fixture_id;
                 var updateDb = false;
-                var homeTeam = CheckTeamExists(teams, rapidApiFixture.homeTeam.team_id,
+                var homeTeam = CheckTeamExists(context, teams, rapidApiFixture.homeTeam.team_id,
                     rapidApiFixture.homeTeam.team_name, rapidApiFixture.homeTeam.logo);
 
                 if (homeTeam.Id == 0)
                 {
-                    _context.Teams.AddOrUpdate(homeTeam);
+                    context.Teams.AddOrUpdate(homeTeam);
                     updateDb = true;
                 }
 
-                var awayTeam = CheckTeamExists(teams, rapidApiFixture.awayTeam.team_id,
+                var awayTeam = CheckTeamExists(context, teams, rapidApiFixture.awayTeam.team_id,
                     rapidApiFixture.awayTeam.team_name, rapidApiFixture.awayTeam.logo);
 
                 if (awayTeam.Id == 0)
                 {
-                    _context.Teams.AddOrUpdate(awayTeam);
+                    context.Teams.AddOrUpdate(awayTeam);
                     updateDb = true;
                 }
 
                 if(updateDb)
-                    _context.SaveChanges();
+                    context.SaveChanges();
 
                 var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
                 if (fixture == null)
@@ -93,22 +108,25 @@ namespace Predict.RapidApi
                 if (fixture.HomeResult == null && rapidApiFixture.score.fulltime != null)
                 {
                     newResultFound = true;
+                    fixture.HomeResult = (short)rapidApiFixture.goalsHomeTeam;
+                    fixture.AwayResult = (short)rapidApiFixture.goalsAwayTeam;
+                    fixture.ResultProcessed = false;
                 }
                 fixture.FixtureDateTime = rapidApiFixture.event_date;
                 fixture.LeagueId = league.Id;
-                fixture.HomeResult = (short)rapidApiFixture.goalsHomeTeam;
-                fixture.AwayResult = (short)rapidApiFixture.goalsAwayTeam;
-                fixture.ResultProcessed = false;
 
-                _context.Fixtures.AddOrUpdate(fixture);
-
+                context.Fixtures.AddOrUpdate(fixture);
             }
-            _context.SaveChanges();
+            context.SaveChanges();
+
+            if(newResultFound)
+                Helper.Cache.UpdateScoring(context);
+
         }
 
-        private Models.Team CheckTeamExists(List<Models.Team> teams, int rapidApiTeamId, string teamName, string logo)
+        private static Models.Team CheckTeamExists(ApplicationDbContext context, List<Models.Team> teams, int rapidApiTeamId, string teamName, string logo)
         {
-            var team = _context.Teams.FirstOrDefault(t => t.RapidApiTeamId == rapidApiTeamId);
+            var team = context.Teams.FirstOrDefault(t => t.RapidApiTeamId == rapidApiTeamId);
             if (team == null)
             {
                 team = new Models.Team
@@ -123,6 +141,31 @@ namespace Predict.RapidApi
 
             return team;
         }
-  
+
+        public static void SaveSiteSetting(ApplicationDbContext context, string settingName, string settingValue)
+        {
+            var siteSetting = context.SiteSettings.FirstOrDefault(f => f.SettingName == settingName);
+            if (siteSetting == null)
+            {
+                siteSetting = new SiteSetting
+                {
+                    SettingName = settingName,
+                    SettingValue = settingValue,
+                    CreatedDateTime = DateTime.Now,
+                    ModifiedDateTime = DateTime.Now
+                };
+                context.SiteSettings.Add(siteSetting);
+            }
+        }
+
+        public static string GetSiteSetting(ApplicationDbContext context, string settingName)
+        {
+            var siteSetting = context.SiteSettings.FirstOrDefault(f => f.SettingName == settingName);
+            if (siteSetting == null)
+                return "";
+
+            return siteSetting.SettingValue;
+
+        }
     }
 }

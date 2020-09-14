@@ -10,10 +10,6 @@ namespace Predict.ViewModels
     {
         public int Id { get; set; }
 
-        [Required] public short EventId { get; set; }
-
-        public Event Event { get; set; }
-
         [Required]
         [Display(Name = "Fixture Date/Time")]
         public DateTime? FixtureDateTime { get; set; }
@@ -34,10 +30,15 @@ namespace Predict.ViewModels
 
         [Display(Name = "Away Team")] public short? AwayResult { get; set; }
 
+        public short LeagueId { get; set; }
+
+        public League League { get; set; }
+
         [Required] public DateTime CreatedDateTime { get; set; }
 
         [Required] public DateTime ModifiedDateTime { get; set; }
 
         public List<Team> Teams { get; set; }
+        public List<League> Leagues { get; set; }
     }
 }

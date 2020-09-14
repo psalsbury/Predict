@@ -79,24 +79,21 @@ namespace Predict.Controllers
             _context.Events.AddOrUpdate(myEvent);
             _context.SaveChanges();
 
-            // Ensure the current user is entered into the new event
-           var eventPlayer = _context.EventPlayers.FirstOrDefault(f => f.EventId == myEvent.Id && f.PlayerId == playerId);
-
-            if (eventPlayer == null)
+            // Ensure that the default pool is associated to the to the event
+            var eventPool =
+                _context.EventPools.FirstOrDefault(a => a.EventId == myEvent.Id && a.PoolId == globalPoolId);
+            if (eventPool == null)
             {
-                eventPlayer = new EventPlayer
+                eventPool = new EventPool
                 {
-                    CreatedDateTime = DateTime.Now,
-                    PlayerId = User.Identity.GetUserId(),
                     EventId = myEvent.Id,
+                    PoolId = globalPoolId,
+                    CreatedDateTime = DateTime.Now,
+                    ModifiedDateTime = DateTime.Now
                 };
-
+                _context.EventPools.AddOrUpdate(eventPool);
+                _context.SaveChanges();
             }
-
-            eventPlayer.ModifiedDateTime = DateTime.Now;
-            eventPlayer.Enabled = true;
-            _context.EventPlayers.AddOrUpdate(eventPlayer);
-            _context.SaveChanges();
 
             // update the application cache for events
             Helper.Cache.SetEventCache();

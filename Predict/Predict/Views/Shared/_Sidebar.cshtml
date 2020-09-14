@@ -36,25 +36,12 @@
                         </a>
                     </li>
 
-                    <li class="treeview">
-                        <a href="#">
+                    <li>
+                        <a href="@Url.Action("AdminHome", "Admin")">
                             <i class="fa fa-gear"></i> <span>Admin</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
                         </a>
-                        <ul class="treeview-menu">
-
-                            @foreach (var eventPlayer in eventPlayers)
-                            {
-                                <li>
-                                    <a href="@Url.Action("AdminHome", "Admin", new {eventId = eventPlayer.EventId})">
-                                        <i class="fa fa-key"></i> <span>@eventPlayer.Event.EventName</span>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
                     </li>
+
                 }
             }
             else

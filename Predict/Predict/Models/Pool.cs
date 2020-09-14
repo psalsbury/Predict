@@ -14,7 +14,6 @@ namespace Predict.Models
         [Required] [StringLength(50)] public string PoolName { get; set; }
 
         public string AdminPlayerId { get; set; }
-
         [ForeignKey("AdminPlayerId")] public Player AdminPlayer { get; set; }
 
         [StringLength(50)]

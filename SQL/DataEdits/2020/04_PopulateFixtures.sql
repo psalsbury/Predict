@@ -59,6 +59,7 @@ INSERT INTO [dbo].[Fixtures]
 	, [CreatedDateTime]
 	, [ModifiedDateTime]
 	, LeagueId
+	, ResultProcessed
 )
 SELECT TMP.FixtureDateTime
 	, TH.Id
@@ -66,6 +67,7 @@ SELECT TMP.FixtureDateTime
 	, GETDATE()
 	, GETDATE()
 	, TMP.LeagueId
+	, 0
 FROM #tmp AS TMP
 INNER JOIN [dbo].[Teams] AS TH ON TH.TeamName = TMP.TeamName1
 INNER JOIN [dbo].[Teams] AS TA ON TA.TeamName = TMP.TeamName2

@@ -6,6 +6,7 @@ using System.Runtime.Caching;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace Predict.Helper
 {
@@ -89,6 +90,17 @@ namespace Predict.Helper
                 myEvents[myOriginalEventIndex] = myNewEvent;
             }
             SetCachedItem("Events", myEvents);
+        }
+
+        public static void UpdateScoring(ApplicationDbContext context)
+        {
+            // Run stored procedure to update all scoring
+            var today = DateTime.Today;
+            var todayParam = new SqlParameter("@dteDate", today);
+            context.Database.ExecuteSqlCommand("EXEC spProcessScores @intEventId, @dteDate", todayParam);
+
+            // Update the cache for this event
+            SetEventCache();
         }
     }
 }
