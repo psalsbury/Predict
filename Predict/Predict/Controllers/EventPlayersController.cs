@@ -5,6 +5,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
 
@@ -38,35 +39,31 @@ namespace Predict.Controllers
             foreach (Event myEvent in myEvents)
             {
                 var myEventPlayer = myEventPlayers.FirstOrDefault(m => m.EventId == myEvent.Id);
-
+                var changeMade = false;
                 var playingIn = Request["event_" + myEvent.Id];
-                if (playingIn == null && myEventPlayer != null)
+                if (playingIn.IsNullOrWhiteSpace() && myEventPlayer != null && myEventPlayer.Enabled == true)
                 {
                     // User has selected NOT to be in this event and the record exists
-                    if (myEventPlayer.Enabled == true)
-                    {
-                        myEventPlayer.Enabled = false;
-                        myEventPlayer.ModifiedDateTime = DateTime.Now;
+                    myEventPlayer.Enabled = false;
+                    myEventPlayer.ModifiedDateTime = DateTime.Now;
 
-                        // disable all entries to pools for this event
-                        var poolPlayers = _context.PoolPlayers.Where(f => f.PlayerId == playerId && f.EventId == myEvent.Id).ToList();
-                        poolPlayers.ForEach(a => a.Enabled = false);
-                        poolPlayers.ForEach(a => a.ModifiedDateTime= DateTime.Now);
-                        _context.EventPlayers.AddOrUpdate(myEventPlayer);
-                    }
+                    // disable all entries to pools for this event
+                    var poolPlayers = _context.PoolPlayers.Where(f => f.PlayerId == playerId && f.EventId == myEvent.Id).ToList();
+                    poolPlayers.ForEach(a => a.Enabled = false);
+                    poolPlayers.ForEach(a => a.ModifiedDateTime= DateTime.Now);
+                    _context.EventPlayers.AddOrUpdate(myEventPlayer);
+                    changeMade = true;
 
                 }
-                else if (playingIn != "" && myEventPlayer != null)
+                else if (!playingIn.IsNullOrWhiteSpace() && myEventPlayer != null && myEventPlayer.Enabled == false)
                 {
                     // User has selected to be in this event and the record exists
-                    if (myEventPlayer.Enabled == false)
-                    {
-                        myEventPlayer.Enabled = true;
-                        myEventPlayer.ModifiedDateTime = DateTime.Now;
-                        _context.EventPlayers.AddOrUpdate(myEventPlayer);
-                    }
+                    myEventPlayer.Enabled = true;
+                    myEventPlayer.ModifiedDateTime = DateTime.Now;
+                    _context.EventPlayers.AddOrUpdate(myEventPlayer);
+                    changeMade = true;
                 }
-                else if (playingIn != "" && myEventPlayer == null)
+                else if (!playingIn.IsNullOrWhiteSpace() && myEventPlayer == null)
                 {
                     // User has selected to be in this event and the record does not exist
                     myEventPlayer = new EventPlayer
@@ -78,10 +75,11 @@ namespace Predict.Controllers
                         Enabled = true
 
                     };
-                    _context.EventPlayers.Add(myEventPlayer);                                       
+                    _context.EventPlayers.Add(myEventPlayer);
+                    changeMade = true;
                 }
 
-                if (playingIn != "")
+                if (!playingIn.IsNullOrWhiteSpace())
                 {
                     // Make sure the player has an enabled record for the default pool
                     var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
@@ -106,11 +104,13 @@ namespace Predict.Controllers
                         myPoolPlayer.ModifiedDateTime = DateTime.Now;
                     }
                     _context.PoolPlayers.AddOrUpdate(myPoolPlayer);
+                    changeMade = true;
                 }
-                _context.SaveChanges();
+
+                if (changeMade == true)
+                     _context.SaveChanges();
             }
             
-            Helper.SessionHelper.UpdateEventPlayersSessionVariable(_context, Session,playerId,true);
             Helper.SessionHelper.SetUserSessionVariables(Session, playerId,true);
             return RedirectToAction("Index", "Home");
         }

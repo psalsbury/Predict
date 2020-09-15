@@ -122,7 +122,7 @@ namespace Predict.Helper
             // Run stored procedure to update all scoring
             var today = DateTime.Today;
             var todayParam = new SqlParameter("@dteDate", today);
-            context.Database.ExecuteSqlCommand("EXEC spProcessScores @intEventId, @dteDate", todayParam);
+            context.Database.ExecuteSqlCommand("EXEC spProcessScores @dteDate", todayParam);
 
             // Update the cache for this event
             SetEventCache();

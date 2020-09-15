@@ -43,6 +43,7 @@ namespace Predict.Controllers
                 .Include(b => b.HomeTeam)
                 .Include(b => b.AwayTeam)
                 .Include(b => b.League)
+                .OrderBy(a => a.FixtureDateTime)
                 .ToList();
 
             eventFixturesViewModel.Fixtures = fixtures;
@@ -108,7 +109,7 @@ namespace Predict.Controllers
                 _context.Database.ExecuteSqlCommand("EXEC spUpdateEventStartEnd @intEventId", eventParam);
             }
 
-            return RedirectToAction("AdminHome", "Admin");
+            return RedirectToAction("EventsIndex", "Events");
 
         }
 

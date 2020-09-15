@@ -14,6 +14,11 @@
         </nav>
     }
 }
+@if (!Model.ReadOnly)
+{
+    <input class="btn btn-primary" title="Click to select let the computer pick your predictions for you." type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
+    <br />
+}
 @using (Html.BeginForm("Save", "BonusQuestionPredictions"))
 {
     @Html.HiddenFor(m => m.EventId);
@@ -22,7 +27,7 @@
             <tr>
 
                 <th>
-                    Question
+
                 </th>
                 <th>
                     Answer
@@ -51,8 +56,10 @@
                         @Html.TextBoxFor(m => m.BonusQuestionPredictions[i].PredictedAnswer, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
                     }
                 </td>
-                <td>
-                    @Html.DisplayFor(m => m.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime)
+                <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
+                    
+                    @Html.Hidden("ToBeAnsweredByDateTime", Model.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime.ToLongDateString() + " " + Model.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime.ToShortTimeString())
+
                 </td>
 
             </tr>
@@ -77,28 +84,95 @@
         </div>
     }
 }
+<script src="../../Scripts/bootbox.js"></script>
+@if (!Model.ReadOnly)
+{
+    <script>
 
-<script>
+        function IsNumeric(obj) {
+            //  check for valid numeric strings
+            var strString = obj.value;
+            var strValidChars = "0123456789";
+            var strChar;
+            var blnResult = true;
+            if (strString.length == 0) return true; // Nulls are ok
 
-    function IsNumeric(obj) {
-        //  check for valid numeric strings
-        var strString = obj.value;
-        var strValidChars = "0123456789";
-        var strChar;
-        var blnResult = true;
-        if (strString.length == 0) return true; // Nulls are ok
-
-        //  test strString consists of valid characters listed above
-        for (i = 0; i < strString.length && blnResult === true; i++) {
-            strChar = strString.charAt(i);
-            if (strValidChars.indexOf(strChar) === -1) {
-                obj.select();
-                obj.focus();
-                alert('Please enter a numerical value');
-                obj.value = "";
-                blnResult = false;
+            //  test strString consists of valid characters listed above
+            for (i = 0; i < strString.length && blnResult === true; i++) {
+                strChar = strString.charAt(i);
+                if (strValidChars.indexOf(strChar) === -1) {
+                    obj.select();
+                    obj.focus();
+                    alert('Please enter a numerical value');
+                    obj.value = "";
+                    blnResult = false;
+                }
             }
+            return blnResult;
         }
-        return blnResult;
-    }
-</script>
+    </script>
+
+    <script>
+        function LuckyDip() {
+            bootbox.confirm("Lucky dip, are you sure?",
+                function(result) {
+                    if (result) {
+                        @{
+                            var position = 0;
+                            foreach (var fixturePrediction in Model.BonusQuestionPredictions)
+                            {
+                                var fixtureDateTime = fixturePrediction.BonusQuestion.ToBeAnsweredByDateTime;
+                                var now = DateTime.Now.ToUniversalTime();
+
+                                var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
+                                if (diffInSeconds > 0)
+                                {
+                                    <text>
+                                        $('#BonusQuestionPredictions_@(position)__PredictedAnswer')
+                                            .val(Math.round(Math.random() * 3));
+                                    </text>
+                                }
+                                position = position + 1;
+                            }
+                        }
+                    }
+                });
+        }
+    </script>
+
+
+    <script>
+
+        //get all td with actionclass in table
+        $("tbody tr td.myDate").each(function() {
+
+            $hiddenValue = $(this).find("input[type=hidden]").val();
+
+            var d = new Date($hiddenValue);
+
+            this.innerHTML = convertUTCDateToLocalDate(d);
+
+        });
+
+        function convertUTCDateToLocalDate(date) {
+            var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+            var offset = date.getTimezoneOffset() / 60;
+            var hours = date.getHours();
+
+            newDate.setHours(hours - offset);
+            mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
+            da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+
+            return da + ' ' + mo + ' ' + newDate.getHours() + ':' + pad(newDate.getMinutes(), 2);
+
+        }
+
+        function pad(n, width, z) {
+            z = z || '0';
+            n = n + '';
+            return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        }
+
+    </script>
+}

@@ -6,7 +6,7 @@
 
 {
     @Html.HiddenFor(m => m.Event.Id);
-    <table class="table" id="EventFixtures" class="table table-bordered table-hover">
+    <table  id="EventFixtures" class="table table-bordered table-hover">
         <thead>
         <tr>
             <th></th>
@@ -18,31 +18,35 @@
             </thead>
         @foreach (var item in Model.Fixtures.ToList())
         {
-            <tr>
-                <td>
-                    @{ var exists = Model.EventFixtures.Exists(a => a.FixtureId == item.Id); }
-                    <input type="checkbox" value="@item.Id" id="fixture_@item.Id" name="fixture_@item.Id" @(exists ? "checked" : "")>
-                </td>
-                <td>
-                    @item.League.ShortLeagueName
-                </td>
-                <td>
-                    @item.HomeTeam.TeamName
-                </td>
-                <td>
-                    @item.AwayTeam.TeamName
-                </td>
-                <td>
-                    @item.FixtureDateTime.ToString("yyyy-MM-dd h:mm tt")
-                </td>
-            </tr>
+            var exists = Model.EventFixtures.Exists(a => a.FixtureId == item.Id);
+            if (exists || item.FixtureDatePassed == false)
+            {
+                <tr>
+                    <td>
+
+                        <input type="checkbox" value="@item.Id" id="fixture_@item.Id" name="fixture_@item.Id" @(exists ? "checked" : "")>
+                    </td>
+                    <td>
+                        @item.League.ShortLeagueName
+                    </td>
+                    <td>
+                        @item.HomeTeam.TeamName
+                    </td>
+                    <td>
+                        @item.AwayTeam.TeamName
+                    </td>
+                    <td>
+                        @item.FixtureDateTime.ToString("yyyy-MM-dd h:mm tt")
+                    </td>
+                </tr>
+            }
         }
     </table>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Save" class="btn btn-success" />
         </div>
     </div>
 

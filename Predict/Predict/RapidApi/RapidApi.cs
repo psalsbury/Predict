@@ -27,28 +27,32 @@ namespace Predict.Helper
         public static void FixturesByLeague(int rapidApiLeagueId, string leagueName, string shortLeagueName)
         {
             var context = new ApplicationDbContext();
+
+            var siteSettingName = "RapidApi_Fixtures_By_League_" + rapidApiLeagueId + "_" +
+                                  DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString();
+            var siteSettingValue = GetSiteSetting(context, siteSettingName);
+            if (siteSettingValue.IsNullOrWhiteSpace())
+            {
+                siteSettingValue = "0";
+            }
+
+            var nbrTimesApiCalled = System.Convert.ToInt32(siteSettingValue);
+            if (nbrTimesApiCalled >= 100)
+                return;
+
             var client = new RestClient("https://api-football-v1.p.rapidapi.com/v2/fixtures/league/"+ rapidApiLeagueId + "?timezone=Europe%2FLondon");
             var request = new RestRequest(Method.GET);
             request.AddHeader("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
             request.AddHeader("x-rapidapi-key", "d2f34fda45msh6212d84073d1f56p1b7dd9jsn619a512aa3fb");
             IRestResponse response = client.Execute(request);
 
-            // Update setting value
-            var siteSettingName = "RapidApi_Fixtures_By_League_" + rapidApiLeagueId + "_" +
-                                  DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString();
-            var siteSettingValue = GetSiteSetting(context, siteSettingName);
-            if (siteSettingValue.IsNullOrWhiteSpace())
-            {
-                siteSettingValue = "1";
-            }
-            else
-            {
-                siteSettingValue = (System.Convert.ToInt32(siteSettingValue) + 1).ToString();
-            }
+            // Get setting value
+            nbrTimesApiCalled = nbrTimesApiCalled + 1;
+            siteSettingValue = nbrTimesApiCalled.ToString();
             SaveSiteSetting(context, siteSettingName,siteSettingValue);                
 
-            var pete = new JsonSerializer();
-            var pete2 = pete.Deserialize<Root>(response);
+            var jsonSerializer = new JsonSerializer();
+            var rapidApiFixtures = jsonSerializer.Deserialize<Root>(response);
 
             var fixtures = context.Fixtures.ToList();
             var teams = context.Teams.ToList();
@@ -69,7 +73,7 @@ namespace Predict.Helper
                 context.SaveChanges();
             }
 
-            foreach (Fixture rapidApiFixture in pete2.api.fixtures)
+            foreach (var rapidApiFixture in rapidApiFixtures.api.fixtures)
             {
                 var rapidApiFixtureId = rapidApiFixture.fixture_id;
                 var updateDb = false;
@@ -94,6 +98,9 @@ namespace Predict.Helper
                 if(updateDb)
                     context.SaveChanges();
 
+                // Check if the fixture needs updating
+                updateDb = false;
+
                 var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
                 if(rapidApiFixture.status == "Match Postponed")
                 {
@@ -103,6 +110,7 @@ namespace Predict.Helper
                             newResultFound = true;
 
                         context.Fixtures.Remove(fixture);
+                        updateDb = true;
                     }
                 }
                 else
@@ -114,24 +122,39 @@ namespace Predict.Helper
                             RapidApiFixtureId = rapidApiFixtureId,
                             HomeTeamId = homeTeam.Id,
                             AwayTeamId = awayTeam.Id,
+                            LeagueId = league.Id,
                             CreatedDateTime = DateTime.Now,
                             ModifiedDateTime = DateTime.Now
                         };
+                        updateDb = true;
                     }
+
+                    if (fixture.HomeResult == null && rapidApiFixture.score.fulltime != null)
+                    {
+                        newResultFound = true;
+                        updateDb = true;
+                        fixture.HomeResult = (short) rapidApiFixture.goalsHomeTeam;
+                        fixture.AwayResult = (short) rapidApiFixture.goalsAwayTeam;
+                        fixture.ResultProcessed = false;
+                    }
+
+                    if (rapidApiFixture.event_date.IsDaylightSavingTime())
+                    {
+                        // Change time to UTC
+                        rapidApiFixture.event_date = rapidApiFixture.event_date.AddHours(-1);
+                    }
+
+                    if (fixture.FixtureDateTime != rapidApiFixture.event_date)
+                    {
+                        fixture.FixtureDateTime = rapidApiFixture.event_date;
+                        updateDb = true;
+                    }
+
+                    if (updateDb)
+                        context.Fixtures.AddOrUpdate(fixture);
+                    
                 }
 
-
-                if (fixture.HomeResult == null && rapidApiFixture.score.fulltime != null)
-                {
-                    newResultFound = true;
-                    fixture.HomeResult = (short)rapidApiFixture.goalsHomeTeam;
-                    fixture.AwayResult = (short)rapidApiFixture.goalsAwayTeam;
-                    fixture.ResultProcessed = false;
-                }
-                fixture.FixtureDateTime = rapidApiFixture.event_date;
-                fixture.LeagueId = league.Id;
-
-                context.Fixtures.AddOrUpdate(fixture);
             }
             context.SaveChanges();
 

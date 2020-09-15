@@ -81,10 +81,6 @@ namespace Predict.Helper
 
             // Pool info
             UpdatePlayerPoolInfo(context, session, userId, forcePoolRefresh);
-            if (forcePoolRefresh)
-            {
-                UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
-            }
 
             session.Timeout = 252000; // 180 day
         }

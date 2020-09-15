@@ -10,7 +10,7 @@
 
     if (eventId == 0 && nbrEvents > 0)
     {
-        eventId = eventPlayers.Min(a => a.EventId);
+        eventId = eventPlayers.OrderBy(a => a.Event.StartDateTime).FirstOrDefault().EventId;
     }
 
     if (eventId > 0)

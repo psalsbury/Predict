@@ -18,8 +18,6 @@ CREATE PROCEDURE dbo.spProcessScores
 AS
 BEGIN
 
-	DECLARE @dteDate DATE = '14 SEP 2020'
-
 	SET NOCOUNT ON;
 
 	CREATE TABLE #tmpEventPools

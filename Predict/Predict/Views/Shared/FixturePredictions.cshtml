@@ -16,8 +16,9 @@
 
 @if (!Model.ReadOnly)
 {
-    <input class="btn btn-primary" title="Click to select let the computer pick your predictions for you." type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
+    <input class="btn btn-primary alignleft" title="Click to select let the computer pick your predictions for you." type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
 }
+<input type="button" class="btn btn-primary alignright" data-toggle="modal" data-target="#myModal" value="Colour Key">
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
     @Html.HiddenFor(m => m.EventId)
@@ -225,7 +226,7 @@
         }
 
         function ClearPredictions() {
-            bootbox.confirm("Clear your predictions, are you sure?",
+            bootbox.confirm("Clear all your outstanding predictions, are you sure?",
                 function(result) {
                     if (result)
                     {
@@ -313,3 +314,68 @@
         });
     });
 </script>
+
+<!-- Button trigger modal -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">What the colours mean</h4>
+            </div>
+            <div class="modal-body">
+
+                <table>
+                    <tr>
+                        <td style="background-color: #d9f2e6" width="20">
+                            &nbsp
+                        </td>
+                        <td>
+                            &nbsp&nbsp Correct Score
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #b3d9ff">
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp&nbsp Correct Win Margin
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #ffebcc">
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp&nbsp Correct Result
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #ffcccc">
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp&nbsp No score
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .alignleft {
+        float: left;
+    }
+    .alignright {
+        float: right;
+    }
+</style>

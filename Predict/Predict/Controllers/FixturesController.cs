@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using AutoMapper;
 using Predict.Models;
 using Predict.ViewModels;
@@ -26,7 +27,9 @@ namespace Predict.Controllers
 
             var fixtures = _context.Fixtures
                 .Include(b => b.HomeTeam)
-                .Include(b => b.AwayTeam).ToList();
+                .Include(b => b.AwayTeam)
+                .OrderBy(a => a.FixtureDateTime)
+                .ToList();
 
             return View(fixtures);
         }

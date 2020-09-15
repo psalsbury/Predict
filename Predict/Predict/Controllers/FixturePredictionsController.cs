@@ -23,7 +23,7 @@ namespace Predict.Controllers
         // GET: FixturePredictions
         // Used to enter predictions
         //[Route("FixturePredictions/FixturePredictions/{eventId}")]
-        public ActionResult FixturePredictions(int eventId)
+        public ActionResult FixturePredictions(short eventId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -37,7 +37,7 @@ namespace Predict.Controllers
         // GET: FixturePredictions
         // Used to view predictions
         [ActionName("ViewFixturePredictions")]
-        public ActionResult FixturePredictions(int eventId, string userId)
+        public ActionResult FixturePredictions(short eventId, string userId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -49,7 +49,7 @@ namespace Predict.Controllers
         }
 
         public FixturePredictionsViewModel GetFixturePredictionsViewModel(string loggedInUserId, string userId,
-            int eventId)
+            short eventId)
         {
 
             var fixturePredictions = new List<FixturePrediction>();
@@ -109,6 +109,7 @@ namespace Predict.Controllers
 
             fixturePredictionsViewModel.FixturePredictions = fixturePredictions;
             fixturePredictionsViewModel.UserId = userId;
+            fixturePredictionsViewModel.EventId = eventId;
 
             return fixturePredictionsViewModel;
         }
