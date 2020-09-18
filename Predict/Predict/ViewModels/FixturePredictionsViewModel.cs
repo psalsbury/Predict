@@ -9,6 +9,8 @@ namespace Predict.ViewModels
 
         public string UserId { get; set; }
 
+        public bool OtherUserViewing { get; set; }
+
         public short EventId { get; set; }
 
         public bool ReadOnly { get; set; }

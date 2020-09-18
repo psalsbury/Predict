@@ -8,8 +8,16 @@
 
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab_1" data-toggle="tab"><b>Your Pools</b></a></li>
-        <li><a href="#tab_2" data-toggle="tab"><b>All other pools</b></a></li>
+        <li class="active">
+            <a href="#tab_1" data-toggle="tab">
+                <b>Your Pools</b>
+            </a>
+        </li>
+        <li>
+            <a href="#tab_2" data-toggle="tab">
+                <b>All other pools</b>
+            </a>
+        </li>
     </ul>
 
     <div class="tab-content nav-tabs-custom">
@@ -17,11 +25,11 @@
 
             <table class="table table-bordered table-hover" id="poolMembershipJoined">
                 <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Pools[0].PoolName)
-                        </th>
-                    </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Pools[0].PoolName)
+                    </th>
+                </tr>
                 </thead>
 
                 @foreach (var joinedPool in Model.JoinedPools)
@@ -61,7 +69,7 @@
                         Join Code Required
                     </th>
                     <th>
-                        
+
                     </th>
                 </tr>
                 </thead>
@@ -82,11 +90,11 @@
                                     @Html.DisplayFor(modelItem => item.InitialInfo)
                                 </td>
                                 <td>
-                                    @joinCodeNeededDisplay.ToString()
+                                    @joinCodeNeededDisplay
                                 </td>
 
                                 <td>
-                                    <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded.ToString()" dataPoolId="@item.Id" poolName="@item.PoolName">Request to join</button>
+                                    <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded" dataPoolId="@item.Id" poolName="@item.PoolName">Request to join</button>
                                 </td>
 
                             </tr>
@@ -104,10 +112,10 @@
 
 <script>
 
-    $(function () {
-        $("#poolMembershipJoined, #poolMembershipNotJoined").DataTable( {
+    $(function() {
+        $("#poolMembershipJoined, #poolMembershipNotJoined").DataTable({
             "bLengthChange": false
-        } );;
+        });;
     });
 
 
@@ -116,60 +124,63 @@
 <script>
 
 
-    $("#poolMembershipJoined").on("click", ".js-approve", function() {
-        var button = $(this);
-        bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " pool?",
-            function(result) {
-                $.ajax(
-                    {
-                        url: "../api/poolPlayers/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
-                        method: "DELETE",
-                        success: function() {
-                            $(button.closest("tr")).fadeOut(1000);
+    $("#poolMembershipJoined").on("click",
+        ".js-approve",
+        function() {
+            var button = $(this);
+            bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " pool?",
+                function(result) {
+                    $.ajax(
+                        {
+                            url: "../api/poolPlayers/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
+                            method: "DELETE",
+                            success: function() {
+                                $(button.closest("tr")).fadeOut(1000);
+                            }
+                        });
+
+
+                });
+        });
+
+
+    $("#poolMembershipNotJoined").on("click",
+        ".btn-success",
+        function() {
+            var button = $(this);
+
+            var ok = false;
+            if (button.attr("joinCode") === "" || typeof button.attr("joinCode") === 'undefined') {
+                bootbox.confirm("Are you sure you want to join the " + button.attr("poolName") + " pool?",
+                    function(result) {
+                        if (result) {
+                            JoinPool(button, "");
                         }
                     });
+            } else {
+                bootbox.prompt("To join the " + button.attr("poolName") + " pool, please enter the join code",
+                    function(result) {
+                        JoinPool(button, result);
+                    });
 
-
-            });
-    });
-
-
-
-    $("#poolMembershipNotJoined").on("click", ".btn-success", function () {
-        var button = $(this);
-
-        var ok = false;
-        if (button.attr("joinCode") === "" || typeof button.attr("joinCode") === 'undefined') {
-            bootbox.confirm("Are you sure you want to join the "+ button.attr("poolName") + " pool?",
-                function(result) {
-                    if (result) {
-                        JoinPool(button,"");
-                    }
-                });
-        }
-
-        else {
-            bootbox.prompt("To join the " + button.attr("poolName") + " pool, please enter the join code",
-                function(result) {
-                    JoinPool(button, result);
-                });
-
-        };
-    });
+            };
+        });
 
     function JoinPool(button, joinCode) {
         $.ajax(
-            {        
+            {
                 // If this doesnt work, its the URL thats not working. The api works fine
-                url: "../api/PoolPlayers/AddNewPoolPlayer/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())" + "/" + joinCode,
+                url: "../api/EventEventPoolPlayers/AddNewEventPoolPlayer/" +
+                    button.attr("dataPoolId") +
+                    "/@(User.Identity.GetUserId())" +
+                    "/" +
+                    joinCode,
                 method: "POST",
-                success: function ()
-                {
+                success: function() {
                     $(button.closest("tr")).fadeOut(1000);
                 },
-                error: function (request, status, error)
-                {
-                    bootbox.alert("Join request has not been successful : "+ error);
+                error: function(request, status, error) {
+                    bootbox.alert("Join request has not been successful : " + error);
                 }
             });
     };

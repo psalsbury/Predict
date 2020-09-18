@@ -65,3 +65,5 @@ C:\Projects\Predict\Predict\Predict.Tests\obj\Release\Predict.Tests.csproj.CoreC
 C:\Projects\Predict\Predict\Predict.Tests\obj\Release\Predict.Tests.csproj.CopyComplete
 C:\Projects\Predict\Predict\Predict.Tests\obj\Release\Predict.Tests.dll
 C:\Projects\Predict\Predict\Predict.Tests\obj\Release\Predict.Tests.pdb
+C:\projects\Predict\Predict\Predict.Tests\bin\Release\RestSharp.dll
+C:\projects\Predict\Predict\Predict.Tests\bin\Release\RestSharp.xml

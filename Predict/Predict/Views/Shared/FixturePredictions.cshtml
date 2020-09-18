@@ -52,7 +52,7 @@
             {
                 rowColour = "#ffebcc"; // amber
             }
-            else if (Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
+            else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
             {
                 rowColour = "#ffcccc"; // red
             }
@@ -82,7 +82,15 @@
                                             {
                                                 if (Model.FixturePredictions[i].HomePrediction != null)
                                                 {
-                                                    @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+                                                    if (Model.OtherUserViewing)
+                                                    {
+                                                        <text>?</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+                                                    }
+
                                                 }
                                                 else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
                                                 {
@@ -122,7 +130,15 @@
                                             {
                                                 if (Model.FixturePredictions[i].AwayPrediction != null)
                                                 {
-                                                    @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+                                                    if (Model.OtherUserViewing)
+                                                    {
+                                                        <text>?</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+                                                    }
+
                                                 }
                                                 else if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
                                                 {
@@ -335,7 +351,7 @@
                             &nbsp
                         </td>
                         <td>
-                            &nbsp&nbsp Correct Score
+                            &nbsp&nbsp Correct Score Predicted
                         </td>
                     </tr>
                     <tr>
@@ -343,7 +359,7 @@
                             &nbsp;
                         </td>
                         <td>
-                            &nbsp&nbsp Correct Win Margin
+                            &nbsp&nbsp Correct Win Margin Predicted
                         </td>
                     </tr>
                     <tr>
@@ -351,7 +367,7 @@
                             &nbsp;
                         </td>
                         <td>
-                            &nbsp&nbsp Correct Result
+                            &nbsp&nbsp Correct Result Predicted
                         </td>
                     </tr>
                     <tr>
@@ -359,7 +375,7 @@
                             &nbsp;
                         </td>
                         <td>
-                            &nbsp&nbsp No score
+                            &nbsp&nbsp No points
                         </td>
                     </tr>
                 </table>

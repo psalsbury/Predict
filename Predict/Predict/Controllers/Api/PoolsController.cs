@@ -18,8 +18,8 @@ namespace Predict.Controllers.Api
             var pool = _context.Pools.Find(id);
             if (pool == null) return NotFound();
 
-            var poolPlayers = _context.PoolPlayers.Where(b => b.PoolId == id);
-            foreach (var poolPlayer in poolPlayers) _context.PoolPlayers.Remove(poolPlayer);
+            var poolPlayers = _context.EventPoolPlayers.Where(b => b.PoolId == id);
+            foreach (var poolPlayer in poolPlayers) _context.EventPoolPlayers.Remove(poolPlayer);
 
             _context.Pools.Remove(pool);
             _context.SaveChanges();

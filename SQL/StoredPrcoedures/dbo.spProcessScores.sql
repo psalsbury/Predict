@@ -73,7 +73,7 @@ BEGIN
 		, BonusScore = 0
 		, TotalScore = 0
 		, ModifiedDateTime = GETDATE()
-	FROM PoolPlayers AS PP
+	FROM EventPoolPlayers AS PP
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId;
 		
 	/* Calculate the group scores */
@@ -146,7 +146,7 @@ BEGIN
 	SET PP.CorrectScore = CTE.CorrectScore
 		, PP.[CorrectResult] = CTE.CorrectResult
 		, PP.[WinMargin] = CTE.WinMargin
-	FROM dbo.PoolPlayers AS PP
+	FROM dbo.EventPoolPlayers AS PP
 	INNER JOIN CTE ON CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 	
 	IF EXISTS(SELECT 1 FROM [dbo].[EventsKo] WHERE EventId IN (SELECT EventID FROM #tmpEvents))
@@ -267,7 +267,7 @@ BEGIN
 				END AS RoundOfScore
 		FROM #tmpKOPredictions AS KOP
 		INNER JOIN #koResults KOR ON KOR.RoundOf = KOP.RoundOf AND KOR.TeamId = KOP.TeamId
-		INNER JOIN dbo.PoolPlayers AS PP ON PP.PlayerId = KOP.PlayerID
+		INNER JOIN dbo.EventPoolPlayers AS PP ON PP.PlayerId = KOP.PlayerID
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
 		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = PP.EventId
 		GROUP BY KOP.PlayerID
@@ -290,7 +290,7 @@ BEGIN
 		)
 		UPDATE PP
 		SET KoScore = CTE.KoScore
-		FROM dbo.PoolPlayers AS PP
+		FROM dbo.EventPoolPlayers AS PP
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
 		INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId
 		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = PP.EventId;
@@ -307,7 +307,7 @@ BEGIN
 							, PP.CorrectScore DESC
 							, PP.KoScore DESC
 							, PL.CreatedDateTime) AS PoolPosition
-		FROM dbo.PoolPlayers AS PP
+		FROM dbo.EventPoolPlayers AS PP
 		INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 		INNER JOIN dbo.Players AS PL ON PL.Id = PP.PlayerId
@@ -316,7 +316,7 @@ BEGIN
 	SET PP.PoolPosition = CTE.PoolPosition
 		, PP.TotalScore = CTE.TotalScore
 		, PP.ModifiedDateTime = GETDATE()
-	FROM dbo.PoolPlayers AS PP
+	FROM dbo.EventPoolPlayers AS PP
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN CTE ON CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 
@@ -324,13 +324,13 @@ BEGIN
 	UPDATE PPPH
 	SET PPPH.PoolPosition = PP.PoolPosition
 		, PPPH.ModifiedDateTime = GETDATE()
-	FROM dbo.PoolPlayerPositionHistory AS PPPH
-	INNER JOIN dbo.PoolPlayers AS PP ON PP.PoolId = PPPH.PoolId AND PP.PlayerId = PPPH.PlayerId
+	FROM dbo.EventPoolPlayerPositionHistory AS PPPH
+	INNER JOIN dbo.EventPoolPlayers AS PP ON PP.PoolId = PPPH.PoolId AND PP.PlayerId = PPPH.PlayerId
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 	WHERE PPPH.PositionDate = @dteDate
 
-	INSERT INTO dbo.PoolPlayerPositionHistory
+	INSERT INTO dbo.EventPoolPlayerPositionHistory
 	(
 		EventId
 		, PoolId
@@ -347,10 +347,10 @@ BEGIN
 		, PP.PoolPosition
 		, GETDATE()
 		, GETDATE()
-	FROM dbo.PoolPlayers AS PP
+	FROM dbo.EventPoolPlayers AS PP
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
-	LEFT OUTER JOIN dbo.PoolPlayerPositionHistory AS PPPH ON PPPH.PlayerId = PP.PlayerId AND PPPH.PoolId = PP.PoolId AND PPPH.PositionDate = @dteDate
+	LEFT OUTER JOIN dbo.EventPoolPlayerPositionHistory AS PPPH ON PPPH.PlayerId = PP.PlayerId AND PPPH.PoolId = PP.PoolId AND PPPH.PositionDate = @dteDate
 	WHERE PPPH.PlayerId IS NULL;
 
 	/* Update LastModifiedDateTime for this event */

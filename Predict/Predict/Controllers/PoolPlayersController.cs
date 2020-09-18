@@ -17,7 +17,7 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
 
-        // GET: PoolPlayers
+        // GET: EventPoolPlayers
         [Route("PoolAdmin/{poolId}")]
         public ActionResult PoolAdmin(int id)
         {
@@ -30,7 +30,7 @@ namespace Predict.Controllers
 
             if (!isPoolAdmin) throw new Exception("Only pool admin is allowed to edit the pool");
 
-            var poolPlayers = _context.PoolPlayers.Include(p => p.Player)
+            var poolPlayers = _context.EventPoolPlayers.Include(p => p.Player)
                 .Where(p => p.PoolId == id).ToList();
 
             var pool = _context.Pools.SingleOrDefault(p => p.Id == id);

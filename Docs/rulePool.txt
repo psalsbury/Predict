@@ -1,0 +1,40 @@
+
+<p>
+    <h2>Pools/Leagues/Sweepstakes</h2>
+</p>
+<p>
+When you register and join any prediction comp, you will automatically be
+entered into our 'Global' pool which is for everybody who has
+registered and completed their online predictions.
+<br/>
+<br/>
+You can also join or create your own Pool for your colleagues/mates.
+<br><br>If you create the pool you have the responsibility of administering the pool and its entrants.
+When creating the pool you have the option of specifying whether there is an entry fee and how much the entry fee is.
+From here you can also specify how to distribute the 'pot' amongst the winners. i.e. 60% to 1st place, 30% to second and so on.
+The league administrator will usually be the person who collects the entry fees and pays the winners of your league/sweepstake.
+
+<br>
+<br>
+If you create your own pool you can also specify your own scoring system. You will have the option
+to pick your own points for correct scores/correct results and correct winning margins. On top of this.
+
+<p>
+    <h2>General Information</h2>
+</p>
+<p>
+    The person with the most points at the end of the competition is the
+    winner. In the event of a draw the next winning considerations are as
+    follows:
+</p>
+<table class="table table-hover">
+    <tr>
+        <td>1. Total number of correct scores</td>
+    </tr>
+    <tr>
+        <td>2. Total number of correct results</td>
+    </tr>
+    <tr>
+        <td>3. Date Registered (People who register 1st get priority)</td>
+    </tr>
+

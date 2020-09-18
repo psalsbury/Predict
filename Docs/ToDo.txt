@@ -34,7 +34,7 @@ ideas for homepage
 
 
 goDaddy database
-admin
+peteuser
 Kcalb267da
 
 peteuser

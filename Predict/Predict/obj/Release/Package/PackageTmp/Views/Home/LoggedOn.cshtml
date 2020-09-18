@@ -1,156 +1,244 @@
-﻿@using Predict.Models
-@{
-    var nbrFixturePredictionsToEnter = 36;
-    var nbrKoPredictionsToEnter = 31;
-    var nbrBonusQuestionsToEnter = 1;
-
-    var nbrFixturePredictionsEntered = (int) Session["nbrFixturePredictions"];
-    var nbrKoPredictionsEntered = (int)Session["nbrKoPredictions"] + (int)Session["nbrWinningTeamPredictions"];
-    var nbrBonusQuestionPredictionsEntered = (int) Session["nbrBonusQuestionPredictions"];
-
-    var bonusPredictionBox = "green";
-    if (nbrBonusQuestionPredictionsEntered == 0)
-    {
-        bonusPredictionBox = "red";
-    }
-    else if (nbrBonusQuestionsToEnter > nbrBonusQuestionPredictionsEntered)
-    {
-        bonusPredictionBox = "yellow";
-    }
-
-    var fixturePredictionBox = "green";
-    if (nbrFixturePredictionsEntered == 0)
-    {
-        fixturePredictionBox = "red";
-    }
-    else if (nbrFixturePredictionsToEnter > nbrFixturePredictionsEntered)
-    {
-        fixturePredictionBox = "yellow";
-    }
-
-    var koPredictionBox = "green";
-    if (nbrKoPredictionsEntered == 0)
-    {
-        koPredictionBox = "red";
-    }
-    else if (nbrKoPredictionsToEnter > nbrKoPredictionsEntered)
-    {
-        koPredictionBox = "yellow";
-    }
-
-}
+﻿@using Microsoft.Ajax.Utilities
+@using Predict.Models
+@using Predict.ViewModels
 <link rel="stylesheet" href="~/Content/css/ionicons.min.css">
-
-<div class="row">
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-@fixturePredictionBox">
-            <div class="inner">
-                <h3>@nbrFixturePredictionsEntered <sup style="font-size: 20px"> out of @nbrFixturePredictionsToEnter</sup></h3>
-                <p>Group games predicted</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="~/FixturePredictions/FixturePredictions" class="small-box-footer">
-                Enter them here <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-@koPredictionBox">
-            <div class="inner">
-                <h3>@nbrKoPredictionsEntered <sup style="font-size: 20px"> out of @nbrKoPredictionsToEnter</sup></h3>
-                <p>Knock Out Predictions entered</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped?ReadOnly=false" class="small-box-footer">
-                Enter them here <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-
-
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-@bonusPredictionBox">
-            <div class="inner">
-                <h3>@nbrBonusQuestionPredictionsEntered <sup style="font-size: 20px"> out of @nbrBonusQuestionsToEnter</sup></h3>
-                <p>Bonus Predictions entered</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="~/BonusQuestionPredictions/Edit" class="small-box-footer">
-                Enter them here <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-</div>
-
-<div class="col-md-6">
-    <!-- LINE CHART -->
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">Global League Position</h3>
-
-            <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <div class="box-body chart-responsive">
-            <div class="chart" id="line-chart" style="height: 300px;"></div>
-        </div>
-        <!-- /.box-body -->
-    </div>
-
-</div>
-
-
-<script src="~/plugins/morris/morris.min.js"></script>
-<script src="~/plugins/morris/raphael.min.js"></script>
-
 @{
-    var posnHistory = (List<PoolPlayerPositionHistory>) Session["posnHistory"] ;
+
+    var eventPlayers = ((List<EventPlayer>)Session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
+    var eventId = Convert.ToInt16(Request["EventId"]);
+    var nbrEvents = eventPlayers.Count;
+
+    if (eventId == 0 && nbrEvents > 0)
+    {
+        eventId = eventPlayers.OrderBy(a => a.Event.StartDateTime).FirstOrDefault().EventId;
+    }
+
+    if (eventId > 0)
+    {
+        var eventPlayer = eventPlayers.FirstOrDefault(a => a.EventId == eventId);
+        var poolInfoViewModels = ((List<PoolInfoViewModel>)Session["PoolInfo"]).Where(a => a.EventId == eventId);
+
+        <text>
+            <h3>@eventPlayer.Event.EventName - Home</h3>
+        </text>
+
+        var nbrFixturePredictionsToEnter = (int)Session["nbrFixtures*" + eventId];
+        var nbrKoPredictionsToEnter = (int)Session["nbrKoFixtures*" + eventId] * 2 + 1;
+        if ((int)Session["nbrKoFixtures*" + eventId] == 0)
+        {
+            nbrKoPredictionsToEnter = 0;
+        }
+        ;
+        var nbrBonusQuestionsToEnter = (int)Session["nbrBonusQuestions*" + eventId];
+        ;
+
+        var nbrFixturePredictionsEntered = (int)Session["nbrFixturePredictions*" + eventId];
+        var nbrKoPredictionsEntered = (int)Session["nbrKoPredictions*" + eventId] + (int)Session["nbrWinningTeamPredictions*" + eventId];
+        var nbrBonusQuestionPredictionsEntered = (int)Session["nbrBonusQuestionPredictions*" + eventId];
+
+        var bonusPredictionBox = "green";
+        if (nbrBonusQuestionPredictionsEntered == 0)
+        {
+            bonusPredictionBox = "red";
+        }
+        else if (nbrBonusQuestionsToEnter > nbrBonusQuestionPredictionsEntered)
+        {
+            bonusPredictionBox = "yellow";
+        }
+
+        var fixturePredictionBox = "green";
+        if (nbrFixturePredictionsEntered == 0)
+        {
+            fixturePredictionBox = "red";
+        }
+        else if (nbrFixturePredictionsToEnter > nbrFixturePredictionsEntered)
+        {
+            fixturePredictionBox = "yellow";
+        }
+
+        var koPredictionBox = "green";
+        if (nbrKoPredictionsEntered == 0)
+        {
+            koPredictionBox = "red";
+        }
+        else if (nbrKoPredictionsToEnter > nbrKoPredictionsEntered)
+        {
+            koPredictionBox = "yellow";
+        }
+        var firstPass = true;
+
+        <div class="row">
+
+
+            @if (nbrFixturePredictionsToEnter > 0)
+            {
+
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-@fixturePredictionBox">
+                        <div class="inner">
+                            <h3>
+                                @nbrFixturePredictionsEntered <sup style="font-size: 20px"> out of @nbrFixturePredictionsToEnter</sup>
+                            </h3>
+                            <p>Group games predicted</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-football-outline"></i>
+                        </div>
+                        <a href="~/FixturePredictions/FixturePredictions/@eventId" class="small-box-footer">
+                            Enter them here <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+            @if (nbrKoPredictionsToEnter > 0)
+            {
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-@koPredictionBox">
+                        <div class="inner">
+                            <h3>
+                                @nbrKoPredictionsEntered <sup style="font-size: 20px"> out of @nbrKoPredictionsToEnter</sup>
+                            </h3>
+                            <p>KO Predictions entered</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId" class="small-box-footer">
+                            Enter them here <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+            @if (nbrBonusQuestionsToEnter > 0)
+            {
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-@bonusPredictionBox">
+                        <div class="inner">
+                            <h3>
+                                @nbrBonusQuestionPredictionsEntered <sup style="font-size: 20px"> out of @nbrBonusQuestionsToEnter</sup>
+                            </h3>
+                            <p>Bonus Predictions entered</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="~/BonusQuestionPredictions/BonusQuestionPredictions/@eventId" class="small-box-footer">
+                            Enter them here <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                    <p style="font-size: 30px">
+                            Game Info
+                    </p>
+                        <p>See whos predicted what</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})" class="small-box-footer">
+                        See them here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                        
+                </div>
+            </div>  
+
+        </div>
+
+
+
+        foreach (var poolInfoViewModel in poolInfoViewModels)
+        {
+            var collapsedBox = "";
+            var image = "fa-minus";
+            if (!firstPass)
+            {
+                collapsedBox = "collapsed-box";
+                image = "fa-plus";
+
+            }
+
+            <div class="box box-primary @collapsedBox">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><b>@poolInfoViewModel.PoolName</b> Details
+                    
+                        @if (poolInfoViewModel.IsAdmin)
+                        {
+                            @:<b>(@poolInfoViewModel.PlayersToApprove to approve)</b>
+                        }
+                    </h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa @image"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item">
+                            <span class="info-box-icon bg-yellow">
+                                <i class="ion ion-ios-people-outline"></i>
+                            </span>
+                            <div class="info-box-content">
+
+                                    <span class="info-box-text">Nbr of Members</span>
+                                    <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+
+                                </div>
+                        </li>
+
+                        <!-- /.item -->
+                        <li class="item">
+                            <span class="info-box-icon bg-blue">
+                                <i class="ion ion-ios-football-outline"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <a href="~/Table/ShowTable?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                    <span class="info-box-text">Position</span>
+
+                                    <span class="label label-info pull-right">View Table</span>
+
+                                    @if (poolInfoViewModel.PoolPosition == 0)
+                                    {
+                                        <span class="info-box-number">(not started)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="info-box-number">@poolInfoViewModel.PoolPosition</span>
+                                    }
+
+                                </a>
+                            </div>
+                         
+                        </li>
+                        <!-- /.item -->
+                        <li class="item">
+                            <span class="info-box-icon bg-red">
+                                <i class="ion ion-ios-circle-outline"></i>
+                            </span>
+                            <div class="info-box-content">
+
+                                <span class="info-box-text">total Score</span>
+                                <span class="info-box-number">@poolInfoViewModel.TotalScore</span>
+
+                            </div>
+                        </li>
+                        <!-- /.item -->
+                    </ul>
+                </div>
+            </div>
+
+            firstPass = false;
+        }
+
+    }
 }
-
-<script>
-    $(function () {
-
-        // LINE CHART
-        var line = new Morris.Line({
-            element: 'line-chart',
-            resize: true,
-            data: [
-                { y: '2011 Q1', item1: 2666 },
-                { y: '2011 Q2', item1: 2778 },
-                { y: '2011 Q3', item1: 4912 },
-                { y: '2011 Q4', item1: 3767 },
-                { y: '2012 Q1', item1: 6810 },
-                { y: '2012 Q2', item1: 5670 },
-                { y: '2012 Q3', item1: 4820 },
-                { y: '2012 Q4', item1: 15073 },
-                { y: '2013 Q1', item1: 10687 },
-                { y: '2013 Q2', item1: 8432 }
-            ],
-            xkey: 'y',
-            ykeys: ['item1'],
-            labels: ['Item 1'],
-            lineColors: ['#3c8dbc'],
-            hideHover: 'auto'
-        });
-
-
-    });
-</script>
-

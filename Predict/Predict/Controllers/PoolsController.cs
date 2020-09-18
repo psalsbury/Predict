@@ -69,7 +69,7 @@ namespace Predict.Controllers
             var availablePools = _context.Pools.Include(b => b.AdminPlayer).ToList();
 
             // Normal user can see only their pools           
-            var joinedPools = _context.PoolPlayers
+            var joinedPools = _context.EventPoolPlayers
                 .Include(b => b.Pool)
                 .Where(p => p.PlayerId == playerId).ToList();
             poolMembershipViewModel.Pools = availablePools;
@@ -162,8 +162,8 @@ namespace Predict.Controllers
             if (isInLockDown) throw new Exception("Pool cannot be removed after the comp has started");
 
             // Remove all the players from the pool
-            var poolPlayers = _context.PoolPlayers.Where(b => b.PoolId == id);
-            foreach (var poolPlayer in poolPlayers) _context.PoolPlayers.Remove(poolPlayer);
+            var poolPlayers = _context.EventPoolPlayers.Where(b => b.PoolId == id);
+            foreach (var poolPlayer in poolPlayers) _context.EventPoolPlayers.Remove(poolPlayer);
 
             var eventPools = _context.EventPools.Where(b => b.PoolId == id);
             foreach (var eventPool in eventPools) _context.EventPools.Remove(eventPool);

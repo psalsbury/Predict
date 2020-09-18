@@ -1,0 +1,21 @@
+﻿@using (Html.BeginForm("SaveUpdateScoring", "Admin"))
+{
+    <div class="form-group">
+        <div>
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Update Scoring" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("PremierLeagueUpdate", "Admin"))
+{
+    <div class="form-group">
+        <div>
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Premier League Update" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@Html.ActionLink("All Fixtures","Index","Fixtures");

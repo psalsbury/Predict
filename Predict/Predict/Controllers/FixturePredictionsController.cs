@@ -48,8 +48,7 @@ namespace Predict.Controllers
             return View("FixturePredictions", fixturePredictionsViewModel);
         }
 
-        public FixturePredictionsViewModel GetFixturePredictionsViewModel(string loggedInUserId, string userId,
-            short eventId)
+        public FixturePredictionsViewModel GetFixturePredictionsViewModel(string loggedInUserId, string userId, short eventId)
         {
 
             var fixturePredictions = new List<FixturePrediction>();
@@ -59,6 +58,7 @@ namespace Predict.Controllers
             if (userId == null)
                 userId = loggedInUserId;
 
+            fixturePredictionsViewModel.OtherUserViewing = (userId != loggedInUserId);
             fixturePredictionsViewModel.UserId = userId;
 
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
@@ -126,7 +126,7 @@ namespace Predict.Controllers
             var eventId = fixturePredictionsViewModel.EventId;
             var predictionChanged = true;
 
-            // Get existing predictions and update or delete
+            // Get existing predictions and update or delete. Only get those where the dat has not yet passed
             var fixturePredictionsInDb = _context.FixturePredictions
                 .Include(b => b.EventFixture)
                 .Include(b => b.EventFixture.Fixture)
@@ -134,6 +134,7 @@ namespace Predict.Controllers
                 .Include(b => b.EventFixture.Fixture.AwayTeam)
                 .Where(p => p.PlayerId == userId)
                 .Where(p => p.EventId == eventId)
+                .Where(p => p.EventFixture.Fixture.FixtureDatePassed==false)
                 .ToList();
 
             var eventFixtures = _context.EventFixtures

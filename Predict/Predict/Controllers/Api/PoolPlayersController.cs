@@ -17,43 +17,43 @@ namespace Predict.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        // POST: api/PoolPlayers/5
+        // POST: api/EventPoolPlayers/5
         [HttpPost]
-        [Route("api/PoolPlayers/delete/{poolId}/{playerId}")]
+        [Route("api/EventPoolPlayers/delete/{poolId}/{playerId}")]
         public IHttpActionResult Delete(int poolId, string playerId)
         {
-            var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
+            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
 
             if (poolPlayer == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            _context.PoolPlayers.Remove(poolPlayer);
+            _context.EventPoolPlayers.Remove(poolPlayer);
             _context.SaveChanges();
 
             return Ok();
         }
 
         [HttpGet]
-        public IEnumerable<PoolPlayer> GetPoolPlayers()
+        public IEnumerable<EventPoolPlayer> GetPoolPlayers()
         {
-            return _context.PoolPlayers.ToList();
+            return _context.EventPoolPlayers.ToList();
         }
 
         [HttpGet]
-        [Route("api/PoolPlayers/{poolId}/{playerId}")]
-        public PoolPlayer GetPoolPlayer(int poolId, string playerId)
+        [Route("api/EventPoolPlayers/{poolId}/{playerId}")]
+        public EventPoolPlayer GetPoolPlayer(int poolId, string playerId)
         {
-            var poolPlayer = _context.PoolPlayers.SingleOrDefault(p => p.PoolId == poolId && p.PlayerId == playerId);
+            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(p => p.PoolId == poolId && p.PlayerId == playerId);
             if (poolPlayer == null) throw new HttpResponseException(HttpStatusCode.NotFound);
 
             return poolPlayer;
         }
 
         [HttpPost]
-        [Route("api/PoolPlayers/{poolId}/{playerId}")]
+        [Route("api/EventPoolPlayers/{poolId}/{playerId}")]
         public IHttpActionResult Authorize(int poolId, string playerId)
         {
-            var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
+            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
 
             if (poolPlayer == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -65,7 +65,7 @@ namespace Predict.Controllers.Api
         }
 
         [HttpPost]
-        [Route("api/PoolPlayers/AddNewPoolPlayer/{poolId}/{playerId}/{joinCode}")]
+        [Route("api/EventPoolPlayers/AddNewPoolPlayer/{poolId}/{playerId}/{joinCode}")]
         public IHttpActionResult AddNewPoolPlayer(int poolId, string playerId, string joinCode)
         {
             var pool = _context.Pools.SingleOrDefault(p => p.Id == poolId);
@@ -75,18 +75,18 @@ namespace Predict.Controllers.Api
             if (!pool.JoinCode.IsNullOrWhiteSpace() && pool.JoinCode != joinCode)
                 return BadRequest("Join Code is Not Valid");
 
-            var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
+            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
 
             if (poolPlayer != null) return BadRequest("Player already belongs to this pool");
 
-            poolPlayer = new PoolPlayer
+            poolPlayer = new EventPoolPlayer
             {
                 PlayerId = playerId,
                 PoolId = poolId,
                 CreatedDateTime = DateTime.Now,
                 ModifiedDateTime = DateTime.Now
             };
-            _context.PoolPlayers.Add(poolPlayer);
+            _context.EventPoolPlayers.Add(poolPlayer);
             _context.SaveChanges();
 
             return Ok();

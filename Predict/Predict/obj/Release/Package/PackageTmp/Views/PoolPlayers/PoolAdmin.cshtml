@@ -6,33 +6,35 @@
 
 <table class="table table-bordered table-hover" id="poolPlayers">
     <thead>
-        <tr>
-            <th>
-                Player Name
-            </th>
-            <th>
-                &nbsp
-            </th>
-        </tr>
+    <tr>
+        <th>
+            Player Name
+        </th>
+        <th>
+            &nbsp
+        </th>
+    </tr>
     </thead>
-    @for (int i = 0; i < Model.PoolPlayers.Count(); i++)
+    @for (var i = 0; i < Model.PoolPlayers.Count(); i++)
     {
-
         <tr>
             <td>
-                <table><tr><td data-toggle="popover" title="Display Name: @Model.PoolPlayers[i].Player.DisplayName" data-content="Date Registered: @Model.PoolPlayers[i].Player.CreatedDateTime">
-    @Html.DisplayFor(m => m.PoolPlayers[i].Player.PlayerName)
-</td></tr></table>
-                
+                <table>
+                    <tr>
+                        <td data-toggle="popover" title="Display Name: @Model.PoolPlayers[i].Player.DisplayName" data-content="Date Registered: @Model.PoolPlayers[i].Player.CreatedDateTime">
+                            @Html.DisplayFor(m => m.PoolPlayers[i].Player.PlayerName)
+                        </td>
+                    </tr>
+                </table>
+
             </td>
             <td>
                 <button class="btn btn-danger js-delete btn-sm" value="Remove" dataPlayerId="@Model.PoolPlayers[i].PlayerId" dataPoolId="@Model.PoolPlayers[i].PoolId">Remove</button>
-                
-                @if (@Model.PoolPlayers[i].AdminApprovedDateTime == null)
+
+                @if (Model.PoolPlayers[i].AdminApprovedDateTime == null)
                 {
                     @:&nbsp
                     <button class="btn btn-success js-approve btn-sm" value="Remove" dataPlayerId="@Model.PoolPlayers[i].PlayerId" dataPoolId="@Model.PoolPlayers[i].PoolId">Approve</button>
-
                 }
 
             </td>
@@ -42,62 +44,74 @@
 <script src="~/Scripts/bootbox.js"></script>
 <script>
 
-    $("#poolPlayers").on("click", ".js-delete", function () {
-        var button = $(this);
-        bootbox.confirm("Are you sure you want to remove this player from your pool?", function (result) {
-            if (result) {
-                $.ajax(
-                    {
-                        url: "../../api/poolPlayers/delete/" + button.attr("dataPoolId") + "/" + button.attr("dataPlayerId"),
-                        method: "POST",
-                        success: function () {
-                            $(button.closest("tr")).fadeOut(1000);
-                        }
-                    });
-            }
+    $("#poolPlayers").on("click",
+        ".js-delete",
+        function() {
+            var button = $(this);
+            bootbox.confirm("Are you sure you want to remove this player from your pool?",
+                function(result) {
+                    if (result) {
+                        $.ajax(
+                            {
+                                url: "../../api/poolPlayers/delete/" +
+                                    button.attr("dataPoolId") +
+                                    "/" +
+                                    button.attr("dataPlayerId"),
+                                method: "POST",
+                                success: function() {
+                                    $(button.closest("tr")).fadeOut(1000);
+                                }
+                            });
+                    }
+                });
         });
-    });
 
-    $("#poolPlayers").on("click", ".js-approve", function () {
-        
-        var button = $(this);
-        bootbox.confirm("Are you sure you want to approve this player?", function (result) {
-            if (result) {
-                $.ajax(
-                    {
-                        url: "../../api/poolPlayers/" + button.attr("dataPoolId") + "/" + button.attr("dataPlayerId"),
-                        method: "POST",
-                        success: function() {
-                            $(button).fadeOut(1000);
-                        }                        
-                    });                
-            }
+    $("#poolPlayers").on("click",
+        ".js-approve",
+        function() {
+
+            var button = $(this);
+            bootbox.confirm("Are you sure you want to approve this player?",
+                function(result) {
+                    if (result) {
+                        $.ajax(
+                            {
+                                url: "../../api/poolPlayers/" +
+                                    button.attr("dataPoolId") +
+                                    "/" +
+                                    button.attr("dataPlayerId"),
+                                method: "POST",
+                                success: function() {
+                                    $(button).fadeOut(1000);
+                                }
+                            });
+                    }
+                });
         });
-    });
 </script>
 
 <script>
-    $(function () {
+    $(function() {
         $("#poolPlayers").DataTable({
-            'columnDefs': [{
-                'targets': [3, 4], /* column index */
-                'orderable': false /* true or false */
+            'columnDefs': [
+                {
+                    'targets': [3, 4], /* column index */
+                    'orderable': false /* true or false */
 
-            }]
+                }
+            ]
         });
     });
 
 </script>
 <script>
-$(document).ready(function(){
-$('[data-toggle="popover"]').popover({
-placement : 'top',
-trigger : 'hover'
-});
-});
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            placement: 'top',
+            trigger: 'hover'
+        });
+    });
 </script>
 <style>
-    .bs-example{
-        margin: 150px 50px;
-    }
+    .bs-example { margin: 150px 50px; }
 </style>

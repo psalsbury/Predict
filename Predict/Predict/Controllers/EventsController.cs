@@ -66,6 +66,7 @@ namespace Predict.Controllers
                 {
                     CreatedDateTime = DateTime.Now
                     ,DefaultPoolId = globalPoolId
+                    , CreatedByPlayerId = playerId
                 };
             }
             else

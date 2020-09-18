@@ -3,21 +3,13 @@
     ViewBag.Title = "Register";
     if (Model.Id != "")
     {
-     ViewBag.Title = "Your Account";
+        ViewBag.Title = "Your Account";
     }
 }
 
-@using (Html.BeginForm((Model.Id == null) ? "Register" : "UpdateRegister" , "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form", id = "RegisterForm"}))
 {
     @Html.AntiForgeryToken()
-    if (Model.Id == null)
-    {
-        <h4>Create a new account.</h4>
-    }
-    else
-    {
-        <h4>Update your account.</h4>
-    }
     <hr/>
     @Html.ValidationSummary("", new {@class = "text-danger"})
     <div class="form-group">
@@ -25,11 +17,11 @@
         <div class="col-md-10">
             @if (Model.Id == null)
             {
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
             }
             else
             {
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , @readonly = "readonly" })
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", @readonly = "readonly"})
             }
 
         </div>
@@ -37,48 +29,48 @@
     <div class="form-group">
         @Html.LabelFor(m => m.DisplayName, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})
+            @if (Model.Id == null)
+            {
+                @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control", @readonly = "readonly"})
+            }
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.SupportTeamId, new {@class = "col-md-2 control-label"})
-        @{
-            var defaultFlagLocation = "";
-        }
-        <div class="col-md-10">
-
-        <select name="@Html.NameFor(m => m.SupportTeamId)" id="@Html.IdFor(m => m.SupportTeamId)" class="form-control">
-
-                @if (Model.Teams != null)
-                {
-                    foreach (var item in Model.Teams)
-                    {
-                        if (Model != null && item.Id == Model.SupportTeamId)
-                        {
-                            defaultFlagLocation = item.FlagFileLocation;
-                        }
-                        <option value="@item.Id" dataSrcFlag="@Url.Content(@item.FlagFileLocation)"
-                                selected="@(Model != null && item.Id == Model.SupportTeamId)">
-                            @item.TeamName
-                        </option>
-                    }
-                }
-            </select>
-            <img id="flagImage" height="20" src="@defaultFlagLocation" />
-        </div>
-        
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
-        </div>
-    </div>
 
     if (Model.Id == null)
     {
+        <div class="form-group">
+            @Html.LabelFor(m => m.EventId, new {@class = "col-md-2 control-label"})
+
+            <div class="col-md-10">
+
+                <select name="@Html.NameFor(m => m.EventId)" id="@Html.IdFor(m => m.EventId)" class="form-control">
+
+                    @if (Model.Events != null)
+                    {
+                        foreach (var item in Model.Events)
+                        {
+                            <option value="@item.Id"> @item.EventName </option>
+                        }
+                    }
+                </select>
+            </div>
+
+        </div>
+    }
+
+    if (Model.Id == null)
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label"})
@@ -86,23 +78,28 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
             </div>
         </div>
-    }
- 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="@((Model.Id == null) ? "Register" : "Update")"/>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnSubmit" class="btn btn-success" value="@(Model.Id == null ? "Register" : "Update")"/>
+            </div>
         </div>
-    </div>
-    @Html.HiddenFor(m => m.Id)
+
+        @Html.HiddenFor(m => m.Id)
+    }
 }
 
-<script>
 
-    $(document).ready(function(){
-        $("#SupportTeamId").change(function () {
-            var option = $('option:selected', this).attr('dataSrcFlag');
-            $("#flagImage").attr("src", option);
+<script>
+    $(document).ready(function() {
+
+        $("#RegisterForm").submit(function(e) {
+
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+
+            return true;
+
         });
     });
 </script>

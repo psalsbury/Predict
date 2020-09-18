@@ -31,26 +31,21 @@ namespace Predict.Models
         public DbSet<Event> Events { get; set; }
         public DbSet<EventPlayer> EventPlayers { get; set; }
         public DbSet<EventPool> EventPools { get; set; }
-
         public DbSet<EventKo> EventKos { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<EventFixture> EventFixtures { get; set; }
         public DbSet<FixturePrediction> FixturePredictions { get; set; }
         public DbSet<BonusQuestion> BonusQuestions { get; set; }
         public DbSet<BonusQuestionPrediction> BonusQuestionPredictions { get; set; }
-
         public DbSet<League> Leagues { get; set; }
-
         public DbSet<Pool> Pools { get; set; }
-        public DbSet<PoolPlayer> PoolPlayers { get; set; }
-        public DbSet<PoolPlayerPositionHistory> PoolPlayerPositionHistory { get; set; }
-
+        public DbSet<PoolPlayer> PoolPlayers{ get; set; }
+        public DbSet<EventPoolPlayer> EventPoolPlayers { get; set; }
+        public DbSet<EventPoolPlayerPositionHistory> EventPoolPlayerPositionHistory { get; set; }
         public DbSet<KoFixture> KoFixtures { get; set; }
         public DbSet<KoFixturePrediction> KoFixturePredictions { get; set; }
         public DbSet<KoWinningTeamPrediction> KoWinningTeamPredictions { get; set; }
-
         public DbSet<SiteSetting> SiteSettings { get; set; }
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

@@ -7,15 +7,11 @@
         @* Mini logo for sidebar 50x50 pixels *@
         <span class="logo-mini"><b>2</b>020</span>
         @* Logo for regular state and mobile devices *@
-        <span class="logo-lg"><b>Euro 2020 Prediction Competition </b></span>
+        <span class="logo-lg">
+            <b>Prediction Comp</b>
+        </span>
     </a>
-    @* END Logo *@
-    @* BEGIN Header *@
-    @{
 
-        //var player = SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());
-        var player = (Player) Session["player"];
-    }
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -24,21 +20,28 @@
 
             <ul class="nav navbar-nav">
 
-                @if (Request.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated)
                 {
+                    var player = (Player) SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span>Your Account</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <p>
-                                    @player.DisplayName
-                                </p>
-                                <small>Member since @player.CreatedDateTime </small>
+                            @if (player != null)
+                            {
+                                <li class="user-header">
+                                    <p>
+                                        @if (player != null)
+                                        {
+                                            @player.DisplayName
+                                        }
 
-                            </li>
+                                    </p>
+                                    <small>Member since @player.CreatedDateTime </small>
+                                </li>
+                            }
                             <li class="user-footer">
                                 <div class="pull-left">
                                     <a href="~/Account/UpdateAccount" class="btn btn-default btn-flat">Profile</a>
@@ -55,19 +58,19 @@
                             </li>
                         </ul>
                     </li>
-
                 }
                 else
                 {
-                    <li class="user-footer">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                    <li class="user-footer">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-
+                    <li class="user-footer">@Html.ActionLink("Register", "Register", "Account", null, new {id = "registerLink"})</li>
+                    <li class="user-footer">@Html.ActionLink("Log in", "Login", "Account", null, new {id = "loginLink"})</li>
                 }
 
                 @* END User Account Menu *@
                 @* BEGIN Control Sidebar Toggle Button *@
                 <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    <a href="#" data-toggle="control-sidebar">
+                        <i class="fa fa-gears"></i>
+                    </a>
                 </li>
                 @* END Control Sidebar Toggle Button *@
             </ul>

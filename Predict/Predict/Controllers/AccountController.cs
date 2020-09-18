@@ -239,6 +239,7 @@ namespace Predict.Controllers
                         {
                             EventId = model.EventId,
                             PlayerId = user.Id,
+                            Enabled = true,
                             CreatedDateTime = DateTime.Now,
                             ModifiedDateTime = DateTime.Now
                         };
@@ -247,16 +248,17 @@ namespace Predict.Controllers
                         var defaultPoolId = myEvent.DefaultPoolId;
                         if (defaultPoolId > 0)
                         {
-                            var globalPoolPlayer = new PoolPlayer
+                            var globalPoolPlayer = new EventPoolPlayer
                             {
                                 PoolId = defaultPoolId,
                                 PlayerId = user.Id,
                                 EventId = model.EventId,
                                 AdminApprovedDateTime = DateTime.Now,
+                                Enabled =  true,
                                 CreatedDateTime = DateTime.Now,
                                 ModifiedDateTime = DateTime.Now
                             };
-                            context.PoolPlayers.Add(globalPoolPlayer);
+                            context.EventPoolPlayers.Add(globalPoolPlayer);
                         }
 
                     }

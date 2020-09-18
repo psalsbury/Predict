@@ -1,7 +1,7 @@
 ﻿@model Predict.ViewModels.StatsFixtureViewModel
 
 @{
-    ViewBag.Title = Model.Fixture.HomeTeam.TeamName + " vs " + Model.Fixture.AwayTeam.TeamName + " prediction summary";
+    ViewBag.Title = Model.Fixture.HomeTeam.TeamName + " vs " + Model.Fixture.AwayTeam.TeamName;
     var nbrPredictions = Model.StatFixturePredictions.Sum(s => s.NumberOfPredictions);
 
     var nbrPredictionsHomeWin = Model.StatFixturePredictions.Where(s => s.HomePrediction > s.AwayPrediction)
@@ -9,14 +9,18 @@
 
     var nbrPredictionsAwayWin = Model.StatFixturePredictions.Where(s => s.HomePrediction < s.AwayPrediction)
         .Sum(s => s.NumberOfPredictions);
-    
+
     var nbrPredictionsDraw = Model.StatFixturePredictions.Where(s => s.HomePrediction == s.AwayPrediction)
         .Sum(s => s.NumberOfPredictions);
 }
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="../../StatsGroup">Group Game Stats</a></li>
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@Model.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="../../StatsGroup?eventid=@Model.EventId">Game Stats</a>
+        </li>
         <li class="breadcrumb-item active" aria-current="page">Data</li>
     </ol>
 </nav>
@@ -29,7 +33,9 @@
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="fa fa-minus"></i>
             </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                <i class="fa fa-times"></i>
+            </button>
         </div>
     </div>
     <div class="box-body chart-responsive">
@@ -45,7 +51,9 @@
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="fa fa-minus"></i>
             </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                <i class="fa fa-times"></i>
+            </button>
         </div>
     </div>
     <div class="box-body">
@@ -70,7 +78,6 @@
 
             @foreach (var item in Model.StatFixturePredictions)
             {
-
                 var result = Model.Fixture.HomeTeam.TeamName;
                 if (item.HomePrediction == item.AwayPrediction)
                 {
@@ -98,8 +105,8 @@
                         @percent%
                     </td>
                 </tr>
-             }
-          </table>
+            }
+        </table>
     </div>
 </div>
 
@@ -108,7 +115,7 @@
 <script src="~/plugins/morris/morris.min.js"></script>
 
 <script>
-    $(function () {
+    $(function() {
         "use strict";
         //DONUT CHART
         var donut = new Morris.Donut({
@@ -116,11 +123,11 @@
             resize: true,
             colors: ["#3c8dbc", "#f56954", "#00a65a"],
             data: [
-                { label: "@Model.Fixture.HomeTeam.TeamName", value: @nbrPredictionsHomeWin},
-        { label: "@Model.Fixture.AwayTeam.TeamName", value: @nbrPredictionsAwayWin },
-    { label: "Draw", value: @nbrPredictionsDraw }
+                { label: "@Model.Fixture.HomeTeam.TeamName", value: @nbrPredictionsHomeWin },
+                { label: "@Model.Fixture.AwayTeam.TeamName", value: @nbrPredictionsAwayWin },
+                { label: "Draw", value: @nbrPredictionsDraw }
             ],
-    hideHover: 'auto'
+            hideHover: 'auto'
         });
     });
 </script>

@@ -18,7 +18,7 @@ namespace Predict.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        // POST: api/PoolPlayers/5
+        // POST: api/EventPoolPlayers/5
         [HttpPost]
         [Route("api/EventPlayers/delete/{EventId}/{playerId}")]
         public IHttpActionResult Delete(int eventId, string playerId)

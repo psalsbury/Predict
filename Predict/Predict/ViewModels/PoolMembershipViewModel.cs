@@ -11,7 +11,7 @@ namespace Predict.ViewModels
         }
 
         public List<Pool> Pools { get; set; }
-        public List<PoolPlayer> JoinedPools { get; set; }
+        public List<EventPoolPlayer> JoinedPools { get; set; }
         public string PlayerId { get; set; }
         public List<int> ReadOnlyPools { get; set; }
     }

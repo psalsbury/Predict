@@ -20,7 +20,7 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var positionHistory = (from a in _context.PoolPlayerPositionHistory
+            var positionHistory = (from a in _context.EventPoolPlayerPositionHistory
                 join c in _context.Pools on a.PoolId equals c.Id
                 where a.PlayerId == playerId
                       && c.Id == poolId
