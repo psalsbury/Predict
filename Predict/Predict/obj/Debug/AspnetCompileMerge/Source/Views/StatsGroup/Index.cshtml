@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Predict.Models.Fixture>
+﻿@model IEnumerable<Predict.Models.EventFixture>
 
 @{
     ViewBag.Title = "Games Stats";
@@ -7,7 +7,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="~/">Home</a>
+            <a href="/Home/Index?eventid=@Model.First().EventId">Home</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Game Stats</li>
     </ol>
@@ -37,10 +37,10 @@
                             <table width="100%">
                                 <tr>
                                     <td width="20%">
-                                        <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20"/>
+                                        <img src="@Url.Content(item.Fixture.HomeTeam.FlagFileLocation)" height="20"/>
                                     </td>
                                     <td width="80%" align="left">
-                                        &nbsp @Html.DisplayFor(modelItem => item.HomeTeam.TeamName)
+                                        &nbsp @Html.DisplayFor(modelItem => item.Fixture.HomeTeam.TeamName)
                                     </td>
                                 </tr>
                             </table>
@@ -50,10 +50,10 @@
                             <table width="100%">
                                 <tr>
                                     <td width="20%">
-                                        <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20"/>
+                                        <img src="@Url.Content(item.Fixture.AwayTeam.FlagFileLocation)" height="20"/>
                                     </td>
                                     <td width="80%"  align="left">
-                                        &nbsp @Html.DisplayFor(modelItem => item.AwayTeam.TeamName)
+                                        &nbsp @Html.DisplayFor(modelItem => item.Fixture.AwayTeam.TeamName)
                                     </td>
 
                                 </tr>
@@ -67,10 +67,10 @@
 
             <td style="text-align: center; vertical-align: middle;" class="myDate">
 
-                @Html.Hidden("FixtureDateTime", item.FixtureDateTime.ToLongDateString() + " " + item.FixtureDateTime.ToShortTimeString())
+                @Html.Hidden("FixtureDateTime", item.Fixture.FixtureDateTime.ToLongDateString() + " " + item.Fixture.FixtureDateTime.ToShortTimeString())
             </td>
             <td>
-                <a href="StatsGroup/StatsFixture/@item.Id" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
+                <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
             </td>
 
         </tr>

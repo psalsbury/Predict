@@ -44,7 +44,7 @@ namespace Predict.Controllers
             var fixturePredictionsViewModel =
                 fixturePredictionsController.GetFixturePredictionsViewModel(loggedInUserId, playerId, eventId);
 
-            fixturePredictionsViewModel.ReadOnly = true;
+            fixturePredictionsViewModel.OtherUserViewing = true;
             predictionsConsolidated.FixturePredictionsViewModel = fixturePredictionsViewModel;
 
             if (nbrKoPredictionsToEnter > 0)

@@ -64,9 +64,6 @@ namespace Predict.Controllers
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
             fixturePredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
 
-            if (loggedInUserId != userId)
-                fixturePredictionsViewModel.ReadOnly = true;
-
             // Get the existing predictions
             var predictionsExist =
                 _context.FixturePredictions.Any(p => p.PlayerId == userId && p.EventId == eventId);
@@ -134,7 +131,6 @@ namespace Predict.Controllers
                 .Include(b => b.EventFixture.Fixture.AwayTeam)
                 .Where(p => p.PlayerId == userId)
                 .Where(p => p.EventId == eventId)
-                .Where(p => p.EventFixture.Fixture.FixtureDatePassed==false)
                 .ToList();
 
             var eventFixtures = _context.EventFixtures
@@ -165,7 +161,6 @@ namespace Predict.Controllers
                         predictionChanged = true;
                         var fixturePredictionInDb =
                             fixturePredictionsInDb.Find(m => m.FixtureId == fixturePredictionSubmitted.FixtureId);
-
 
                         if (fixturePredictionInDb == null)
                         {

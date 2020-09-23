@@ -1,8 +1,9 @@
 ﻿@model Predict.ViewModels.FixturePredictionsViewModel
 @{
-    ViewBag.Title = "Edit Group Game Predictions";
+    ViewBag.Title = "Fixture Predictions";
+    var allowSubmit = false;
 }
-@if (!Model.ReadOnly)
+@if (!Model.OtherUserViewing)
 {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -14,7 +15,7 @@
     </nav>
 }
 
-@if (!Model.ReadOnly)
+@if (!Model.OtherUserViewing)
 {
     <input class="btn btn-primary alignleft" title="Click to select let the computer pick your predictions for you." type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
 }
@@ -37,8 +38,6 @@
         </thead>
         @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
         {
-
-
             var rowColour = "";
             if (Model.FixturePredictions[i].CorrectScore??false)
             {
@@ -78,18 +77,15 @@
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.ReadOnly || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                            @if (Model.OtherUserViewing || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
-                                                if (Model.FixturePredictions[i].HomePrediction != null)
+                                                if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.OtherUserViewing)
                                                 {
-                                                    if (Model.OtherUserViewing)
-                                                    {
-                                                        <text>?</text>
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
-                                                    }
+                                                    <text>?</text>
+                                                }
+                                                else if (Model.FixturePredictions[i].HomePrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
 
                                                 }
                                                 else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
@@ -108,7 +104,7 @@
                                             else
                                             {
                                                 @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
-
+                                                allowSubmit = true;
                                             }
                                         </td>
                                     </tr>
@@ -126,18 +122,15 @@
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.ReadOnly || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                            @if (Model.OtherUserViewing || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
-                                                if (Model.FixturePredictions[i].AwayPrediction != null)
+                                                if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.OtherUserViewing)
                                                 {
-                                                    if (Model.OtherUserViewing)
-                                                    {
-                                                        <text>?</text>
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
-                                                    }
+                                                    <text>?</text>
+                                                }
+                                                else if (Model.FixturePredictions[i].AwayPrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
 
                                                 }
                                                 else if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
@@ -175,7 +168,7 @@
 
     @Html.AntiForgeryToken()
 
-    if (!Model.ReadOnly)
+    if (!Model.OtherUserViewing && allowSubmit)
     {
         <div class="form-group">
             <div>
@@ -187,7 +180,7 @@
 }
 <br/>
 <script src="../../Scripts/bootbox.js"></script>
-@if (!Model.ReadOnly)
+@if (!Model.OtherUserViewing)
 {
     <script>
 

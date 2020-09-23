@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA1I9IcfNJBU+m+lI1od51dQAAAAACAAAAAAAQZgAAAAEAACAAAABbfTsIfMVnJwWOQNWJhcqpOVTtU+kNJ29LsigwV94RCAAAAAAOgAAAAAIAACAAAAAeXy4areC3d/WgKXuonaUYtXt7ZRc9ePry3JPwxXIV0iAAAACBT/ZoHz3ObVa/k5pCO+8gOHMYTPZtG2lESmduw71z1kAAAAD5IYyCt4xIeMFx78eTNqpyV5y4oue+/WO7jdHJVl2nvAA8Qw1CQI6Vp0v+GJAybzp/izR3yvOGzlWRiIQiGgTe</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAWT+rwZ2mC0mWDruxTvG4NgAAAAACAAAAAAAQZgAAAAEAACAAAABzJVa9UnOvNEKQaNutSEtXqImGK75SyLPYGp8X/mpbpQAAAAAOgAAAAAIAACAAAADCTqn1qqv/9gNoRhRtubGv572aFVH/i3uhPBcp/Bf4lCAAAACR8DhMMNJz/CYvOBBicoHJO1y/Ip+WrXlsQwngXOUC7kAAAAAi5CPb4Pqf/WgmOwCd+DYnypl0UtoljanhdimW7lljHiC8BmGsg002H8Ry72rq34CPz0QWg8OmOT4XAW52s0id</EncryptedPassword>
     <_PublishTargetUrl>ftp://predictioncomp.com/httpdocs</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
@@ -86,16 +86,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/20/2019 18:43:44</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authentication.Abstractions.dll">
-      <publishTime>11/12/2018 17:29:06</publishTime>
+      <publishTime>12/11/2018 17:29:06</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authentication.Core.dll">
-      <publishTime>11/12/2018 17:29:10</publishTime>
+      <publishTime>12/11/2018 17:29:10</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authorization.dll">
       <publishTime>08/21/2020 21:33:06</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authorization.Policy.dll">
-      <publishTime>11/12/2018 17:39:32</publishTime>
+      <publishTime>12/11/2018 17:39:32</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Cryptography.Internal.dll">
       <publishTime>08/21/2020 21:27:20</publishTime>
@@ -104,31 +104,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/21/2020 21:27:04</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Diagnostics.Abstractions.dll">
-      <publishTime>11/12/2018 17:38:16</publishTime>
+      <publishTime>12/11/2018 17:38:16</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Hosting.Server.Abstractions.dll">
-      <publishTime>11/12/2018 17:30:20</publishTime>
+      <publishTime>12/11/2018 17:30:20</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Html.Abstractions.dll">
-      <publishTime>11/12/2018 17:28:42</publishTime>
+      <publishTime>12/11/2018 17:28:42</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Http.Abstractions.dll">
-      <publishTime>11/12/2018 17:29:00</publishTime>
+      <publishTime>12/11/2018 17:29:00</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Http.dll">
       <publishTime>01/24/2019 23:18:54</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Http.Extensions.dll">
-      <publishTime>11/12/2018 17:29:06</publishTime>
+      <publishTime>12/11/2018 17:29:06</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Http.Features.dll">
-      <publishTime>11/12/2018 17:28:58</publishTime>
+      <publishTime>12/11/2018 17:28:58</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Metadata.dll">
       <publishTime>08/21/2020 21:28:04</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.WebUtilities.dll">
-      <publishTime>11/12/2018 17:29:00</publishTime>
+      <publishTime>12/11/2018 17:29:00</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/14/2020 15:57:01</publishTime>
@@ -155,7 +155,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2020 23:49:50</publishTime>
     </File>
     <File Include="bin/Microsoft.Net.Http.Headers.dll">
-      <publishTime>11/12/2018 17:28:58</publishTime>
+      <publishTime>12/11/2018 17:28:58</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
       <publishTime>09/14/2020 15:57:02</publishTime>
@@ -206,10 +206,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/14/2020 15:57:02</publishTime>
     </File>
     <File Include="bin/Predict.dll">
-      <publishTime>09/18/2020 21:56:56</publishTime>
+      <publishTime>09/21/2020 09:14:09</publishTime>
     </File>
     <File Include="bin/Predict.pdb">
-      <publishTime>09/18/2020 21:56:56</publishTime>
+      <publishTime>09/21/2020 09:14:09</publishTime>
     </File>
     <File Include="bin/RestSharp.dll">
       <publishTime>09/14/2020 15:57:02</publishTime>
@@ -1211,7 +1211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/14/2020 15:56:58</publishTime>
     </File>
     <File Include="Views/Shared/FixturePredictions.cshtml">
-      <publishTime>09/18/2020 21:51:53</publishTime>
+      <publishTime>09/20/2020 21:40:54</publishTime>
     </File>
     <File Include="Views/Shared/KoFixturePredictions.cshtml">
       <publishTime>09/18/2020 16:32:21</publishTime>

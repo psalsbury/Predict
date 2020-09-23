@@ -1,7 +1,10 @@
-﻿@model Predict.ViewModels.LeagueTablesViewModel
+﻿@using System.Configuration
+@model Predict.ViewModels.LeagueTablesViewModel
 
 @{
     ViewBag.Title = Model.Results ? "League Tables" : "Predicted League Tables";
+
+    var flagFileLocation = ConfigurationManager.AppSettings["FlagFileLocation"];
 }
 
 
@@ -11,7 +14,7 @@
         <text>
             <h3>
                 League
-                @Html.Label(leagueTable.League)
+                @Html.Label(leagueTable.LeagueName)
             </h3>
         </text>
         <div class="box-body">
@@ -36,7 +39,7 @@
                         <tr>
                             <td>@leagueTableTeam.Position.ToString()</td>
                             <td style="width: 1%">
-                                <img src="@Url.Content(leagueTableTeam.TeamFlag)"/>
+                                <img src="@Url.Content(flagFileLocation+"/"+leagueTableTeam.TeamFlag)"/>
                             </td>
                             <td>@leagueTableTeam.Team </td>
                             <td>@leagueTableTeam.Played.ToString()</td>

@@ -51,8 +51,8 @@ BEGIN
 		, NULL	-- ThirdPercent
 		, NULL	-- NonPrizePercent
 		, 0		-- EmailNotifications
-		, 3		-- CorrectScorePoints
-		, 1		-- CorrectResultPoints
+		, 5		-- CorrectScorePoints
+		, 2		-- CorrectResultPoints
 		, 1		-- WinMarginPoints
 		, 0		-- KoLast16Points
 		, 0		-- KoLast8Points

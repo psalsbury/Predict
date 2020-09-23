@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = Model.Predictions ? "Edit Knock Out Fixture Predictions" : "Edit Knock Out Fixture Results";
-    var nbrFixturePredictionsToEnter = 36;
-    var nbrFixturePredictionsEntered = (int) Session["nbrFixturePredictions"];
-    var disableAutoFill = nbrFixturePredictionsToEnter - nbrFixturePredictionsEntered == 0 ? "" : "disabled";
-    string autoFilButtonName;
+    var nbrKoPredictionsToEnter = (int)Session["nbrFixtures*" + Model.EventId];
+    var nbrFixturePredictionsEntered = (int) Session["nbrFixturePredictions*" + Model.EventId];
+    var disableAutoFill = nbrKoPredictionsToEnter - nbrFixturePredictionsEntered == 0 ? "" : "disabled";
+    string autoFilButtonName="";
 }
 
 <nav aria-label="breadcrumb">
@@ -19,10 +19,10 @@
 
 @using (Html.BeginForm(Model.Predictions ? (Model.ReadOnly ? "ReadOnly" : "Save") : "SaveKoResults", Model.Predictions ? "KoFixturePredictions" : "KoFixtures"))
 {
-    @Html.AntiForgeryToken()
 
     @Html.HiddenFor(model => model.MaxRows)
     @Html.HiddenFor(model => model.MaxCols)
+    @Html.HiddenFor(model => model.EventId)
 
     <div class="container-flex">
         <div class="row">
@@ -157,7 +157,7 @@
         {
             return selectedTeam;
         }
-        return Html.DropDownList(listName, new SelectList(Model.Teams, "id", "TeamName", selectedValue), defaultValue, new {id = listName, @class = "myclass"}).ToString();
+        return Html.DropDownList(listName, new SelectList(Model.EventTeams, "TeamId", "TeamName", selectedValue), defaultValue, new {id = listName, @class = "myclass"}).ToString();
     }
 
 }

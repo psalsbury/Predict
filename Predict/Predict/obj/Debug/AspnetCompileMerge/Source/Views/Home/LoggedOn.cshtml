@@ -4,13 +4,13 @@
 <link rel="stylesheet" href="~/Content/css/ionicons.min.css">
 @{
 
-    var eventPlayers = (List<EventPlayer>)Session["Events"];
+    var eventPlayers = ((List<EventPlayer>)Session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
     var eventId = Convert.ToInt16(Request["EventId"]);
     var nbrEvents = eventPlayers.Count;
 
     if (eventId == 0 && nbrEvents > 0)
     {
-        eventId = eventPlayers.Min(a => a.EventId);
+        eventId = eventPlayers.OrderBy(a => a.Event.StartDateTime).FirstOrDefault().EventId;
     }
 
     if (eventId > 0)
@@ -105,7 +105,7 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped?ReadOnly=false" class="small-box-footer">
+                        <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId" class="small-box-footer">
                             Enter them here <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -125,7 +125,7 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="~/BonusQuestionPredictions/BonusQuestionPredictions" class="small-box-footer">
+                        <a href="~/BonusQuestionPredictions/BonusQuestionPredictions/@eventId" class="small-box-footer">
                             Enter them here <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -141,7 +141,7 @@
                         <p>See whos predicted what</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="ion ion-pie-graph"></i>
                     </div>
                     <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})" class="small-box-footer">
                         See them here <i class="fa fa-arrow-circle-right"></i>
@@ -202,7 +202,7 @@
                                 <i class="ion ion-ios-football-outline"></i>
                             </span>
                             <div class="info-box-content">
-                                <a href="~/Table?poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                <a href="~/Table/ShowTable?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
                                     <span class="info-box-text">Position</span>
 
                                     <span class="label label-info pull-right">View Table</span>

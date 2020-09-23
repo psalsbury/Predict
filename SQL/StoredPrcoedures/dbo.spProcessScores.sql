@@ -10,7 +10,7 @@ GO
 -- Create date: 17 Feb 2019
 -- Description:	Calculate all the scores
 -- =============================================
--- EXEC dbo.spProcessScores '20 jan 2020'
+-- EXEC dbo.spProcessScores '23 sep 2020'
 CREATE PROCEDURE dbo.spProcessScores 
 (
 	@dteDate DATE
@@ -31,6 +31,7 @@ BEGIN
 		EventID INT
 	)
 	
+	/* Find all the EventPool entries with an outstanding result to process */
 	INSERT INTO #tmpEventPools
 	(
 		EventID 
@@ -41,7 +42,9 @@ BEGIN
 	FROM [dbo].[Fixtures] AS F
 	INNER JOIN [dbo].[EventFixtures] AS EF ON EF.FixtureId = F.Id
 	INNER JOIN [dbo].[EventPools] AS EP ON EP.EventId = EF.EventId
-	WHERE F.ResultProcessed = 1
+	WHERE F.ResultProcessed = 0
+	AND F.HomeResult IS NOT NULL
+	AND F.AwayResult IS NOT NULL
 
 	UNION 
 
@@ -49,7 +52,9 @@ BEGIN
 		, EP.PoolId
 	FROM [dbo].[KoFixtures] AS KO
 	INNER JOIN [dbo].[EventPools] AS EP ON EP.EventId = KO.EventId
-	WHERE KO.ResultProcessed = 1
+	WHERE KO.ResultProcessed = 0
+	AND KO.Team1Id IS NOT NULL
+	OR KO.Team2Id IS NOT NULL
 
 	INSERT INTO #tmpEvents
 	(EventId)
@@ -99,7 +104,7 @@ BEGIN
 		, FP.ModifiedDateTime = GETDATE()
 	FROM dbo.FixturePredictions AS FP
 	INNER JOIN dbo.Fixtures AS FX ON FX.Id = FP.FixtureId
-	INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = FP.EventId
+	INNER JOIN #tmpEvents AS TMP ON TMP.EventId = FP.EventId
 	WHERE FX.HomeResult IS NOT NULL 
 	AND FX.AwayResult IS NOT NULL;
 
@@ -132,22 +137,25 @@ BEGIN
 	/* Update the PoolPlayer table with a summary of the fixture scores for each player/pool */
 	WITH CTE AS
 	(
-		SELECT FPP.PoolId
+		SELECT FP.EventId
+			, FPP.PoolId
 			, FP.PlayerId
 			, SUM(FPP.CorrectScorePoints) AS CorrectScore
 			, SUM(FPP.CorrectResultPoints) AS CorrectResult
 			, SUM(FPP.CorrectWinMarginPoints) AS WinMargin
 		FROM #FixturePredictionScores AS FPP
 		INNER JOIN dbo.FixturePredictions AS FP ON FP.Id = FPP.FixturePredictionId
-		GROUP BY FPP.PoolId
+		GROUP BY FP.EventId
+			, FPP.PoolId
 			, FP.PlayerId
 	)
 	UPDATE PP
 	SET PP.CorrectScore = CTE.CorrectScore
 		, PP.[CorrectResult] = CTE.CorrectResult
 		, PP.[WinMargin] = CTE.WinMargin
+		, PP.ModifiedDateTime = GETDATE()
 	FROM dbo.EventPoolPlayers AS PP
-	INNER JOIN CTE ON CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
+	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 	
 	IF EXISTS(SELECT 1 FROM [dbo].[EventsKo] WHERE EventId IN (SELECT EventID FROM #tmpEvents))
 	BEGIN
@@ -299,7 +307,8 @@ BEGIN
 	/* Update each PlayerPool record with the total score and the position within the league */
 	WITH CTE AS
 	(
-		SELECT PP.PoolId
+		SELECT PP.EventId
+			, PP.PoolId
 			, PP.PlayerId
 			, PP.CorrectScore+PP.CorrectResult+PP.WinMargin+PP.KoScore+PP.BonusScore AS TotalScore
 			, ROW_NUMBER() OVER(PARTITION BY PP.EventId, PP.PoolId
@@ -309,7 +318,6 @@ BEGIN
 							, PL.CreatedDateTime) AS PoolPosition
 		FROM dbo.EventPoolPlayers AS PP
 		INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
-		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 		INNER JOIN dbo.Players AS PL ON PL.Id = PP.PlayerId
 	)
 	UPDATE PP
@@ -317,8 +325,7 @@ BEGIN
 		, PP.TotalScore = CTE.TotalScore
 		, PP.ModifiedDateTime = GETDATE()
 	FROM dbo.EventPoolPlayers AS PP
-	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
-	INNER JOIN CTE ON CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
+	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 
 	/* Update the position history */
 	UPDATE PPPH
@@ -352,6 +359,23 @@ BEGIN
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 	LEFT OUTER JOIN dbo.EventPoolPlayerPositionHistory AS PPPH ON PPPH.PlayerId = PP.PlayerId AND PPPH.PoolId = PP.PoolId AND PPPH.PositionDate = @dteDate
 	WHERE PPPH.PlayerId IS NULL;
+
+	/* Update Fixtures to be processed */
+	UPDATE FX
+	SET FX.ResultProcessed = 1
+		, FX.ModifiedDateTime = GETDATE()
+	FROM [dbo].[Fixtures] AS FX
+	WHERE FX.ResultProcessed = 0
+	AND FX.HomeResult IS NOT NULL
+	AND FX.AwayResult IS NOT NULL;
+
+	UPDATE KO
+	SET	KO.ResultProcessed = 1
+		, KO.ModifiedDateTime = GETDATE()
+	FROM [dbo].[KoFixtures] AS KO
+	WHERE KO.ResultProcessed = 0
+	AND KO.Team1Id IS NOT NULL
+	AND KO.Team2Id IS NOT NULL
 
 	/* Update LastModifiedDateTime for this event */
 	UPDATE EV

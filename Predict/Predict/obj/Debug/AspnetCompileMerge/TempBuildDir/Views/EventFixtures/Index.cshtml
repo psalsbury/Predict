@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+@using Predict.Models
+@model Predict.ViewModels.EventFixturesViewModel
+
+@using (Html.BeginForm("Save", "EventFixtures"))
+
+{
+    @Html.HiddenFor(m => m.Event.Id);
+    <table  id="EventFixtures" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>League</th>
+            <th>Home Team</th>
+            <th>Away Team</th>
+            <th>Date</th>
+        </tr>
+            </thead>
+        @foreach (var item in Model.Fixtures.ToList())
+        {
+            var exists = Model.EventFixtures.Exists(a => a.FixtureId == item.Id);
+            if (exists || item.FixtureDatePassed == false)
+            {
+                <tr>
+                    <td>
+
+                        <input type="checkbox" value="@item.Id" id="fixture_@item.Id" name="fixture_@item.Id" @(exists ? "checked" : "")>
+                    </td>
+                    <td>
+                        @item.League.ShortLeagueName
+                    </td>
+                    <td>
+                        @item.HomeTeam.TeamName
+                    </td>
+                    <td>
+                        @item.AwayTeam.TeamName
+                    </td>
+                    <td>
+                        @item.FixtureDateTime.ToString("yyyy-MM-dd h:mm tt")
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+
+}
+
+
+<script>
+
+    $(function () {
+        $("#EventFixtures").DataTable({
+            'columnDefs': [
+                {
+                    'targets': [4], /* column index */
+                    "type": "date-eu"                
+                }
+            ]
+
+        });
+    });
+
+
+</script>

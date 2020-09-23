@@ -1,26 +1,21 @@
-﻿@model Predict.Models.Event
-@{
-    ViewBag.Title = "Admin Home";
+﻿@using (Html.BeginForm("SaveUpdateScoring", "Admin"))
+{
+    <div class="form-group">
+        <div>
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Update Scoring" class="btn btn-default" />
+        </div>
+    </div>
 }
 
-<h1>
-    @Model.EventName Admin
-</h1>
+@using (Html.BeginForm("PremierLeagueUpdate", "Admin"))
+{
+    <div class="form-group">
+        <div>
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Premier League Update" class="btn btn-default" />
+        </div>
+    </div>
+}
 
-<br/>
-
-<a href="@Url.Action("Index", "Fixtures", new {eventId = Model.Id})">
-    <span><h2>Edit Fixtures</h2></span>
-</a>
-<br/>
-<a href="@Url.Action("Index", "KOFixtures", new {eventId = Model.Id})">
-    <span><h2>Edit KO Fixtures</h2></span>
-</a>
-<br/>
-<a href="@Url.Action("EditKoResults", "KoFixtures", new {eventId = Model.Id})">
-    <span><h2>Enter KO Results</h2></span>
-</a>
-<br/>
-<a href="@Url.Action("UpdateScoring", "Admin", new {eventId = Model.Id})">
-    <span><h2>Update Scoring</h2></span>
-</a>
+@Html.ActionLink("All Fixtures","Index","Fixtures");

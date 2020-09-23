@@ -13,8 +13,6 @@ namespace Predict.ViewModels
 
         public short EventId { get; set; }
 
-        public bool ReadOnly { get; set; }
-
         public bool IsPremiumPlayer { get; set; }
     }
 }

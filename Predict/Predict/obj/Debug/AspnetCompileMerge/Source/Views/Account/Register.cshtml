@@ -10,14 +10,6 @@
 @using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form", id = "RegisterForm"}))
 {
     @Html.AntiForgeryToken()
-    if (Model.Id == null)
-    {
-        <h4>Create a new account.</h4>
-    }
-    else
-    {
-        <h4>View your account.</h4>
-    }
     <hr/>
     @Html.ValidationSummary("", new {@class = "text-danger"})
     <div class="form-group">
@@ -89,7 +81,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="btnSubmit" class="btn btn-default" value="@(Model.Id == null ? "Register" : "Update")"/>
+                <input type="submit" id="btnSubmit" class="btn btn-success" value="@(Model.Id == null ? "Register" : "Update")"/>
             </div>
         </div>
 
