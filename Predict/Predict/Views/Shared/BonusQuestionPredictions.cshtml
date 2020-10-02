@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="~/">Home</a>
+                    <a href="/Home/Index?eventid=@Model.EventId">Home</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Bonus Questions</li>
             </ol>
@@ -122,7 +122,7 @@
                             foreach (var fixturePrediction in Model.BonusQuestionPredictions)
                             {
                                 var fixtureDateTime = fixturePrediction.BonusQuestion.ToBeAnsweredByDateTime;
-                                var now = DateTime.Now.ToUniversalTime();
+                                var now = DateTime.UtcNow;
 
                                 var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
                                 if (diffInSeconds > 0)
@@ -164,7 +164,7 @@
             mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
             da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
 
-            return da + ' ' + mo + ' ' + newDate.getHours() + ':' + pad(newDate.getMinutes(), 2);
+            return da + ' ' + mo + ' ' + pad(newDate.getHours(),2) + ':' + pad(newDate.getMinutes(), 2);
 
         }
 

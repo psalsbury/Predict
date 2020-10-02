@@ -64,7 +64,7 @@ namespace Predict.Controllers
             {
                 myEvent = new Event
                 {
-                    CreatedDateTime = DateTime.Now
+                    CreatedDateTime = DateTime.UtcNow
                     ,DefaultPoolId = globalPoolId
                     , CreatedByPlayerId = playerId
                 };
@@ -74,7 +74,7 @@ namespace Predict.Controllers
                 myEvent = _context.Events.FirstOrDefault(e => e.Id == passedInEvent.Id);
             }
 
-            myEvent.ModifiedDateTime = DateTime.Now;
+            myEvent.ModifiedDateTime = DateTime.UtcNow;
             myEvent.EventName = passedInEvent.EventName;
             myEvent.EventDescription = passedInEvent.EventDescription;
             _context.Events.AddOrUpdate(myEvent);
@@ -89,8 +89,8 @@ namespace Predict.Controllers
                 {
                     EventId = myEvent.Id,
                     PoolId = globalPoolId,
-                    CreatedDateTime = DateTime.Now,
-                    ModifiedDateTime = DateTime.Now
+                    CreatedDateTime = DateTime.UtcNow,
+                    ModifiedDateTime = DateTime.UtcNow
                 };
                 _context.EventPools.AddOrUpdate(eventPool);
                 _context.SaveChanges();

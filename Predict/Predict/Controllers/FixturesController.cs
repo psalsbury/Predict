@@ -86,11 +86,11 @@ namespace Predict.Controllers
 
             Mapper.Map(fixtureViewModel, fixture);
 
-            fixture.ModifiedDateTime = DateTime.Now;
+            fixture.ModifiedDateTime = DateTime.UtcNow;
 
             if (fixtureViewModel.Id == 0)
             {
-                fixture.CreatedDateTime = DateTime.Now;
+                fixture.CreatedDateTime = DateTime.UtcNow;
                 _context.Fixtures.Add(fixture);
             }
 

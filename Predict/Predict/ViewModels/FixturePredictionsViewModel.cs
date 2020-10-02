@@ -14,5 +14,7 @@ namespace Predict.ViewModels
         public short EventId { get; set; }
 
         public bool IsPremiumPlayer { get; set; }
+
+        public bool AnyFixturesInTheFuture { get; set; }
     }
 }

@@ -98,6 +98,7 @@ namespace Predict.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -156,7 +157,7 @@ namespace Predict.Controllers
             var context = new ApplicationDbContext();
             var registerViewModel = new RegisterViewModel
             {
-                Events = context.Events.Where(a => a.StartDateTime >= DateTime.Now).ToList()
+                Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList()
             };
             context.Dispose();
             return View(registerViewModel);
@@ -212,7 +213,7 @@ namespace Predict.Controllers
                 {
                     //pjs
                     ModelState.AddModelError("Password", "The password and confirmation password do not match.");
-                    model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.Now).ToList();
+                    model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
                     return View("Register", model);
                 }
 
@@ -228,8 +229,8 @@ namespace Predict.Controllers
                         Id = user.Id
                         , DisplayName = model.DisplayName
                         , PlayerName = model.DisplayName // both the same//
-                        , CreatedDateTime = DateTime.Now
-                        , ModifiedDateTime = DateTime.Now
+                        , CreatedDateTime = DateTime.UtcNow
+                        , ModifiedDateTime = DateTime.UtcNow
                     };
                     context.Players.Add(player);
 
@@ -240,8 +241,8 @@ namespace Predict.Controllers
                             EventId = model.EventId,
                             PlayerId = user.Id,
                             Enabled = true,
-                            CreatedDateTime = DateTime.Now,
-                            ModifiedDateTime = DateTime.Now
+                            CreatedDateTime = DateTime.UtcNow,
+                            ModifiedDateTime = DateTime.UtcNow
                         };
                         context.EventPlayers.Add(eventPlayer);
 
@@ -253,10 +254,10 @@ namespace Predict.Controllers
                                 PoolId = defaultPoolId,
                                 PlayerId = user.Id,
                                 EventId = model.EventId,
-                                AdminApprovedDateTime = DateTime.Now,
+                                AdminApprovedDateTime = DateTime.UtcNow,
                                 Enabled =  true,
-                                CreatedDateTime = DateTime.Now,
-                                ModifiedDateTime = DateTime.Now
+                                CreatedDateTime = DateTime.UtcNow,
+                                ModifiedDateTime = DateTime.UtcNow
                             };
                             context.EventPoolPlayers.Add(globalPoolPlayer);
                         }
@@ -297,7 +298,7 @@ namespace Predict.Controllers
                 AddErrors(result);
             }
 
-            model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.Now).ToList();
+            model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
             return View("Register", model);
         }
 
@@ -544,6 +545,7 @@ namespace Predict.Controllers
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
+
             return RedirectToAction("Index", "Home");
         }
 

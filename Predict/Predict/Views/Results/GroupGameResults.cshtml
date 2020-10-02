@@ -117,7 +117,7 @@
         mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
 
-        return da + ' ' + mo + ' ' + newDate.getHours() + ':' + pad(newDate.getMinutes(), 2);
+        return da + ' ' + mo + ' ' + pad(newDate.getHours(),2) + ':' + pad(newDate.getMinutes(), 2);
 
     }
 

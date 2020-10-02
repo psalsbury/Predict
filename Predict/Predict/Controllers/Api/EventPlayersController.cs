@@ -50,16 +50,14 @@ namespace Predict.Controllers.Api
             {
                 PlayerId = playerId,
                 EventId = eventId,
-                CreatedDateTime = DateTime.Now,
-                ModifiedDateTime = DateTime.Now
+                CreatedDateTime = DateTime.UtcNow,
+                ModifiedDateTime = DateTime.UtcNow
             };
             _context.EventPlayers.Add(eventPlayer);
             _context.SaveChanges();
 
             return Ok();
         }
-
-
 
     }
 }

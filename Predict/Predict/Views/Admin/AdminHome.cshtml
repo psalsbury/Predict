@@ -18,4 +18,10 @@
     </div>
 }
 
-@Html.ActionLink("All Fixtures","Index","Fixtures");
+<input type="button"
+       value="All Fixtures"
+       class="btn btn-default"
+       onclick="location.href='@Url.Action("Index", "Fixtures") '" />
+
+
+

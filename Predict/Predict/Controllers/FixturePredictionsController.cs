@@ -76,7 +76,6 @@ namespace Predict.Controllers
                     .Include(b => b.EventFixture.Fixture.AwayTeam) 
                     .Where(p => p.PlayerId == userId)
                     .Where(p => p.EventId == eventId)
-                    .OrderBy(b => b.EventFixture.Fixture.FixtureDateTime)
                     .ToList();
 
             // Get the list of fixtures
@@ -86,6 +85,7 @@ namespace Predict.Controllers
                 .Include(t => t.Fixture)
                 .Include(t => t.Fixture.League)
                 .Where(p => p.EventId == eventId)
+                .OrderBy(b => b.Fixture.FixtureDateTime)
                 .ToList();
 
             // generate all the missing ones
@@ -104,7 +104,13 @@ namespace Predict.Controllers
                 }
             }
 
-            fixturePredictionsViewModel.FixturePredictions = fixturePredictions;
+            // If there are any fixtures in the future, set the property so the luck dip/clear buttons are available
+            fixturePredictionsViewModel.AnyFixturesInTheFuture =
+                fixturePredictions.Any(a => a.EventFixture.Fixture.FixtureDateTime > DateTime.UtcNow);
+
+            fixturePredictionsViewModel.FixturePredictions =
+                fixturePredictions.OrderBy(a => a.EventFixture.Fixture.FixtureDateTime).ToList();
+
             fixturePredictionsViewModel.UserId = userId;
             fixturePredictionsViewModel.EventId = eventId;
 
@@ -169,10 +175,10 @@ namespace Predict.Controllers
                                 PlayerId = userId,
                                 EventId =  eventId,
                                 FixtureId = fixturePredictionSubmitted.FixtureId,
-                                CreatedDateTime = DateTime.Now,
+                                CreatedDateTime = DateTime.UtcNow,
                                 HomePrediction = fixturePredictionSubmitted.HomePrediction,
                                 AwayPrediction = fixturePredictionSubmitted.AwayPrediction,
-                                ModifiedDateTime = DateTime.Now
+                                ModifiedDateTime = DateTime.UtcNow
                             };
                         }
                         else
@@ -186,7 +192,7 @@ namespace Predict.Controllers
                         {
                             fixturePredictionInDb.HomePrediction = fixturePredictionSubmitted.HomePrediction;
                             fixturePredictionInDb.AwayPrediction = fixturePredictionSubmitted.AwayPrediction;
-                            fixturePredictionInDb.ModifiedDateTime = DateTime.Now;
+                            fixturePredictionInDb.ModifiedDateTime = DateTime.UtcNow;
                             _context.FixturePredictions.AddOrUpdate(fixturePredictionInDb);
                         }
                     }

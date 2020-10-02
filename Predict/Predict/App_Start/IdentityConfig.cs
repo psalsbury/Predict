@@ -26,11 +26,11 @@ namespace Predict
             smtpMessage.IsBodyHtml = true;
 
             var client = new SmtpClient();
-            if (Environment.MachineName == "PETESDELL")
+            if (Environment.MachineName == "PETESXPS")
             {
                 client.Host = "ignored";
                 client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                client.PickupDirectoryLocation = @"c:\projects\Predict\predictemails";
+                client.PickupDirectoryLocation = @"c:\repos\Predict\predictemails";
             }
 
             return client.SendMailAsync(smtpMessage);

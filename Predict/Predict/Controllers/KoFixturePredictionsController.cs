@@ -70,8 +70,8 @@ namespace Predict.Controllers
             {
                 koWinningTeamPrediction = new KoWinningTeamPrediction
                 {
-                    CreatedDateTime = DateTime.Now,
-                    ModifiedDateTime = DateTime.Now,
+                    CreatedDateTime = DateTime.UtcNow,
+                    ModifiedDateTime = DateTime.UtcNow,
                     PlayerId = userId,
                     EventId = eventId,
                     TeamId = winningTeamId
@@ -81,7 +81,7 @@ namespace Predict.Controllers
             else if (winningTeamId > 0 && koWinningTeamPrediction != null &&
                      koWinningTeamPrediction.TeamId != winningTeamId)
             {
-                koWinningTeamPrediction.ModifiedDateTime = DateTime.Now;
+                koWinningTeamPrediction.ModifiedDateTime = DateTime.UtcNow;
                 koWinningTeamPrediction.TeamId = winningTeamId;
                 _context.KoWinningTeamPredictions.AddOrUpdate(koWinningTeamPrediction);
             }
@@ -120,7 +120,7 @@ namespace Predict.Controllers
                         {
                             if (team1Id > 0 || team2Id > 0)
                             {
-                                koFixturePrediction.ModifiedDateTime = DateTime.Now;
+                                koFixturePrediction.ModifiedDateTime = DateTime.UtcNow;
                                 koFixturePrediction.Team1Id = team1Id;
                                 koFixturePrediction.Team2Id = team2Id;
                                 _context.KoFixturePredictions.AddOrUpdate(koFixturePrediction);
@@ -144,8 +144,8 @@ namespace Predict.Controllers
 
             var koFixturePrediction = new KoFixturePrediction
             {
-                CreatedDateTime = DateTime.Now,
-                ModifiedDateTime = DateTime.Now,
+                CreatedDateTime = DateTime.UtcNow,
+                ModifiedDateTime = DateTime.UtcNow,
                 PlayerId = userId,
                 Team1Id = null,
                 Team2Id = null,

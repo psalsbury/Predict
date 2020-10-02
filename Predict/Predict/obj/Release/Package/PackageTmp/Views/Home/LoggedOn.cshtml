@@ -1,21 +1,15 @@
 ﻿@using Microsoft.Ajax.Utilities
 @using Predict.Models
 @using Predict.ViewModels
+@model Predict.Models.EventPlayer
 <link rel="stylesheet" href="~/Content/css/ionicons.min.css">
 @{
 
-    var eventPlayers = ((List<EventPlayer>)Session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
-    var eventId = Convert.ToInt16(Request["EventId"]);
-    var nbrEvents = eventPlayers.Count;
-
-    if (eventId == 0 && nbrEvents > 0)
-    {
-        eventId = eventPlayers.OrderBy(a => a.Event.StartDateTime).FirstOrDefault().EventId;
-    }
+    var eventPlayer = Model;
+    var eventId = eventPlayer.EventId;
 
     if (eventId > 0)
     {
-        var eventPlayer = eventPlayers.FirstOrDefault(a => a.EventId == eventId);
         var poolInfoViewModels = ((List<PoolInfoViewModel>)Session["PoolInfo"]).Where(a => a.EventId == eventId);
 
         <text>
@@ -135,9 +129,9 @@
                 <!-- small box -->
                 <div class="small-box bg-blue">
                     <div class="inner">
-                    <p style="font-size: 30px">
+                        <p style="font-size: 30px">
                             Game Info
-                    </p>
+                        </p>
                         <p>See whos predicted what</p>
                     </div>
                     <div class="icon">
@@ -146,9 +140,9 @@
                     <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})" class="small-box-footer">
                         See them here <i class="fa fa-arrow-circle-right"></i>
                     </a>
-                        
+
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -167,8 +161,9 @@
 
             <div class="box box-primary @collapsedBox">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><b>@poolInfoViewModel.PoolName</b> Details
-                    
+                    <h3 class="box-title">
+                        <b>@poolInfoViewModel.PoolName</b> Details
+
                         @if (poolInfoViewModel.IsAdmin)
                         {
                             @:<b>(@poolInfoViewModel.PlayersToApprove to approve)</b>
@@ -190,10 +185,10 @@
                             </span>
                             <div class="info-box-content">
 
-                                    <span class="info-box-text">Nbr of Members</span>
-                                    <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+                                <span class="info-box-text">Nbr of Members</span>
+                                <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
 
-                                </div>
+                            </div>
                         </li>
 
                         <!-- /.item -->
@@ -218,7 +213,7 @@
 
                                 </a>
                             </div>
-                         
+
                         </li>
                         <!-- /.item -->
                         <li class="item">

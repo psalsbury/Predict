@@ -93,8 +93,8 @@ namespace Predict.Controllers
                     {
                         EventId = eventFixtureViewModel.Event.Id,
                         FixtureId = fixture.Id,
-                        CreatedDateTime = DateTime.Now,
-                        ModifiedDateTime = DateTime.Now
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow
 
                     };
                     _context.EventFixtures.Add(myEventFixture);
@@ -107,6 +107,9 @@ namespace Predict.Controllers
             {
                 var eventParam = new SqlParameter("@intEventId", eventFixtureViewModel.Event.Id);
                 _context.Database.ExecuteSqlCommand("EXEC spUpdateEventStartEnd @intEventId", eventParam);
+
+                // update the application cache for events
+                Helper.Cache.SetEventCache(eventFixtureViewModel.Event.Id);
             }
 
             return RedirectToAction("EventsIndex", "Events");

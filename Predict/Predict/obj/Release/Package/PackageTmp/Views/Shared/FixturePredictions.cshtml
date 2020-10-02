@@ -77,35 +77,33 @@
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.OtherUserViewing || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+
+                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
-                                                if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.OtherUserViewing)
-                                                {
-                                                    <text>?</text>
-                                                }
-                                                else if (Model.FixturePredictions[i].HomePrediction != null)
-                                                {
-                                                    @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
-
-                                                }
-                                                else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
-                                                {
-                                                    <text>-</text>
-                                                }
-
-                                                if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
-                                                {
-                                                    <small>
-                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeResult))
-                                                    </small>
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
                                                 allowSubmit = true;
                                             }
+                                            else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                            {
+                                                <text>?</text>
+                                            }
+                                            else if (Model.FixturePredictions[i].HomePrediction != null)
+                                            {
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+
+                                            }
+                                            else if (Model.FixturePredictions[i].HomePrediction == null)
+                                            {
+                                                <text>-</text>
+                                            }
+
+                                            @if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
+                                            {
+                                                <small>
+                                                    (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeResult))
+                                                </small>
+                                            }
+
                                         </td>
                                     </tr>
                                 </table>
@@ -122,32 +120,30 @@
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.OtherUserViewing || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
-                                                if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.OtherUserViewing)
-                                                {
-                                                    <text>?</text>
-                                                }
-                                                else if (Model.FixturePredictions[i].AwayPrediction != null)
-                                                {
-                                                    @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
-
-                                                }
-                                                else if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
-                                                {
-                                                    <text>-</text>
-                                                }
-
-                                                if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
-                                                {
-                                                    <small>
-                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayResult))
-                                                    </small>
-                                                }
+                                                @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new {onblur = "IsNumeric(this)", size = "2", maxlength = "2"})
+                                                allowSubmit = true;
                                             }
-                                            else
+                                            else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
+                                                <text>?</text>
+                                            }
+                                            else if (Model.FixturePredictions[i].AwayPrediction != null)
+                                            {
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+
+                                            }
+                                            else if (Model.FixturePredictions[i].AwayPrediction == null)
+                                            {
+                                                <text>-</text>
+                                            }
+
+                                            @if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
+                                            {
+                                                <small>
+                                                    (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayResult))
+                                                </small>
                                             }
                                         </td>
                                     </tr>

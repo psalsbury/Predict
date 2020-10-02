@@ -32,6 +32,6 @@ namespace Predict.Models
         [Column(TypeName = "datetime2")]
         public DateTime ModifiedDateTime { get; set; }
 
-        public bool DatePassed => ToBeAnsweredByDateTime < DateTime.Now.ToUniversalTime();
+        public bool DatePassed => ToBeAnsweredByDateTime < DateTime.UtcNow;
     }
 }

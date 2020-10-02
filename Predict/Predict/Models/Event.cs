@@ -38,6 +38,6 @@ namespace Predict.Models
         [Column(TypeName = "datetime2")]
         public DateTime ModifiedDateTime { get; set; }
 
-        public bool EventStarted => StartDateTime < DateTime.Now.ToUniversalTime();
+        public bool EventStarted => StartDateTime < DateTime.UtcNow;
     }
 }

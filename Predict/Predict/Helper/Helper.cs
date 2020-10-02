@@ -6,7 +6,10 @@ using System.Runtime.Caching;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
+using Predict.RapidApi;
 
 namespace Predict.Helper
 {
@@ -26,11 +29,11 @@ namespace Predict.Helper
             smtpMessage.IsBodyHtml = true;
 
             var client = new SmtpClient();
-            if (Environment.MachineName == "THINKPAD")
+            if (Environment.MachineName == "PETESXPS")
             {
                 client.Host = "ignored";
                 client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                client.PickupDirectoryLocation = @"c:\predictemails";
+                client.PickupDirectoryLocation = @"C:\repos\Predict\predictemails";
             }
 
             client.Send(smtpMessage);
@@ -40,6 +43,15 @@ namespace Predict.Helper
         {
             if (!MemoryCache.Default.Contains(cacheId))
             {
+                switch (cacheId)
+                {
+                    case "Events":
+                        SetEventCache();
+                        break;
+                    default:
+                        break;
+                }
+
                 return null;
             }
             return MemoryCache.Default.Get(cacheId);
@@ -47,7 +59,7 @@ namespace Predict.Helper
 
         public static void SetCachedItem(string cacheId, object cachedItem)
         {
-            MemoryCache.Default.Set(cacheId, cachedItem, DateTime.Now.AddDays(30));
+            MemoryCache.Default.Set(cacheId, cachedItem, DateTime.UtcNow.AddDays(30));
         }
 
         public static Event GetCachedEvent(int eventId)
@@ -63,7 +75,7 @@ namespace Predict.Helper
             var myEvents = (List<Event>)GetCachedItem("Events");
             foreach (Event myEvent in myEvents)
             {
-                if (myEvent.StartDateTime.ToUniversalTime() > DateTime.Now.ToUniversalTime())
+                if (myEvent.StartDateTime > DateTime.UtcNow)
                 {
                     if (nextDateTime == DateTime.Today.AddDays(365))
                     {
@@ -88,7 +100,7 @@ namespace Predict.Helper
             var myEvent = myEvents.FirstOrDefault(e => e.Id == eventId);
             if (myEvent != null)
             {
-                if (myEvent.StartDateTime < DateTime.Now)
+                if (myEvent.StartDateTime < DateTime.UtcNow)
                 {
                     return true;
                 }
@@ -96,16 +108,95 @@ namespace Predict.Helper
 
             return false;
         }
-        
+
+        public static DateTime RoundUp(DateTime dt, TimeSpan d)
+        {
+            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
+        }
+
+        public static void GetRapidApiResults()
+        {
+            string cacheKey = "NextFixtureCheckDateTime";
+            bool checkPerformed = false;
+            var rapidApiResultChecks = (List<RapidApiResultCheck>) GetCachedItem(cacheKey);
+            if (rapidApiResultChecks == null)
+            {
+                SetNextResultCheckDateTime();
+                rapidApiResultChecks = (List<RapidApiResultCheck>)GetCachedItem(cacheKey);
+            }
+
+            foreach (var rapidApiResultCheck in rapidApiResultChecks)
+            {
+                if (rapidApiResultCheck.FixtureDateTime != DateTime.MinValue && rapidApiResultCheck.FixtureDateTime <= DateTime.UtcNow)
+                {
+                    var rapidApiLeagueId = rapidApiResultCheck.RapidApiLeagueId;
+                    RapidApiHelper.UpdateRapidApiLeagueByDate(rapidApiLeagueId,DateTime.UtcNow);
+                    checkPerformed = true;
+                }
+            }
+
+            if (checkPerformed)
+                SetNextResultCheckDateTime();
+        }
+
+        public static void SetNextResultCheckDateTime()
+        {
+            // Get all the fixtures that are associated to events, that do not have a result
+
+            string cacheKey = "NextFixtureCheckDateTime";
+            bool updateNeeded = false;
+
+            var rapidApiResultChecks = (List<RapidApiResultCheck>)GetCachedItem(cacheKey);
+            if (rapidApiResultChecks == null)
+            {
+                updateNeeded = true;
+            }
+            else
+            {
+                foreach (var rapidApiResultCheck in rapidApiResultChecks)
+                {
+                    // FixtureDateTime includes an addition of 2 hours to ensure we are checking after the game has finished
+                    if (rapidApiResultCheck.FixtureDateTime < DateTime.UtcNow)
+                    {
+                        updateNeeded = true;
+                    }
+                }
+            }
+
+            if (updateNeeded)
+            {
+                var context = new ApplicationDbContext();
+
+                rapidApiResultChecks = context.Database.SqlQuery<RapidApiResultCheck>(
+                    "spGetNextFixtureToCheckResult").ToList();
+
+                foreach (var rapidApiResultCheck in rapidApiResultChecks)
+                {
+                     var fixtureDateTime = rapidApiResultCheck.FixtureDateTime.AddMinutes(120); // Add 2 hours to the end time 
+
+                    if (fixtureDateTime < DateTime.UtcNow)
+                        fixtureDateTime = DateTime.UtcNow;
+
+                    fixtureDateTime = RoundUp(fixtureDateTime, TimeSpan.FromMinutes(5));
+                    rapidApiResultCheck.FixtureDateTime = fixtureDateTime;
+                }
+                SetCachedItem(cacheKey, rapidApiResultChecks);
+                context.Dispose();
+            }
+        }
+
         public static void SetEventCache()
         {
             var context = new ApplicationDbContext();
 
             var events = context.Events.ToList();
             SetCachedItem("Events",events);
+
+            context.Dispose();
         }
         public static void SetEventCache(short eventId)
         {
+            // Sets/Updates one specific event
             var myEvents = (List<Event>)GetCachedItem("Events");
             var context = new ApplicationDbContext();
             var myNewEvent = context.Events.SingleOrDefault(a => a.Id == eventId);
@@ -115,6 +206,7 @@ namespace Predict.Helper
                 myEvents[myOriginalEventIndex] = myNewEvent;
             }
             SetCachedItem("Events", myEvents);
+            context.Dispose();
         }
 
         public static void UpdateScoring(ApplicationDbContext context)
@@ -127,5 +219,7 @@ namespace Predict.Helper
             // Update the cache for this event
             SetEventCache();
         }
+
+
     }
 }

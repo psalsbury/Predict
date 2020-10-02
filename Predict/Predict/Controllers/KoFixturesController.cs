@@ -44,11 +44,11 @@ namespace Predict.Controllers
             Mapper.Map(koFixtureViewModel, koFixture);
             if (koFixtureViewModel.Id == 0)
             {
-                koFixture.CreatedDateTime = DateTime.Now;
+                koFixture.CreatedDateTime = DateTime.UtcNow;
                 _context.KoFixtures.Add(koFixture);
             }
 
-            koFixture.ModifiedDateTime = DateTime.Now;
+            koFixture.ModifiedDateTime = DateTime.UtcNow;
             _context.SaveChanges();
 
             return RedirectToAction("Index", "KoFixtures");
@@ -115,7 +115,7 @@ namespace Predict.Controllers
 
                     koFixture.Team1Id = team1Id;
                     koFixture.Team2Id = team2Id;
-                    koFixture.ModifiedDateTime = DateTime.Now;
+                    koFixture.ModifiedDateTime = DateTime.UtcNow;
 
                     _context.KoFixtures.AddOrUpdate(koFixture);
                 }

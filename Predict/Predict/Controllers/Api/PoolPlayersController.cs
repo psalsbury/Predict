@@ -58,7 +58,7 @@ namespace Predict.Controllers.Api
             if (poolPlayer == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            poolPlayer.AdminApprovedDateTime = DateTime.Now;
+            poolPlayer.AdminApprovedDateTime = DateTime.UtcNow;
             _context.SaveChanges();
 
             return Ok();
@@ -83,8 +83,8 @@ namespace Predict.Controllers.Api
             {
                 PlayerId = playerId,
                 PoolId = poolId,
-                CreatedDateTime = DateTime.Now,
-                ModifiedDateTime = DateTime.Now
+                CreatedDateTime = DateTime.UtcNow,
+                ModifiedDateTime = DateTime.UtcNow
             };
             _context.EventPoolPlayers.Add(poolPlayer);
             _context.SaveChanges();

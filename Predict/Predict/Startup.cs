@@ -12,6 +12,7 @@ namespace Predict
         {
             ConfigureAuth(app);
             Helper.Cache.SetEventCache();
+            Helper.Cache.SetNextResultCheckDateTime();
         }
     }
 }

@@ -1,3 +1,31 @@
-Add in Predictions By REsut section in Game stats
+When viewing prediction stats for events with KO, make the KO stats available through the link shown on the home page
 
-Make the preductions a queation mark of a future prediction and viewed by someone else
+Change the session to cookie
+
+If I am viewing my own predictions from the table, then show them
+
+logging off when session has expired takes me to 
+http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff
+I then get an error if I try to log on
+
+if fixture date changes, need to update start/end time of events that have the fixture
+
+
+needs testing
+order the left event menu by a) Unfinished by start date, b finished by start date (2 week expiry)
+
+When a new event is created , and the new fixtures added, I cant add myself to the event until I resave the event
+
+Add session variables for events only when clicked on
+
+
+
+Notes:
+get earliest fixture date time that has not completed
+add on 10 minutes
+Save that date/time in the cache
+
+
+Check cahce.. if cache date/time is less than now, check the results.
+perform th
+

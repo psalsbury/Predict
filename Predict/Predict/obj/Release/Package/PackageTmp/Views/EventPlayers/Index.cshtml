@@ -4,49 +4,102 @@
 @model IEnumerable<Predict.Models.Event>
 
 @{
-    var eventPlayers = (List<EventPlayer>)Session["Events"];
+    var eventPlayers = (List<EventPlayer>)Session["EventPlayers"];
     var playerId = User.Identity.GetUserId();
 }
+
 @using (Html.BeginForm("Save", "EventPlayers"))
-
 {
-    <table class="table" id="EventPlayers">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EventName)
-            </th>
-            <th>Playing</th>
-            <th>Home</th>
-        </tr>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#tab_1" data-toggle="tab">Upcoming</a>
+            </li>
+            <li>
+                <a href="#tab_2" data-toggle="tab">Active/Completed</a>
+            </li>
+        </ul>
+    </div>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EventName)
-                </td>
-                <td>
-                    @{ var exists = eventPlayers.Exists(a => a.EventId == item.Id); }
-                    @if (item.EventStarted)
-                    {
-                       @(exists?"Yes":"No");
-                    }
-                    else
-                    {
+    
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
 
-                        <input type="checkbox" value ="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists ? "checked" : "") )>
-                    }
 
-                </td>
-                <td>
-                    @if (exists)
-                    { 
-                     <input  class="btn btn-primary" value="Home" title="Visit Home Page" type="button" onclick="javascript:window.location='/?eventid=@item.Id'">
-                    }
-                </td>
-            </tr>
-        }
-    </table>
+            
+            <table class="table" id="EventPlayers">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EventName)
+                    </th>
+                    <th>Playing</th>
+                    <th>Home</th>
+                </tr>
+
+                @foreach (var item in Model.Where(e => e.EndDateTime >= DateTime.Now))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EventName)
+                        </td>
+                        <td>
+                            @{ var exists = eventPlayers.Exists(a => a.EventId == item.Id); }
+
+                            <input type="checkbox" value ="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists ? "checked" : "") )>
+
+                        </td>
+                        <td>
+                            @if (exists)
+                            { 
+                                <input  class="btn btn-primary" value="Home" title="Visit Home Page" type="button" onclick="javascript:window.location='/?eventid=@item.Id'">
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            
+
+        </div>
+        <div class="tab-pane" id="tab_2">
+
+
+            
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EventName)
+                    </th>
+                    <th>Playing</th>
+                    <th>Home</th>
+                </tr>
+
+                @foreach (var item in Model.Where(e => e.EndDateTime < DateTime.Now))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EventName)
+                        </td>
+                        <td>
+                            @{ var exists = eventPlayers.Exists(a => a.EventId == item.Id); }
+                            @(exists?"Yes":"No")
+                        </td>
+                        <td>
+                            @if (exists)
+                            { 
+                                <input  class="btn btn-primary" value="Home" title="Visit Home Page" type="button" onclick="javascript:window.location='/?eventid=@item.Id'">
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+
+
+
+        </div>
+    </div>
+
+
 
     <div class="form-group">
         <div class="col-md-offset-1 col-md-10">

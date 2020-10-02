@@ -1,17 +1,47 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Predict.Helper;
+using Predict.Models;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace Predict.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public HomeController()
+        {
+            _context = new ApplicationDbContext();
+        }
         public ActionResult Index()
         {
+            EventPlayer eventPlayer = null;
             if (User.Identity.IsAuthenticated)
-                SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(),false);
+            {
+                SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
+                
+                // Check if result is needed to be checked
+                Helper.Cache.GetRapidApiResults();
 
-            return View();
+                var eventId = System.Convert.ToInt16(Request["EventId"]);
+                if (eventId == 0)
+                {
+                    eventPlayer = SessionHelper.GetOrderedEventsForPlayers(Session).FirstOrDefault();
+                }
+                else
+                {
+                    eventPlayer =
+                        ((List<EventPlayer>) Session["EventPlayers"]).FirstOrDefault(e => e.EventId == eventId);
+                }
+
+                SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, false);
+
+            }
+            return View(eventPlayer);
         }
 
         public ActionResult ContactUs()

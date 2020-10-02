@@ -1,4 +1,5 @@
-﻿@using Predict.Models
+﻿@using Predict.Helper
+@using Predict.Models
 @using WebHelpers.Mvc5
 <aside class="main-sidebar">
     <section class="sidebar">
@@ -9,7 +10,7 @@
 
             @if (Request.IsAuthenticated)
             {
-                var eventPlayers = ((List<EventPlayer>)Session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
+                var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
 
                 foreach (var eventPlayer in eventPlayers)
                 {

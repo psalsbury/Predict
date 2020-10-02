@@ -13,13 +13,13 @@ namespace Predict.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void ContactUs()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var result = controller.ContactUs();
 
             // Assert
             Assert.IsNotNull(result);

@@ -46,7 +46,7 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            Helper.RapidApi.UpdatePremierLeague();
+            RapidApi.RapidApiHelper.UpdatePremierLeague();
 
             return RedirectToAction("AdminHome", "Admin");
         }        

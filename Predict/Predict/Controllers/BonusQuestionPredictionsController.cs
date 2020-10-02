@@ -41,11 +41,13 @@ namespace Predict.Controllers
             var player = (Player) System.Web.HttpContext.Current.Session["Player"];
 
             bonusQuestionPredictionsViewModel.PlayerId = playerId;
+            bonusQuestionPredictionsViewModel.EventId = eventId;
 
             var isPremiumPlayer = !(loggedInUserId != playerId && !player.PremiumPlayer);
             bonusQuestionPredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
 
             var bonusQuestions = _context.BonusQuestions.Where(e => e.EventId == eventId);
+
 
             // Get the existing bonus question predictions
             var bonusQuestionPredictions = _context.BonusQuestionPredictions
@@ -65,8 +67,8 @@ namespace Predict.Controllers
                     bonusQuestionPrediction = new BonusQuestionPrediction
                     {
                         BonusQuestion = bonusQuestion,
-                        CreatedDateTime = DateTime.Now,
-                        ModifiedDateTime = DateTime.Now,
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow,
                         PlayerId = playerId,
                         BonusQuestionId = bonusQuestion.Id
                     };
@@ -108,8 +110,8 @@ namespace Predict.Controllers
                         BonusQuestionId = bonusQuestionPrediction.BonusQuestionId
                         , PlayerId = loggedInUserId
                         , PredictedAnswer = bonusQuestionPrediction.PredictedAnswer
-                        , CreatedDateTime = DateTime.Now
-                        , ModifiedDateTime = DateTime.Now
+                        , CreatedDateTime = DateTime.UtcNow
+                        , ModifiedDateTime = DateTime.UtcNow
                     };
                     _context.BonusQuestionPredictions.Add(bonusQuestionPredictionInDb);
                 }
@@ -124,7 +126,7 @@ namespace Predict.Controllers
                 {
                     // An existing prediction that needs to be updated
                         bonusQuestionPredictionInDb.PredictedAnswer = bonusQuestionPrediction.PredictedAnswer;
-                        bonusQuestionPredictionInDb.ModifiedDateTime = DateTime.Now;
+                        bonusQuestionPredictionInDb.ModifiedDateTime = DateTime.UtcNow;
                         _context.BonusQuestionPredictions.AddOrUpdate(bonusQuestionPredictionInDb);
                  }
              }

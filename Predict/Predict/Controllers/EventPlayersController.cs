@@ -36,98 +36,102 @@ namespace Predict.Controllers
             var playerId = User.Identity.GetUserId();
             var myEventPlayers = _context.EventPlayers.Where(a => a.PlayerId == playerId).ToList();
             var myEvents = (List<Event>)Predict.Helper.Cache.GetCachedItem("Events");
+
             foreach (Event myEvent in myEvents)
             {
                 var myEventPlayer = myEventPlayers.FirstOrDefault(m => m.EventId == myEvent.Id);
                 var changeMade = false;
                 var playingIn = Request["event_" + myEvent.Id];
-                if (playingIn.IsNullOrWhiteSpace() && myEventPlayer != null && myEventPlayer.Enabled == true)
+                if (!myEvent.EventStarted)
                 {
-                    // User has selected NOT to be in this event and the record exists
-                    myEventPlayer.Enabled = false;
-                    myEventPlayer.ModifiedDateTime = DateTime.Now;
 
-                    // disable all entries to pools for this event
-                    var poolPlayers = _context.EventPoolPlayers.Where(f => f.PlayerId == playerId && f.EventId == myEvent.Id).ToList();
-                    poolPlayers.ForEach(a => a.Enabled = false);
-                    poolPlayers.ForEach(a => a.ModifiedDateTime= DateTime.Now);
-                    _context.EventPlayers.AddOrUpdate(myEventPlayer);
-                    changeMade = true;
-
-                }
-                else if (!playingIn.IsNullOrWhiteSpace() && myEventPlayer != null && myEventPlayer.Enabled == false)
-                {
-                    // User has selected to be in this event and the record exists
-                    myEventPlayer.Enabled = true;
-                    myEventPlayer.ModifiedDateTime = DateTime.Now;
-                    _context.EventPlayers.AddOrUpdate(myEventPlayer);
-                    changeMade = true;
-                }
-                else if (!playingIn.IsNullOrWhiteSpace() && myEventPlayer == null)
-                {
-                    // User has selected to be in this event and the record does not exist
-                    myEventPlayer = new EventPlayer
+                    if (playingIn.IsNullOrWhiteSpace() && myEventPlayer != null && myEventPlayer.Enabled == true)
                     {
-                        EventId = myEvent.Id,
-                        PlayerId = playerId,
-                        CreatedDateTime = DateTime.Now,
-                        ModifiedDateTime = DateTime.Now,
-                        Enabled = true
+                        // User has selected NOT to be in this event and the record exists
+                        myEventPlayer.Enabled = false;
+                        myEventPlayer.ModifiedDateTime = DateTime.UtcNow;
 
-                    };
-                    _context.EventPlayers.Add(myEventPlayer);
-                    changeMade = true;
-                }
+                        // disable all entries to pools for this event
+                        var poolPlayers = _context.EventPoolPlayers
+                            .Where(f => f.PlayerId == playerId && f.EventId == myEvent.Id).ToList();
+                        poolPlayers.ForEach(a => a.Enabled = false);
+                        poolPlayers.ForEach(a => a.ModifiedDateTime = DateTime.UtcNow);
+                        _context.EventPlayers.AddOrUpdate(myEventPlayer);
+                        changeMade = true;
 
-                if (!playingIn.IsNullOrWhiteSpace())
-                {
-                    // Make sure the player is associated to the global pool.
-                    var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
-
-                    var myPoolPlayer = _context.PoolPlayers.FirstOrDefault();
-                    if (myPoolPlayer == null)
-                    {
-                        myPoolPlayer = new PoolPlayer();
-                        myPoolPlayer.CreatedDateTime = DateTime.Now;
-                        myPoolPlayer.ModifiedDateTime = DateTime.Now;
-                        myPoolPlayer.PlayerId = playerId;
-                        myPoolPlayer.PoolId = globalPoolId;
-                        myPoolPlayer.Enabled = true;
                     }
-                    else if (myPoolPlayer.Enabled == false)
+                    else if (!playingIn.IsNullOrWhiteSpace() && myEventPlayer != null && myEventPlayer.Enabled == false)
                     {
-                        myPoolPlayer.ModifiedDateTime = DateTime.Now;
-                        myPoolPlayer.Enabled = true;
+                        // User has selected to be in this event and the record exists
+                        myEventPlayer.Enabled = true;
+                        myEventPlayer.ModifiedDateTime = DateTime.UtcNow;
+                        _context.EventPlayers.AddOrUpdate(myEventPlayer);
+                        changeMade = true;
                     }
-                    _context.PoolPlayers.AddOrUpdate(myPoolPlayer);
-
-                    // Associate the player/pool to the event
-                    var myEventPoolPlayer =_context.EventPoolPlayers.FirstOrDefault(f => f.EventId == myEvent.Id && f.PlayerId == playerId && f.PoolId== globalPoolId);
-                    if (myEventPoolPlayer == null)
+                    else if (!playingIn.IsNullOrWhiteSpace() && myEventPlayer == null)
                     {
-                        myEventPoolPlayer = new EventPoolPlayer()
+                        // User has selected to be in this event and the record does not exist
+                        myEventPlayer = new EventPlayer
                         {
-                            CreatedDateTime = DateTime.Now
-                            , ModifiedDateTime = DateTime.Now
-                            , EventId = myEvent.Id
-                            , PlayerId = playerId
-                            , PoolId = globalPoolId
-                            , AdminApprovedDateTime = DateTime.Now
-                            , PoolPosition = 1
-                            , Enabled =true
-                        };
-                    }
-                    else
-                    {
-                        myEventPoolPlayer.Enabled = true;
-                        myEventPoolPlayer.ModifiedDateTime = DateTime.Now;
-                    }
-                    _context.EventPoolPlayers.AddOrUpdate(myEventPoolPlayer);
-                    changeMade = true;
-                }
+                            EventId = myEvent.Id,
+                            PlayerId = playerId,
+                            CreatedDateTime = DateTime.UtcNow,
+                            ModifiedDateTime = DateTime.UtcNow,
+                            Enabled = true
 
-                if (changeMade == true)
-                     _context.SaveChanges();
+                        };
+                        _context.EventPlayers.Add(myEventPlayer);
+                        changeMade = true;
+                    }
+
+                    if (!playingIn.IsNullOrWhiteSpace())
+                    {
+                        // Make sure the player is associated to the global pool.
+                        var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
+
+                        var myPoolPlayer = _context.PoolPlayers.FirstOrDefault();
+                        if (myPoolPlayer == null)
+                        {
+                            myPoolPlayer = new PoolPlayer();
+                            myPoolPlayer.CreatedDateTime = DateTime.UtcNow;
+                            myPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                            myPoolPlayer.PlayerId = playerId;
+                            myPoolPlayer.PoolId = globalPoolId;
+                            myPoolPlayer.Enabled = true;
+                        }
+                        else if (myPoolPlayer.Enabled == false)
+                        {
+                            myPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                            myPoolPlayer.Enabled = true;
+                        }
+
+                        _context.PoolPlayers.AddOrUpdate(myPoolPlayer);
+
+                        // Associate the player/pool to the event
+                        var myEventPoolPlayer = _context.EventPoolPlayers.FirstOrDefault(f =>
+                            f.EventId == myEvent.Id && f.PlayerId == playerId && f.PoolId == globalPoolId);
+                        if (myEventPoolPlayer == null)
+                        {
+                            myEventPoolPlayer = new EventPoolPlayer()
+                            {
+                                CreatedDateTime = DateTime.UtcNow, ModifiedDateTime = DateTime.UtcNow, EventId = myEvent.Id,
+                                PlayerId = playerId, PoolId = globalPoolId, AdminApprovedDateTime = DateTime.UtcNow,
+                                PoolPosition = 1, Enabled = true
+                            };
+                        }
+                        else
+                        {
+                            myEventPoolPlayer.Enabled = true;
+                            myEventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                        }
+
+                        _context.EventPoolPlayers.AddOrUpdate(myEventPoolPlayer);
+                        changeMade = true;
+                    }
+
+                    if (changeMade == true)
+                        _context.SaveChanges();
+                }
             }
             
             Helper.SessionHelper.SetUserSessionVariables(Session, playerId,true);

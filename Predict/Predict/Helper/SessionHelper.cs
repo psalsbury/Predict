@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using Predict.Controllers;
 using Predict.Models;
 using Predict.ViewModels;
 
@@ -43,6 +44,58 @@ namespace Predict.Helper
             UpdateBonusPredictionsSessionVar(context, session, eventId, userId, true);
         }
 
+        public static void UpdateSessionForHomePage(ApplicationDbContext context, HttpSessionStateBase session, EventPlayer eventPlayer, bool forceRefresh)
+        {
+            var eventId = eventPlayer.EventId;
+            var userId = eventPlayer.PlayerId;
+
+            var thisEvent = Cache.GetCachedEvent(eventId);
+
+            // Static fixtures --> These should be cached to application, not session!!
+            UpdateFixturesSessionVar(context, session, eventId, forceRefresh);
+            UpdateKoFixturesSessionVar(context, session, eventId, forceRefresh);
+            UpdateBonusSessionVar(context, session, eventId, forceRefresh);
+
+            //Predictions
+            UpdateFixturePredictionsSessionVar(context, session, eventId, userId, forceRefresh);
+            UpdateKoPredictionsSessionVar(context, session, eventId, userId, forceRefresh);
+            UpdateWinningTeamPredictions(context, session, eventId, userId, forceRefresh);
+            UpdateBonusPredictionsSessionVar(context, session, eventId, userId, forceRefresh);
+
+            var forcePoolRefresh = (eventPlayer.Event.ModifiedDateTime < thisEvent.ModifiedDateTime);
+
+            // Pool info
+            UpdatePlayerPoolInfo(context, session, eventId, userId, forcePoolRefresh);
+
+        }
+
+        public static List<EventPlayer> GetOrderedEventsForPlayers(HttpSessionStateBase session)
+        {
+            var eventPlayers = (List<EventPlayer>)session["EventPlayers"];
+            var newList = new List<EventPlayer>();
+
+            // Order should by 1, unfinished by start date ASC, then 2. Finished (for 2 weeks) by start date ASC
+            var unfinishedEventPlayers = eventPlayers.Where(a => a.Event.EndDateTime >= DateTime.UtcNow).OrderBy(a => a.Event.StartDateTime);
+            foreach (var eventPlayer in unfinishedEventPlayers)
+            {
+                newList.Add(eventPlayer);
+            }
+            
+            var finishedEventPlayers = eventPlayers.Where(a => a.Event.EndDateTime < DateTime.UtcNow && a.Event.EndDateTime>= DateTime.UtcNow.AddDays(-14)).OrderBy(a => a.Event.StartDateTime);
+            foreach (var eventPlayer in finishedEventPlayers)
+            {
+                newList.Add(eventPlayer);
+            }
+
+            if (newList.Count == 0)
+            {
+                var eventPlayer = eventPlayers.OrderByDescending(a => a.Event.EventStarted).FirstOrDefault();
+                newList.Add(eventPlayer);
+            }
+
+            return newList;
+        }
+
         public static void SetUserSessionVariables(HttpSessionStateBase session, string userId, bool forceRefresh)
         {
             if(session["Player"] != null && forceRefresh==false)
@@ -52,35 +105,9 @@ namespace Predict.Helper
 
             var context = new ApplicationDbContext();
             var forcePoolRefresh = forceRefresh;
+
             UpdatePlayerSessionVariable(context, session, userId, forceRefresh);
             UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
-            var eventPlayers = ((List<EventPlayer>) session["Events"]).FindAll(v => v.Event.EndDateTime >= DateTime.Today.AddDays(-14));
-
-            foreach (var eventPlayer in eventPlayers)
-            {
-                var eventId = eventPlayer.EventId;
-
-                var thisEvent = Cache.GetCachedEvent(eventPlayer.Event.Id);
-
-                if(eventPlayer.Event.ModifiedDateTime < thisEvent.ModifiedDateTime)
-                {
-                    forcePoolRefresh = true;
-                }
-
-                // Static fixtures --> These should be cached to application, not session!!
-                UpdateFixturesSessionVar(context, session, eventId, forceRefresh);
-                UpdateKoFixturesSessionVar(context, session, eventId, forceRefresh);
-                UpdateBonusSessionVar(context, session, eventId, forceRefresh);
-
-                //Predictions
-                UpdateFixturePredictionsSessionVar(context, session, eventId, userId, forceRefresh);
-                UpdateKoPredictionsSessionVar(context, session, eventId, userId, forceRefresh);
-                UpdateWinningTeamPredictions(context, session, eventId, userId, forceRefresh);
-                UpdateBonusPredictionsSessionVar(context, session, eventId, userId, forceRefresh);
-            }
-
-            // Pool info
-            UpdatePlayerPoolInfo(context, session, userId, forcePoolRefresh);
 
             session.Timeout = 252000; // 180 day
         }
@@ -94,7 +121,7 @@ namespace Predict.Helper
             HttpSessionStateBase session,
             string userId, bool forceRefresh)
         {
-            const string sessionName = "Events";
+            const string sessionName = "EventPlayers";
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
@@ -108,14 +135,15 @@ namespace Predict.Helper
         }
 
         private static void UpdatePlayerPoolInfo(ApplicationDbContext context, HttpSessionStateBase session,
-            string userId, bool forceRefresh)
+            short eventId, string userId, bool forceRefresh)
         {
             const string sessionName = "PoolInfo";
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
             var poolInfoViewModel = context.Database.SqlQuery<PoolInfoViewModel>(
-                "spGetPlayerPoolInfo @strPlayerId"
+                "spGetPlayerPoolInfo @intEventId, @strPlayerId"
+                ,new SqlParameter("intEventId", eventId)
                 , new SqlParameter("@strPlayerId", userId)).ToList();
 
             session[sessionName] = poolInfoViewModel;

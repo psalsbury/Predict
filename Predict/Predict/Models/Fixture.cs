@@ -47,6 +47,6 @@ namespace Predict.Models
         [Column(TypeName = "datetime2")]
         public DateTime ModifiedDateTime { get; set; }
 
-        public bool FixtureDatePassed => FixtureDateTime < DateTime.Now.ToUniversalTime(); // FixtureDateTime should already be UTC
+        public bool FixtureDatePassed => FixtureDateTime < DateTime.UtcNow; // FixtureDateTime should already be UTC
     }
 }

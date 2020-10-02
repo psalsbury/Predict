@@ -131,11 +131,11 @@ namespace Predict.Controllers
             if (poolModel.Id != 0) poolFromDb = _context.Pools.Single(m => m.Id == poolModel.Id);
 
             Mapper.Map(poolModel, poolFromDb);
-            poolFromDb.ModifiedDateTime = DateTime.Now;
+            poolFromDb.ModifiedDateTime = DateTime.UtcNow;
 
             if (poolModel.Id == 0)
             {
-                poolFromDb.CreatedDateTime = DateTime.Now;
+                poolFromDb.CreatedDateTime = DateTime.UtcNow;
                 _context.Pools.Add(poolFromDb);
             }
 

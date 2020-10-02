@@ -1,7 +1,6 @@
 ﻿@model Predict.ViewModels.FixturePredictionsViewModel
 @{
     ViewBag.Title = "Fixture Predictions";
-    var allowSubmit = false;
 }
 @if (!Model.OtherUserViewing)
 {
@@ -15,7 +14,7 @@
     </nav>
 }
 
-@if (!Model.OtherUserViewing)
+@if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
 {
     <input class="btn btn-primary alignleft" title="Click to select let the computer pick your predictions for you." type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
 }
@@ -25,21 +24,21 @@
     @Html.HiddenFor(m => m.EventId)
     <table id="predictions" name="predictions" class="table table-bordered table-hover">
         <thead>
-        <tr>
+            <tr>
 
-            <th class="hidden-xs" style="text-align: center; vertical-align: middle;">
+                <th class="hidden-xs" style="text-align: center; vertical-align: middle;">
 
-            </th>
-            <th style="text-align: center; vertical-align: middle;">Game</th>
-            <th style="text-align: center; vertical-align: middle;">
-                Fixture Date
-            </th>
-        </tr>
+                </th>
+                <th style="text-align: center; vertical-align: middle;">Game</th>
+                <th style="text-align: center; vertical-align: middle;">
+                    Fixture Date
+                </th>
+            </tr>
         </thead>
         @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
         {
             var rowColour = "";
-            if (Model.FixturePredictions[i].CorrectScore??false)
+            if (Model.FixturePredictions[i].CorrectScore ?? false)
             {
                 rowColour = "#d9f2e6"; // Green
             }
@@ -70,42 +69,39 @@
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20"/>
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20" />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.OtherUserViewing || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
-                                            {
-                                                if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.OtherUserViewing)
-                                                {
-                                                    <text>?</text>
-                                                }
-                                                else if (Model.FixturePredictions[i].HomePrediction != null)
-                                                {
-                                                    @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
 
-                                                }
-                                                else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
-                                                {
-                                                    <text>-</text>
-                                                }
-
-                                                if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
-                                                {
-                                                    <small>
-                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeResult))
-                                                    </small>
-                                                }
-
-                                            }
-                                            else
+                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
                                                 @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
-                                                allowSubmit = true;
                                             }
+                                            else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                            {
+                                                <text>?</text>
+                                            }
+                                            else if (Model.FixturePredictions[i].HomePrediction != null)
+                                            {
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+
+                                            }
+                                            else if (Model.FixturePredictions[i].HomePrediction == null)
+                                            {
+                                                <text>-</text>
+                                            }
+
+                                            @if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
+                                            {
+                                                <small>
+                                                    (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeResult))
+                                                </small>
+                                            }
+
                                         </td>
                                     </tr>
                                 </table>
@@ -115,39 +111,37 @@
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20"/>
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20" />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @if (Model.OtherUserViewing || Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
-                                            {
-                                                if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && Model.OtherUserViewing)
-                                                {
-                                                    <text>?</text>
-                                                }
-                                                else if (Model.FixturePredictions[i].AwayPrediction != null)
-                                                {
-                                                    @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
-
-                                                }
-                                                else if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
-                                                {
-                                                    <text>-</text>
-                                                }
-
-                                                if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
-                                                {
-                                                    <small>
-                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayResult))
-                                                    </small>
-                                                }
-                                            }
-                                            else
+                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
                                                 @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
+                                            
+                                            }
+                                            else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                            {
+                                                <text>?</text>
+                                            }
+                                            else if (Model.FixturePredictions[i].AwayPrediction != null)
+                                            {
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+
+                                            }
+                                            else if (Model.FixturePredictions[i].AwayPrediction == null)
+                                            {
+                                                <text>-</text>
+                                            }
+
+                                            @if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
+                                            {
+                                                <small>
+                                                    (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayResult))
+                                                </small>
                                             }
                                         </td>
                                     </tr>
@@ -168,20 +162,21 @@
 
     @Html.AntiForgeryToken()
 
-    if (!Model.OtherUserViewing && allowSubmit)
+    if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
     {
         <div class="form-group">
             <div>
-                <input type="submit" value="Save" class="btn btn-success"/>
+                <input type="submit" value="Save" class="btn btn-success" />
                 <input class="btn btn-danger" title="Click to clear all predictions" type="button" value="Clear" onclick="javascript:ClearPredictions();" id="Clear" name="Clear">
             </div>
         </div>
     }
 }
-<br/>
-<script src="../../Scripts/bootbox.js"></script>
-@if (!Model.OtherUserViewing)
+<br />
+
+@if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
 {
+    <script src="../../Scripts/bootbox.js"></script>
     <script>
 
         function IsNumeric(obj) {
@@ -209,13 +204,13 @@
         function LuckyDip() {
             bootbox.confirm("Lucky dip, are you sure?",
                 function(result) {
-                    if (result) {            
+                    if (result) {
                         @{
                             var position = 0;
                             foreach (var fixturePrediction in Model.FixturePredictions)
                             {
                                 var fixtureDateTime = fixturePrediction.EventFixture.Fixture.FixtureDateTime;
-                                var now = DateTime.Now.ToUniversalTime();
+                                var now = DateTime.UtcNow;
 
                                 var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
                                 if (diffInSeconds > 0)
@@ -244,7 +239,7 @@
                             foreach (var fixturePrediction in Model.FixturePredictions)
                             {
                                 var fixtureDateTime = fixturePrediction.EventFixture.Fixture.FixtureDateTime;
-                                var now = DateTime.Now.ToUniversalTime();
+                                var now = DateTime.UtcNow;
 
                                 var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
                                 if (diffInSeconds > 0)
@@ -269,7 +264,7 @@
 <script>
 
     //get all td with actionclass in table
-    $("tbody tr td.myDate").each(function() {
+    $("tbody tr td.myDate").each(function () {
 
         $hiddenValue = $(this).find("input[type=hidden]").val();
 
@@ -289,7 +284,7 @@
         mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
 
-        return da + ' ' + mo + ' ' + newDate.getHours() + ':' + pad(newDate.getMinutes(), 2);
+        return da + ' ' + mo + ' ' + pad(newDate.getHours(),2) + ':' + pad(newDate.getMinutes(), 2);
 
     }
 
@@ -302,12 +297,12 @@
 </script>
 
 <script>
-    $(function() {
+    $(function () {
         // Determine timezone offset in milliseconds
         // from: http://www.w3schools.com/jsref/jsref_getTimezoneOffset.asp
         var d = new Date();
         var offsetms = d.getTimezoneOffset() * 60 * 1000;
-        $('.UTCTime').each(function() {
+        $('.UTCTime').each(function () {
             try {
                 var text = $(this).html();
 
@@ -325,9 +320,6 @@
 </script>
 
 <!-- Button trigger modal -->
-
-
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -384,6 +376,7 @@
     .alignleft {
         float: left;
     }
+
     .alignright {
         float: right;
     }
