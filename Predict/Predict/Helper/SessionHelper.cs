@@ -1,22 +1,21 @@
-﻿using System;
+﻿using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using Predict.Controllers;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Helper
 {
     public static class SessionHelper
-    {        
+    {
 
         // this class is for session variable
         public static object GetPlayerSessionData(HttpSessionStateBase session, string sessionKey, string userId)
         {
-            if (session[sessionKey] == null) SetUserSessionVariables(session, userId,false);
+            if (session[sessionKey] == null) SetUserSessionVariables(session, userId, false);
             return session[sessionKey];
         }
 
@@ -80,8 +79,8 @@ namespace Predict.Helper
             {
                 newList.Add(eventPlayer);
             }
-            
-            var finishedEventPlayers = eventPlayers.Where(a => a.Event.EndDateTime < DateTime.UtcNow && a.Event.EndDateTime>= DateTime.UtcNow.AddDays(-14)).OrderBy(a => a.Event.StartDateTime);
+
+            var finishedEventPlayers = eventPlayers.Where(a => a.Event.EndDateTime < DateTime.UtcNow && a.Event.EndDateTime >= DateTime.UtcNow.AddDays(-14)).OrderBy(a => a.Event.StartDateTime);
             foreach (var eventPlayer in finishedEventPlayers)
             {
                 newList.Add(eventPlayer);
@@ -98,7 +97,7 @@ namespace Predict.Helper
 
         public static void SetUserSessionVariables(HttpSessionStateBase session, string userId, bool forceRefresh)
         {
-            if(session["Player"] != null && forceRefresh==false)
+            if (session["Player"] != null && forceRefresh == false)
             {
                 return;
             }
@@ -127,7 +126,7 @@ namespace Predict.Helper
 
             var eventPlayers = context.EventPlayers
                 .Include(t => t.Event)
-                .Where(e => e.PlayerId == userId && e.Enabled==true)   
+                .Where(e => e.PlayerId == userId && e.Enabled == true)
                 .OrderBy(a => a.Event.StartDateTime)
                 .ToList();
 
@@ -137,13 +136,13 @@ namespace Predict.Helper
         private static void UpdatePlayerPoolInfo(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, string userId, bool forceRefresh)
         {
-            const string sessionName = "PoolInfo";
+            var sessionName = "PoolInfo*" + eventId; 
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
             var poolInfoViewModel = context.Database.SqlQuery<PoolInfoViewModel>(
                 "spGetPlayerPoolInfo @intEventId, @strPlayerId"
-                ,new SqlParameter("intEventId", eventId)
+                , new SqlParameter("intEventId", eventId)
                 , new SqlParameter("@strPlayerId", userId)).ToList();
 
             session[sessionName] = poolInfoViewModel;
@@ -205,10 +204,10 @@ namespace Predict.Helper
                 return;
 
             var nbrFixturePredictions = (from a in context.FixturePredictions
-                join c in context.EventFixtures on a.FixtureId equals c.FixtureId
-                where c.EventId == eventId
-                      && a.PlayerId == userId
-                select a).Count();
+                                         join c in context.EventFixtures on a.FixtureId equals c.FixtureId
+                                         where c.EventId == eventId
+                                               && a.PlayerId == userId
+                                         select a).Count();
 
             session[sessionName] = nbrFixturePredictions;
         }
@@ -221,18 +220,18 @@ namespace Predict.Helper
                 return;
 
             var nbrKoPredictionsTeam1 = (from a in context.KoFixturePredictions
-                join c in context.KoFixtures on a.KoFixtureId equals c.Id
-                where c.EventId == eventId
-                      && a.PlayerId == userId
-                      && a.Team1Id != null
-                select a).Count();
+                                         join c in context.KoFixtures on a.KoFixtureId equals c.Id
+                                         where c.EventId == eventId
+                                               && a.PlayerId == userId
+                                               && a.Team1Id != null
+                                         select a).Count();
 
             var nbrKoPredictionsTeam2 = (from a in context.KoFixturePredictions
-                join c in context.KoFixtures on a.KoFixtureId equals c.Id
-                where c.EventId == eventId
-                      && a.PlayerId == userId
-                      && a.Team2Id != null
-                select a).Count();
+                                         join c in context.KoFixtures on a.KoFixtureId equals c.Id
+                                         where c.EventId == eventId
+                                               && a.PlayerId == userId
+                                               && a.Team2Id != null
+                                         select a).Count();
 
             session[sessionName] = nbrKoPredictionsTeam1 + nbrKoPredictionsTeam2;
         }
@@ -245,9 +244,9 @@ namespace Predict.Helper
                 return;
 
             var nbrWinningTeamPredictions = (from a in context.KoWinningTeamPredictions
-                where a.EventId == eventId
-                      && a.PlayerId == userId
-                select a).Count();
+                                             where a.EventId == eventId
+                                                   && a.PlayerId == userId
+                                             select a).Count();
 
             session[sessionName] = nbrWinningTeamPredictions;
         }
@@ -260,9 +259,9 @@ namespace Predict.Helper
                 return;
 
             var nbrBonusQuestionPredictions = (from a in context.BonusQuestions
-                join c in context.BonusQuestionPredictions on a.Id equals c.BonusQuestionId
-                where a.EventId == eventId && c.PlayerId == userId
-                select a).Count();
+                                               join c in context.BonusQuestionPredictions on a.Id equals c.BonusQuestionId
+                                               where a.EventId == eventId && c.PlayerId == userId
+                                               select a).Count();
 
             session[sessionName] = nbrBonusQuestionPredictions;
         }

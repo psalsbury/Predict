@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Predict.Models;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Data.SqlClient;
+﻿using Predict.Models;
 using Predict.ViewModels;
+using System;
+using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Predict.Controllers
 {
@@ -49,7 +45,7 @@ namespace Predict.Controllers
             eventFixturesViewModel.Fixtures = fixtures;
             eventFixturesViewModel.EventFixtures = eventFixtures;
             eventFixturesViewModel.Event = Helper.Cache.GetCachedEvent(id);
-            
+
             return View(eventFixturesViewModel);
         }
 
@@ -74,7 +70,7 @@ namespace Predict.Controllers
                 if (exists == null && myEventFixture != null)
                 {
                     // User has selected for this fixture NOT to be associated with this event,
-                     
+
                     // delete any predictions there may be for this
                     var fixturePredictions = _context.FixturePredictions.Where(f => f.FixtureId == fixture.Id).ToList();
                     foreach (FixturePrediction fixturePrediction in fixturePredictions)
@@ -105,11 +101,8 @@ namespace Predict.Controllers
 
             if (changesMade == true)
             {
-                var eventParam = new SqlParameter("@intEventId", eventFixtureViewModel.Event.Id);
-                _context.Database.ExecuteSqlCommand("EXEC spUpdateEventStartEnd @intEventId", eventParam);
-
-                // update the application cache for events
-                Helper.Cache.SetEventCache(eventFixtureViewModel.Event.Id);
+                Helper.Cache.UpdateEventStartEnd(_context, eventFixtureViewModel.Event.Id);
+                
             }
 
             return RedirectToAction("EventsIndex", "Events");
@@ -118,4 +111,4 @@ namespace Predict.Controllers
 
 
     }
-    }
+}

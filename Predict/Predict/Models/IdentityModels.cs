@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Predict.Models
 {
@@ -39,7 +39,7 @@ namespace Predict.Models
         public DbSet<BonusQuestionPrediction> BonusQuestionPredictions { get; set; }
         public DbSet<League> Leagues { get; set; }
         public DbSet<Pool> Pools { get; set; }
-        public DbSet<PoolPlayer> PoolPlayers{ get; set; }
+        public DbSet<PoolPlayer> PoolPlayers { get; set; }
         public DbSet<EventPoolPlayer> EventPoolPlayers { get; set; }
         public DbSet<EventPoolPlayerPositionHistory> EventPoolPlayerPositionHistory { get; set; }
         public DbSet<KoFixture> KoFixtures { get; set; }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Predict.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Predict.Models;
 
 namespace Predict.ViewModels
 {

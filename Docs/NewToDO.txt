@@ -2,13 +2,11 @@ When viewing prediction stats for events with KO, make the KO stats available th
 
 Change the session to cookie
 
-If I am viewing my own predictions from the table, then show them
-
 logging off when session has expired takes me to 
 http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff
 I then get an error if I try to log on
 
-if fixture date changes, need to update start/end time of events that have the fixture
+remove KO score fom table if no KO stage
 
 
 needs testing

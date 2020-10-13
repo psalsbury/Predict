@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Predict.Helper;
+using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Predict.Helper;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -55,7 +55,7 @@ namespace Predict.Controllers
                 .Include(b => b.Team)
                 .FirstOrDefault(e => e.EventId == eventId && e.PlayerId == userId);
 
-            var round = (int) koFixtures.Max(a => a.RoundOf);
+            var round = (int)koFixtures.Max(a => a.RoundOf);
 
             // Save the winning team information
             var stringWinningTeamId = Request["1_1"];
@@ -172,7 +172,7 @@ namespace Predict.Controllers
         }
 
         // GET: KOFixturePredictionsGrouped
-       // [Route("KoFixturePredictionsGrouped/{eventId}")]
+        // [Route("KoFixturePredictionsGrouped/{eventId}")]
         public ActionResult KoFixturePredictionsGrouped(short eventId)
         {
             // If user is not logged in redirect to the home page
@@ -184,13 +184,13 @@ namespace Predict.Controllers
 
             return View(koFixturePredictionViewModel);
         }
-            
+
         public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId, string userId,
             bool readOnly, short eventId)
         {
 
             var isInLockDown = Cache.HasEventStarted(eventId);
-            var player = (Player) System.Web.HttpContext.Current.Session["Player"];
+            var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
 
             if (userId == null)

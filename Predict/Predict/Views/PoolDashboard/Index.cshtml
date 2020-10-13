@@ -1,0 +1,74 @@
+﻿@model  Predict.ViewModels.PoolDashboardViewModel
+
+@{
+    ViewBag.Title = "Pool Dashboard";
+    var globalPoolId = ViewBag.GlobalPoolId;
+}
+<link rel="stylesheet" href="~/content/css/ionicons.min.css">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Pool Admin</a>
+        </li>
+    </ol>
+</nav>
+
+
+<!-- Info boxes -->
+<div class="row">
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-arrow-circle-right"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">&nbsp</span>
+                @Html.ActionLink("Join a Pool", "JoinPool", "Pools", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">@Model.NumberOfPoolsMemberOf Pool@(Model.NumberOfPoolsMemberOf==1?"":"s")</span>
+                @Html.ActionLink("Your Pools", "PoolsMemberOf", "Pools", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-plus"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">&nbsp</span>
+                @Html.ActionLink("Create New Pool", "New", "Pools", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-gear-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">@Model.NumberOfPoolsAdminOf Pool@(Model.NumberOfPoolsAdminOf == 1?"":"s")</span>
+                @Html.ActionLink("Manage Pools", "Index", "Pools", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+
+</div>

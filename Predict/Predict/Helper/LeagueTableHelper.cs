@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Predict.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using Predict.Models;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Predict.Helper
 {
@@ -151,16 +151,16 @@ namespace Predict.Helper
 
             foreach (var koFixture in koFixtures.Where(k => k.RoundOf == maxRoundOf).OrderBy(p => p.Position))
             {
-                var team1FromLeagueId = koFixture.Team1FromLeagueId ?? 0; 
+                var team1FromLeagueId = koFixture.Team1FromLeagueId ?? 0;
                 var team1FromLeaguePosition = koFixture.Team1FromLeaguePosition ?? default(int);
 
-                var team2FromLeagueId = koFixture.Team2FromLeagueId ?? 0; 
+                var team2FromLeagueId = koFixture.Team2FromLeagueId ?? 0;
                 var team2FromLeaguePosition = koFixture.Team2FromLeaguePosition ?? default(int);
 
                 var team1 = GetTeamFromPosition(leagueTables, team1FromLeagueId, team1FromLeaguePosition);
                 var team2 = team2FromLeagueId > 0
                     ? GetTeamFromPosition(leagueTables, team2FromLeagueId, team2FromLeaguePosition)
-                    : GetBestPlacedThirdPosition(leagueTables,thirdPlaceDictionary, team1FromLeagueId);
+                    : GetBestPlacedThirdPosition(leagueTables, thirdPlaceDictionary, team1FromLeagueId);
 
                 resultingDictionary.Add((koFixture.Position - 1) * 2 + 1, team1.TeamId);
                 resultingDictionary.Add((koFixture.Position - 1) * 2 + 2, team2.TeamId);
@@ -178,7 +178,7 @@ namespace Predict.Helper
 
         public static LeagueTableTeam GetBestPlacedThirdPosition(List<LeagueTable> leagueTables, Dictionary<string, string> thirdPlaceDictionary, int team1FromLeagueId)
         {
-            
+
             var firstPlaceTeamLeagueShortName = leagueTables.First(a => a.LeagueId == team1FromLeagueId).LeagueName;
             var leagueShortNameToGet3rdPlaceTeamFrom = thirdPlaceDictionary[firstPlaceTeamLeagueShortName];
             var leagueIdToGet3rdPlaceTeamFrom = leagueTables.First(a => a.LeagueName == leagueShortNameToGet3rdPlaceTeamFrom).LeagueId;
@@ -194,8 +194,8 @@ namespace Predict.Helper
             var result = new Dictionary<int, int>();
 
             foreach (var leagueTable in leagueTables)
-            foreach (var leagueTableTeam in leagueTable.LeagueTableTeams)
-                allLeagueTeams.Add(leagueTableTeam);
+                foreach (var leagueTableTeam in leagueTable.LeagueTableTeams)
+                    allLeagueTeams.Add(leagueTableTeam);
 
             allLeagueTeams = allLeagueTeams.OrderByDescending(c => c.Points)
                 .ThenByDescending(e => e.GoalDifference)
@@ -349,7 +349,7 @@ namespace Predict.Helper
             return eventTeams;
         }
 
-        private static List<LeagueTable> GetLeagueTables(ApplicationDbContext context, List<EventTeam> eventTeams,int eventId)
+        private static List<LeagueTable> GetLeagueTables(ApplicationDbContext context, List<EventTeam> eventTeams, int eventId)
         {
             var leagueTables = new List<LeagueTable>();
 
@@ -362,8 +362,10 @@ namespace Predict.Helper
                     var leagueTable = new LeagueTable
                     {
                         LeagueId = leagueId
-                        , LeagueName = eventTeam.ShortLeagueName
-                        , LeagueTableTeams = new List<LeagueTableTeam>()
+                        ,
+                        LeagueName = eventTeam.ShortLeagueName
+                        ,
+                        LeagueTableTeams = new List<LeagueTableTeam>()
                     };
                     leagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.TeamName, eventTeam.TeamId,
                         eventTeam.FlagFileLocation));

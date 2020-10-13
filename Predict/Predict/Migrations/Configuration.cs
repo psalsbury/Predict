@@ -1,5 +1,5 @@
-using System.Data.Entity.Migrations;
 using Predict.Models;
+using System.Data.Entity.Migrations;
 
 namespace Predict.Migrations
 {

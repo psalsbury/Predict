@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Predict.Models;
 
 namespace Predict.Helper
 {

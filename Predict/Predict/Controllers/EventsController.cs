@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using Predict.Models;
+using System;
 using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Predict.Models;
 
 namespace Predict.Controllers
 {
@@ -29,7 +27,10 @@ namespace Predict.Controllers
         // GET: Events
         public ActionResult EventsIndex()
         {
-            if( !CheckUserIsValid()) return HttpNotFound();
+            if (!CheckUserIsValid())
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             var events = _context.Events.ToList();
             return View(events);
@@ -37,15 +38,15 @@ namespace Predict.Controllers
 
         public ActionResult AddEvent()
         {
-            if (!CheckUserIsValid()) return HttpNotFound();
+            if (!CheckUserIsValid()) return RedirectToAction("Index", "Home");
 
             var myEvent = new Event();
-            return View("EditEvent",myEvent);
+            return View("EditEvent", myEvent);
         }
 
         public ActionResult EditEvent(int id)
         {
-            if (!CheckUserIsValid()) return HttpNotFound();
+            if (!CheckUserIsValid()) return RedirectToAction("Index", "Home");
 
             var myEvent = _context.Events.FirstOrDefault(e => e.Id == id);
             return View(myEvent);
@@ -55,18 +56,20 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveEvent(Event passedInEvent)
         {
-            if (!CheckUserIsValid()) return HttpNotFound();
+            if (!CheckUserIsValid()) return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
             var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
             Event myEvent;
-            if (passedInEvent.Id==0)
+            if (passedInEvent.Id == 0)
             {
                 myEvent = new Event
                 {
                     CreatedDateTime = DateTime.UtcNow
-                    ,DefaultPoolId = globalPoolId
-                    , CreatedByPlayerId = playerId
+                    ,
+                    DefaultPoolId = globalPoolId
+                    ,
+                    CreatedByPlayerId = playerId
                 };
             }
             else

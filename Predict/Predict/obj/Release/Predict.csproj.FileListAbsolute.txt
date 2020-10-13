@@ -571,3 +571,7 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.CoreCompileInputs.ca
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.dll
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.pdb
+C:\repos\Predict\Predict\Predict\bin\NLog.config
+C:\repos\Predict\Predict\Predict\bin\NLog.dll
+C:\repos\Predict\Predict\Predict\bin\NLog.xml
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.csprojAssemblyReference.cache

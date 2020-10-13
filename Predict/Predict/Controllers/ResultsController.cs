@@ -1,9 +1,9 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
-using Predict.Helper;
+﻿using Predict.Helper;
 using Predict.Models;
 using Predict.ViewModels;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Predict.Controllers
 {
@@ -45,7 +45,7 @@ namespace Predict.Controllers
                 .Where(p => p.EventId == eventId).ToList()
                 .OrderBy(p => p.Fixture.FixtureDateTime).ToList();
 
-            groupGameResultsViewModel.EventFixtures = eventFixtures;        
+            groupGameResultsViewModel.EventFixtures = eventFixtures;
 
             return View(groupGameResultsViewModel);
         }

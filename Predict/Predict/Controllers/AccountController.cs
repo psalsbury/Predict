@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Predict.Helper;
 using Predict.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 using RegisterViewModel = Predict.ViewModels.RegisterViewModel;
 
 namespace Predict.Controllers
@@ -17,9 +17,11 @@ namespace Predict.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly NLog.Logger _logger;
 
         public AccountController()
         {
+            _logger = NLog.LogManager.GetCurrentClassLogger();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -98,12 +100,12 @@ namespace Predict.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-
+                    _logger.Info("Account - Login (HttpPost) - {0} logged in", model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -118,7 +120,7 @@ namespace Predict.Controllers
         {
             // Require that the user has already logged in via username/password or external login
             if (!await SignInManager.HasBeenVerifiedAsync()) return View("Error");
-            return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
+            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
         //
@@ -196,7 +198,7 @@ namespace Predict.Controllers
                 return View("Register", model);
             }
 
-
+            _logger.Info("Account - Register (HttpPost) - {0} registered", model.Email);
             return RedirectToAction("Index", "Home");
         }
 
@@ -218,7 +220,7 @@ namespace Predict.Controllers
                 }
 
 
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email,EmailConfirmed = true};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = true };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -227,10 +229,14 @@ namespace Predict.Controllers
                     var player = new Player
                     {
                         Id = user.Id
-                        , DisplayName = model.DisplayName
-                        , PlayerName = model.DisplayName // both the same//
-                        , CreatedDateTime = DateTime.UtcNow
-                        , ModifiedDateTime = DateTime.UtcNow
+                        ,
+                        DisplayName = model.DisplayName
+                        ,
+                        PlayerName = model.DisplayName // both the same//
+                        ,
+                        CreatedDateTime = DateTime.UtcNow
+                        ,
+                        ModifiedDateTime = DateTime.UtcNow
                     };
                     context.Players.Add(player);
 
@@ -255,7 +261,7 @@ namespace Predict.Controllers
                                 PlayerId = user.Id,
                                 EventId = model.EventId,
                                 AdminApprovedDateTime = DateTime.UtcNow,
-                                Enabled =  true,
+                                Enabled = true,
                                 CreatedDateTime = DateTime.UtcNow,
                                 ModifiedDateTime = DateTime.UtcNow
                             };
@@ -285,7 +291,7 @@ namespace Predict.Controllers
                     {
                         // Send an email with this link
                         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code},
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code },
                             Request.Url.Scheme);
                         await UserManager.SendEmailAsync(user.Id, "Confirm your account",
                             "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
@@ -335,7 +341,7 @@ namespace Predict.Controllers
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new {userId = user.Id, code},
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code },
                     Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "Reset Password",
                     "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
@@ -395,7 +401,7 @@ namespace Predict.Controllers
         {
             // Request a redirect to the external login provider
             return new ChallengeResult(provider,
-                Url.Action("ExternalLoginCallback", "Account", new {ReturnUrl = returnUrl}));
+                Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
         //
@@ -406,10 +412,10 @@ namespace Predict.Controllers
             var userId = await SignInManager.GetVerifiedUserIdAsync();
             if (userId == null) return View("Error");
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem {Text = purpose, Value = purpose})
+            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose })
                 .ToList();
             return View(new SendCodeViewModel
-                {Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe});
+            { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
         //
@@ -424,7 +430,7 @@ namespace Predict.Controllers
             // Generate the token and send it
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider)) return View("Error");
             return RedirectToAction("VerifyCode",
-                new {Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe});
+                new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //
@@ -444,14 +450,14 @@ namespace Predict.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
+                        new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
@@ -470,7 +476,7 @@ namespace Predict.Controllers
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null) return View("ExternalLoginFailure");
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -569,7 +575,7 @@ namespace Predict.Controllers
 
             public override void ExecuteResult(ControllerContext context)
             {
-                var properties = new AuthenticationProperties {RedirectUri = RedirectUri};
+                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
                 if (UserId != null) properties.Dictionary[XsrfKey] = UserId;
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }

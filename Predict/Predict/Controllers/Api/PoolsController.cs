@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using Predict.Models;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Predict.Models;
 
 namespace Predict.Controllers.Api
 {

@@ -67,3 +67,6 @@ C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.ValueTuple.xml
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.dll
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.pdb
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.config
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.dll
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.xml

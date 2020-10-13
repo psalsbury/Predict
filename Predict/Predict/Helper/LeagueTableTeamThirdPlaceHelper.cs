@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Predict.Helper
+﻿namespace Predict.Helper
 {
     public class LeagueTableTeamThirdPlaceHelper : LeagueTableTeam
     {
@@ -18,8 +13,8 @@ namespace Predict.Helper
             GoalsFor = leagueTableTeam.GoalsFor;
             GoalsAgainst = leagueTableTeam.GoalsAgainst;
             TeamFlag = leagueTableTeam.TeamFlag;
-            Points =  leagueTableTeam.Points;
-            Position  = leagueTableTeam.Position;
+            Points = leagueTableTeam.Points;
+            Position = leagueTableTeam.Position;
         }
         public short LeagueId { get; set; }
         public string LeagueName { get; set; }

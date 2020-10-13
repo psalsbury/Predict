@@ -1,8 +1,5 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using Predict.Models;
 using System.Web.Mvc;
-using Predict.Models;
 
 namespace Predict.Controllers
 {
@@ -22,7 +19,7 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            if (!User.IsInRole("Admin")) return HttpNotFound();
+            if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
             return View();
         }
@@ -49,6 +46,6 @@ namespace Predict.Controllers
             RapidApi.RapidApiHelper.UpdatePremierLeague();
 
             return RedirectToAction("AdminHome", "Admin");
-        }        
+        }
     }
 }

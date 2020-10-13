@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Predict.Models;
 using Predict.ViewModels;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Predict.Controllers
 {
@@ -27,7 +27,8 @@ namespace Predict.Controllers
             var predictionsConsolidated = new PredictionsConsolidatedViewModel
             {
                 PlayerId = playerId
-                , EventId = eventId
+                ,
+                EventId = eventId
             };
 
             predictionsConsolidated.Player = _context.Players.FirstOrDefault(p => p.Id == playerId);
@@ -36,8 +37,8 @@ namespace Predict.Controllers
             predictionsConsolidated.Pool = _context.Pools.FirstOrDefault(p => p.Id == poolId);
             if (predictionsConsolidated.Pool == null) throw new Exception("Invalid Pool");
 
-            var nbrKoPredictionsToEnter = (int) Session["nbrKoFixtures*" + eventId];
-            var nbrBonusQuestionsToEnter = (int) Session["nbrBonusQuestions*" + eventId];            
+            var nbrKoPredictionsToEnter = (int)Session["nbrKoFixtures*" + eventId];
+            var nbrBonusQuestionsToEnter = (int)Session["nbrBonusQuestions*" + eventId];
 
             var fixturePredictionsController = new FixturePredictionsController();
             var loggedInUserId = User.Identity.GetUserId();

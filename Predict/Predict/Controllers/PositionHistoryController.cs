@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using Predict.Models;
+using System.Linq;
 using System.Web.Mvc;
-using Predict.Models;
 
 namespace Predict.Controllers
 {
@@ -21,10 +21,10 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var positionHistory = (from a in _context.EventPoolPlayerPositionHistory
-                join c in _context.Pools on a.PoolId equals c.Id
-                where a.PlayerId == playerId
-                      && c.Id == poolId
-                select a).ToList();
+                                   join c in _context.Pools on a.PoolId equals c.Id
+                                   where a.PlayerId == playerId
+                                         && c.Id == poolId
+                                   select a).ToList();
             return View();
         }
     }

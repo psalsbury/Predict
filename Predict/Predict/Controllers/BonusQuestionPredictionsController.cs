@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.Identity;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -38,7 +38,7 @@ namespace Predict.Controllers
         {
 
             var bonusQuestionPredictionsViewModel = new BonusQuestionPredictionsViewModel();
-            var player = (Player) System.Web.HttpContext.Current.Session["Player"];
+            var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
             bonusQuestionPredictionsViewModel.PlayerId = playerId;
             bonusQuestionPredictionsViewModel.EventId = eventId;
@@ -108,10 +108,14 @@ namespace Predict.Controllers
                     bonusQuestionPredictionInDb = new BonusQuestionPrediction
                     {
                         BonusQuestionId = bonusQuestionPrediction.BonusQuestionId
-                        , PlayerId = loggedInUserId
-                        , PredictedAnswer = bonusQuestionPrediction.PredictedAnswer
-                        , CreatedDateTime = DateTime.UtcNow
-                        , ModifiedDateTime = DateTime.UtcNow
+                        ,
+                        PlayerId = loggedInUserId
+                        ,
+                        PredictedAnswer = bonusQuestionPrediction.PredictedAnswer
+                        ,
+                        CreatedDateTime = DateTime.UtcNow
+                        ,
+                        ModifiedDateTime = DateTime.UtcNow
                     };
                     _context.BonusQuestionPredictions.Add(bonusQuestionPredictionInDb);
                 }
@@ -125,14 +129,14 @@ namespace Predict.Controllers
                          !bonusQuestionPrediction.PredictedAnswer.IsNullOrWhiteSpace())
                 {
                     // An existing prediction that needs to be updated
-                        bonusQuestionPredictionInDb.PredictedAnswer = bonusQuestionPrediction.PredictedAnswer;
-                        bonusQuestionPredictionInDb.ModifiedDateTime = DateTime.UtcNow;
-                        _context.BonusQuestionPredictions.AddOrUpdate(bonusQuestionPredictionInDb);
-                 }
-             }
+                    bonusQuestionPredictionInDb.PredictedAnswer = bonusQuestionPrediction.PredictedAnswer;
+                    bonusQuestionPredictionInDb.ModifiedDateTime = DateTime.UtcNow;
+                    _context.BonusQuestionPredictions.AddOrUpdate(bonusQuestionPredictionInDb);
+                }
+            }
 
             _context.SaveChanges();
-            Helper.SessionHelper.RefreshBonusQuestionPredictions( Session, loggedInUserId, bonusQuestionPredictionsViewModel.EventId);
+            Helper.SessionHelper.RefreshBonusQuestionPredictions(Session, loggedInUserId, bonusQuestionPredictionsViewModel.EventId);
             return RedirectToAction("Index", "Home", new { EventId = bonusQuestionPredictionsViewModel.EventId });
         }
     }

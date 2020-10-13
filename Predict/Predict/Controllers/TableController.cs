@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using PagedList;
+using Predict.Models;
+using Predict.ViewModels;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
-using PagedList;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -13,7 +12,7 @@ namespace Predict.Controllers
     {
         private const int PAGE_SIZE = 25;
         private readonly ApplicationDbContext _context;
-        
+
         public TableController()
         {
             _context = new ApplicationDbContext();
@@ -33,12 +32,12 @@ namespace Predict.Controllers
         [HttpGet]
         public ActionResult ShowTable(short eventId, int poolId, int? page)
         {
-            var pageNumber = page??1;
+            var pageNumber = page ?? 1;
             var pageSize = PAGE_SIZE;
 
             var pool = _context.Pools.FirstOrDefault(p => p.Id == poolId);
             if (pool == null)
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
 
             ViewBag.PoolName = pool.PoolName;
 
@@ -50,7 +49,7 @@ namespace Predict.Controllers
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
         }
 
-        private List<TableViewModel> GetTableViewModel(short eventId,int poolId)
+        private List<TableViewModel> GetTableViewModel(short eventId, int poolId)
         {
             var tableViewModels = _context.Database.SqlQuery<TableViewModel>(
                 "spGetTable @intEventId, @intPoolId"

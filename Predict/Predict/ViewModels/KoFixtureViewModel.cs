@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Predict.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Predict.Helper;
-using Predict.Models;
 
 namespace Predict.ViewModels
 {

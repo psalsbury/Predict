@@ -86,7 +86,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2020 14:59:28</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Antiforgery.dll">
-      <publishTime>12/11/2018 17:33:18</publishTime>
+      <publishTime>11/12/2018 17:33:18</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authentication.Abstractions.dll">
       <publishTime>09/25/2020 14:59:28</publishTime>
@@ -113,7 +113,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2020 14:59:28</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Hosting.Abstractions.dll">
-      <publishTime>12/11/2018 17:30:22</publishTime>
+      <publishTime>11/12/2018 17:30:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Hosting.Server.Abstractions.dll">
       <publishTime>09/25/2020 14:59:28</publishTime>
@@ -224,10 +224,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2020 14:59:29</publishTime>
     </File>
     <File Include="bin/Predict.dll">
-      <publishTime>09/29/2020 17:49:51</publishTime>
+      <publishTime>10/02/2020 14:59:55</publishTime>
     </File>
     <File Include="bin/Predict.pdb">
-      <publishTime>09/29/2020 17:49:51</publishTime>
+      <publishTime>10/02/2020 14:59:55</publishTime>
     </File>
     <File Include="bin/RestSharp.dll">
       <publishTime>09/25/2020 14:59:29</publishTime>
@@ -1160,13 +1160,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2020 14:59:23</publishTime>
     </File>
     <File Include="Views/Admin/AdminHome.cshtml">
-      <publishTime>09/25/2020 14:59:23</publishTime>
+      <publishTime>10/02/2020 14:42:17</publishTime>
     </File>
     <File Include="Views/EventFixtures/Index.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>
     </File>
     <File Include="Views/EventPlayers/Index.cshtml">
-      <publishTime>10/08/2020 17:18:47</publishTime>
+      <publishTime>10/02/2020 14:33:17</publishTime>
     </File>
     <File Include="Views/Events/EditEvent.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>
@@ -1178,19 +1178,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2020 14:59:23</publishTime>
     </File>
     <File Include="Views/Fixtures/Index.cshtml">
-      <publishTime>09/25/2020 14:59:23</publishTime>
+      <publishTime>10/02/2020 14:57:28</publishTime>
     </File>
     <File Include="Views/Home/ContactUs.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>10/08/2020 17:34:03</publishTime>
+      <publishTime>08/10/2020 17:34:03</publishTime>
     </File>
     <File Include="Views/Home/LoggedOn.cshtml">
-      <publishTime>10/08/2020 17:33:15</publishTime>
+      <publishTime>08/10/2020 17:33:15</publishTime>
     </File>
     <File Include="Views/Home/NotLoggedOn.cshtml">
-      <publishTime>09/26/2020 13:56:36</publishTime>
+      <publishTime>10/01/2020 21:46:24</publishTime>
     </File>
     <File Include="Views/Home/Rules.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>
@@ -1238,22 +1238,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2020 14:59:23</publishTime>
     </File>
     <File Include="Views/Results/GroupGameResults.cshtml">
-      <publishTime>09/25/2020 14:59:23</publishTime>
+      <publishTime>10/02/2020 14:57:40</publishTime>
     </File>
     <File Include="Views/Shared/BonusQuestionPredictions.cshtml">
-      <publishTime>09/25/2020 14:59:23</publishTime>
+      <publishTime>10/02/2020 14:57:51</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>
     </File>
     <File Include="Views/Shared/FixturePredictions.cshtml">
-      <publishTime>09/26/2020 17:32:18</publishTime>
+      <publishTime>10/02/2020 14:56:55</publishTime>
     </File>
     <File Include="Views/Shared/KoFixturePredictions.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>
     </File>
     <File Include="Views/Shared/KoFixturePredictionsGrouped.cshtml">
-      <publishTime>09/25/2020 14:59:23</publishTime>
+      <publishTime>10/01/2020 22:24:03</publishTime>
     </File>
     <File Include="Views/Shared/LeagueTables.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>
@@ -1277,7 +1277,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/29/2020 12:07:50</publishTime>
     </File>
     <File Include="Views/StatsGroup/Index.cshtml">
-      <publishTime>09/25/2020 14:59:23</publishTime>
+      <publishTime>10/02/2020 14:58:01</publishTime>
     </File>
     <File Include="Views/StatsGroup/StatsFixture.cshtml">
       <publishTime>09/25/2020 14:59:23</publishTime>

@@ -77,7 +77,7 @@ BEGIN
 		, KoScore = 0
 		, BonusScore = 0
 		, TotalScore = 0
-		, ModifiedDateTime = GETDATE()
+		, ModifiedDateTime = GETUTCDATE()
 	FROM EventPoolPlayers AS PP
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId;
 		
@@ -101,7 +101,7 @@ BEGIN
 										THEN 1 
 										ELSE 0
 								END
-		, FP.ModifiedDateTime = GETDATE()
+		, FP.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.FixturePredictions AS FP
 	INNER JOIN dbo.Fixtures AS FX ON FX.Id = FP.FixtureId
 	INNER JOIN #tmpEvents AS TMP ON TMP.EventId = FP.EventId
@@ -153,7 +153,7 @@ BEGIN
 	SET PP.CorrectScore = CTE.CorrectScore
 		, PP.[CorrectResult] = CTE.CorrectResult
 		, PP.[WinMargin] = CTE.WinMargin
-		, PP.ModifiedDateTime = GETDATE()
+		, PP.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.EventPoolPlayers AS PP
 	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 	
@@ -323,14 +323,14 @@ BEGIN
 	UPDATE PP
 	SET PP.PoolPosition = CTE.PoolPosition
 		, PP.TotalScore = CTE.TotalScore
-		, PP.ModifiedDateTime = GETDATE()
+		, PP.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.EventPoolPlayers AS PP
 	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
 
 	/* Update the position history */
 	UPDATE PPPH
 	SET PPPH.PoolPosition = PP.PoolPosition
-		, PPPH.ModifiedDateTime = GETDATE()
+		, PPPH.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.EventPoolPlayerPositionHistory AS PPPH
 	INNER JOIN dbo.EventPoolPlayers AS PP ON PP.PoolId = PPPH.PoolId AND PP.PlayerId = PPPH.PlayerId
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
@@ -352,8 +352,8 @@ BEGIN
 		, PP.PlayerId
 		, @dteDate
 		, PP.PoolPosition
-		, GETDATE()
-		, GETDATE()
+		, GETUTCDATE()
+		, GETUTCDATE()
 	FROM dbo.EventPoolPlayers AS PP
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
@@ -363,7 +363,7 @@ BEGIN
 	/* Update Fixtures to be processed */
 	UPDATE FX
 	SET FX.ResultProcessed = 1
-		, FX.ModifiedDateTime = GETDATE()
+		, FX.ModifiedDateTime = GETUTCDATE()
 	FROM [dbo].[Fixtures] AS FX
 	WHERE FX.ResultProcessed = 0
 	AND FX.HomeResult IS NOT NULL
@@ -371,7 +371,7 @@ BEGIN
 
 	UPDATE KO
 	SET	KO.ResultProcessed = 1
-		, KO.ModifiedDateTime = GETDATE()
+		, KO.ModifiedDateTime = GETUTCDATE()
 	FROM [dbo].[KoFixtures] AS KO
 	WHERE KO.ResultProcessed = 0
 	AND KO.Team1Id IS NOT NULL
@@ -379,7 +379,7 @@ BEGIN
 
 	/* Update LastModifiedDateTime for this event */
 	UPDATE EV
-	SET EV.ModifiedDateTime = GETDATE()
+	SET EV.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.[Events] AS EV
 	INNER JOIN #tmpEvents AS TMP ON TMP.EventId = EV.Id;
 

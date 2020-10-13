@@ -1,0 +1,136 @@
+﻿@using Microsoft.Ajax.Utilities
+@using Microsoft.AspNet.Identity
+@model IEnumerable<Predict.Models.Pool> 
+
+@{
+    ViewBag.Title = "Pool Membership";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="~/PoolDashboard">Pool Admin</a>
+        </li>
+
+        <li class="breadcrumb-item active" aria-current="page">Join a Pool</li>
+    </ol>
+</nav>
+
+            <table class="table table-bordered table-hover" id="poolMembershipNotJoined">
+                <thead>
+                    <tr>
+                        <th>
+                            Pool Name
+                        </th>
+                        <th>
+                            Join Code Required
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var item in @Model)
+                {
+  
+                    var joinCodeNeeded = item.JoinCode.IsNullOrWhiteSpace() ? "" : "joinCodeNeeded";
+                    var joinCodeNeededDisplay = item.JoinCode.IsNullOrWhiteSpace() ? "No" : "Yes";
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PoolName)
+                            </td>
+                            <td>
+                                @joinCodeNeededDisplay
+                            </td>
+
+                            <td>
+                                <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded" dataPoolId="@item.Id" poolName="@item.PoolName">Join Pool</button>
+                            </td>
+
+                        </tr>
+                }
+
+
+            </table>
+
+
+<script src="~/Scripts/bootbox.js"></script>
+
+<script>
+
+    $(function() {
+        $("#poolMembershipJoined, #poolMembershipNotJoined").DataTable({
+            "bLengthChange": false
+        });;
+    });
+
+
+</script>
+
+<script>
+
+
+    $("#poolMembershipJoined").on("click",
+        ".js-approve",
+        function() {
+            var button = $(this);
+            bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " pool?",
+                function(result) {
+                    $.ajax(
+                        {
+                            url: "../api/poolPlayers/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
+                            method: "DELETE",
+                            success: function() {
+                                $(button.closest("tr")).fadeOut(1000);
+                            }
+                        });
+
+
+                });
+        });
+
+
+    $("#poolMembershipNotJoined").on("click",
+        ".btn-success",
+        function() {
+            var button = $(this);
+
+            var ok = false;
+            if (button.attr("joinCode") === "" || typeof button.attr("joinCode") === 'undefined') {
+                bootbox.confirm("Are you sure you want to join the " + button.attr("poolName") + " pool?",
+                    function(result) {
+                        if (result) {
+                            JoinPool(button, "");
+                        }
+                    });
+            } else {
+                bootbox.prompt("To join the " + button.attr("poolName") + " pool, please enter the join code",
+                    function(result) {
+                        JoinPool(button, result);
+                    });
+
+            };
+        });
+
+    function JoinPool(button, joinCode) {
+        $.ajax(
+            {
+                // If this doesnt work, its the URL thats not working. The api works fine
+                url: "../api/PoolPlayers/AddNewPoolPlayer/" +
+                    button.attr("dataPoolId") +
+                    "/@(User.Identity.GetUserId())" +
+                    "/" +
+                    joinCode,
+                method: "POST",
+                success: function() {
+                    $(button.closest("tr")).fadeOut(1000);
+                },
+                error: function(request, status, error) {
+                    bootbox.alert("Join request has not been successful : " + error);
+                }
+            });
+    };
+
+
+</script>

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
-using Microsoft.AspNet.Identity;
-using Predict.Helper;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -22,7 +21,7 @@ namespace Predict.Controllers
         }
 
         // GET: Pools
-        public ActionResult Index(short eventId)
+        public ActionResult Index()
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -38,47 +37,53 @@ namespace Predict.Controllers
             {
                 // Normal user can see only their pools
                 var userid = User.Identity.GetUserId();
+
                 pools = _context.Pools.Include(b => b.AdminPlayer)
                     .Where(p => p.AdminPlayerId == userid).ToList();
             }
 
+            ViewBag.GlobalPoolId = Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
             return View(pools);
         }
 
 
         // GET: Pools
-        public ActionResult PoolMembershipIndex(short eventId)
+        public ActionResult JoinPool()
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
             var playerId = User.Identity.GetUserId();
-            var poolMembershipViewModel = new PoolMembershipViewModel();
+
+            var availablePools = (from pool in _context.Pools
+                where !_context.PoolPlayers.Any(f => f.PlayerId == playerId && f.PoolId==pool.Id && f.Enabled==true)
+                select pool).ToList();
+
+            return View("JoinPool", availablePools);
+        }
+
+        // GET: Pools
+        public ActionResult PoolsMemberOf()
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            var playerId = User.Identity.GetUserId();
+
             var globalPoolId =
                 Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
 
-            poolMembershipViewModel.ReadOnlyPools.Add(globalPoolId);
-
-            var adminPools = _context.Pools
-                .Where(p => p.AdminPlayerId == playerId);
-
-            foreach (var pool in adminPools) poolMembershipViewModel.ReadOnlyPools.Add(pool.Id);
-
             // Admin of the site can see all pools
-            var availablePools = _context.Pools.Include(b => b.AdminPlayer).ToList();
+            var joinedPools = _context.PoolPlayers
+                .Include(a => a.Pool)
+                .Where(a => a.PlayerId == playerId && a.Enabled == true);
 
-            // Normal user can see only their pools           
-            var joinedPools = _context.EventPoolPlayers
-                .Include(b => b.Pool)
-                .Where(p => p.PlayerId == playerId).ToList();
-            poolMembershipViewModel.Pools = availablePools;
-            poolMembershipViewModel.JoinedPools = joinedPools;
-
-            return View("PoolMembershipIndex", poolMembershipViewModel);
+            return View("PoolsMemberOf", joinedPools);
         }
 
-        public ActionResult New(short eventId)
+        public ActionResult New()
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -87,9 +92,9 @@ namespace Predict.Controllers
             var poolModel = new Pool
             {
                 AdminPlayerId = User.Identity.GetUserId()
-                , CorrectScorePoints = 3
-                , CorrectResultPoints = 1
-                , WinMarginPoints = 0
+                , CorrectScorePoints = 5
+                , CorrectResultPoints = 2
+                , WinMarginPoints = 1
                 , KoLast16Points = 1
                 , KoLast8Points = 2
                 , KoLast4Points = 4
@@ -141,7 +146,7 @@ namespace Predict.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Pools");
+            return RedirectToAction("Index", "PoolDashboard");
         }
 
         public ActionResult Delete(int id)
@@ -151,7 +156,7 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var pool = _context.Pools.FirstOrDefault(a => a.Id == id);
-            if (pool == null) return HttpNotFound();
+            if (pool == null) return RedirectToAction("Index", "Home");
 
             var loggedInUserId = User.Identity.GetUserId();
             var isInLockDown = false;
@@ -170,12 +175,12 @@ namespace Predict.Controllers
 
             _context.Pools.Remove(pool);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Pools");
+            return RedirectToAction("Index", "PoolDashboard");
         }
 
         public ActionResult Players(int id)
         {
-            return RedirectToAction("PoolAdmin", "PoolPlayers", new {id});
+            return RedirectToAction("PoolAdmin", "PoolPlayers", new { id });
         }
 
 

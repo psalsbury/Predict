@@ -1,9 +1,9 @@
-﻿using System.Data.Entity;
+﻿using Predict.Models;
+using Predict.ViewModels;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {

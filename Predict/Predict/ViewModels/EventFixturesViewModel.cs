@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Predict.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Predict.Models;
 
 namespace Predict.ViewModels
 {

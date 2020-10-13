@@ -1,0 +1,255 @@
+2020-10-12 11:45:57.9708 INFO Startup Configuration - Start
+2020-10-12 11:45:58.0058 INFO SetEventCache - Start
+2020-10-12 11:45:58.0586 INFO SetCachedItem = setting cache for Events
+2020-10-12 11:45:58.0696 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 11:45:58.0696 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 11:45:58.1703 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 11:45:58.1703 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 11:46:17.3298 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 11:46:17.6110 INFO GetRapidApiResults - Start
+2020-10-12 11:46:17.6110 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 11:46:17.6110 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 10:46:17, time to wait for is 17/10/2020 13:25:00
+2020-10-12 11:48:44.3477 INFO GetRapidApiResults - Start
+2020-10-12 11:48:44.3477 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 11:48:44.3477 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 10:48:44, time to wait for is 17/10/2020 13:25:00
+2020-10-12 11:48:45.1844 INFO GetRapidApiResults - Start
+2020-10-12 11:48:45.1844 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 11:48:45.1854 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 10:48:45, time to wait for is 17/10/2020 13:25:00
+2020-10-12 11:48:47.3716 INFO GetRapidApiResults - Start
+2020-10-12 11:48:47.3726 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 11:48:47.3726 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 10:48:47, time to wait for is 17/10/2020 13:25:00
+2020-10-12 20:58:20.3541 INFO Startup Configuration - Start
+2020-10-12 20:58:20.3830 INFO SetEventCache - Start
+2020-10-12 20:58:20.4548 INFO SetCachedItem = setting cache for Events
+2020-10-12 20:58:20.4668 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 20:58:20.4668 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 20:58:20.6164 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 20:58:20.6164 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 20:58:54.9341 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 20:58:55.1974 INFO GetRapidApiResults - Start
+2020-10-12 20:58:55.2014 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 20:58:55.2014 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 19:58:55, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:07:09.2873 INFO Startup Configuration - Start
+2020-10-12 21:07:09.3112 INFO SetEventCache - Start
+2020-10-12 21:07:09.3610 INFO SetCachedItem = setting cache for Events
+2020-10-12 21:07:09.3750 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 21:07:09.3750 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 21:07:09.4668 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 21:07:09.4668 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 21:07:19.0042 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 21:07:19.2406 INFO GetRapidApiResults - Start
+2020-10-12 21:07:19.2406 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:07:19.2476 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:07:19, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:10:21.4580 INFO GetRapidApiResults - Start
+2020-10-12 21:10:21.4580 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:10:21.4580 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:10:21, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:10:36.9572 INFO GetRapidApiResults - Start
+2020-10-12 21:10:36.9572 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:10:36.9572 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:10:36, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:21:11.2902 INFO Startup Configuration - Start
+2020-10-12 21:21:11.3161 INFO SetEventCache - Start
+2020-10-12 21:21:11.3700 INFO SetCachedItem = setting cache for Events
+2020-10-12 21:21:11.3939 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 21:21:11.4039 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 21:21:11.4598 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 21:21:11.4598 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 21:21:37.7869 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 21:21:38.0293 INFO GetRapidApiResults - Start
+2020-10-12 21:21:38.0293 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:21:38.0293 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:21:38, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:29:34.6849 INFO Startup Configuration - Start
+2020-10-12 21:29:34.7088 INFO SetEventCache - Start
+2020-10-12 21:29:34.7601 INFO SetCachedItem = setting cache for Events
+2020-10-12 21:29:34.7730 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 21:29:34.7730 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 21:29:34.8090 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 21:29:34.8100 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 21:30:04.4442 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 21:30:04.6855 INFO GetRapidApiResults - Start
+2020-10-12 21:30:04.6855 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:30:04.6855 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:30:04, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:48:56.0476 INFO Startup Configuration - Start
+2020-10-12 21:48:56.0725 INFO SetEventCache - Start
+2020-10-12 21:48:56.1373 INFO SetCachedItem = setting cache for Events
+2020-10-12 21:48:56.1822 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 21:48:56.1882 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 21:48:56.2350 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 21:48:56.2350 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 21:48:56.8753 INFO GetRapidApiResults - Start
+2020-10-12 21:48:56.8753 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:48:56.8753 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:48:56, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:55:24.3347 INFO GetRapidApiResults - Start
+2020-10-12 21:55:24.3347 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:55:24.3347 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:55:24, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:55:34.2072 INFO GetRapidApiResults - Start
+2020-10-12 21:55:34.2072 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:55:34.2072 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:55:34, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:58:22.6521 INFO GetRapidApiResults - Start
+2020-10-12 21:58:22.6521 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:58:22.6571 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:58:22, time to wait for is 17/10/2020 13:25:00
+2020-10-12 21:58:44.4928 INFO GetRapidApiResults - Start
+2020-10-12 21:58:44.4928 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 21:58:44.4928 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 20:58:44, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:01:41.4628 INFO GetRapidApiResults - Start
+2020-10-12 22:01:41.4628 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:01:41.4628 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:01:41, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:02:48.5869 INFO GetRapidApiResults - Start
+2020-10-12 22:02:48.5869 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:02:48.5869 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:02:48, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:04:57.3846 INFO GetRapidApiResults - Start
+2020-10-12 22:04:57.3846 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:04:57.3906 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:04:57, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:06:07.2211 INFO GetRapidApiResults - Start
+2020-10-12 22:06:07.2211 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:06:07.2211 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:06:07, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:06:58.9344 INFO GetRapidApiResults - Start
+2020-10-12 22:06:58.9354 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:06:58.9354 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:06:58, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:07:14.4907 INFO GetRapidApiResults - Start
+2020-10-12 22:07:14.4907 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:07:14.4907 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:07:14, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:07:53.9059 INFO GetRapidApiResults - Start
+2020-10-12 22:07:53.9059 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:07:53.9059 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:07:53, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:08:19.4813 INFO GetRapidApiResults - Start
+2020-10-12 22:08:19.4813 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:08:19.4863 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:08:19, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:08:44.8427 INFO GetRapidApiResults - Start
+2020-10-12 22:08:44.8427 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:08:44.8427 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:08:44, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:08:58.5917 INFO GetRapidApiResults - Start
+2020-10-12 22:08:58.5917 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:08:58.5917 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:08:58, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:09:04.7972 INFO GetRapidApiResults - Start
+2020-10-12 22:09:04.7972 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:09:04.7972 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:09:04, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:10:25.1183 INFO Startup Configuration - Start
+2020-10-12 22:10:25.1422 INFO SetEventCache - Start
+2020-10-12 22:10:25.1981 INFO SetCachedItem = setting cache for Events
+2020-10-12 22:10:25.2180 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 22:10:25.2409 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 22:10:25.2928 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 22:10:25.2928 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 22:10:25.7182 INFO GetRapidApiResults - Start
+2020-10-12 22:10:25.7182 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:10:25.7182 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:10:25, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:10:34.6238 INFO GetRapidApiResults - Start
+2020-10-12 22:10:34.6238 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:10:34.6238 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:10:34, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:11:03.5788 INFO GetRapidApiResults - Start
+2020-10-12 22:11:03.5788 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:11:03.5788 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:11:03, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:11:15.3279 INFO GetRapidApiResults - Start
+2020-10-12 22:11:15.3279 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:11:15.3279 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:11:15, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:13:06.8856 INFO GetRapidApiResults - Start
+2020-10-12 22:13:06.8856 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:13:06.8856 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:13:06, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:13:12.9322 INFO GetRapidApiResults - Start
+2020-10-12 22:13:12.9322 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:13:12.9372 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:13:12, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:13:13.9417 INFO GetRapidApiResults - Start
+2020-10-12 22:13:13.9417 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:13:13.9417 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:13:13, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:13:14.4710 INFO GetRapidApiResults - Start
+2020-10-12 22:13:14.4710 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:13:14.4710 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:13:14, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:13:14.7392 INFO GetRapidApiResults - Start
+2020-10-12 22:13:14.7392 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:13:14.7392 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:13:14, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:13:51.0723 INFO GetRapidApiResults - Start
+2020-10-12 22:13:51.0723 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:13:51.0723 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:13:51, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:18:53.4499 INFO GetRapidApiResults - Start
+2020-10-12 22:18:53.4509 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:18:53.4509 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:18:53, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:20:14.1742 INFO GetRapidApiResults - Start
+2020-10-12 22:20:14.1742 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:20:14.1742 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:20:14, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:20:22.3239 INFO GetRapidApiResults - Start
+2020-10-12 22:20:22.3239 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:20:22.3259 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:20:22, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:22:29.7242 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 22:22:29.7601 INFO GetRapidApiResults - Start
+2020-10-12 22:22:29.7641 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:22:29.7641 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:22:29, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:23:08.9628 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 22:23:08.9887 INFO GetRapidApiResults - Start
+2020-10-12 22:23:08.9887 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:23:08.9887 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:23:08, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:25:55.8992 INFO GetRapidApiResults - Start
+2020-10-12 22:25:55.8992 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:25:55.9052 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:25:55, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:42:16.9174 INFO Startup Configuration - Start
+2020-10-12 22:42:16.9453 INFO SetEventCache - Start
+2020-10-12 22:42:17.0011 INFO SetCachedItem = setting cache for Events
+2020-10-12 22:42:17.0301 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 22:42:17.0301 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 22:42:17.0939 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 22:42:17.0939 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 22:45:19.8457 INFO GetRapidApiResults - Start
+2020-10-12 22:45:19.8457 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:45:19.8457 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:45:19, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:45:47.6073 INFO GetRapidApiResults - Start
+2020-10-12 22:45:47.6073 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:45:47.6073 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:45:47, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:45:48.7858 INFO GetRapidApiResults - Start
+2020-10-12 22:45:48.7858 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:45:48.7858 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:45:48, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:45:52.7538 INFO GetRapidApiResults - Start
+2020-10-12 22:45:52.7538 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:45:52.7538 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:45:52, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:45:54.2058 INFO GetRapidApiResults - Start
+2020-10-12 22:45:54.2058 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:45:54.2058 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:45:54, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:45:56.9853 INFO GetRapidApiResults - Start
+2020-10-12 22:45:56.9853 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:45:56.9853 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:45:56, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:46:46.8972 INFO GetRapidApiResults - Start
+2020-10-12 22:46:46.8972 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:46:46.8972 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:46:46, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:46:49.7635 INFO GetRapidApiResults - Start
+2020-10-12 22:46:49.7635 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:46:49.7635 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:46:49, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:48:11.3331 INFO GetRapidApiResults - Start
+2020-10-12 22:48:11.3331 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:48:11.3331 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:48:11, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:48:43.9078 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-12 22:48:43.9417 INFO GetRapidApiResults - Start
+2020-10-12 22:48:43.9417 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:48:43.9417 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:48:43, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:49:21.6001 INFO GetRapidApiResults - Start
+2020-10-12 22:49:21.6001 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:49:21.6001 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:49:21, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:54:01.0122 INFO Startup Configuration - Start
+2020-10-12 22:54:01.0421 INFO SetEventCache - Start
+2020-10-12 22:54:01.1019 INFO SetCachedItem = setting cache for Events
+2020-10-12 22:54:01.1368 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 22:54:01.1528 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 22:54:01.1987 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 22:54:01.1987 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 22:54:01.8214 INFO GetRapidApiResults - Start
+2020-10-12 22:54:01.8214 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:54:01.8294 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:54:01, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:54:20.0000 INFO GetRapidApiResults - Start
+2020-10-12 22:54:20.0000 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:54:20.0000 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:54:20, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:54:22.3323 INFO GetRapidApiResults - Start
+2020-10-12 22:54:22.3323 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:54:22.3323 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:54:22, time to wait for is 17/10/2020 13:25:00
+2020-10-12 22:54:23.1062 INFO GetRapidApiResults - Start
+2020-10-12 22:54:23.1072 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 22:54:23.1072 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 21:54:23, time to wait for is 17/10/2020 13:25:00
+2020-10-12 23:02:03.6453 INFO Startup Configuration - Start
+2020-10-12 23:02:03.6692 INFO SetEventCache - Start
+2020-10-12 23:02:03.7261 INFO SetCachedItem = setting cache for Events
+2020-10-12 23:02:03.7460 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-12 23:02:03.7610 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-12 23:02:03.8118 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 17/10/2020 13:25:00
+2020-10-12 23:02:03.8118 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-12 23:02:46.0185 INFO GetRapidApiResults - Start
+2020-10-12 23:02:46.0185 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 23:02:46.0185 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 22:02:46, time to wait for is 17/10/2020 13:25:00
+2020-10-12 23:03:00.1894 INFO GetRapidApiResults - Start
+2020-10-12 23:03:00.1894 INFO GetRapidApiResults = rapidApiResultChecks has 1 items
+2020-10-12 23:03:00.1894 INFO GetRapidApiResults = Waiting for result. Time now is 12/10/2020 22:03:00, time to wait for is 17/10/2020 13:25:00

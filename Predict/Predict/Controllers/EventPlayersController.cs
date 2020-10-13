@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Predict.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.Identity;
-using Predict.Models;
 
 namespace Predict.Controllers
 {
@@ -24,7 +23,12 @@ namespace Predict.Controllers
         // GET: EventPlayers
         public ActionResult Index()
         {
-            var myEvents = (List<Event>) Predict.Helper.Cache.GetCachedItem("Events");
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var myEvents = (List<Event>)Predict.Helper.Cache.GetCachedItem("Events");
 
             return View(myEvents);
         }
@@ -114,9 +118,14 @@ namespace Predict.Controllers
                         {
                             myEventPoolPlayer = new EventPoolPlayer()
                             {
-                                CreatedDateTime = DateTime.UtcNow, ModifiedDateTime = DateTime.UtcNow, EventId = myEvent.Id,
-                                PlayerId = playerId, PoolId = globalPoolId, AdminApprovedDateTime = DateTime.UtcNow,
-                                PoolPosition = 1, Enabled = true
+                                CreatedDateTime = DateTime.UtcNow,
+                                ModifiedDateTime = DateTime.UtcNow,
+                                EventId = myEvent.Id,
+                                PlayerId = playerId,
+                                PoolId = globalPoolId,
+                                AdminApprovedDateTime = DateTime.UtcNow,
+                                PoolPosition = 0,
+                                Enabled = true
                             };
                         }
                         else
@@ -133,8 +142,8 @@ namespace Predict.Controllers
                         _context.SaveChanges();
                 }
             }
-            
-            Helper.SessionHelper.SetUserSessionVariables(Session, playerId,true);
+
+            Helper.SessionHelper.SetUserSessionVariables(Session, playerId, true);
             return RedirectToAction("Index", "Home");
         }
     }

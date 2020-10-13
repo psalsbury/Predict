@@ -36,7 +36,7 @@
                     <th>Home</th>
                 </tr>
 
-                @foreach (var item in Model.Where(e => e.EndDateTime >= DateTime.Now))
+                @foreach (var item in Model.Where(e => e.EndDateTime >= DateTime.UtcNow))
                 {
                     <tr>
                         <td>
@@ -74,7 +74,7 @@
                     <th>Home</th>
                 </tr>
 
-                @foreach (var item in Model.Where(e => e.EndDateTime < DateTime.Now))
+                @foreach (var item in Model.Where(e => e.EndDateTime < DateTime.UtcNow))
                 {
                     <tr>
                         <td>

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Predict.Models;
-using Predict.ViewModels;
+using System.Configuration;
 
 namespace Predict.Controllers
 {
@@ -30,14 +31,18 @@ namespace Predict.Controllers
 
             if (!isPoolAdmin) throw new Exception("Only pool admin is allowed to edit the pool");
 
-            var poolPlayers = _context.EventPoolPlayers.Include(p => p.Player)
+            var poolPlayers = _context.PoolPlayers.Include(p => p.Player)
                 .Where(p => p.PoolId == id).ToList();
+
+            var globalPoolId =
+                Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
 
             var pool = _context.Pools.SingleOrDefault(p => p.Id == id);
             var poolPlayerViewModel = new PoolPlayerViewModel
             {
                 Pool = pool,
-                PoolPlayers = poolPlayers
+                PoolPlayers = poolPlayers,
+                GlobalPoolId = globalPoolId
             };
 
             return View(poolPlayerViewModel);

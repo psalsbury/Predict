@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using Predict.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using Microsoft.Ajax.Utilities;
-using Predict.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Predict.Controllers.Api
 {
@@ -17,76 +20,67 @@ namespace Predict.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        // POST: api/EventPoolPlayers/5
         [HttpPost]
-        [Route("api/EventPoolPlayers/delete/{poolId}/{playerId}")]
+        [Route("api/PoolPlayers/delete/{poolId}/{playerId}")]
         public IHttpActionResult Delete(int poolId, string playerId)
         {
-            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
+            var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
 
             if (poolPlayer == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
+            
+            var eventPoolPlayers = _context.EventPoolPlayers.Include(a => a.Event)
+                .Where(a => a.Event.StartDateTime >= DateTime.UtcNow)
+                .Where(a => a.PlayerId == playerId)
+                .Where(a => a.PoolId == poolId);
 
-            _context.EventPoolPlayers.Remove(poolPlayer);
+            poolPlayer.Enabled = false;
+            _context.PoolPlayers.AddOrUpdate(poolPlayer);
+
+            // Remove player from any events that have not yet started
+            foreach (var eventPoolPlayer in eventPoolPlayers)
+            {
+                eventPoolPlayer.Enabled = false;
+                eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                _context.EventPoolPlayers.AddOrUpdate(eventPoolPlayer);
+            }
+
             _context.SaveChanges();
 
             return Ok();
         }
 
-        [HttpGet]
-        public IEnumerable<EventPoolPlayer> GetPoolPlayers()
-        {
-            return _context.EventPoolPlayers.ToList();
-        }
-
-        [HttpGet]
-        [Route("api/EventPoolPlayers/{poolId}/{playerId}")]
-        public EventPoolPlayer GetPoolPlayer(int poolId, string playerId)
-        {
-            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(p => p.PoolId == poolId && p.PlayerId == playerId);
-            if (poolPlayer == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-
-            return poolPlayer;
-        }
 
         [HttpPost]
-        [Route("api/EventPoolPlayers/{poolId}/{playerId}")]
-        public IHttpActionResult Authorize(int poolId, string playerId)
-        {
-            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
-
-            if (poolPlayer == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-
-            poolPlayer.AdminApprovedDateTime = DateTime.UtcNow;
-            _context.SaveChanges();
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("api/EventPoolPlayers/AddNewPoolPlayer/{poolId}/{playerId}/{joinCode}")]
+        [Route("api/PoolPlayers/AddNewPoolPlayer/{poolId}/{playerId}/{joinCode}")]
         public IHttpActionResult AddNewPoolPlayer(int poolId, string playerId, string joinCode)
         {
             var pool = _context.Pools.SingleOrDefault(p => p.Id == poolId);
             if (pool == null)
-                return BadRequest("Player does not exist");
+                return BadRequest("Pool does not exist");
 
             if (!pool.JoinCode.IsNullOrWhiteSpace() && pool.JoinCode != joinCode)
                 return BadRequest("Join Code is Not Valid");
 
-            var poolPlayer = _context.EventPoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
-
-            if (poolPlayer != null) return BadRequest("Player already belongs to this pool");
-
-            poolPlayer = new EventPoolPlayer
+            var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
+            if (poolPlayer == null)
             {
-                PlayerId = playerId,
-                PoolId = poolId,
-                CreatedDateTime = DateTime.UtcNow,
-                ModifiedDateTime = DateTime.UtcNow
-            };
-            _context.EventPoolPlayers.Add(poolPlayer);
+
+                poolPlayer = new PoolPlayer
+                {
+                    PlayerId = playerId,
+                    PoolId = poolId,
+                    CreatedDateTime = DateTime.UtcNow,
+                    ModifiedDateTime = DateTime.UtcNow,
+                    Enabled = true
+                };
+            }
+            else
+            {
+                poolPlayer.Enabled = true;
+                poolPlayer.ModifiedDateTime = DateTime.UtcNow;
+            }
+            _context.PoolPlayers.AddOrUpdate(poolPlayer);
             _context.SaveChanges();
 
             return Ok();

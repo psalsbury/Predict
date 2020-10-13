@@ -1,11 +1,9 @@
-﻿using System;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Predict.Helper;
 using Predict.Models;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace Predict.Controllers
 {
@@ -23,7 +21,7 @@ namespace Predict.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
-                
+
                 // Check if result is needed to be checked
                 Helper.Cache.GetRapidApiResults();
 
@@ -35,7 +33,7 @@ namespace Predict.Controllers
                 else
                 {
                     eventPlayer =
-                        ((List<EventPlayer>) Session["EventPlayers"]).FirstOrDefault(e => e.EventId == eventId);
+                        ((List<EventPlayer>)Session["EventPlayers"]).FirstOrDefault(e => e.EventId == eventId);
                 }
 
                 SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, false);

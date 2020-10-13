@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-
-namespace Predict.Helper
+﻿namespace Predict.Helper
 {
     public class EventTeam
     {
@@ -17,5 +10,5 @@ namespace Predict.Helper
         public string ShortLeagueName { get; set; }
         public string FlagFileLocation { get; set; }
     }
-    
+
 }

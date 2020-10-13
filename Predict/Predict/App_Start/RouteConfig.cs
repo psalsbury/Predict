@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Predict
@@ -13,7 +12,7 @@ namespace Predict
             routes.MapRoute(
                 "EnterFixturePredictions", // Route name
                 "FixturePredictions/FixturePredictions/{eventId}", // URL with parameters
-                new {controller = "FixturePredictions", action = "FixturePredictions"} // Parameter default
+                new { controller = "FixturePredictions", action = "FixturePredictions" } // Parameter default
             );
 
             routes.MapRoute(
@@ -31,7 +30,7 @@ namespace Predict
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional}
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

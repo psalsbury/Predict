@@ -1,7 +1,7 @@
-﻿using System.Data.Entity;
+﻿using Predict.Models;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using Predict.Models;
 
 namespace Predict.Controllers
 {

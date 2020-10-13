@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using Predict.Models;
+using System.Linq;
 using System.Web.Mvc;
-using Predict.Models;
 
 namespace Predict.Controllers
 {

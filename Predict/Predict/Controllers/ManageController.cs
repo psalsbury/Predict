@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Predict.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Predict.Controllers
 {
@@ -88,7 +88,7 @@ namespace Predict.Controllers
                 message = ManageMessageId.Error;
             }
 
-            return RedirectToAction("ManageLogins", new {Message = message});
+            return RedirectToAction("ManageLogins", new { Message = message });
         }
 
         //
@@ -117,7 +117,7 @@ namespace Predict.Controllers
                 await UserManager.SmsService.SendAsync(message);
             }
 
-            return RedirectToAction("VerifyPhoneNumber", new {PhoneNumber = model.Number});
+            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
 
         //
@@ -152,7 +152,7 @@ namespace Predict.Controllers
             // Send an SMS through the SMS provider to verify the phone number
             return phoneNumber == null
                 ? View("Error")
-                : View(new VerifyPhoneNumberViewModel {PhoneNumber = phoneNumber});
+                : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
         //
@@ -168,7 +168,7 @@ namespace Predict.Controllers
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null) await SignInManager.SignInAsync(user, false, false);
-                return RedirectToAction("Index", new {Message = ManageMessageId.AddPhoneSuccess});
+                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
 
             // If we got this far, something failed, redisplay form
@@ -183,10 +183,10 @@ namespace Predict.Controllers
         public async Task<ActionResult> RemovePhoneNumber()
         {
             var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
-            if (!result.Succeeded) return RedirectToAction("Index", new {Message = ManageMessageId.Error});
+            if (!result.Succeeded) return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null) await SignInManager.SignInAsync(user, false, false);
-            return RedirectToAction("Index", new {Message = ManageMessageId.RemovePhoneSuccess});
+            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
         //
@@ -209,7 +209,7 @@ namespace Predict.Controllers
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null) await SignInManager.SignInAsync(user, false, false);
-                return RedirectToAction("Index", new {Message = ManageMessageId.ChangePasswordSuccess});
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
 
             AddErrors(result);
@@ -236,7 +236,7 @@ namespace Predict.Controllers
                 {
                     var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                     if (user != null) await SignInManager.SignInAsync(user, false, false);
-                    return RedirectToAction("Index", new {Message = ManageMessageId.SetPasswordSuccess});
+                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
 
                 AddErrors(result);
@@ -283,11 +283,11 @@ namespace Predict.Controllers
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-            if (loginInfo == null) return RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
+            if (loginInfo == null) return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded
                 ? RedirectToAction("ManageLogins")
-                : RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
+                : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
         protected override void Dispose(bool disposing)

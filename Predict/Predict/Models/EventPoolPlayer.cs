@@ -19,13 +19,13 @@ namespace Predict.Models
         [StringLength(128)]
         [ForeignKey("Player")]
         public string PlayerId { get; set; }
-       
+
         public Event Event { get; set; }
-        
+
         public Player Player { get; set; }
-        
+
         public Pool Pool { get; set; }
-        
+
         public DateTime? AdminApprovedDateTime { get; set; }
 
         public short PoolPosition { get; set; }

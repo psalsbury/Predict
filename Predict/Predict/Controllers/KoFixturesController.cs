@@ -1,13 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using Predict.Helper;
+using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
-using Microsoft.Ajax.Utilities;
-using Predict.Helper;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -61,7 +60,7 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             // If not an admin of the site, then do not allow the creation of a fixture
-            if (!User.IsInRole("Admin")) return HttpNotFound();
+            if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
             var koFixtureViewModel = PrepareViewModel(eventId);
 
             return View("EditKoFixture", koFixtureViewModel);
@@ -80,7 +79,7 @@ namespace Predict.Controllers
                 .Where(f => f.EventId == eventId)
                 .ToList();
 
-            var round = (int) koFixtures.Max(a => a.RoundOf);
+            var round = (int)koFixtures.Max(a => a.RoundOf);
 
             var stringWinningTeamId = Request["1_1"];
 
@@ -200,7 +199,7 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            if (!User.IsInRole("Admin")) return HttpNotFound();
+            if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
             var koFixtureViewModel = PrepareViewModel(eventId);
             var koFixtureFromDb = _context.KoFixtures.SingleOrDefault(f => f.Id == id);
@@ -217,7 +216,7 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var koFixture = _context.KoFixtures.SingleOrDefault(f => f.Id == id);
-            if (!User.IsInRole("Admin") | (koFixture == null)) return HttpNotFound();
+            if (!User.IsInRole("Admin") | (koFixture == null)) return RedirectToAction("Index", "Home");
             _context.KoFixtures.Remove(koFixture);
             _context.SaveChanges();
 
@@ -230,11 +229,11 @@ namespace Predict.Controllers
             var koFixtureViewModel = new KoFixtureViewModel
             {
                 RoundOfs = new List<short>(),
-                EventTeams = Helper.LeagueTableHelper.GetEventTeams(_context,eventId)
-                
+                EventTeams = Helper.LeagueTableHelper.GetEventTeams(_context, eventId)
+
             };
             for (var power = 0; power <= 4; power++)
-                koFixtureViewModel.RoundOfs.Add((short) Math.Pow(2, power));
+                koFixtureViewModel.RoundOfs.Add((short)Math.Pow(2, power));
 
             var leagueNames = new List<string>();
             foreach (EventTeam eventTeam in koFixtureViewModel.EventTeams)

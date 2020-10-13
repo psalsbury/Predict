@@ -14,7 +14,7 @@ namespace Predict.Models
         [Required]
         [ForeignKey("EventFixture"), Column(Order = 0)]
         public short EventId { get; set; }
-        
+
         [Required]
         [ForeignKey("EventFixture"), Column(Order = 1)]
         public int FixtureId { get; set; }

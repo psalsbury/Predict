@@ -1,4 +1,5 @@
-﻿@using (Html.BeginForm("SaveUpdateScoring", "Admin"))
+﻿@using Predict.RapidApi
+@using (Html.BeginForm("SaveUpdateScoring", "Admin"))
 {
     <div class="form-group">
         <div>
@@ -18,4 +19,28 @@
     </div>
 }
 
-@Html.ActionLink("All Fixtures","Index","Fixtures");
+<input type="button"
+       value="All Fixtures"
+       class="btn btn-default"
+       onclick="location.href='@Url.Action("Index", "Fixtures") '" />
+
+<br />
+<h2>RapidAPI Next Check Time (UTC Time)</h2>
+<br />
+<h3>Current UTC Time is </h3>
+@DateTime.UtcNow
+<br />
+<br />
+@{
+    var rapidApiResultChecks = (List<RapidApiResultCheck>)Predict.Helper.Cache.GetCachedItem("NextFixtureCheckDateTime");
+    foreach (var rapidApiResultCheck in rapidApiResultChecks)
+    {
+        @rapidApiResultCheck.RapidApiLeagueId;
+        <text>--></text>
+        @rapidApiResultCheck.FixtureDateTime;
+        <text><br/></text>
+    }
+}
+
+
+

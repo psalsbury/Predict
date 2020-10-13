@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Predict.Models;
+using System;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using Microsoft.Ajax.Utilities;
-using Predict.Models;
 
 namespace Predict.Controllers.Api
 {

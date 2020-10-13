@@ -2,13 +2,22 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
+
         <li class="breadcrumb-item">
-            <a href="#">Home</a>
+            <a href="/PoolDashboard/">Pool Admin</a>
         </li>
+    @if (Model.Id == 0)
+    {
+        <li class="breadcrumb-item active" aria-current="page">New Pool</li>
+    }
+    else
+    {
         <li class="breadcrumb-item">
-            <a href="../Index">Pool Admin</a>
+            <a href="/Pools/">Manage Pools</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Edit @Model.PoolName</li>
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+    }
+
     </ol>
 </nav>
 
@@ -26,7 +35,6 @@ else
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.AdminPlayerId)
-    @Html.HiddenFor(model => model.EventId)
     @Html.HiddenFor(model => model.KoLast16Points)
     @Html.HiddenFor(model => model.KoLast8Points)
     @Html.HiddenFor(model => model.KoLast4Points)

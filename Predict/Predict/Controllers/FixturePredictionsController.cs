@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Predict.Helper;
+using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Predict.Helper;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -53,7 +53,7 @@ namespace Predict.Controllers
 
             var fixturePredictions = new List<FixturePrediction>();
             var fixturePredictionsViewModel = new FixturePredictionsViewModel();
-            var player = (Player) System.Web.HttpContext.Current.Session["Player"];
+            var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
             if (userId == null)
                 userId = loggedInUserId;
@@ -73,7 +73,7 @@ namespace Predict.Controllers
                     .Include(b => b.EventFixture.Fixture)
                     .Include(b => b.EventFixture.Fixture.League)
                     .Include(b => b.EventFixture.Fixture.HomeTeam)
-                    .Include(b => b.EventFixture.Fixture.AwayTeam) 
+                    .Include(b => b.EventFixture.Fixture.AwayTeam)
                     .Where(p => p.PlayerId == userId)
                     .Where(p => p.EventId == eventId)
                     .ToList();
@@ -119,6 +119,7 @@ namespace Predict.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError]
         public ActionResult Save(FixturePredictionsViewModel fixturePredictionsViewModel)
         {
             // If user is not logged in redirect to the home page
@@ -173,7 +174,7 @@ namespace Predict.Controllers
                             fixturePredictionInDb = new FixturePrediction
                             {
                                 PlayerId = userId,
-                                EventId =  eventId,
+                                EventId = eventId,
                                 FixtureId = fixturePredictionSubmitted.FixtureId,
                                 CreatedDateTime = DateTime.UtcNow,
                                 HomePrediction = fixturePredictionSubmitted.HomePrediction,
@@ -201,7 +202,7 @@ namespace Predict.Controllers
             _context.SaveChanges();
             SessionHelper.RefreshFixturePredictions(Session, userId, eventId);
 
-            return RedirectToAction("Index", "Home", new {EventId = fixturePredictionsViewModel.EventId });
+            return RedirectToAction("Index", "Home", new { EventId = fixturePredictionsViewModel.EventId });
         }
     }
 }

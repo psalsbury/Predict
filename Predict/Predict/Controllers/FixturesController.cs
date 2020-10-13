@@ -1,11 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using Predict.Models;
+using Predict.ViewModels;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using AutoMapper;
-using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -41,12 +40,12 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             // If not an admin of the site, then do not allow the creation of a fixture
-            if (!User.IsInRole("Admin")) return HttpNotFound();
+            if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
             var fixtureViewModel = new FixtureViewModel
             {
                 Teams = (from a in _context.Teams
-                    select a).ToList()
+                         select a).ToList()
             };
 
             return View("EditFixture", fixtureViewModel);
@@ -58,7 +57,7 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            if (!User.IsInRole("Admin")) return HttpNotFound();
+            if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
             var fixture = _context.Fixtures
                 .Include(t => t.HomeTeam)
@@ -68,7 +67,7 @@ namespace Predict.Controllers
             var fixtureViewModel = new FixtureViewModel
             {
                 Teams = (from a in _context.Teams
-                    select a).ToList()
+                         select a).ToList()
             };
 
             Mapper.Map(fixture, fixtureViewModel);

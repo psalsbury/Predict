@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using Predict.Dtos;
+using Predict.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using AutoMapper;
-using Predict.Dtos;
-using Predict.Models;
 
 namespace Predict.Controllers.Api
 {

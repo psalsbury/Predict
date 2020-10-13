@@ -1,20 +1,19 @@
-﻿using System;
+﻿using Predict.Models;
+using Predict.RapidAPIFixtures;
+using RestSharp;
+using RestSharp.Serialization.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using Predict.RapidAPIFixtures;
-using Predict.Models;
-using RestSharp;
-using RestSharp.Serialization.Json;
-using Fixture = Predict.RapidAPIFixtures.Fixture;
 using League = Predict.Models.League;
 
 namespace Predict.RapidApi
 {
-    
+
     public static class RapidApiHelper
     {
-        
+
         public static void UpdatePremierLeague()
         {
             var rapidApiLeagueId = 2790;
@@ -45,7 +44,7 @@ namespace Predict.RapidApi
             var nbrTimesApiCalled = SettingCheck(context);
             if (nbrTimesApiCalled >= 100)
                 return;
-        
+
             var client = new RestClient("https://api-football-v1.p.rapidapi.com/v2/fixtures/date/" + resultDate + "? timezone=Europe%2FLondon");
             var request = new RestRequest(Method.GET);
             request.AddHeader("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
@@ -63,7 +62,7 @@ namespace Predict.RapidApi
 
             var nbrTimesApiCalled = SettingCheck(context);
             if (nbrTimesApiCalled >= 100)
-                return; 
+                return;
 
             var resultDate = dateToUpdate.Year + "-" + dateToUpdate.Month.ToString("D2") + "-" + dateToUpdate.Day.ToString("D2");
             var client = new RestClient("https://api-football-v1.p.rapidapi.com/v2/fixtures/league/" + rapidApiLeagueId + "/" + resultDate + "?timezone=Europe%2FLondon");
@@ -102,16 +101,15 @@ namespace Predict.RapidApi
             var fixtures = context.Fixtures.ToList();
             var teams = context.Teams.ToList();
             var newResultFound = false;
+            var eventsWithChangedFixtureDateTime = new List<short>();
 
             foreach (var rapidApiFixture in rapidApiFixtures.api.fixtures)
             {
 
                 var rapidApiLeague = rapidApiFixture.league;
                 var league = AddOrUpdateLeague(context, rapidApiLeague, rapidApiFixture.league_id);
-
                 var homeTeam = AddOrUpdateTeam(context, teams, rapidApiFixture.homeTeam.team_id, rapidApiFixture.homeTeam.team_name, rapidApiFixture.homeTeam.logo);
                 var awayTeam = AddOrUpdateTeam(context, teams, rapidApiFixture.awayTeam.team_id, rapidApiFixture.awayTeam.team_name, rapidApiFixture.awayTeam.logo);
-
                 var rapidApiFixtureId = rapidApiFixture.fixture_id;
 
                 // Check if the fixture needs updating
@@ -131,6 +129,12 @@ namespace Predict.RapidApi
                 }
                 else
                 {
+                    if (rapidApiFixture.event_date.IsDaylightSavingTime())
+                    {
+                        // Change time to UTC
+                        rapidApiFixture.event_date = rapidApiFixture.event_date.AddHours(-1);
+                    }
+
                     if (fixture == null)
                     {
                         fixture = new Models.Fixture
@@ -139,10 +143,30 @@ namespace Predict.RapidApi
                             HomeTeamId = homeTeam.Id,
                             AwayTeamId = awayTeam.Id,
                             LeagueId = league.Id,
+                            FixtureDateTime = rapidApiFixture.event_date,
                             CreatedDateTime = DateTime.UtcNow,
                             ModifiedDateTime = DateTime.UtcNow
                         };
                         updateDb = true;
+                    }
+                    else
+                    {
+                        // Existing fixture
+                        if (fixture.FixtureDateTime != rapidApiFixture.event_date)
+                        {
+                            // Date has changed
+                            fixture.FixtureDateTime = rapidApiFixture.event_date;
+                            updateDb = true;
+
+                            // Get all the events that have this fixture
+                            var eventFixtures = context.EventFixtures.Where(a => a.FixtureId == fixture.Id).ToList();
+                            foreach (var eventFixture in eventFixtures)
+                            {
+                                var eventId = eventFixture.EventId;
+                                if (!eventsWithChangedFixtureDateTime.Contains(eventId))
+                                    eventsWithChangedFixtureDateTime.Add(eventId);
+                            }
+                        }
                     }
 
                     if (fixture.HomeResult == null && rapidApiFixture.score.fulltime != null)
@@ -154,28 +178,20 @@ namespace Predict.RapidApi
                         fixture.ResultProcessed = false;
                     }
 
-                    if (rapidApiFixture.event_date.IsDaylightSavingTime())
-                    {
-                        // Change time to UTC
-                        rapidApiFixture.event_date = rapidApiFixture.event_date.AddHours(-1);
-                    }
-
-                    if (fixture.FixtureDateTime != rapidApiFixture.event_date)
-                    {
-                        fixture.FixtureDateTime = rapidApiFixture.event_date;
-                        updateDb = true;
-                    }
-
                     if (updateDb)
                         context.Fixtures.AddOrUpdate(fixture);
                 }
 
             }
-
             context.SaveChanges();
 
             if (newResultFound)
                 Helper.Cache.UpdateScoring(context);
+
+            foreach (var eventId in eventsWithChangedFixtureDateTime)
+            {
+                Helper.Cache.UpdateEventStartEnd(context, eventId);
+            }
 
         }
         private static League AddOrUpdateLeague(ApplicationDbContext context, RapidAPIFixtures.League rapidApiLeague, int rapidApiLeagueId)
@@ -200,6 +216,8 @@ namespace Predict.RapidApi
         private static Models.Team AddOrUpdateTeam(ApplicationDbContext context, List<Models.Team> teams, int rapidApiTeamId, string teamName, string logo)
         {
             var team = context.Teams.FirstOrDefault(t => t.RapidApiTeamId == rapidApiTeamId);
+            teamName = teamName.Replace(" United", " Utd");
+            var changeMade = false;
             if (team == null)
             {
                 team = new Models.Team
@@ -211,8 +229,19 @@ namespace Predict.RapidApi
                     ModifiedDateTime = DateTime.UtcNow
                 };
                 context.Teams.AddOrUpdate(team);
-                context.SaveChanges();
+                changeMade = true;
             }
+            else
+            {
+                if (team.TeamName != teamName || team.TeamFlag != logo)
+                {
+                    team.TeamName = teamName;
+                    team.TeamFlag = logo;
+                    changeMade = true;
+                }
+            }
+            if(changeMade== true)
+                context.SaveChanges();
 
             return team;
         }
