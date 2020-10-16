@@ -32,7 +32,7 @@ namespace Predict.Controllers
             var poolDashboardViewModel = new PoolDashboardViewModel
             {
                 NumberOfPoolsAdminOf = _context.Pools.Count(a => a.AdminPlayerId == playerId)
-                , NumberOfPoolsMemberOf = _context.PoolPlayers.Count(a => a.PlayerId == playerId)
+                , NumberOfPoolsMemberOf = _context.PoolPlayers.Count(a => a.PlayerId == playerId && a.Enabled==true)
             };
 
             return View(poolDashboardViewModel);

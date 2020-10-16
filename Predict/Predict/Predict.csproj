@@ -340,14 +340,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\EventPlayersController.cs" />
-    <Compile Include="Controllers\Api\EventPoolsController.cs" />
     <Compile Include="Controllers\Api\PlayersController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
-    <Compile Include="Controllers\Api\PoolsController.cs" />
-    <Compile Include="Controllers\Api\TeamsController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
     <Compile Include="Controllers\EventFixturesController.cs" />
     <Compile Include="Controllers\EventPlayersController.cs" />
+    <Compile Include="Controllers\EventPoolsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FixturePredictionsController.cs" />
     <Compile Include="Controllers\FixturesController.cs" />
@@ -415,6 +413,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BonusQuestionPredictionsViewModel.cs" />
     <Compile Include="ViewModels\EventFixturesViewModel.cs" />
+    <Compile Include="ViewModels\EventPoolsViewModel.cs" />
     <Compile Include="ViewModels\FixturePredictionsViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
     <Compile Include="ViewModels\GroupGameResultsViewModel.cs" />
@@ -525,13 +524,13 @@
     <None Include="Properties\PublishProfiles\predictioncomp.com - Web Deploy.pubxml" />
     <Content Include="Views\PoolDashboard\Index.cshtml" />
     <Content Include="Views\Pools\JoinPool.cshtml" />
+    <Content Include="Views\EventPools\EventsLinkedToPool.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\AnimatedFlags\" />
     <Folder Include="Images\Flags\" />
     <Folder Include="Scripts\" />
-    <Folder Include="Views\EventPools\" />
     <Folder Include="Views\FixturePredictions\" />
     <Folder Include="Views\PosnHistory\" />
   </ItemGroup>

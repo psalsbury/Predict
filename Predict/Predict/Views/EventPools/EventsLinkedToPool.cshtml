@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNet.Identity
+@using Predict.Models
+@using System.Linq;
+@model Predict.ViewModels.EventPoolsViewModel
+@{
+    ViewBag.Title = "Add Comps to " + ViewBag.PoolName;
+    var playerId = User.Identity.GetUserId();
+}
+
+@using (Html.BeginForm("Save", "EventPools"))
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/PoolDashboard">Pool Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/Pools/">Manage Pools</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Pool Comps</li>
+        </ol>
+    </nav>
+
+    @Html.HiddenFor(a => Model.PoolId)
+
+    <table class="table" id="EventPools">
+        <tr>
+            <th>
+                Comp Name
+            </th>
+            <th>
+                Comp Start Date
+            </th>
+            <th>Pool Linked to this Comp</th>
+        </tr>
+
+        @foreach (var item in Model.Events.OrderBy(a => a.StartDateTime))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(a => item.StartDateTime)
+                </td>
+                <td>
+                    @{ var exists = Model.EventPools.Exists(a => a.EventId == item.Id); }
+
+                    @if (item.EventStarted && exists)
+                    {
+                        <text>Yes</text>
+                    }
+                    else if (item.EventStarted && !exists)
+                    {
+                        <text>No</text>
+                    }
+                    else
+                    {
+                        <input type="checkbox" value="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists ? "checked" : "") )>
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-1 col-md-10">
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+
+}
+

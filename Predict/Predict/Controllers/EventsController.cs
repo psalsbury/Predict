@@ -60,21 +60,15 @@ namespace Predict.Controllers
 
             var playerId = User.Identity.GetUserId();
             var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
-            Event myEvent;
-            if (passedInEvent.Id == 0)
+            var myEvent = _context.Events.FirstOrDefault(e => e.Id == passedInEvent.Id);
+            if (myEvent == null)
             {
                 myEvent = new Event
                 {
                     CreatedDateTime = DateTime.UtcNow
-                    ,
-                    DefaultPoolId = globalPoolId
-                    ,
-                    CreatedByPlayerId = playerId
+                    , DefaultPoolId = globalPoolId
+                    , CreatedByPlayerId = playerId
                 };
-            }
-            else
-            {
-                myEvent = _context.Events.FirstOrDefault(e => e.Id == passedInEvent.Id);
             }
 
             myEvent.ModifiedDateTime = DateTime.UtcNow;
@@ -93,7 +87,9 @@ namespace Predict.Controllers
                     EventId = myEvent.Id,
                     PoolId = globalPoolId,
                     CreatedDateTime = DateTime.UtcNow,
-                    ModifiedDateTime = DateTime.UtcNow
+                    ModifiedDateTime = DateTime.UtcNow,
+                    Enabled = true
+
                 };
                 _context.EventPools.AddOrUpdate(eventPool);
                 _context.SaveChanges();

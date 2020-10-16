@@ -36,13 +36,12 @@
                 @Html.DisplayFor(modelItem => item.PoolName)
             </td>
             <td>
-                <a href="~/Pools/Edit/@item.Id" class="btn btn-info btn-sm">Edit</a>
-                &nbsp;
-                <a href="~/PoolPlayers/PoolAdmin/@item.Id" class="btn btn-primary btn-sm">Players</a>
-                &nbsp;
+                <a href="~/Pools/Edit/@item.Id" class="btn btn btn-block btn-info">Edit</a>
+                <a href="~/PoolPlayers/PoolAdmin/@item.Id" class="btn btn-block btn-primary">Players</a>
+                <a href="~/EventPools/EventsLinkedToPool/@item.Id" class="btn btn-block btn-success">Comps</a>
                 @if (item.Id != globalPoolId)
                 {
-                    <button class="btn btn-danger btn-sm" value="Remove" poolId="@item.Id">Delete</button>
+                    <button class="btn btn-block btn-danger" value="Remove" poolId="@item.Id">Delete</button>
                 }
 
             </td>

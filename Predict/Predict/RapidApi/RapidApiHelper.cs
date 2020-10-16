@@ -16,7 +16,15 @@ namespace Predict.RapidApi
 
         public static void UpdatePremierLeague()
         {
+           // this is for the 20/21 league
             var rapidApiLeagueId = 2790;
+            FixturesByLeague(rapidApiLeagueId);
+        }
+
+        public static void UpdateChampionshipLeague()
+        {
+            // this is for the 20/21 league
+            var rapidApiLeagueId = 2794;
             FixturesByLeague(rapidApiLeagueId);
         }
 
@@ -156,6 +164,7 @@ namespace Predict.RapidApi
                         {
                             // Date has changed
                             fixture.FixtureDateTime = rapidApiFixture.event_date;
+                            fixture.ModifiedDateTime = DateTime.UtcNow;
                             updateDb = true;
 
                             // Get all the events that have this fixture

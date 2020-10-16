@@ -2,30 +2,31 @@
 
 @{
     ViewBag.Title = "Manage Your Pools";
+    var globalPoolId = ViewBag.GlobalPoolId;
 }
+<link rel="stylesheet" href="~/content/css/ionicons.min.css">
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Home</a>
+            <a href="~/PoolDashboard">Pool Admin</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Pool Admin</li>
+
+        <li class="breadcrumb-item active" aria-current="page">Manage Pools</li>
     </ol>
 </nav>
-<p>
-    @Html.ActionLink("Create New Pool", "New", null, new {@class = "btn btn-success"})
-</p>
+
 
 <table id="poolsTable" class="table table-bordered table-hover">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PoolName)
-        </th>
-        <th>
-            &nbsp;
-        </th>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PoolName)
+            </th>
+            <th>
+                &nbsp;
+            </th>
 
-    </tr>
+        </tr>
     </thead>
 
     @foreach (var item in Model)
@@ -35,11 +36,14 @@
                 @Html.DisplayFor(modelItem => item.PoolName)
             </td>
             <td>
-                <a href="~/Pools/Edit/@item.Id" class="btn btn-info btn-sm">Edit</a>
-                &nbsp;
-                <button class="btn btn-danger btn-sm" value="Remove" poolId="@item.Id">Delete</button>
-                &nbsp;
-                <a href="~/PoolPlayers/PoolAdmin/@item.Id" class="btn btn-primary btn-sm">Players</a>
+                <a href="~/Pools/Edit/@item.Id" class="btn btn btn-block btn-info">Edit</a>
+                <a href="~/PoolPlayers/PoolAdmin/@item.Id" class="btn btn-block btn-primary">Players</a>
+                <a href="~/EventPools/EventsLinkedToPool/@item.Id" class="btn btn-block btn-success">Comps</a>
+                @if (item.Id != globalPoolId)
+                {
+                    <button class="btn btn-block btn-danger" value="Remove" poolId="@item.Id">Delete</button>
+                }
+
             </td>
         </tr>
     }
@@ -49,17 +53,17 @@
 <script>
     $("#poolsTable").on("click",
         ".btn-danger",
-        function() {
+        function () {
 
             var button = $(this);
             bootbox.confirm("Are you sure you want to delete this pool?",
-                function(result) {
+                function (result) {
                     if (result) {
                         $.ajax(
                             {
                                 url: "/api/pools/" + button.attr("poolId"),
                                 method: "DELETE",
-                                success: function() {
+                                success: function () {
                                     $(button.closest("tr")).fadeOut(1000);
                                 }
                             });
@@ -71,7 +75,7 @@
 
 <script>
 
-    $(function() {
+    $(function () {
         $("#poolsTable").DataTable({
             'columnDefs': [
                 {

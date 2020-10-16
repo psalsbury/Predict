@@ -47,5 +47,16 @@ namespace Predict.Controllers
 
             return RedirectToAction("AdminHome", "Admin");
         }
+        [HttpPost]
+        public ActionResult ChampLeagueUpdate()
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            RapidApi.RapidApiHelper.UpdateChampionshipLeague();
+
+            return RedirectToAction("AdminHome", "Admin");
+        }
     }
 }

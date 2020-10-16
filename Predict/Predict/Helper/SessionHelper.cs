@@ -23,25 +23,37 @@ namespace Predict.Helper
         {
             var context = new ApplicationDbContext();
             UpdateKoPredictionsSessionVar(context, session, eventId, userId, true);
+            context.Dispose();
         }
 
         public static void RefreshWinningTeamPredictions(HttpSessionStateBase session, string userId, short eventId)
         {
             var context = new ApplicationDbContext();
             UpdateWinningTeamPredictions(context, session, eventId, userId, true);
+            context.Dispose();
         }
 
         public static void RefreshFixturePredictions(HttpSessionStateBase session, string userId, short eventId)
         {
             var context = new ApplicationDbContext();
             UpdateFixturePredictionsSessionVar(context, session, eventId, userId, true);
+            context.Dispose();
         }
 
         public static void RefreshBonusQuestionPredictions(HttpSessionStateBase session, string userId, short eventId)
         {
             var context = new ApplicationDbContext();
             UpdateBonusPredictionsSessionVar(context, session, eventId, userId, true);
+            context.Dispose();
         }
+
+        public static void RefreshPlayerPoolInfo(HttpSessionStateBase session, string userId, short eventId)
+        {
+            var context = new ApplicationDbContext();
+            UpdatePlayerPoolInfo(context, session, eventId, userId, true);
+            context.Dispose();
+        }
+
 
         public static void UpdateSessionForHomePage(ApplicationDbContext context, HttpSessionStateBase session, EventPlayer eventPlayer, bool forceRefresh)
         {
@@ -109,6 +121,8 @@ namespace Predict.Helper
             UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
 
             session.Timeout = 252000; // 180 day
+
+            context.Dispose();
         }
 
         public static void ClearSessionVariables(HttpSessionStateBase session)
@@ -159,7 +173,6 @@ namespace Predict.Helper
             if (player != null) session[sessionName] = player;
         }
 
-
         private static void UpdateFixturesSessionVar(ApplicationDbContext context, HttpSessionStateBase session,
             short eventId, bool forceRefresh)
         {
@@ -206,6 +219,7 @@ namespace Predict.Helper
             var nbrFixturePredictions = (from a in context.FixturePredictions
                                          join c in context.EventFixtures on a.FixtureId equals c.FixtureId
                                          where c.EventId == eventId
+                                               && a.EventId == eventId
                                                && a.PlayerId == userId
                                          select a).Count();
 

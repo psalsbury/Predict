@@ -219,7 +219,6 @@ namespace Predict.Controllers
                     return View("Register", model);
                 }
 
-
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = true };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -229,14 +228,10 @@ namespace Predict.Controllers
                     var player = new Player
                     {
                         Id = user.Id
-                        ,
-                        DisplayName = model.DisplayName
-                        ,
-                        PlayerName = model.DisplayName // both the same//
-                        ,
-                        CreatedDateTime = DateTime.UtcNow
-                        ,
-                        ModifiedDateTime = DateTime.UtcNow
+                        , DisplayName = model.DisplayName
+                        , PlayerName = model.DisplayName // both the same//
+                        , CreatedDateTime = DateTime.UtcNow
+                        , ModifiedDateTime = DateTime.UtcNow
                     };
                     context.Players.Add(player);
 
@@ -255,6 +250,17 @@ namespace Predict.Controllers
                         var defaultPoolId = myEvent.DefaultPoolId;
                         if (defaultPoolId > 0)
                         {
+                            // Add the player to be associated to the global pool
+                            var poolPlayer = new PoolPlayer
+                            {
+                                Enabled = true,
+                                CreatedDateTime = DateTime.UtcNow,
+                                ModifiedDateTime = DateTime.UtcNow,
+                                PlayerId = user.Id,
+                                PoolId = defaultPoolId
+                            };
+                            context.PoolPlayers.Add(poolPlayer);
+
                             var globalPoolPlayer = new EventPoolPlayer
                             {
                                 PoolId = defaultPoolId,

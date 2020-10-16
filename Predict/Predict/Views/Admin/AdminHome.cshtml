@@ -14,7 +14,17 @@
     <div class="form-group">
         <div>
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Premier League Update" class="btn btn-default" />
+            <input type="submit" value="Premier League 20/21 Update" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("ChampLeagueUpdate", "Admin"))
+{
+    <div class="form-group">
+        <div>
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Championship 20/21 Update" class="btn btn-default" />
         </div>
     </div>
 }
@@ -38,7 +48,9 @@
         @rapidApiResultCheck.RapidApiLeagueId;
         <text>--></text>
         @rapidApiResultCheck.FixtureDateTime;
-        <text><br/></text>
+        <text>
+            <br />
+        </text>
     }
 }
 
