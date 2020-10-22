@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using League = Predict.Models.League;
 
 namespace Predict.RapidApi
@@ -13,6 +14,13 @@ namespace Predict.RapidApi
 
     public static class RapidApiHelper
     {
+        public static async Task UpdatePremierLeagueAsync(int rapidApiLeagueId)
+        {
+            await Task.Run(() =>
+            {
+                FixturesByLeague(rapidApiLeagueId);
+            });
+        }
 
         public static void UpdatePremierLeague()
         {
@@ -32,36 +40,9 @@ namespace Predict.RapidApi
         {
             FixturesByLeagueByDate(rapidApiLeagueId, dateToUpdate);
         }
-
-        public static void UpdateAllFixturesByDate(DateTime dateToUpdate)
+        public static void UpdateRapidApiLeague(int rapidApiLeagueId)
         {
-            UpdateFixturesByDate(dateToUpdate);
-        }
-
-        private static string GetRapidApiDate(DateTime dateToUpdate)
-        {
-            return dateToUpdate.Year + "-" + dateToUpdate.Month.ToString("D2") + "-" + dateToUpdate.Day.ToString("D2");
-        }
-
-        private static void UpdateFixturesByDate(DateTime dateToUpdate)
-        {
-
-            var context = new ApplicationDbContext();
-            var resultDate = GetRapidApiDate(dateToUpdate);
-
-            var nbrTimesApiCalled = SettingCheck(context);
-            if (nbrTimesApiCalled >= 100)
-                return;
-
-            var client = new RestClient("https://api-football-v1.p.rapidapi.com/v2/fixtures/date/" + resultDate + "? timezone=Europe%2FLondon");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
-            request.AddHeader("x-rapidapi-key", "dd93656aa1msh15481f122393c01p11fd67jsnf7e74925fed3");
-            IRestResponse response = client.Execute(request);
-
-            // Set setting value
-            IncrementSetting(context, nbrTimesApiCalled);
-            UpdateFixtures(context, response);
+            FixturesByLeague(rapidApiLeagueId);
         }
 
         private static void FixturesByLeagueByDate(int rapidApiLeagueId, DateTime dateToUpdate)
@@ -84,7 +65,7 @@ namespace Predict.RapidApi
             UpdateFixtures(context, response);
         }
 
-        public static void FixturesByLeague(int rapidApiLeagueId)
+        private static void FixturesByLeague(int rapidApiLeagueId)
         {
             var context = new ApplicationDbContext();
             var nbrTimesApiCalled = SettingCheck(context);

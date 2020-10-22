@@ -25,7 +25,8 @@ namespace Predict.Controllers
         // GET: EventPlayers
         public ActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated)
+            // Session["EventPlayers"] is required for the view. if its null, go back to the home page
+            if (!User.Identity.IsAuthenticated | Session["EventPlayers"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -74,10 +75,25 @@ namespace Predict.Controllers
                         eventPoolPlayers.ForEach(a => a.Enabled = false);
                         eventPoolPlayers.ForEach(a => a.ModifiedDateTime = DateTime.UtcNow);
 
+                        // remove any existing fixture predictions as player is no longer playing this event
                         var fixturePredictions = _context.FixturePredictions
                             .Where(a => a.EventId == myEvent.Id)
                             .Where(a => a.PlayerId == playerId).ToList();
                         _context.FixturePredictions.RemoveRange(fixturePredictions);
+
+                        // remove any ko fixture predictions as player is no longer playing this event
+                        var koFixturePredictions = _context.KoFixturePredictions
+                            .Include(a => a.KoFixture)
+                            .Where(a => a.KoFixture.EventId == myEvent.Id)
+                            .Where(a => a.PlayerId == playerId).ToList();
+                        _context.KoFixturePredictions.RemoveRange(koFixturePredictions);
+
+                        // remove any bonus question predictions as player is no longer playing this event
+                        var bonusPredictions = _context.BonusQuestionPredictions
+                            .Include(a => a.BonusQuestion)
+                            .Where(a => a.BonusQuestion.EventId == myEvent.Id)
+                            .Where(a => a.PlayerId == playerId).ToList();
+                        _context.BonusQuestionPredictions.RemoveRange(bonusPredictions);
 
                         _context.EventPlayers.AddOrUpdate(myEventPlayer);
                         changeMade = true;
@@ -101,13 +117,15 @@ namespace Predict.Controllers
                             CreatedDateTime = DateTime.UtcNow,
                             ModifiedDateTime = DateTime.UtcNow,
                             Enabled = true
-
                         };
                         _context.EventPlayers.Add(myEventPlayer);
                         changeMade = true;
                     }
 
-                    if (!playingIn.IsNullOrWhiteSpace())
+                    if (changeMade == true)
+                        _context.SaveChanges();
+
+                    if (!playingIn.IsNullOrWhiteSpace() && changeMade)
                     {
                         // Make sure the player is associated to all pools that are associated to the player that are associated to this event
                         var eventPools = _context.EventPools.Where(a => a.EventId == myEvent.Id)
@@ -119,7 +137,7 @@ namespace Predict.Controllers
                             var exists = poolPlayers.Exists(a => a.PoolId == eventPool.PoolId && a.Enabled==true);
                             if (exists)
                             {
-                                // Associate the player/pool to the event
+                                // If the player is also associated the the pool then associate the player/pool to the event
                                 var myEventPoolPlayer = _context.EventPoolPlayers.FirstOrDefault(f =>
                                     f.EventId == myEvent.Id && f.PlayerId == playerId && f.PoolId == eventPool.PoolId);
                                 if (myEventPoolPlayer == null)
@@ -143,15 +161,14 @@ namespace Predict.Controllers
                                 }
 
                                 _context.EventPoolPlayers.AddOrUpdate(myEventPoolPlayer);
-                                changeMade = true;
+                                _context.SaveChanges();
+                                SessionHelper.UpdateSessionForHomePage(_context, Session, myEventPlayer, true,true);
 
                             }
                         }
-                        SessionHelper.UpdateSessionForHomePage(_context, Session, myEventPlayer, true);
+                        
                     }
 
-                    if (changeMade == true)
-                        _context.SaveChanges();
                 }
             }
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using Microsoft.ApplicationInsights;
+using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.Logging;
 using Predict.Helper;
 
@@ -26,18 +27,30 @@ namespace Predict.Controllers.Api
         [Route("api/PoolPlayers/delete/{poolId}/{playerId}")]
         public IHttpActionResult Delete(int poolId, string playerId)
         {
+
+            if (!User.Identity.IsAuthenticated)
+                return BadRequest();
+
+            var pool = _context.Pools.SingleOrDefault(p => p.Id == poolId);
+            if (pool == null)
+                return BadRequest("Pool does not exist");
+
+            if(playerId!=User.Identity.GetUserId() && pool.AdminPlayerId != User.Identity.GetUserId())
+                return BadRequest("Invalid user");
+
             var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
 
             if (poolPlayer == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             
+            poolPlayer.Enabled = false;
+            poolPlayer.ModifiedDateTime = DateTime.UtcNow;
+            _context.PoolPlayers.AddOrUpdate(poolPlayer);
+
             var eventPoolPlayers = _context.EventPoolPlayers.Include(a => a.Event)
-                .Where(a => a.Event.StartDateTime >= DateTime.UtcNow)
+                .Where(a => a.Event.StartDateTime > DateTime.UtcNow)
                 .Where(a => a.PlayerId == playerId)
                 .Where(a => a.PoolId == poolId).ToList();
-
-            poolPlayer.Enabled = false;
-            _context.PoolPlayers.AddOrUpdate(poolPlayer);
 
             // Remove player from any events that have not yet started
             foreach (var eventPoolPlayer in eventPoolPlayers)
@@ -45,9 +58,14 @@ namespace Predict.Controllers.Api
                 eventPoolPlayer.Enabled = false;
                 eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
                 _context.EventPoolPlayers.AddOrUpdate(eventPoolPlayer);
+
+                // Set this so when user goes on the home page it updates the screen
+                Helper.Cache.SetCachedItem("ForceUpdate*" + playerId + "*" + eventPoolPlayer.EventId, DateTime.Now.AddHours(1));
             }
 
             _context.SaveChanges();
+
+
 
             return Ok();
         }
@@ -57,11 +75,22 @@ namespace Predict.Controllers.Api
         [Route("api/PoolPlayers/AddNewPoolPlayer/{poolId}/{playerId}/{joinCode}")]
         public IHttpActionResult AddNewPoolPlayer(int poolId, string playerId, string joinCode)
         {
+
+            if (!User.Identity.IsAuthenticated)
+                return BadRequest();
+
             var pool = _context.Pools.SingleOrDefault(p => p.Id == poolId);
             if (pool == null)
                 return BadRequest("Pool does not exist");
 
-            if (!pool.JoinCode.IsNullOrWhiteSpace() && pool.JoinCode != joinCode)
+            if (playerId != User.Identity.GetUserId() && pool.AdminPlayerId != User.Identity.GetUserId())
+                return BadRequest("Invalid user");
+
+            var player = _context.Players.SingleOrDefault(p => p.Id == playerId);
+            if (player == null)
+                return BadRequest("Player does not exist");
+
+            if (!pool.JoinCode.IsNullOrWhiteSpace() && pool.JoinCode != joinCode) 
                 return BadRequest("Join Code is Not Valid");
 
             var poolPlayer = _context.PoolPlayers.SingleOrDefault(c => c.PoolId == poolId && c.PlayerId == playerId);
@@ -97,6 +126,8 @@ namespace Predict.Controllers.Api
             {
                 eventPoolPlayer.Enabled = true;
                 eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+
+                Helper.Cache.SetCachedItem("ForceUpdate*" + playerId + "*" + eventPoolPlayer.EventId, DateTime.Now.AddHours(1));
             }
 
             // now get new ones
@@ -116,10 +147,37 @@ namespace Predict.Controllers.Api
                         ModifiedDateTime = DateTime.UtcNow, PoolId = eventPool.PoolId
                     };
                     _context.EventPoolPlayers.Add(eventPoolPlayer);
+
+                    Helper.Cache.SetCachedItem("ForceUpdate*" + playerId + "*" + eventPoolPlayer.EventId, DateTime.Now.AddHours(1));
                 }
             }
             _context.SaveChanges();
 
+            // Send email to pool admin when someone joins
+            // May need to change this to be picked up by quartz 1 min job to send outstanding requests if errors
+            if (pool.EmailNotifications)
+            {
+                var joiningPLayer = _context.Users.FirstOrDefault(a => a.Id == playerId);
+                var adminPlayer = _context.Users.FirstOrDefault(a => a.Id == pool.AdminPlayerId);
+                if (joiningPLayer != null && adminPlayer != null)
+                {
+                    var email = new IdentityMessage
+                    {
+                        Body = player.PlayerName + " (" + joiningPLayer.Email + ") has joined your " +
+                                 pool.PoolName + " pool."
+                        + "<br><br>To Login to your account please follow this link <a href='https://www.predictioncomp.com'>www.predictioncomp.com</a>",
+                        Subject = "New member of your " + pool.PoolName + " pool",
+                        Destination = adminPlayer.Email
+                    };
+                    Helper.Cache.SendEmail(email);
+
+                    poolPlayer.EmailSentToAdminDateTime = DateTime.UtcNow;
+                    _context.PoolPlayers.AddOrUpdate(poolPlayer);
+                    _context.SaveChanges();
+                }
+            }
+
+            _context.Dispose();
             return Ok();
         }
     }

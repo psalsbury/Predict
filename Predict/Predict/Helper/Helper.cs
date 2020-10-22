@@ -26,7 +26,7 @@ namespace Predict.Helper
                 From = new MailAddress(ConfigurationManager.AppSettings["SupportEmailAddr"])
             };
             smtpMessage.To.Add(new MailAddress(message.Destination));
-            smtpMessage.Bcc.Add(new MailAddress("peter@salsbury.co.uk"));
+            smtpMessage.Bcc.Add(new MailAddress("pete@salsbury.co.uk"));
             smtpMessage.Subject = message.Subject;
             smtpMessage.Body = message.Body;
             smtpMessage.IsBodyHtml = true;
@@ -40,6 +40,14 @@ namespace Predict.Helper
             }
 
             client.Send(smtpMessage);
+        }
+
+        public static void RemoveCachedItem(string cacheId)
+        {
+            if (MemoryCache.Default.Contains(cacheId))
+            {
+                MemoryCache.Default.Remove(cacheId);
+            }
         }
 
         public static object GetCachedItem(string cacheId)
@@ -63,7 +71,13 @@ namespace Predict.Helper
         public static void SetCachedItem(string cacheId, object cachedItem)
         {
             Logger.Info("SetCachedItem = setting cache for {0}", cacheId);
-            MemoryCache.Default.Set(cacheId, cachedItem, DateTime.UtcNow.AddDays(30));
+            SetCachedItem(cacheId, cachedItem, DateTime.UtcNow.AddDays(30));
+        }
+
+        public static void SetCachedItem(string cacheId, object cachedItem, DateTime expiryDate)
+        {
+            Logger.Info("SetCachedItem = setting cache for {0}", cacheId);
+            MemoryCache.Default.Set(cacheId, cachedItem, expiryDate);
         }
 
         public static Event GetCachedEvent(int eventId)
@@ -153,7 +167,17 @@ namespace Predict.Helper
 
                     Logger.Info("GetRapidApiResults = Getting results from RapidApi {0}", rapidApiLeagueId);
 
-                    RapidApiHelper.UpdateRapidApiLeagueByDate(rapidApiLeagueId, DateTime.UtcNow);
+                    if (rapidApiResultCheck.FixtureDateTime.Date < DateTime.Today)
+                    {
+                        // If the date of the fixture is less than today then get all results
+                        RapidApiHelper.UpdateRapidApiLeague(rapidApiLeagueId);
+                    }
+                    else
+                    {
+                       // If the date of the fixture is today, then get the results for today only
+                       RapidApiHelper.UpdateRapidApiLeagueByDate(rapidApiLeagueId, DateTime.UtcNow);
+                    }
+
                     checkPerformed = true;
                 }
                 else
@@ -203,7 +227,7 @@ namespace Predict.Helper
                 {
                     var fixtureDateTime = rapidApiResultCheck.FixtureDateTime.AddMinutes(115); // Add 1 hour 55 to the end time 
 
-                    if (fixtureDateTime < DateTime.UtcNow)
+                    if (roundUp && fixtureDateTime < DateTime.UtcNow)
                         fixtureDateTime = DateTime.UtcNow;
 
                     if(roundUp)

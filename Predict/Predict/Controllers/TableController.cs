@@ -45,6 +45,7 @@ namespace Predict.Controllers
 
             ViewBag.PoolId = poolId;
             ViewBag.EventId = eventId;
+            ViewBag.KOFixtures = (int) Session["nbrKoFixtures*" + eventId] > 0;
 
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
         }

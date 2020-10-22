@@ -54,9 +54,12 @@
         <td STYLE="color: WHITE; text-align: center;">
             <b>CR</b>
         </td>
-        <td STYLE="color: WHITE; text-align: center;">
-            <b>KO</b>
-        </td>
+        @if (ViewBag.KOFixtures)
+        {
+            <td STYLE="color: WHITE; text-align: center;">
+                <b>KO</b>
+            </td>
+         }
         <td STYLE="color: WHITE; text-align: center;">
             <b>Total</b>
         </td>
@@ -78,9 +81,12 @@
             <td STYLE="text-align: center">
                 @((tableViewModel.CorrectResult + @tableViewModel.WinMargin).ToString())
             </td>
-            <td STYLE="text-align: center">
-                @tableViewModel.KoScore.ToString()
-            </td>
+            @if(ViewBag.KOFixtures)
+            {
+                <td STYLE="text-align: center">
+                    @tableViewModel.KoScore.ToString()
+                </td>
+            }
             <td STYLE="text-align: center">
                 @tableViewModel.TotalScore.ToString()
             </td>

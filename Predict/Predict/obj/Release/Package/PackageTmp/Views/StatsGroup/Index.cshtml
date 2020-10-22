@@ -33,26 +33,26 @@
             <td style="text-align: left; vertical-align: middle;">
                 <div class="container-fluid">
                     <div class="row vertical-middle text-center">
-                        <div class="col-sm-6 text-center">
+                        <div class="col-sm-6 text-center; row no-gutters">
                             <table width="100%">
                                 <tr>
-                                    <td width="20%">
-                                        <img src="@Url.Content(item.Fixture.HomeTeam.FlagFileLocation)" height="20"/>
+                                    <td width="20" >
+                                        <img src="@Url.Content(item.Fixture.HomeTeam.FlagFileLocation)" height="20" />
                                     </td>
-                                    <td width="80%" align="left">
+                                    <td align="left">
                                         &nbsp @Html.DisplayFor(modelItem => item.Fixture.HomeTeam.TeamName)
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
-                        <div class="col-sm-6 text-center">
+                        <div class="col-sm-6 text-center; row no-gutters">
                             <table width="100%">
                                 <tr>
-                                    <td width="20%">
-                                        <img src="@Url.Content(item.Fixture.AwayTeam.FlagFileLocation)" height="20"/>
+                                    <td width="20">
+                                        <img src="@Url.Content(item.Fixture.AwayTeam.FlagFileLocation)" height="20" />
                                     </td>
-                                    <td width="80%"  align="left">
+                                    <td align="left">
                                         &nbsp @Html.DisplayFor(modelItem => item.Fixture.AwayTeam.TeamName)
                                     </td>
 
@@ -65,11 +65,11 @@
             </td>
 
 
-            <td style="text-align: center; vertical-align: middle;" class="myDate">
+            <td style="text-align: center; vertical-align: middle;" class="myDate" width="25%">
 
                 @Html.Hidden("FixtureDateTime", item.Fixture.FixtureDateTime.ToLongDateString() + " " + item.Fixture.FixtureDateTime.ToShortTimeString())
             </td>
-            <td>
+            <td  class="row no-gutters">
                 <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
             </td>
 

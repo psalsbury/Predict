@@ -16,5 +16,7 @@ namespace Predict.ViewModels
         public bool IsPremiumPlayer { get; set; }
 
         public bool AnyFixturesInTheFuture { get; set; }
+
+        public Pool Pool { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Owin.Security;
 using Predict.Helper;
 using Predict.Models;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -208,18 +209,22 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            var confirmEmailAddress = System.Convert.ToBoolean(ConfigurationManager.AppSettings["ConfirmEmailOnRegister"]);
+            
+            if(model.Email.Contains("thinkmoney.co.uk"))
+                confirmEmailAddress = false;
+
             var context = new ApplicationDbContext();
             if (ModelState.IsValid)
             {
                 if (model.Password != model.ConfirmPassword)
                 {
-                    //pjs
                     ModelState.AddModelError("Password", "The password and confirmation password do not match.");
                     model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
                     return View("Register", model);
                 }
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = true };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = !confirmEmailAddress };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -273,7 +278,6 @@ namespace Predict.Controllers
                             };
                             context.EventPoolPlayers.Add(globalPoolPlayer);
                         }
-
                     }
 
                     // If this is me, then the pool will not yet have been created
@@ -289,11 +293,15 @@ namespace Predict.Controllers
                     context.SaveChanges();
                     context.Dispose();
 
-                    if (1 == 1)
+                    var myEmail = new IdentityMessage
                     {
-                        await SignInManager.SignInAsync(user, false, false);
-                    }
-                    else
+                        Subject = "New Player Registered",
+                        Destination = "pete@salsbury.co.uk",
+                        Body = user.Email
+                    };
+                    Helper.Cache.SendEmail(myEmail);
+
+                    if (confirmEmailAddress)
                     {
                         // Send an email with this link
                         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -302,6 +310,10 @@ namespace Predict.Controllers
                         await UserManager.SendEmailAsync(user.Id, "Confirm your account",
                             "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                         return RedirectToAction("RegisterSendCodeNotification", "Account");
+                    }
+                    else
+                    {
+                        await SignInManager.SignInAsync(user, false, false);
                     }
 
                     return RedirectToAction("Index", "Home");
@@ -342,7 +354,7 @@ namespace Predict.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id)) return View("Error");
+                if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id)) return View("EmailNotFound");
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link

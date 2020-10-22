@@ -36,7 +36,7 @@
                     <th>Home</th>
                 </tr>
 
-                @foreach (var item in Model.Where(e => e.EndDateTime >= DateTime.UtcNow))
+                @foreach (var item in Model.Where(e => e.StartDateTime >= DateTime.UtcNow).OrderBy(a => a.StartDateTime))
                 {
                     <tr>
                         <td>
@@ -45,7 +45,7 @@
                         <td>
                             @{ var exists = eventPlayers.Exists(a => a.EventId == item.Id); }
 
-                            <input type="checkbox" value ="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists ? "checked" : "") )>
+                            <input type="checkbox" value="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists ? "checked" : "") )>
 
                         </td>
                         <td>
@@ -74,7 +74,7 @@
                     <th>Home</th>
                 </tr>
 
-                @foreach (var item in Model.Where(e => e.EndDateTime < DateTime.UtcNow))
+                @foreach (var item in Model.Where(e => e.StartDateTime < DateTime.UtcNow))
                 {
                     <tr>
                         <td>

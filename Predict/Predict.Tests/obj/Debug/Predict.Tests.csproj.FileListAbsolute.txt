@@ -1,6 +1,5 @@
-C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csprojAssemblyReference.cache
-C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CoreCompileInputs.cache
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\ApplicationInsights.config
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.config
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
@@ -24,6 +23,7 @@ C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Owin.dll
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Web.Http.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\AutoMapper.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\RestSharp.dll
@@ -52,6 +52,7 @@ C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Web.Optimization.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.xml
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Web.Http.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\AutoMapper.pdb
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\AutoMapper.xml
@@ -64,9 +65,12 @@ C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.x
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\PagedList.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Net.Http.Formatting.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.ValueTuple.xml
+C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csprojAssemblyReference.cache
+C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CoreCompileInputs.cache
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.dll
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.pdb
-C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.config
-C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.dll
-C:\repos\Predict\Predict\Predict.Tests\bin\Debug\NLog.xml
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Quartz.dll
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Quartz.xml
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Diagnostics.DiagnosticSource.xml

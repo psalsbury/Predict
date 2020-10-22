@@ -18,7 +18,7 @@ namespace Predict.Models
         [StringLength(30)]
         [Display(Name = "Display Name")]
         public string DisplayName { get; set; }
-
+        
         [DefaultValue("false")] public bool PremiumPlayer { get; set; }
 
         [ForeignKey("Id")] public ApplicationUser AspNetUser { get; set; }

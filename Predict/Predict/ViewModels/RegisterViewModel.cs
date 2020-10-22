@@ -15,7 +15,7 @@ namespace Predict.ViewModels
 
         public string Id { get; set; }
 
-        [Display(Name = "Event")] public short EventId { get; set; }
+        [Display(Name = "Comp")] public short EventId { get; set; }
 
         public IEnumerable<Team> Teams { get; set; }
         public IEnumerable<Event> Events { get; set; }

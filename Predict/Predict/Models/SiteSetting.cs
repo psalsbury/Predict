@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Predict.Models
 {
@@ -14,9 +15,11 @@ namespace Predict.Models
         [StringLength(200)]
         public string SettingValue { get; set; }
 
-        [Required] public DateTime CreatedDateTime { get; set; }
+        [Required]
+        [Column(TypeName = "datetime2")] public DateTime CreatedDateTime { get; set; }
 
-        [Required] public DateTime ModifiedDateTime { get; set; }
+        [Required]
+        [Column(TypeName = "datetime2")] public DateTime ModifiedDateTime { get; set; }
 
 
     }

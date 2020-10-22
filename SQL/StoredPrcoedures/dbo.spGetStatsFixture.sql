@@ -28,7 +28,12 @@ BEGIN
 	WHERE FP.FixtureId = @intFixtureId
 	GROUP BY FixtureId
 		, FP.HomePrediction
-		, FP.AwayPrediction;
+		, FP.AwayPrediction
+	ORDER BY CASE WHEN FP.HomePrediction > FP.AwayPrediction THEN 1
+			WHEN FP.HomePrediction = FP.AwayPrediction THEN 2
+			WHEN FP.AwayPrediction > FP.HomePrediction THEN 3
+			END
+	, ABS(FP.HomePrediction) - ABS(FP.AwayPrediction);
 
 	END
 GO

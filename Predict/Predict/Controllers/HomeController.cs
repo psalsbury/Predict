@@ -20,6 +20,7 @@ namespace Predict.Controllers
             EventPlayer eventPlayer = null;
             if (User.Identity.IsAuthenticated)
             {
+               
                 SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
 
                 // Check if result is needed to be checked
@@ -33,10 +34,17 @@ namespace Predict.Controllers
                 else
                 {
                     eventPlayer =
-                        ((List<EventPlayer>)Session["EventPlayers"]).FirstOrDefault(e => e.EventId == eventId);
+                        ((List<EventPlayer>)Session["EventPlayers"]).First(e => e.EventId == eventId);
                 }
 
-                SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, false);
+                // If the user has just added themsleves to a pool, ensure the home page is refreshed
+                var cacheItem = "ForceUpdate*" + User.Identity.GetUserId() + "*" + eventPlayer.EventId;
+                var forcePoolRefresh = Helper.Cache.GetCachedItem(cacheItem) != null;
+                if (forcePoolRefresh)
+                {
+                    Helper.Cache.RemoveCachedItem(cacheItem);
+                }
+                SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, false, forcePoolRefresh);
 
             }
             return View(eventPlayer);

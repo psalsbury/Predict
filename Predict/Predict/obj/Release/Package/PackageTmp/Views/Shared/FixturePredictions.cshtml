@@ -65,7 +65,7 @@
                 <td style="text-align: left; vertical-align: middle;" witdth="50%">
                     <div class="container-fluid">
                         <div class="row vertical-middle text-center">
-                            <div class="col-sm-6 text-left">
+                            <div class="col-sm-6 text-left ; row no-gutters">
                                 <table width="100%" cellpadding="0">
                                     <tr>
                                         <td>
@@ -75,7 +75,7 @@
                                             &nbsp
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName)
                                         </td>
-                                        <td style="text-align: left" width="20%">
+                                        <td style="text-align: center" width="20%">
 
                                             @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
@@ -87,7 +87,7 @@
                                             }
                                             else if (Model.FixturePredictions[i].HomePrediction != null)
                                             {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction)
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction, new { style = "text-align:center;" })
 
                                             }
                                             else if (Model.FixturePredictions[i].HomePrediction == null)
@@ -107,7 +107,7 @@
                                 </table>
                             </div>
 
-                            <div class="col-sm-6 text-left">
+                            <div class="col-sm-6 text-left ; row no-gutters">
                                 <table width="100%">
                                     <tr>
                                         <td>
@@ -117,7 +117,7 @@
                                             &nbsp
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
                                         </td>
-                                        <td style="text-align: left" width="20%">
+                                        <td style="text-align: center" width="20%">
                                             @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
                                                 @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" , style = "text-align:center;" })
@@ -129,7 +129,7 @@
                                             }
                                             else if (Model.FixturePredictions[i].AwayPrediction != null)
                                             {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction)
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction, new { style = "text-align:center;" })
 
                                             }
                                             else if (Model.FixturePredictions[i].AwayPrediction == null)
@@ -330,38 +330,62 @@
             </div>
             <div class="modal-body">
 
-                <table>
+                <table  class="table table-bordered table-hover">
                     <tr>
                         <td style="background-color: #d9f2e6" width="20">
                             &nbsp
                         </td>
                         <td>
-                            &nbsp&nbsp Correct Score Predicted
+                            &nbsp&nbsp Correct Score
                         </td>
+                        @if(Model.Pool!=null)
+                        {
+                            <td>
+                                <b>@Model.Pool.CorrectScorePoints</b> Points
+                            </td>
+                        }
                     </tr>
                     <tr>
                         <td style="background-color: #b3d9ff">
                             &nbsp;
                         </td>
                         <td>
-                            &nbsp&nbsp Correct Win Margin Predicted
+                            &nbsp&nbsp Correct Win Margin 
                         </td>
+                        @if(Model.Pool!=null)
+                        {
+                            <td>
+                                <b>@Model.Pool.WinMarginPoints + @Model.Pool.CorrectResultPoints</b> Points
+                            </td>
+                        }
                     </tr>
                     <tr>
                         <td style="background-color: #ffebcc">
                             &nbsp;
                         </td>
                         <td>
-                            &nbsp&nbsp Correct Result Predicted
+                            &nbsp&nbsp Correct Result 
                         </td>
+                        @if(Model.Pool!=null)
+                        {
+                            <td>
+                                <b>@Model.Pool.CorrectResultPoints</b> Points
+                            </td>
+                        }
                     </tr>
                     <tr>
                         <td style="background-color: #ffcccc">
                             &nbsp;
                         </td>
                         <td>
-                            &nbsp&nbsp No points
+                            &nbsp&nbsp Wrong Result
                         </td>
+                        @if (Model.Pool != null)
+                        {
+                            <td>
+                                <b>0</b> Points
+                            </td>
+                        }
                     </tr>
                 </table>
             </div>

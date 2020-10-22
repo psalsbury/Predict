@@ -1,0 +1,141 @@
+2020-10-21 18:30:54.7500 INFO GetRapidApiResults - Start
+2020-10-21 18:30:54.7551 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:30:54.7551 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:30:54, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:30:54.7551 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:30:54, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:08.1861 INFO GetRapidApiResults - Start
+2020-10-21 18:31:08.1861 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:31:08.1990 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:08, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:08.1990 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:08, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:26.9558 INFO GetRapidApiResults - Start
+2020-10-21 18:31:26.9558 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:31:26.9558 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:26, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:26.9558 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:26, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:56.6476 INFO GetRapidApiResults - Start
+2020-10-21 18:31:56.6476 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:31:56.6476 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:56, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:56.6476 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:56, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:59.3492 INFO GetRapidApiResults - Start
+2020-10-21 18:31:59.3492 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:31:59.3492 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:59, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:31:59.3492 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:31:59, time to wait for is 21/10/2020 17:35:00
+2020-10-21 18:38:20.2830 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-21 18:38:20.3408 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-21 18:38:20.3408 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-21 18:38:20.3668 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-21 18:38:20.3997 INFO RAMJobStore initialized.
+2020-10-21 18:38:20.4176 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-21 18:38:20.4176 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-21 18:38:20.4176 INFO Quartz scheduler version: 3.2.2.0
+2020-10-21 18:38:20.4296 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-21 18:38:20.5583 INFO Startup Configuration - Start
+2020-10-21 18:38:20.5583 INFO SetEventCache - Start
+2020-10-21 18:38:20.6052 INFO SetCachedItem = setting cache for Events
+2020-10-21 18:38:20.6052 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-21 18:38:20.6052 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-21 18:38:20.6431 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 21/10/2020 17:38:20
+2020-10-21 18:38:20.6431 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 21/10/2020 17:38:20
+2020-10-21 18:38:20.6431 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-21 18:38:21.2775 INFO GetRapidApiResults - Start
+2020-10-21 18:38:21.2874 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:38:21.2874 INFO GetRapidApiResults = Getting results from RapidApi 2790
+2020-10-21 18:38:22.1877 INFO GetRapidApiResults = Getting results from RapidApi 2794
+2020-10-21 18:38:22.5392 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2020-10-21 18:38:22.5552 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 21/10/2020 17:40:00
+2020-10-21 18:38:22.5651 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 21/10/2020 17:40:00
+2020-10-21 18:38:22.5651 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-21 18:38:39.8814 ERROR AN ERROR HAS OCCURED WITH USER thinkmoney@salsbury.co.uk AT http://localhost:64432/
+2020-10-21 18:40:00.4745 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-21 18:40:00.5323 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-21 18:40:00.5563 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-21 18:40:00.5902 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-21 18:40:00.6121 INFO RAMJobStore initialized.
+2020-10-21 18:40:00.6281 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-21 18:40:00.6281 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-21 18:40:00.6281 INFO Quartz scheduler version: 3.2.2.0
+2020-10-21 18:40:00.6281 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-21 18:40:00.8016 INFO Startup Configuration - Start
+2020-10-21 18:40:00.8016 INFO SetEventCache - Start
+2020-10-21 18:40:00.8545 INFO SetCachedItem = setting cache for Events
+2020-10-21 18:40:00.8545 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-21 18:40:00.8545 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-21 18:40:00.8954 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 21/10/2020 17:40:00
+2020-10-21 18:40:00.8954 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 21/10/2020 17:40:00
+2020-10-21 18:40:00.8954 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-21 18:40:01.5384 INFO GetRapidApiResults - Start
+2020-10-21 18:40:01.5384 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:40:01.5573 INFO GetRapidApiResults = Getting results from RapidApi 2790
+2020-10-21 18:40:03.7822 INFO GetRapidApiResults = Getting results from RapidApi 2794
+2020-10-21 18:40:04.2131 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2020-10-21 18:40:04.2300 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 21/10/2020 17:45:00
+2020-10-21 18:40:04.2400 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 21/10/2020 17:45:00
+2020-10-21 18:40:04.2400 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-21 18:40:26.5632 INFO GetRapidApiResults - Start
+2020-10-21 18:40:26.5632 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:40:26.5652 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:40:26, time to wait for is 21/10/2020 17:45:00
+2020-10-21 18:40:26.5652 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:40:26, time to wait for is 21/10/2020 17:45:00
+2020-10-21 18:40:29.6544 INFO GetRapidApiResults - Start
+2020-10-21 18:40:29.6544 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:40:29.6544 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:40:29, time to wait for is 21/10/2020 17:45:00
+2020-10-21 18:40:29.6544 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:40:29, time to wait for is 21/10/2020 17:45:00
+2020-10-21 18:40:40.3736 INFO GetRapidApiResults - Start
+2020-10-21 18:40:40.3736 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 18:40:40.3736 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:40:40, time to wait for is 21/10/2020 17:45:00
+2020-10-21 18:40:40.3776 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 17:40:40, time to wait for is 21/10/2020 17:45:00
+2020-10-21 19:10:57.6103 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-21 19:10:57.6681 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-21 19:10:57.7020 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-21 19:10:57.7399 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-21 19:10:57.7549 INFO RAMJobStore initialized.
+2020-10-21 19:10:57.7709 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-21 19:10:57.7709 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-21 19:10:57.7709 INFO Quartz scheduler version: 3.2.2.0
+2020-10-21 19:10:57.7709 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-21 19:10:57.9045 INFO Startup Configuration - Start
+2020-10-21 19:10:57.9045 INFO SetEventCache - Start
+2020-10-21 19:10:57.9504 INFO SetCachedItem = setting cache for Events
+2020-10-21 19:10:57.9504 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-21 19:10:57.9504 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-21 19:10:57.9883 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 21/10/2020 18:10:57
+2020-10-21 19:10:57.9883 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 21/10/2020 18:10:57
+2020-10-21 19:10:57.9883 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-21 19:10:58.9445 INFO GetRapidApiResults - Start
+2020-10-21 19:10:58.9445 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 19:10:58.9634 INFO GetRapidApiResults = Getting results from RapidApi 2790
+2020-10-21 19:10:59.8058 INFO GetRapidApiResults = Getting results from RapidApi 2794
+2020-10-21 19:11:00.1034 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2020-10-21 19:11:00.1193 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 21/10/2020 18:15:00
+2020-10-21 19:11:00.1283 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 21/10/2020 18:15:00
+2020-10-21 19:11:00.1283 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-21 19:11:13.1640 INFO GetRapidApiResults - Start
+2020-10-21 19:11:13.1950 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 19:11:13.2249 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 18:11:13, time to wait for is 21/10/2020 18:15:00
+2020-10-21 19:11:13.2558 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 18:11:13, time to wait for is 21/10/2020 18:15:00
+2020-10-21 19:11:15.2713 INFO GetRapidApiResults - Start
+2020-10-21 19:11:15.2713 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 19:11:15.2713 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 18:11:15, time to wait for is 21/10/2020 18:15:00
+2020-10-21 19:11:15.2713 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 18:11:15, time to wait for is 21/10/2020 18:15:00
+2020-10-21 19:11:25.6590 INFO GetRapidApiResults - Start
+2020-10-21 19:11:25.6590 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-21 19:11:25.6590 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 18:11:25, time to wait for is 21/10/2020 18:15:00
+2020-10-21 19:11:25.6590 INFO GetRapidApiResults = Waiting for result. Time now is 21/10/2020 18:11:25, time to wait for is 21/10/2020 18:15:00

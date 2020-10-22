@@ -1,4 +1,5 @@
 C:\repos\Predict\Predict\Predict\bin\ApplicationInsights.config
+C:\repos\Predict\Predict\Predict\bin\NLog.config
 C:\repos\Predict\Predict\Predict\bin\Predict.dll.config
 C:\repos\Predict\Predict\Predict\bin\Predict.dll
 C:\repos\Predict\Predict\Predict\bin\Predict.pdb
@@ -148,6 +149,7 @@ C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.OAuth.dll
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Web.Infrastructure.dll
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Win32.Registry.dll
 C:\repos\Predict\Predict\Predict\bin\Newtonsoft.Json.dll
+C:\repos\Predict\Predict\Predict\bin\NLog.dll
 C:\repos\Predict\Predict\Predict\bin\Owin.dll
 C:\repos\Predict\Predict\Predict\bin\PagedList.dll
 C:\repos\Predict\Predict\Predict\bin\PagedList.Mvc.dll
@@ -230,6 +232,7 @@ C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Win32.Registry.xml
 C:\repos\Predict\Predict\Predict\bin\Newtonsoft.Json.xml
+C:\repos\Predict\Predict\Predict\bin\NLog.xml
 C:\repos\Predict\Predict\Predict\bin\PagedList.xml
 C:\repos\Predict\Predict\Predict\bin\PagedList.Mvc.xml
 C:\repos\Predict\Predict\Predict\bin\RestSharp.xml
@@ -268,7 +271,7 @@ C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CoreCompileInputs.cach
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.pdb
-C:\repos\Predict\Predict\Predict\bin\NLog.config
-C:\repos\Predict\Predict\Predict\bin\NLog.dll
-C:\repos\Predict\Predict\Predict\bin\NLog.xml
-C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache
+C:\repos\Predict\Predict\Predict\bin\Quartz.dll
+C:\repos\Predict\Predict\Predict\bin\Quartz.xml
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.AdddPoolPlayerEmailSent.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.DateTime2.resources

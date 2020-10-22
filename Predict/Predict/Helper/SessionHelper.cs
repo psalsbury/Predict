@@ -55,7 +55,7 @@ namespace Predict.Helper
         }
 
 
-        public static void UpdateSessionForHomePage(ApplicationDbContext context, HttpSessionStateBase session, EventPlayer eventPlayer, bool forceRefresh)
+        public static void UpdateSessionForHomePage(ApplicationDbContext context, HttpSessionStateBase session, EventPlayer eventPlayer, bool forceRefresh, bool forcePoolRefresh)
         {
             var eventId = eventPlayer.EventId;
             var userId = eventPlayer.PlayerId;
@@ -73,10 +73,8 @@ namespace Predict.Helper
             UpdateWinningTeamPredictions(context, session, eventId, userId, forceRefresh);
             UpdateBonusPredictionsSessionVar(context, session, eventId, userId, forceRefresh);
 
-            var forcePoolRefresh = (eventPlayer.Event.ModifiedDateTime < thisEvent.ModifiedDateTime);
-
             // Pool info
-            UpdatePlayerPoolInfo(context, session, eventId, userId, forcePoolRefresh);
+            UpdatePlayerPoolInfo(context, session, eventId, userId, forcePoolRefresh| forceRefresh ? true:false);
 
         }
 

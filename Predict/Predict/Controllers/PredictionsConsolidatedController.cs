@@ -27,8 +27,7 @@ namespace Predict.Controllers
             var predictionsConsolidated = new PredictionsConsolidatedViewModel
             {
                 PlayerId = playerId
-                ,
-                EventId = eventId
+                , EventId = eventId
             };
 
             predictionsConsolidated.Player = _context.Players.FirstOrDefault(p => p.Id == playerId);
@@ -46,6 +45,7 @@ namespace Predict.Controllers
                 fixturePredictionsController.GetFixturePredictionsViewModel(loggedInUserId, playerId, eventId);
 
             fixturePredictionsViewModel.OtherUserViewing = true;
+            fixturePredictionsViewModel.Pool = predictionsConsolidated.Pool;
             predictionsConsolidated.FixturePredictionsViewModel = fixturePredictionsViewModel;
 
             if (nbrKoPredictionsToEnter > 0)

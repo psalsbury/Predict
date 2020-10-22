@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace Predict.Controllers
 {
@@ -26,7 +27,8 @@ namespace Predict.Controllers
             var eventFixtures = _context.EventFixtures
                 .Include(b => b.Fixture.HomeTeam)
                 .Include(b => b.Fixture.AwayTeam)
-                .Where(p => p.EventId == eventId).ToList();
+                .Where(p => p.EventId == eventId)
+                .OrderBy(a => a.Fixture.FixtureDateTime).ToList();
 
             return View(eventFixtures);
         }

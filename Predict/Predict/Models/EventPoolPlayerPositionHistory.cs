@@ -24,8 +24,10 @@ namespace Predict.Models
 
         public short PoolPosition { get; set; }
 
-        [Required] public DateTime CreatedDateTime { get; set; }
+        [Required]
+        [Column(TypeName = "datetime2")] public DateTime CreatedDateTime { get; set; }
 
-        [Required] public DateTime ModifiedDateTime { get; set; }
+        [Required]
+        [Column(TypeName = "datetime2")] public DateTime ModifiedDateTime { get; set; }
     }
 }

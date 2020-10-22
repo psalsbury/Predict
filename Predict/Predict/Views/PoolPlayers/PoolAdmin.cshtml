@@ -44,7 +44,7 @@
 
             </td>
             <td>
-                Email Address! TODO
+                @Html.DisplayFor(m => m.PoolPlayers[i].Player.AspNetUser.Email)
             </td>
             <td>
                 <button class="btn btn-danger js-delete btn-sm" value="Remove" dataPlayerId="@Model.PoolPlayers[i].PlayerId" dataPoolId="@Model.PoolPlayers[i].PoolId">Remove</button>

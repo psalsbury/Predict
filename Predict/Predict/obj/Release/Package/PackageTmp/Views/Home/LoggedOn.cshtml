@@ -10,7 +10,7 @@
 
     if (eventId > 0)
     {
-        var poolInfoViewModels = ((List<PoolInfoViewModel>)Session["PoolInfo*" + eventId]);
+        var poolInfoViewModels = ((List<PoolInfoViewModel>)Session["PoolInfo*" + eventId]).OrderByDescending(a => a.PoolId);
 
         <text>
             <h3>@eventPlayer.Event.EventName - Home</h3>
@@ -74,7 +74,7 @@
                             <h3>
                                 @nbrFixturePredictionsEntered <sup style="font-size: 20px"> out of @nbrFixturePredictionsToEnter</sup>
                             </h3>
-                            <p>Group games predicted</p>
+                            <p>@(nbrKoPredictionsToEnter>0?"Group games":"Games") predicted</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-ios-football-outline"></i>

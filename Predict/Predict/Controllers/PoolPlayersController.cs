@@ -31,7 +31,9 @@ namespace Predict.Controllers
 
             if (!isPoolAdmin) throw new Exception("Only pool admin is allowed to edit the pool");
 
-            var poolPlayers = _context.PoolPlayers.Include(p => p.Player)
+            var poolPlayers = _context.PoolPlayers
+                .Include(p => p.Player)
+                .Include(u => u.Player.AspNetUser)
                 .Where(p => p.PoolId == id).ToList();
 
             var globalPoolId =
