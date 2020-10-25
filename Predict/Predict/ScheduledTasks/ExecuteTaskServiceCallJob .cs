@@ -22,18 +22,9 @@ namespace Predict.ScheduledTasks
                     {
                         try
                         {
-                            //Do whatever stuff you want
-                            var myContext = new ApplicationDbContext();
-                            var poo = new SiteSetting
-                            {
-                                CreatedDateTime = DateTime.UtcNow,
-                                ModifiedDateTime = DateTime.UtcNow,
-                                SettingName = DateTime.UtcNow.ToShortDateString() + ' ' + DateTime.UtcNow.ToLongTimeString(),
-                                SettingValue = DateTime.Today.ToShortDateString()
-                            };
-                            myContext.SiteSettings.Add(poo);
-                            myContext.SaveChanges();
-                            myContext.Dispose();
+                            // Check if result is needed to be checked
+                            RapidApiHelper.GetRapidApiResults();
+                            RapidApiHelper.DailyRapidApiLeagueCheck();
                         }
                         catch (Exception ex)
                         {

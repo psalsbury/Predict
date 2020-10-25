@@ -6,9 +6,6 @@ logging off when session has expired takes me to
 http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff
 I then get an error if I try to log on
 
-
-call update all fixtues for leagues using quartz timer
-
 create leagues for 1st of month to 15 of month, and 16th to 28/29/30/31 of month 
 
 all fixtures screen --> show all fixtures. Add date range and drop down list for leagues, select all

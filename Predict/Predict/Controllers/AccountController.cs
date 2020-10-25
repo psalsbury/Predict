@@ -293,13 +293,13 @@ namespace Predict.Controllers
                     context.SaveChanges();
                     context.Dispose();
 
-                    var myEmail = new IdentityMessage
-                    {
-                        Subject = "New Player Registered",
-                        Destination = "pete@salsbury.co.uk",
-                        Body = user.Email
-                    };
-                    Helper.Cache.SendEmail(myEmail);
+                    //var myEmail = new IdentityMessage
+                    //{
+                    //    Subject = "New Player Registered",
+                    //    Destination = "pete@salsbury.co.uk",
+                    //    Body = user.Email
+                    //};
+                    //Helper.Cache.SendEmail(myEmail);
 
                     if (confirmEmailAddress)
                     {

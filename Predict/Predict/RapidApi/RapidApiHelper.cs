@@ -14,66 +14,201 @@ namespace Predict.RapidApi
 
     public static class RapidApiHelper
     {
-        public static async Task UpdatePremierLeagueAsync(int rapidApiLeagueId)
+        private static string RapidApiFixtureUrl = "https://api-football-v1.p.rapidapi.com/v2/fixtures/league/";
+        private static string Timezone = "timezone=Europe%2FLondon";
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+
+        public static void DailyRapidApiLeagueCheck()
         {
-            await Task.Run(() =>
+
+            // Check all leagues that are linked to rapid api. Update all leagues on a daily basis
+
+            string cacheId = "DailyRapidApiLeagueCheck";
+            var performUpdate = false;
+            var checkObject = Helper.Cache.GetCachedItem(cacheId);
+            if (checkObject == null)
             {
-                FixturesByLeague(rapidApiLeagueId);
-            });
+                // Time to do the daily check
+                var context = new ApplicationDbContext();
+                var siteSetting = context.SiteSettings.FirstOrDefault(a => a.SettingName == cacheId);
+                if (siteSetting == null)
+                {
+
+                    Logger.Info("DailyRapidApiLeagueCheck --> Site Setting not found");
+
+                    siteSetting = new SiteSetting
+                    {
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow,
+                        SettingName = cacheId,
+                        SettingValue = DateTime.Now.Date.ToLongDateString()
+                    };
+                    context.SiteSettings.Add(siteSetting);
+                    context.SaveChanges();
+                    performUpdate = true;
+                }
+                else
+                {
+                    var lastDate = System.Convert.ToDateTime(siteSetting.SettingValue);
+                    if (lastDate < DateTime.Now.Date)
+                    {
+
+                        Logger.Info("DailyRapidApiLeagueCheck --> lastDate = {0}, Now = {1}", lastDate, DateTime.Now.Date);
+
+                        siteSetting.SettingValue = DateTime.Now.Date.ToLongDateString();
+                        siteSetting.ModifiedDateTime = DateTime.UtcNow;
+                        context.SiteSettings.AddOrUpdate(siteSetting);
+                        context.SaveChanges();
+                        performUpdate = true;
+                    }
+                }
+
+                Helper.Cache.SetCachedItem(cacheId, "ReRunWhenExpired", DateTime.Today.AddDays(1));
+                if (performUpdate)
+                {
+                    Logger.Info("DailyRapidApiLeagueCheck --> Performing daily league update");
+
+                    var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null);
+                    foreach (var league in leagues)
+                    {
+                        // If the date of the fixture is less than today then get all results
+                        RapidApiHelper.FixturesByLeague(league.RapidApiLeagueId ?? 0);
+                    }
+                }
+
+                context.Dispose();
+            }
         }
 
-        public static void UpdatePremierLeague()
+
+        public static void GetRapidApiResults()
         {
-           // this is for the 20/21 league
-            var rapidApiLeagueId = 2790;
-            FixturesByLeague(rapidApiLeagueId);
+            string cacheKey = "NextFixtureCheckDateTime";
+            bool checkPerformed = false;
+            var rapidApiResultChecks = (List<RapidApiResultCheck>)Helper.Cache.GetCachedItem(cacheKey);
+            if (rapidApiResultChecks == null)
+            {
+                SetNextResultCheckDateTime(false);
+                rapidApiResultChecks = (List<RapidApiResultCheck>)Helper.Cache.GetCachedItem(cacheKey);
+            }
+
+            foreach (var rapidApiResultCheck in rapidApiResultChecks)
+            {
+
+                if (rapidApiResultCheck.FixtureDateTime != DateTime.MinValue && rapidApiResultCheck.FixtureDateTime <= DateTime.UtcNow)
+                {
+                    var rapidApiLeagueId = rapidApiResultCheck.RapidApiLeagueId;
+
+                    Logger.Info("GetRapidApiResults = Getting results from RapidApi {0}. FixtureDateTime = {1}, Now = {2}", rapidApiLeagueId, rapidApiResultCheck.FixtureDateTime.Date, DateTime.UtcNow);
+
+                    if (rapidApiResultCheck.FixtureDateTime.Date < DateTime.UtcNow.Date)
+                    {
+                        // If the date of the fixture is less than today then get all results
+                        RapidApiHelper.FixturesByLeague(rapidApiLeagueId);
+                    }
+                    else
+                    {
+                        // If the date of the fixture is today, then get the results for today only
+                        RapidApiHelper.FixturesByLeagueByDate(rapidApiLeagueId, DateTime.UtcNow);
+                    }
+
+                    checkPerformed = true;
+                }
+            }
+
+            if (checkPerformed)
+                SetNextResultCheckDateTime(true);
         }
 
-        public static void UpdateChampionshipLeague()
+        private static DateTime RoundUp(DateTime dt, TimeSpan d)
         {
-            // this is for the 20/21 league
-            var rapidApiLeagueId = 2794;
-            FixturesByLeague(rapidApiLeagueId);
+            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
         }
 
-        public static void UpdateRapidApiLeagueByDate(int rapidApiLeagueId, DateTime dateToUpdate)
+        public static void SetNextResultCheckDateTime(bool roundUp)
         {
-            FixturesByLeagueByDate(rapidApiLeagueId, dateToUpdate);
-        }
-        public static void UpdateRapidApiLeague(int rapidApiLeagueId)
-        {
-            FixturesByLeague(rapidApiLeagueId);
+            // Get all the fixtures that are associated to events, that do not have a result
+            Logger.Info("SetNextResultCheckDateTime - Start - roundUp = {0}", roundUp);
+
+            string cacheKey = "NextFixtureCheckDateTime";
+            bool updateNeeded = false;
+
+            var rapidApiResultChecks = (List<RapidApiResultCheck>)Helper.Cache.GetCachedItem(cacheKey);
+            if (rapidApiResultChecks == null)
+            {
+                Logger.Info("SetNextResultCheckDateTime - rapidApiResultChecks == null");
+                updateNeeded = true;
+            }
+            else
+            {
+                foreach (var rapidApiResultCheck in rapidApiResultChecks)
+                {
+                    // FixtureDateTime includes an addition of 2 hours to ensure we are checking after the game has finished
+                    if (rapidApiResultCheck.FixtureDateTime < DateTime.UtcNow)
+                    {
+                        updateNeeded = true;
+                    }
+                }
+            }
+
+            if (updateNeeded)
+            {
+                var context = new ApplicationDbContext();
+
+                rapidApiResultChecks = context.Database.SqlQuery<RapidApiResultCheck>(
+                    "spGetNextFixtureToCheckResult").ToList();
+
+                foreach (var rapidApiResultCheck in rapidApiResultChecks)
+                {
+                    var fixtureDateTime = rapidApiResultCheck.FixtureDateTime.AddMinutes(115); // Add 1 hour 55 to the end time 
+
+                    if (roundUp && fixtureDateTime < DateTime.UtcNow)
+                        fixtureDateTime = DateTime.UtcNow;
+
+                    if (roundUp)
+                        fixtureDateTime = RoundUp(fixtureDateTime, TimeSpan.FromMinutes(5));
+
+                    rapidApiResultCheck.FixtureDateTime = fixtureDateTime;
+
+                    Logger.Info("SetNextResultCheckDateTime - Set League {0} next check date to {1}", rapidApiResultCheck.RapidApiLeagueId, rapidApiResultCheck.FixtureDateTime);
+                }
+                Helper.Cache.SetCachedItem(cacheKey, rapidApiResultChecks);
+                context.Dispose();
+            }
         }
 
-        private static void FixturesByLeagueByDate(int rapidApiLeagueId, DateTime dateToUpdate)
+        public static void FixturesByLeagueByDate(int rapidApiLeagueId, DateTime dateToUpdate)
         {
-            var context = new ApplicationDbContext();
-
-            var nbrTimesApiCalled = SettingCheck(context);
-            if (nbrTimesApiCalled >= 100)
-                return;
 
             var resultDate = dateToUpdate.Year + "-" + dateToUpdate.Month.ToString("D2") + "-" + dateToUpdate.Day.ToString("D2");
-            var client = new RestClient("https://api-football-v1.p.rapidapi.com/v2/fixtures/league/" + rapidApiLeagueId + "/" + resultDate + "?timezone=Europe%2FLondon");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
-            request.AddHeader("x-rapidapi-key", "dd93656aa1msh15481f122393c01p11fd67jsnf7e74925fed3");
-            IRestResponse response = client.Execute(request);
 
-            // Set setting value
-            IncrementSetting(context, nbrTimesApiCalled);
-            UpdateFixtures(context, response);
+            Logger.Info("FixturesByLeagueByDate - League = {0}, Date = {2}", rapidApiLeagueId, resultDate);
+
+            var baseUrl = RapidApiFixtureUrl + rapidApiLeagueId + "/" + resultDate + "?" + Timezone;
+            MakeRapidApiCall(baseUrl);
         }
 
-        private static void FixturesByLeague(int rapidApiLeagueId)
+        public static void FixturesByLeague(int rapidApiLeagueId)
+        {
+            Logger.Info("FixturesByLeague - League = {0}", rapidApiLeagueId);
+
+            var baseUrl = RapidApiFixtureUrl + rapidApiLeagueId + "?"+ Timezone;
+            MakeRapidApiCall(baseUrl);
+        }
+
+        private static void MakeRapidApiCall(string baseUrl)
         {
             var context = new ApplicationDbContext();
             var nbrTimesApiCalled = SettingCheck(context);
 
             if (nbrTimesApiCalled >= 100)
+            {
+                Logger.Info("MakeRapidApiCall CALLS OVER 100");
                 return;
+            }
 
-            var client = new RestClient("https://api-football-v1.p.rapidapi.com/v2/fixtures/league/" + rapidApiLeagueId + "?timezone=Europe%2FLondon");
+            var client = new RestClient(baseUrl);
             var request = new RestRequest(Method.GET);
             request.AddHeader("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
             request.AddHeader("x-rapidapi-key", "dd93656aa1msh15481f122393c01p11fd67jsnf7e74925fed3");
@@ -83,6 +218,7 @@ namespace Predict.RapidApi
             IncrementSetting(context, nbrTimesApiCalled);
             UpdateFixtures(context, response);
         }
+
         private static void UpdateFixtures(ApplicationDbContext context, IRestResponse response)
         {
             var jsonSerializer = new JsonSerializer();

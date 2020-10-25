@@ -1,0 +1,134 @@
+2020-10-23 14:49:23.6713 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-23 14:49:23.7361 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-23 14:49:23.7361 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-23 14:49:23.7361 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-23 14:49:23.7361 INFO RAMJobStore initialized.
+2020-10-23 14:49:23.7621 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-23 14:49:23.7621 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-23 14:49:23.7621 INFO Quartz scheduler version: 3.2.2.0
+2020-10-23 14:49:23.7850 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-23 14:49:23.9077 INFO Startup Configuration - Start
+2020-10-23 14:49:23.9077 INFO SetEventCache - Start
+2020-10-23 14:49:23.9556 INFO SetCachedItem = setting cache for Events
+2020-10-23 14:49:23.9556 INFO SetCachedItem = setting cache for Events
+2020-10-23 14:49:23.9556 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-23 14:49:23.9556 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-23 14:49:23.9954 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 25/10/2020 18:25:00
+2020-10-23 14:49:23.9954 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 23/10/2020 20:40:00
+2020-10-23 14:49:23.9954 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 14:49:23.9954 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 14:52:44.7299 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-23 14:52:44.8007 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-23 14:52:44.8007 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-23 14:52:44.8126 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-23 14:52:44.8126 INFO RAMJobStore initialized.
+2020-10-23 14:52:44.8126 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-23 14:52:44.8126 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-23 14:52:44.8126 INFO Quartz scheduler version: 3.2.2.0
+2020-10-23 14:52:44.8346 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-23 14:52:45.4978 INFO Startup Configuration - Start
+2020-10-23 14:52:45.5078 INFO SetEventCache - Start
+2020-10-23 14:52:45.5527 INFO SetCachedItem = setting cache for Events
+2020-10-23 14:52:45.5527 INFO SetCachedItem = setting cache for Events
+2020-10-23 14:52:45.5527 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-23 14:52:45.5527 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-23 14:52:45.5906 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 25/10/2020 18:25:00
+2020-10-23 14:52:45.5906 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 23/10/2020 20:40:00
+2020-10-23 14:52:45.5906 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 14:52:45.5906 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 14:54:59.0610 INFO GetRapidApiResults - Start
+2020-10-23 14:54:59.0700 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-23 14:54:59.0790 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 13:54:59, time to wait for is 25/10/2020 18:25:00
+2020-10-23 14:54:59.0790 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 13:54:59, time to wait for is 23/10/2020 20:40:00
+2020-10-23 14:55:33.8254 INFO SetCachedItem = setting cache for ForceUpdate*27c110b5-cde9-4c60-9a09-eeaebe3b5ee8*1
+2020-10-23 14:55:33.8254 INFO SetCachedItem = setting cache for ForceUpdate*27c110b5-cde9-4c60-9a09-eeaebe3b5ee8*1
+2020-10-23 14:55:36.7650 INFO GetRapidApiResults - Start
+2020-10-23 14:55:36.7660 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-23 14:55:36.7660 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 13:55:36, time to wait for is 25/10/2020 18:25:00
+2020-10-23 14:55:36.7660 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 13:55:36, time to wait for is 23/10/2020 20:40:00
+2020-10-23 14:58:09.0265 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-23 14:58:09.0943 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-23 14:58:09.1332 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-23 14:58:09.1661 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-23 14:58:09.1661 INFO RAMJobStore initialized.
+2020-10-23 14:58:09.1721 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-23 14:58:09.1721 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-23 14:58:09.1721 INFO Quartz scheduler version: 3.2.2.0
+2020-10-23 14:58:09.1721 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-23 14:58:09.3098 INFO Startup Configuration - Start
+2020-10-23 14:58:09.3098 INFO SetEventCache - Start
+2020-10-23 14:58:09.3586 INFO SetCachedItem = setting cache for Events
+2020-10-23 14:58:09.3596 INFO SetCachedItem = setting cache for Events
+2020-10-23 14:58:09.3596 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-23 14:58:09.3596 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-23 14:58:09.3975 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 25/10/2020 18:25:00
+2020-10-23 14:58:09.3975 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 23/10/2020 20:40:00
+2020-10-23 14:58:09.3975 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 14:58:09.3975 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 14:59:12.0089 INFO GetRapidApiResults - Start
+2020-10-23 14:59:12.0179 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-23 14:59:12.0179 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 13:59:12, time to wait for is 25/10/2020 18:25:00
+2020-10-23 14:59:12.0349 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 13:59:12, time to wait for is 23/10/2020 20:40:00
+2020-10-23 15:00:35.9497 INFO SetCachedItem = setting cache for ForceUpdate*5d3e1e18-1bb0-458b-9ff9-3b5b1f13c698*1
+2020-10-23 15:00:35.9758 INFO SetCachedItem = setting cache for ForceUpdate*5d3e1e18-1bb0-458b-9ff9-3b5b1f13c698*1
+2020-10-23 15:00:45.6392 INFO GetRapidApiResults - Start
+2020-10-23 15:00:45.6392 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-23 15:00:45.6492 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 14:00:45, time to wait for is 25/10/2020 18:25:00
+2020-10-23 15:00:45.6582 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 14:00:45, time to wait for is 23/10/2020 20:40:00
+2020-10-23 15:01:49.6516 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-23 15:01:49.7164 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-23 15:01:49.7572 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-23 15:01:49.7852 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-23 15:01:49.8011 INFO RAMJobStore initialized.
+2020-10-23 15:01:49.8011 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-23 15:01:49.8011 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-23 15:01:49.8011 INFO Quartz scheduler version: 3.2.2.0
+2020-10-23 15:01:49.8131 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-23 15:01:50.4153 INFO Startup Configuration - Start
+2020-10-23 15:01:50.4153 INFO SetEventCache - Start
+2020-10-23 15:01:50.4691 INFO SetCachedItem = setting cache for Events
+2020-10-23 15:01:50.4691 INFO SetCachedItem = setting cache for Events
+2020-10-23 15:01:50.4901 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-23 15:01:50.4901 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-23 15:01:50.5200 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 25/10/2020 18:25:00
+2020-10-23 15:01:50.5200 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 23/10/2020 20:40:00
+2020-10-23 15:01:50.5200 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 15:01:50.5200 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-23 15:02:18.9908 INFO GetRapidApiResults - Start
+2020-10-23 15:02:18.9908 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-23 15:02:19.0007 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 14:02:18, time to wait for is 25/10/2020 18:25:00
+2020-10-23 15:02:19.0007 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 14:02:19, time to wait for is 23/10/2020 20:40:00
+2020-10-23 15:02:44.1021 INFO SetCachedItem = setting cache for ForceUpdate*b177f6ce-432e-4b75-8cae-2bb14b8e73b7*1
+2020-10-23 15:02:44.1021 INFO SetCachedItem = setting cache for ForceUpdate*b177f6ce-432e-4b75-8cae-2bb14b8e73b7*1
+2020-10-23 15:02:51.1672 INFO GetRapidApiResults - Start
+2020-10-23 15:02:51.1672 INFO GetRapidApiResults = rapidApiResultChecks has 2 items
+2020-10-23 15:02:51.1802 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 14:02:51, time to wait for is 25/10/2020 18:25:00
+2020-10-23 15:02:51.1932 INFO GetRapidApiResults = Waiting for result. Time now is 23/10/2020 14:02:51, time to wait for is 23/10/2020 20:40:00

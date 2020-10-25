@@ -23,9 +23,6 @@ namespace Predict.Controllers
                
                 SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
 
-                // Check if result is needed to be checked
-                Helper.Cache.GetRapidApiResults();
-
                 var eventId = System.Convert.ToInt16(Request["EventId"]);
                 if (eventId == 0)
                 {

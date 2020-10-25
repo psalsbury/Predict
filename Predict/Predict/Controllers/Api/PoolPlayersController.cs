@@ -143,8 +143,12 @@ namespace Predict.Controllers.Api
                 {
                     var eventPoolPlayer = new EventPoolPlayer
                     {
-                        PlayerId = playerId, EventId = eventPool.EventId, CreatedDateTime = DateTime.UtcNow,
-                        ModifiedDateTime = DateTime.UtcNow, PoolId = eventPool.PoolId
+                        PlayerId = playerId
+                        , EventId = eventPool.EventId
+                        , CreatedDateTime = DateTime.UtcNow
+                        , ModifiedDateTime = DateTime.UtcNow
+                        , PoolId = eventPool.PoolId
+                        , Enabled = true
                     };
                     _context.EventPoolPlayers.Add(eventPoolPlayer);
 

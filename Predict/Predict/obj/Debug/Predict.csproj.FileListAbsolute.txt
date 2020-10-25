@@ -153,6 +153,7 @@ C:\repos\Predict\Predict\Predict\bin\NLog.dll
 C:\repos\Predict\Predict\Predict\bin\Owin.dll
 C:\repos\Predict\Predict\Predict\bin\PagedList.dll
 C:\repos\Predict\Predict\Predict\bin\PagedList.Mvc.dll
+C:\repos\Predict\Predict\Predict\bin\Quartz.dll
 C:\repos\Predict\Predict\Predict\bin\RestSharp.dll
 C:\repos\Predict\Predict\Predict\bin\RouteJs.dll
 C:\repos\Predict\Predict\Predict\bin\RouteJs.Mvc5.dll
@@ -235,6 +236,7 @@ C:\repos\Predict\Predict\Predict\bin\Newtonsoft.Json.xml
 C:\repos\Predict\Predict\Predict\bin\NLog.xml
 C:\repos\Predict\Predict\Predict\bin\PagedList.xml
 C:\repos\Predict\Predict\Predict\bin\PagedList.Mvc.xml
+C:\repos\Predict\Predict\Predict\bin\Quartz.xml
 C:\repos\Predict\Predict\Predict\bin\RestSharp.xml
 C:\repos\Predict\Predict\Predict\bin\System.Buffers.xml
 C:\repos\Predict\Predict\Predict\bin\System.Diagnostics.DiagnosticSource.xml
@@ -266,12 +268,11 @@ C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Cookies.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.OAuth.xml
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.InitialMigration.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.AdddPoolPlayerEmailSent.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.DateTime2.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.GenerateResource.cache
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CoreCompileInputs.cache
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.pdb
-C:\repos\Predict\Predict\Predict\bin\Quartz.dll
-C:\repos\Predict\Predict\Predict\bin\Quartz.xml
-C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.AdddPoolPlayerEmailSent.resources
-C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.DateTime2.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache

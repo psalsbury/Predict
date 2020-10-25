@@ -1,0 +1,27 @@
+2020-10-25 21:55:54.6763 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-25 21:55:54.7391 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-25 21:55:54.7391 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-25 21:55:54.7979 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-25 21:55:54.7979 INFO RAMJobStore initialized.
+2020-10-25 21:55:54.8039 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-25 21:55:54.8039 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-25 21:55:54.8039 INFO Quartz scheduler version: 3.2.2.0
+2020-10-25 21:55:54.8229 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-25 21:55:55.3890 INFO Startup Configuration - Start
+2020-10-25 21:55:55.3890 INFO SetEventCache - Start
+2020-10-25 21:55:55.4279 INFO SetCachedItem = setting cache for Events
+2020-10-25 21:55:55.4279 INFO SetCachedItem = setting cache for Events, with Expiry Date of 24/11/2020 21:55:55
+2020-10-25 21:55:55.4279 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-25 21:55:55.4279 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-25 21:55:55.4631 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 31/10/2020 14:25:00
+2020-10-25 21:55:55.4631 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 28/10/2020 21:40:00
+2020-10-25 21:55:55.4631 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-25 21:55:55.4631 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 24/11/2020 21:55:55
+2020-10-25 21:56:00.0688 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 26/10/2020 00:00:00

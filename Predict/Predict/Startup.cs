@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 using Predict;
+using Predict.RapidApi;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -15,7 +16,7 @@ namespace Predict
             var logger = NLog.LogManager.GetCurrentClassLogger();
             logger.Info("Startup Configuration - Start");
             Helper.Cache.SetEventCache();
-            Helper.Cache.SetNextResultCheckDateTime(false);
+            RapidApiHelper.SetNextResultCheckDateTime(false);
         }
     }
 }
