@@ -22,8 +22,6 @@ namespace Predict.App_Start
                     Name = "Admin"
                 };
                 roleManager.Create(role);
-
-                ;
             }
 
             // creating Creating Player role 

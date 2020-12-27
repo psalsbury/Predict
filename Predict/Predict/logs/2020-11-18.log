@@ -1,0 +1,9 @@
+2020-11-18 08:01:00.4546 INFO DailyRapidApiLeagueCheck --> lastDate = 17/11/2020 00:00:00, Now = 18/11/2020 00:00:00
+2020-11-18 08:01:00.6252 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 19/11/2020 00:00:00
+2020-11-18 08:01:00.6252 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2020-11-18 08:01:00.6371 INFO FixturesByLeague - League = 2790
+2020-11-18 08:01:05.3188 INFO FixturesByLeague - League = 2794
+2020-11-18 08:01:09.8603 INFO FixturesByLeague - League = 1422
+2020-11-18 08:01:11.4553 INFO SetEventCache - Start
+2020-11-18 08:01:11.4553 INFO SetCachedItem = setting cache for Events
+2020-11-18 08:01:11.4553 INFO SetCachedItem = setting cache for Events, with Expiry Date of 18/12/2020 08:01:11

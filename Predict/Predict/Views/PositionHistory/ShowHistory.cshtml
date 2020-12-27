@@ -1,0 +1,66 @@
+﻿@using Predict.Models
+@model List<Predict.Models.EventPoolPlayerPositionHistory>
+@{
+    var nbrPlayersInPool = ViewBag.NumberPlayers;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Position Graph</li>
+    </ol>
+</nav>
+
+<script src="~/plugins/morris/raphael.min.js"></script>
+<script src="~/plugins/morris/morris.min.js"></script>
+
+<div class="col-sm-12 text-center">
+    <label class="label label-success">Position Chart</label>
+    <div id="graph"></div>
+</div>
+
+<script>
+    var day_data = [
+        @{
+            var nbrDays = Model.Count;
+            var counter = 0;
+        }
+        @foreach(var eventPoolPlayerPositionHistory in @Model)
+        {
+            counter += 1;
+            var dateOutput = eventPoolPlayerPositionHistory.PositionDate.ToString("yyyy-MM-dd");
+
+            <text>{ "posnDate": "</text>@dateOutput<text>", "Posn": </text> @eventPoolPlayerPositionHistory.PoolPosition<text>}</text>
+
+
+            if (counter < nbrDays)
+            {
+                <text>,</text>
+            }
+
+        }
+
+    ];
+    var line = Morris.Line({
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        ymax: 1,
+        ymin: @nbrPlayersInPool,
+        element: 'graph',
+        data: day_data,
+        xkey: 'posnDate',
+        ykeys: ['Posn'],
+        labels: ['Position']
+    });
+
+    var parentDivWidth = $("#graph").parent("div").width();
+    $("#graph").css("min-width", parentDivWidth);
+    $("#graph > svg:nth-child(1)").css("min-width", parentDivWidth);
+    line.redraw();
+
+    $('#graph').resize(function () {
+        line.redraw();
+    });
+</script>

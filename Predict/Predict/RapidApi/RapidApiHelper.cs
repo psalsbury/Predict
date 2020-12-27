@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Data.Entity;
 using League = Predict.Models.League;
 
 namespace Predict.RapidApi
@@ -18,13 +18,225 @@ namespace Predict.RapidApi
         private static string Timezone = "timezone=Europe%2FLondon";
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
+        private static void DailyRapidApiGenerateEvents(ApplicationDbContext context)
+        {
+            // Check if we need to generate events. 
+            // AutoGenerateEvents --> 1 = Weekly, 2 = twice per month, 3 = Monthly
+            // Weeks start on same weekday as first fixture for the league
+            // Months are whole calendar months
+
+
+            var leagueEventGenerations = context.LeagueEventGenerations
+                .Include(a => a.League)
+                .Where(a => a.Enabled == true).ToList();
+
+            foreach (var leagueEventGeneration in leagueEventGenerations)
+            {
+                // work out first fixture date
+                // iterate out to find next suitable event to create. Only create event if not already created.
+                // month after current month
+
+                var league = leagueEventGeneration.League;
+                var weeklyWeeks = 1;
+
+                var firstFixtureForLeague = context.Fixtures.Where(a => a.LeagueId == league.Id)
+                    .OrderBy(a => a.FixtureDateTime)
+                    .FirstOrDefault();
+
+                var lastFixtureForLeague = context.Fixtures.Where(a => a.LeagueId == league.Id)
+                    .OrderByDescending(a => a.FixtureDateTime)
+                    .FirstOrDefault();
+
+                if (firstFixtureForLeague != null && lastFixtureForLeague!= null)
+                {
+
+                    var dateToCheck = firstFixtureForLeague.FixtureDateTime.Date;
+                    var endDate = firstFixtureForLeague.FixtureDateTime.Date;
+
+                    // For weekly events I want
+                    // 2 separate weekly events generated where the start date is ahead of today
+                    // , find the first date of the day of the week of the first fixture that is after todays date
+
+                    if (leagueEventGeneration.GenerationFrequencyId == 1)
+                    {
+
+                        while (dateToCheck < DateTime.UtcNow.Date)
+                        {
+                            dateToCheck = dateToCheck.AddDays(7);
+                            weeklyWeeks += 1;
+                        }
+
+                        endDate = dateToCheck.AddDays(7);
+                    }
+                    else if (leagueEventGeneration.GenerationFrequencyId == 2)
+                    {
+                        if (dateToCheck > DateTime.UtcNow)
+                        {
+                            // If the first fixture is in the future, then set up the first event to be to 15 or end of month
+                            if (dateToCheck.Day <= 15)
+                            {
+                                endDate = dateToCheck.AddDays(15 - dateToCheck.Day);
+                            }
+                            else
+                            {
+                                endDate = new DateTime(dateToCheck.AddMonths(1).Year, dateToCheck.AddMonths(1).Month, 1).AddDays(-1);
+                            }
+                        }
+                        else
+                        {
+                            // Get next 1st of month, or 16th of month
+                            if (DateTime.UtcNow.Day <= 15)
+                            {
+                                // 16th of current month
+                                dateToCheck = DateTime.UtcNow.AddDays(15 - DateTime.UtcNow.Day);
+                                endDate = new DateTime(dateToCheck.AddMonths(1).Year, dateToCheck.AddMonths(1).Month, 1).AddDays(-1);
+                            }
+                            else
+                            {
+                                // first of next month
+                                dateToCheck = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(1).Month, 1);
+                                endDate = dateToCheck.AddDays(14);
+                            }
+                        }
+
+                    }
+                    else if (leagueEventGeneration.GenerationFrequencyId == 3)
+                    {
+                        if (dateToCheck > DateTime.UtcNow)
+                        {
+                            endDate = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(2).Month, 1).AddDays(-1);
+                        }
+                        else
+                        {
+                            dateToCheck = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(1).Month, 1);
+                            endDate = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(2).Month, 1).AddDays(-1);
+                        }
+                        
+                    }
+
+                    if (dateToCheck > lastFixtureForLeague.FixtureDateTime.Date)
+                    {
+                        // There are no fixtures left. Disable any further generations 
+                        leagueEventGeneration.Enabled = false;
+                        leagueEventGeneration.ModifiedDateTime = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        // Date found that is ahead of today and is before the last fixture
+                        // I want to create a weekly event starting at this date
+                        var eventExists = context.EventGenerations.Any(a => a.LeagueEventGenerationId == leagueEventGeneration.Id
+                                                                            && a.BaseStartDate == dateToCheck
+                                                                            && a.BaseEndDate == endDate);
+                        if (!eventExists)
+                        {
+                            var eventName = league.ShortLeagueName;
+
+                            if (leagueEventGeneration.GenerationFrequencyId == 1)
+                            {
+                                eventName = eventName + " Week " + weeklyWeeks.ToString();
+                            }
+                            else if (leagueEventGeneration.GenerationFrequencyId == 2)
+                            {
+                                eventName = eventName + " " + dateToCheck.ToString("MMM") + " " + dateToCheck.Day +
+                                            " - " + endDate.Day;
+                            }
+                            else if (leagueEventGeneration.GenerationFrequencyId == 3)
+                            {
+                                eventName = eventName + " " + dateToCheck.ToString("MMM");
+                            }
+
+                            CreateEvent(leagueEventGeneration, dateToCheck, endDate, eventName, context);
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+        }
+
+        private static void CreateEvent(LeagueEventGeneration leagueEventGeneration, DateTime startDate, DateTime endDate, string eventName, ApplicationDbContext context)
+        {
+
+            var endDateToUse = endDate.AddDays(1); // Linq doesnt like .AddDays. Add 1 day to include fixtures with that date date
+            var fixtures = context.Fixtures.Where(a => a.ResultProcessed == false
+                                                       && a.LeagueId == leagueEventGeneration.League.Id
+                                                       && a.FixtureDateTime >= startDate
+                                                       && a.FixtureDateTime < endDateToUse)
+                                                        .OrderBy(a => a.FixtureDateTime).ToList();
+
+            // If no fixtures available, then exit
+            if (!fixtures.Any())
+                return;
+
+            // Find the default pool
+            var defaultPool = context.Pools.First(a => a.DefaultPoolForEvent == true);
+
+            var alreadyExists = context.EventGenerations.Count(a => a.LeagueEventGenerationId == leagueEventGeneration.Id);
+
+            // Event has not been created, so create it.
+            var myEvent = new Event
+            {
+                EventName = eventName,
+                EventDescription = eventName,
+                CreatedDateTime = DateTime.UtcNow,
+                ModifiedDateTime = DateTime.UtcNow,
+                CreatedByPlayerId = defaultPool.AdminPlayerId,
+                StartDateTime = fixtures.OrderBy(a => a.FixtureDateTime).First().FixtureDateTime,
+                EndDateTime = fixtures.OrderByDescending(a => a.FixtureDateTime).First().FixtureDateTime,
+                DefaultPoolId = defaultPool.Id
+            };
+            context.Events.Add(myEvent);
+            context.SaveChanges();
+
+            Helper.Cache.SetEventCache();
+
+            var myEventPool = new EventPool
+            {
+                PoolId = defaultPool.Id, EventId = myEvent.Id, CreatedDateTime = DateTime.UtcNow,
+                Enabled =true,
+                ModifiedDateTime = DateTime.UtcNow
+            };
+
+            context.EventPools.Add(myEventPool);
+
+            var myEventGeneration = new EventGeneration
+            {
+                EventId = myEvent.Id,
+                CreatedDateTime = DateTime.UtcNow,
+                ModifiedDateTime = DateTime.UtcNow,
+                BaseStartDate = startDate,
+                BaseEndDate = endDate,
+                LeagueEventGenerationId = leagueEventGeneration.Id
+            };
+
+            context.EventGenerations.Add(myEventGeneration);
+
+            foreach (var fixture in fixtures)
+            {
+                var eventFixture = new EventFixture
+                {
+                    EventId = myEvent.Id
+                    , FixtureId = fixture.Id
+                    , CreatedDateTime = DateTime.UtcNow
+                    , ModifiedDateTime = DateTime.UtcNow
+                    
+                };
+                context.EventFixtures.Add(eventFixture);
+            }
+
+            context.SaveChanges();
+
+        }
 
         public static void DailyRapidApiLeagueCheck()
         {
 
             // Check all leagues that are linked to rapid api. Update all leagues on a daily basis
 
-            string cacheId = "DailyRapidApiLeagueCheck";
+            var cacheId = "DailyRapidApiLeagueCheck";
             var performUpdate = false;
             var checkObject = Helper.Cache.GetCachedItem(cacheId);
             if (checkObject == null)
@@ -69,12 +281,26 @@ namespace Predict.RapidApi
                 {
                     Logger.Info("DailyRapidApiLeagueCheck --> Performing daily league update");
 
-                    var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null);
+                    var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null && a.DailyRapidApiCheck==true);
                     foreach (var league in leagues)
                     {
-                        // If the date of the fixture is less than today then get all results
+                        // Update the whole league for this league
                         RapidApiHelper.FixturesByLeague(league.RapidApiLeagueId ?? 0);
+
+                        var count = context.Fixtures.Count(a => a.LeagueId == league.Id && a.ResultProcessed == false);
+
+                        if (count == 0)
+                        {
+                            // If there are no further fixtures left, then set the league to stop checking every day
+                            league.DailyRapidApiCheck = false;
+                            league.ModifiedDateTime = DateTime.UtcNow;
+                            context.Leagues.AddOrUpdate(league);
+                        }
                     }
+                    context.SaveChanges();
+
+                    // Check if events need to be created
+                    DailyRapidApiGenerateEvents(context);
                 }
 
                 context.Dispose();
@@ -217,6 +443,7 @@ namespace Predict.RapidApi
             // Set setting value
             IncrementSetting(context, nbrTimesApiCalled);
             UpdateFixtures(context, response);
+            context.Dispose();
         }
 
         private static void UpdateFixtures(ApplicationDbContext context, IRestResponse response)
@@ -318,7 +545,6 @@ namespace Predict.RapidApi
             {
                 Helper.Cache.UpdateEventStartEnd(context, eventId);
             }
-
         }
         private static League AddOrUpdateLeague(ApplicationDbContext context, RapidAPIFixtures.League rapidApiLeague, int rapidApiLeagueId)
         {

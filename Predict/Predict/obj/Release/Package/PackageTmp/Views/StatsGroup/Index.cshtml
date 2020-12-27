@@ -28,7 +28,12 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        var rowColour = "";
+        if (item.Fixture.HomeResult != null)
+        {
+            rowColour = "#e3e5e6"; // Green
+        }
+        <tr  bgcolor="@rowColour">
 
             <td style="text-align: left; vertical-align: middle;">
                 <div class="container-fluid">

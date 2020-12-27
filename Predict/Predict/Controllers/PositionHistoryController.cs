@@ -13,8 +13,8 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
 
-        // GET: PosnHistory
-        public ActionResult Index(string playerId, int poolId)
+        [HttpGet]
+        public ActionResult ShowHistory(short eventId, int poolId, string playerId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -22,10 +22,17 @@ namespace Predict.Controllers
 
             var positionHistory = (from a in _context.EventPoolPlayerPositionHistory
                                    join c in _context.Pools on a.PoolId equals c.Id
+                                   join e in _context.Events on a.EventId equals e.Id
                                    where a.PlayerId == playerId
                                          && c.Id == poolId
+                                         && a.EventId == eventId
                                    select a).ToList();
-            return View();
+
+            var nbrPlayersInPool = _context.EventPoolPlayers.Count(a => a.EventId == eventId && a.PoolId == poolId);
+
+            ViewBag.NumberPlayers = nbrPlayersInPool;
+            ViewBag.EventId = eventId;
+            return View(positionHistory);
         }
     }
 }

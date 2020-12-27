@@ -6,8 +6,6 @@ logging off when session has expired takes me to
 http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff
 I then get an error if I try to log on
 
-create leagues for 1st of month to 15 of month, and 16th to 28/29/30/31 of month 
-
 all fixtures screen --> show all fixtures. Add date range and drop down list for leagues, select all
 	--> when a fixture is checked highlight the row
 	--> find a way of making the checkbox consistent for the rows that are not currnetly shown (search datatable checkbox)
@@ -15,6 +13,21 @@ all fixtures screen --> show all fixtures. Add date range and drop down list for
 
 add notification when new comps are created (little icon at the top)
 
+bcc me on activation email
 
 WHEN MESSAGE IS SENT GO TO A THANK YOU FOR SENDING MESSAGE SCREEN
+
+when time is running out to enter predictions, show a modal pop up to remind them
+
+was on the home screen in second position. update was made to change my position but f5'ing the home screen didnt update my position. Need to check if cache is updating correctly for the event so the f5'in knows when to refesh
+
+  select *
+  from [dbo].[EventPoolPlayerPositionHistory]
+  where eventid=9
+--> has poolposition of 4 when oly ever 3 people
+
+
+
+
+
 

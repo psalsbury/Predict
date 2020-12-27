@@ -275,4 +275,5 @@ C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CoreCompileInputs.cach
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.pdb
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.AutoGen.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache

@@ -7,6 +7,7 @@
 {
     @Html.HiddenFor(m => m.Event.Id);
     <table  id="EventFixtures" class="table table-bordered table-hover">
+
         <thead>
         <tr>
             <th></th>
@@ -23,7 +24,6 @@
             {
                 <tr>
                     <td>
-
                         <input type="checkbox" value="@item.Id" id="fixture_@item.Id" name="fixture_@item.Id" @(exists ? "checked" : "")>
                     </td>
                     <td>
@@ -41,6 +41,15 @@
                 </tr>
             }
         }
+        <tfoot>
+        <tr>
+            <th></th>
+            <th>League</th>
+            <th>Home Team</th>
+            <th>Away Team</th>
+            <th>Date</th>
+        </tr>
+        </tfoot>
     </table>
 
     <div class="form-group">
@@ -55,18 +64,64 @@
 
 <script>
 
-    $(function () {
-        $("#EventFixtures").DataTable({
+
+    $(document).ready(function() {
+        $('#EventFixtures').DataTable( {
             'columnDefs': [
                 {
                     'targets': [4], /* column index */
-                    "type": "date-eu"                
+                    "type": "date-eu"
                 }
-             
+
             ]
-           , 'pageLength': 200
-        });
+            , 'pageLength': 25,
+
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+ 
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+ 
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append('<option value="' + d + '">' + d + '</option>');
+                    } );
+                } );
+            }
+        } );
+    } );
+
+    var table = $('#EventFixtures').DataTable({
+        // ... skipped ...
     });
 
+    $('form').on('submit', function(e){
+        var $form = $(this);
+
+        // Iterate over all checkboxes in the table
+        table.$('input[type="checkbox"]').each(function(){
+            // If checkbox doesn't exist in DOM
+            if(!$.contains(document, this)){
+                // If checkbox is checked
+                if(this.checked){
+                    // Create a hidden element 
+                    $form.append(
+                        $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', this.name)
+                        .val(this.value)
+                    );
+                }
+            } 
+        });          
+    });
 
 </script>

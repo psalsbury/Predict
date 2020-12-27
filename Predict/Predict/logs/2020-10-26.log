@@ -1,0 +1,74 @@
+2020-10-26 21:04:14.0014 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-26 21:04:14.0623 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-26 21:04:14.0623 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-26 21:04:14.0742 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-26 21:04:14.0742 INFO RAMJobStore initialized.
+2020-10-26 21:04:14.0742 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-26 21:04:14.0872 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-26 21:04:14.0872 INFO Quartz scheduler version: 3.2.2.0
+2020-10-26 21:04:14.1689 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-26 21:04:14.3116 INFO Startup Configuration - Start
+2020-10-26 21:04:14.3116 INFO SetEventCache - Start
+2020-10-26 21:04:14.3595 INFO SetCachedItem = setting cache for Events
+2020-10-26 21:04:14.3595 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 21:04:14
+2020-10-26 21:04:14.3655 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-26 21:04:14.3655 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-26 21:04:14.4024 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 31/10/2020 14:25:00
+2020-10-26 21:04:14.4024 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 28/10/2020 21:40:00
+2020-10-26 21:04:14.4024 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-26 21:04:14.4024 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 25/11/2020 21:04:14
+2020-10-26 21:05:00.0879 INFO DailyRapidApiLeagueCheck --> lastDate = 25/10/2020 00:00:00, Now = 26/10/2020 00:00:00
+2020-10-26 21:05:00.3612 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 27/10/2020 00:00:00
+2020-10-26 21:05:00.3612 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2020-10-26 21:05:00.3821 INFO FixturesByLeague - League = 2790
+2020-10-26 21:05:03.7550 INFO SetEventCache - Start
+2020-10-26 21:05:03.7550 INFO SetCachedItem = setting cache for Events
+2020-10-26 21:05:03.7550 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 21:05:03
+2020-10-26 21:05:03.7550 INFO FixturesByLeague - League = 2794
+2020-10-26 21:05:07.6479 INFO FixturesByLeague - League = 1422
+2020-10-26 21:05:12.0761 INFO SetEventCache - Start
+2020-10-26 21:05:12.0761 INFO SetCachedItem = setting cache for Events
+2020-10-26 21:05:12.0761 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 21:05:12
+2020-10-26 21:07:28.0961 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2020-10-26 21:46:29.0127 INFO Default Quartz.NET properties loaded from embedded resource file
+2020-10-26 21:46:29.0785 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-10-26 21:46:29.0785 INFO Quartz Scheduler v.3.2.2.0 created.
+2020-10-26 21:46:29.0875 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2020-10-26 21:46:29.0875 INFO RAMJobStore initialized.
+2020-10-26 21:46:29.0875 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-10-26 21:46:29.0875 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-10-26 21:46:29.0875 INFO Quartz scheduler version: 3.2.2.0
+2020-10-26 21:46:29.1144 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-10-26 21:46:29.7222 INFO Startup Configuration - Start
+2020-10-26 21:46:29.7232 INFO SetEventCache - Start
+2020-10-26 21:46:29.7671 INFO SetCachedItem = setting cache for Events
+2020-10-26 21:46:29.7671 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 21:46:29
+2020-10-26 21:46:29.7711 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2020-10-26 21:46:29.7711 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2020-10-26 21:46:29.8030 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 31/10/2020 14:25:00
+2020-10-26 21:46:29.8030 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 28/10/2020 21:40:00
+2020-10-26 21:46:29.8030 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2020-10-26 21:46:29.8030 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 25/11/2020 21:46:29
+2020-10-26 21:47:00.0592 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 27/10/2020 00:00:00
+2020-10-26 21:52:05.0501 INFO SetCachedItem = setting cache for Events
+2020-10-26 21:52:05.0501 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 21:52:05
+2020-10-26 22:21:38.8009 INFO SetCachedItem = setting cache for Events
+2020-10-26 22:21:38.8009 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 22:21:38
+2020-10-26 22:22:18.2991 INFO SetCachedItem = setting cache for Events
+2020-10-26 22:22:18.2991 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 22:22:18
+2020-10-26 22:22:33.8243 INFO SetCachedItem = setting cache for Events
+2020-10-26 22:22:33.8243 INFO SetCachedItem = setting cache for Events, with Expiry Date of 25/11/2020 22:22:33

@@ -34,10 +34,12 @@ namespace Predict.Models
         public DbSet<EventKo> EventKos { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<EventFixture> EventFixtures { get; set; }
+        public DbSet<EventGeneration> EventGenerations { get; set; }
         public DbSet<FixturePrediction> FixturePredictions { get; set; }
         public DbSet<BonusQuestion> BonusQuestions { get; set; }
         public DbSet<BonusQuestionPrediction> BonusQuestionPredictions { get; set; }
         public DbSet<League> Leagues { get; set; }
+        public DbSet<LeagueEventGeneration> LeagueEventGenerations { get; set; }
         public DbSet<Pool> Pools { get; set; }
         public DbSet<PoolPlayer> PoolPlayers { get; set; }
         public DbSet<EventPoolPlayer> EventPoolPlayers { get; set; }

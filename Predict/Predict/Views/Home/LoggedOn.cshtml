@@ -1,4 +1,5 @@
 ﻿@using Microsoft.Ajax.Utilities
+@using Microsoft.AspNet.Identity
 @using Predict.Models
 @using Predict.ViewModels
 @model Predict.Models.EventPlayer
@@ -159,99 +160,116 @@
 
             }
 
-            <div class="box box-primary @collapsedBox">
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <b>@poolInfoViewModel.PoolName</b> Details
+<div class="box box-primary @collapsedBox">
 
-                        &nbsp;
-                        <a href="#"><span class="label label-info pull-right"  data-toggle="modal" data-target="#modal-@poolInfoViewModel.PoolId">Member Info</span></a>
-                    </h3>
+    <!-- MEMBER INFO dialog -->
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <b>@poolInfoViewModel.PoolName</b> Details
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa @image"></i>
-                        </button>
-                    </div>
+            &nbsp;
+            <a href="#"><span class="label label-info pull-right" data-toggle="modal" data-target="#modal-@poolInfoViewModel.PoolId">Member Info</span></a>
+        </h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa @image"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- / MODAL FORM FOR MEMBER INFORMATION -->
+    <div class="modal fade" id="modal-@poolInfoViewModel.PoolId">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">@poolInfoViewModel.PoolName Member Information</h4>
                 </div>
-                
-                
-                <div class="modal fade" id="modal-@poolInfoViewModel.PoolId">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">@poolInfoViewModel.PoolName Member Information</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>@poolInfoViewModel.MemberInfo</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
+                <div class="modal-body">
+                    <p>@poolInfoViewModel.MemberInfo</p>
                 </div>
-                
-
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <ul class="products-list product-list-in-box">
-                        <li class="item">
-                            <span class="info-box-icon bg-yellow">
-                                <i class="ion ion-ios-people-outline"></i>
-                            </span>
-                            <div class="info-box-content">
-
-                                <span class="info-box-text">Nbr of Members</span>
-                                <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
-
-                            </div>
-                        </li>
-
-                        <!-- /.item -->
-                        <li class="item">
-                            <span class="info-box-icon bg-blue">
-                                <i class="ion ion-ios-football-outline"></i>
-                            </span>
-                            <div class="info-box-content">
-                                <a href="~/Table/ShowTable?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
-                                    <span class="info-box-text">Position</span>
-
-                                    <span class="label label-info pull-right">View Table</span>
-
-                                    @if (poolInfoViewModel.PoolPosition == 0)
-                                    {
-                                        <span class="info-box-number">(not started)</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="info-box-number">@poolInfoViewModel.PoolPosition</span>
-                                    }
-
-                                </a>
-                            </div>
-
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <span class="info-box-icon bg-red">
-                                <i class="ion ion-ios-circle-outline"></i>
-                            </span>
-                            <div class="info-box-content">
-
-                                <span class="info-box-text">total Score</span>
-                                <span class="info-box-number">@poolInfoViewModel.TotalScore</span>
-
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                    </ul>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                 </div>
             </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+
+    <!-- /.box-header -->
+    <div class="box-body">
+        <ul class="products-list product-list-in-box">
+            <li class="item">
+                <span class="info-box-icon bg-yellow">
+                    <i class="ion ion-ios-people-outline"></i>
+                </span>
+                <div class="info-box-content">
+
+                    <span class="info-box-text">Nbr of Members</span>
+                    <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+
+                </div>
+            </li>
+
+            <!-- /.item -->
+            <li class="item">
+                <span class="info-box-icon bg-blue">
+                    <i class="ion ion-ios-football-outline"></i>
+                </span>
+                <div class="info-box-content">
+
+                    <a href="~/Table/ShowTable?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
+                        <span class="info-box-text">Position</span>
+
+                        <span class="label label-info pull-right">View Table</span>
+
+                        @if (poolInfoViewModel.PoolPosition == 0)
+                        {
+                            <span class="info-box-number">(not started)</span>
+                        }
+                        else
+                        {
+                            <span class="info-box-number">@poolInfoViewModel.PoolPosition</span>
+                        }
+
+                    </a>
+                </div>
+
+            </li>
+            <li class="item">
+                <span class="info-box-icon bg-red">
+                    <i class="ion ion-ios-circle-outline"></i>
+                </span>
+                <div class="info-box-content">
+
+                    <a href="~/PositionHistory/ShowHistory?eventid=@eventId&poolid=@poolInfoViewModel.PoolId&playerid=@User.Identity.GetUserId()" class="product-title">
+                        <span class="info-box-text">Total Score</span>
+
+                        <span class="label label-info pull-right">Posn History</span>
+
+                        @if (poolInfoViewModel.PoolPosition == 0)
+                        {
+                            <span class="info-box-number">(not started)</span>
+                        }
+                        else
+                        {
+                            <span class="info-box-number">@poolInfoViewModel.TotalScore</span>
+                        }
+
+                    </a>
+                </div>
+
+            </li>
+            <!-- /.item -->
+        </ul>
+    </div>
+</div>
 
             firstPass = false;
         }

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=PETESXPS;Initial Catalog=predictioncomp;Integrated Security=True" tags="SqlConnectionString">
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=PETESXPS;Initial Catalog=predictioncomp;Integrated Security=True ;MultipleActiveResultSets=True" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="C:\\repos\\Predict\\Predict\\Predict\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
   </parameter>
-  <parameter name="GoDaddyConnection-Web.config Connection String" description="GoDaddyConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=188.121.44.214;Initial Catalog=predictioncomp; User Id=peteuser; Password=Kcalb267da" tags="SqlConnectionString">
+  <parameter name="GoDaddyConnection-Web.config Connection String" description="GoDaddyConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=188.121.44.214;Initial Catalog=predictioncomp; User Id=peteuser; Password=Kcalb267da ;MultipleActiveResultSets=True" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="C:\\repos\\Predict\\Predict\\Predict\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='GoDaddyConnection']/@connectionString" />
   </parameter>
 </parameters>
