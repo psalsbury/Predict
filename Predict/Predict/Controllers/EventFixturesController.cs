@@ -19,6 +19,46 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetFixturesForLeague()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            var eventFixturesViewModel = new EventFixturesViewModel();
+
+            var leagueId = System.Convert.ToInt16(Request["LeagueId"]);
+            var eventId = System.Convert.ToInt16(Request["Event.Id"]);
+
+            var fixtures = _context.Fixtures
+                .Include(b => b.HomeTeam)
+                .Include(b => b.AwayTeam)
+                .Include(b => b.League)
+                .Where(b => b.LeagueId==leagueId && b.FixtureDateTime >= DateTime.UtcNow)
+                .OrderBy(a => a.FixtureDateTime)
+                .ToList();
+
+            var eventFixtures = _context.EventFixtures
+                .Include(b => b.Fixture)
+                .Include(b => b.Fixture.HomeTeam)
+                .Include(b => b.Fixture.AwayTeam)
+                .Include(b => b.Event)
+                .Where(b => b.EventId == eventId && b.Fixture.FixtureDateTime >= DateTime.UtcNow)
+                .ToList();
+
+            var leagues = _context.Leagues.ToList();
+
+            eventFixturesViewModel.LeagueId = leagueId;
+            eventFixturesViewModel.Fixtures = fixtures;
+            eventFixturesViewModel.EventFixtures = eventFixtures;
+            eventFixturesViewModel.Leagues = leagues;
+            eventFixturesViewModel.Event = Helper.Cache.GetCachedEvent(eventId);
+
+            return View("Index",eventFixturesViewModel);
+
+        }
+
         // GET: EventFixtures
         public ActionResult Index(short id)
         {
@@ -27,23 +67,9 @@ namespace Predict.Controllers
 
             var eventFixturesViewModel = new EventFixturesViewModel();
 
-            var eventFixtures = _context.EventFixtures
-                .Include(b => b.Fixture)
-                .Include(b => b.Fixture.HomeTeam)
-                .Include(b => b.Fixture.AwayTeam)
-                .Include(b => b.Event)
-                .Where(b => b.EventId == id)
-                .ToList();
+            var leagues = _context.Leagues.ToList();
 
-            var fixtures = _context.Fixtures
-                .Include(b => b.HomeTeam)
-                .Include(b => b.AwayTeam)
-                .Include(b => b.League)
-                .OrderBy(a => a.FixtureDateTime)
-                .ToList();
-
-            eventFixturesViewModel.Fixtures = fixtures;
-            eventFixturesViewModel.EventFixtures = eventFixtures;
+            eventFixturesViewModel.Leagues = leagues;
             eventFixturesViewModel.Event = Helper.Cache.GetCachedEvent(id);
 
             return View(eventFixturesViewModel);

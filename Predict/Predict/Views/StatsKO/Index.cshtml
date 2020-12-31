@@ -4,6 +4,18 @@
     ViewBag.Title = "Knock Out Prediction Stats";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <a href="/StatsGroup?eventid=@ViewBag.EventId">Game Stats</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">KO Stats</li>
+    </ol>
+</nav>
+
 @{
     var last16 = Model.StatsKoRoundOfs.Where(a => a.RoundOf == 16).OrderByDescending(a => a.NumberOfPredictions).ThenBy(a => a.TeamName);
     var last8 = Model.StatsKoRoundOfs.Where(a => a.RoundOf == 8).OrderByDescending(a => a.NumberOfPredictions).ThenBy(a => a.TeamName);

@@ -30,6 +30,8 @@ namespace Predict.Controllers
                 ).ToList()
             };
 
+            ViewBag.EventId = eventId;
+
             return View(statsKoViewModel);
         }
     }

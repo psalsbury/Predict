@@ -20,7 +20,6 @@ namespace Predict.Controllers
             EventPlayer eventPlayer = null;
             if (User.Identity.IsAuthenticated)
             {
-               
                 SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
 
                 var eventId = System.Convert.ToInt16(Request["EventId"]);
@@ -34,13 +33,20 @@ namespace Predict.Controllers
                         ((List<EventPlayer>)Session["EventPlayers"]).First(e => e.EventId == eventId);
                 }
 
-                // If the user has just added themsleves to a pool, ensure the home page is refreshed
+                // If the user has just added themselves to a pool, ensure the home page is refreshed
                 var cacheItem = "ForceUpdate*" + User.Identity.GetUserId() + "*" + eventPlayer.EventId;
                 var forcePoolRefresh = Helper.Cache.GetCachedItem(cacheItem) != null;
                 if (forcePoolRefresh)
                 {
                     Helper.Cache.RemoveCachedItem(cacheItem);
                 }
+
+                // Also want to set forcePoolRefresh to true if the cached event has been modified
+                if (eventPlayer.Event.ModifiedDateTime < Helper.Cache.GetCachedEvent(eventPlayer.EventId).ModifiedDateTime)
+                {
+                    forcePoolRefresh = true;
+                }
+
                 SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, false, forcePoolRefresh);
 
             }

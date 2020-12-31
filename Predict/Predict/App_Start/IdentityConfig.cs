@@ -23,6 +23,7 @@ namespace Predict
             smtpMessage.To.Add(new MailAddress(message.Destination));
             smtpMessage.Subject = message.Subject;
             smtpMessage.Body = message.Body;
+            smtpMessage.Bcc.Add(new MailAddress("pete@salsbury.co.uk"));
             smtpMessage.IsBodyHtml = true;
 
             var client = new SmtpClient();

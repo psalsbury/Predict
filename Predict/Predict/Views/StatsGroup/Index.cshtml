@@ -13,13 +13,20 @@
     </ol>
 </nav>
 
+@if (ViewBag.ShowKoStats == true)
+{
+    <a href="/StatsKO?eventId=@ViewBag.EventId">
+        <input type="button" class="btn btn-primary alignleft" value="KO Stats">
+    </a>
+}
+
 <table class="table table-bordered table-hover" id="fixtures" name="fixtures" align="center">
     <tr>
         <th style="text-align: center; vertical-align: middle;">
             Match
         </th>
         <th style="text-align: center; vertical-align: middle;">
-            Fixture Date/Time
+            Fixture Date
         </th>
         <th>
 

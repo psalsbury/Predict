@@ -5,6 +5,19 @@
 @model IEnumerable<Predict.Models.Event>
 
 @{
+    ViewBag.Title = "Competitions";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Events/EventsIndex">Comps Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Comps List</li>
+    </ol>
+</nav>
+
+
+@{
     var playerId = User.Identity.GetUserId();
 }
 @using (Html.BeginForm("SaveEvent", "Events"))
@@ -27,26 +40,46 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDateTime)
-            </td>
-            <td>
-                <a href="@Url.Action("Index", "EventFixtures", new { id = item.Id })">Fixtures</a>
-            </td>
-            <td>
-                <a href="@Url.Action("Index", "KoFixtures", new { id = item.Id })">KO Fixtures</a>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditEvent", new { id = item.Id })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventName)
+                </td>
+                <td>
+                    @item.StartDateTime.ToString("dd MMM yy")
+                </td>
+                <td>
+                    @item.EndDateTime.ToString("dd MMM yy")
+                </td>
+                <td>
+                    <input type="button"
+                           value="Add Fixtures"
+                           class="btn btn-success"
+                           onclick="location.href = '@Url.Action("Index", "EventFixtures", new {id = item.Id}) '" />
+                    
+                    <input type="button"
+                           value="Show Fixtures"
+                           class="btn btn-primary"
+                           onclick="location.href = '@Url.Action("Index", "EventFixtures", new {id = item.Id}) '" />
+                    
+                    <input type="button"
+                           value="Delete"
+                           class="btn btn-danger"
+                           onclick="location.href = '@Url.Action("Index", "EventFixtures", new {id = item.Id}) '" />
+
+                    @if (@User.IsInRole("Admin"))
+                    {
+                        <input type="button"
+                               value="KO Fixtures"
+                               class="btn btn-success"
+                               onclick="location.href = '@Url.Action("Index", "KoFixtures", new {id = item.Id}) '" />
+                    }
+                    <input type="button"
+                           value="Edit"
+                           class="btn btn-info"
+                           onclick="location.href = '@Url.Action("EditEvent", "Events", new {id = item.Id}) '" />
+
+                </td>
+            </tr>
         }
     </table>
 }

@@ -1,7 +1,5 @@
 When viewing prediction stats for events with KO, make the KO stats available through the link shown on the home page
 
-Change the session to cookie
-
 logging off when session has expired takes me to 
 http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff
 I then get an error if I try to log on
@@ -27,7 +25,29 @@ was on the home screen in second position. update was made to change my position
 --> has poolposition of 4 when oly ever 3 people
 
 
+Add columns SeasonStart & SeasonEnd to Leagues Table. Update from rapid API response. 
 
 
+Comp Dashboard
 
 
+Upcoming Comps
+
+Create a Comp
+
+manage comps
+
+Completed Comps
+
+
+Comp lists
+Comp Name
+Start DAte
+End Date
+EDit Fixtures
+
+
+---> create api to add/remove a fixture. Call this when tick or untick check box when adding fixtures to a comp
+
+--> 
+ 

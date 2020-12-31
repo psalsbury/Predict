@@ -1,127 +1,223 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Predict.Models
 @model Predict.ViewModels.EventFixturesViewModel
+@{
+    ViewBag.Title = Model.Event.EventName + " Fixtures";
+}
 
-@using (Html.BeginForm("Save", "EventFixtures"))
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Events/EventsIndex">Comps Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Events/EventsIndex">Comps List</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Comp Fixtures</li>
+    </ol>
+</nav>
+@using (Html.BeginForm("GetFixturesForLeague", "EventFixtures"))
 {
-    @Html.HiddenFor(m => m.Event.Id);
-    <table  id="EventFixtures" class="table table-bordered table-hover">
+    @Html.HiddenFor(m => m.Event.Id)
+    <div class="row">
+        <select name="LeagueId" id="LeagueId" class="form-control"  onchange="this.form.submit()">
+            <option value="0"> Select League.. </option>
+            @if (Model.Leagues != null)
+            {
+                foreach (var item in Model.Leagues)
+                {
+                    <option value="@item.Id" @(item.Id==Model.LeagueId?"selected":"")> @item.LeagueName </option>
+                }
+            }
+        </select>
+
+        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+    </div>
+}
+
+@if (Model.Fixtures != null && Model.Fixtures.Count > 0)
+{
+    <table id="EventFixtures" class="table table-bordered table-hover no-gutters">
 
         <thead>
         <tr>
-            <th></th>
-            <th>League</th>
-            <th>Home Team</th>
-            <th>Away Team</th>
-            <th>Date</th>
+            <th>&nbsp;</th>
+            <th style="text-align: center; vertical-align: middle;">Game</th>
+            <th style="text-align: center; vertical-align: middle;" width="25%">
+                Fixture Date
+            </th>
         </tr>
-            </thead>
+        </thead>
+
         @foreach (var item in Model.Fixtures.ToList())
         {
-            var exists = Model.EventFixtures.Exists(a => a.FixtureId == item.Id);
-            if (exists || item.FixtureDatePassed == false)
+
+            var exists = false;
+            if (Model.EventFixtures != null && Model.EventFixtures.Count > 0)
             {
-                <tr>
-                    <td>
-                        <input type="checkbox" value="@item.Id" id="fixture_@item.Id" name="fixture_@item.Id" @(exists ? "checked" : "")>
-                    </td>
-                    <td>
-                        @item.League.ShortLeagueName
-                    </td>
-                    <td>
-                        @item.HomeTeam.TeamName
-                    </td>
-                    <td>
-                        @item.AwayTeam.TeamName
-                    </td>
-                    <td>
-                        @item.FixtureDateTime.ToString("yyyy-MM-dd h:mm tt")
-                    </td>
-                </tr>
+                exists = Model.EventFixtures.Exists(a => a.FixtureId == item.Id);
             }
+
+            <tr>
+                <td style="vertical-align: middle;" class="row no-gutters">
+                    @if (exists)
+                    {
+                        <button class="btn btn-danger js-delete btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id">X</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success js-add btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id">+</button>
+                    }
+               </td>
+
+                <td style="text-align: left; vertical-align: middle;" witdth="50%">
+                    <div class="container-fluid">
+                        <div class="row vertical-middle text-center">
+                            <div class="col-sm-6 text-left ; row no-gutters">
+                                <table width="100%" cellpadding="0">
+                                    <tr>
+                                        <td>
+                                            <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20"/>
+                                        </td>
+                                        <td style="text-align: left" width="60%">
+                                            &nbsp;
+                                            @item.HomeTeam.TeamName
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-sm-6 text-left ; row no-gutters">
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20"/>
+                                        </td>
+                                        <td style="text-align: left" width="60%">
+                                            &nbsp;
+                                            @item.AwayTeam.TeamName
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
+                    @Html.Hidden("FixtureDateTime", item.FixtureDateTime.ToLongDateString() + " " + item.FixtureDateTime.ToShortTimeString())
+                </td>
+            </tr>
         }
-        <tfoot>
-        <tr>
-            <th></th>
-            <th>League</th>
-            <th>Home Team</th>
-            <th>Away Team</th>
-            <th>Date</th>
-        </tr>
-        </tfoot>
+
+
     </table>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Save" class="btn btn-success" />
-        </div>
-    </div>
-
 }
-
+else
+{
+    <h1>Select league to add fixtures..</h1>
+}
 
 <script>
 
 
-    $(document).ready(function() {
-        $('#EventFixtures').DataTable( {
-            'columnDefs': [
+    $("#EventFixtures").on("click",
+        ".js-add",
+        function () {
+            var button = $(this);
+            $(button.html(''));
+            $(button.attr('class', 'fa fa-refresh fa-spin'));
+            $.ajax(
                 {
-                    'targets': [4], /* column index */
+                    url: "../api/EventFixtures/Add/" + button.attr("dataEventId") + "/" + button.attr("dataFixtureId"),
+                    method: "POST",
+                    success: function() {
+                        $(button.attr('class', 'btn btn-danger js-delete btn-sm'));
+                        $(button.html('X'));
+                    },
+                    error: function () {
+                        $(button.attr('class', 'btn btn-success js-add btn-sm'));
+                        $(button.html('+'));
+                    }
+                });
+        });
+
+
+    $("#EventFixtures").on("click",
+        ".js-delete",
+        function () {
+            var button = $(this);
+            $(button.html(''));
+            $(button.attr('class', 'fa fa-refresh fa-spin'));
+            $.ajax(
+                {
+                    url: "../api/EventFixtures/Delete/" + button.attr("dataEventId") + "/" + button.attr("dataFixtureId"),
+                    method: "POST",
+                    success: function () {
+                        $(button.attr('class', 'btn btn-success js-add btn-sm'));
+                        $(button.html('+'));
+                    },
+                    error: function() { 
+                        $(button.attr('class', 'btn btn-danger js-delete btn-sm'));
+                        $(button.html('X'));
+                    }
+                });
+        });
+
+
+
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#EventFixtures').DataTable({
+            'columnDefs':
+            [
+                {
+                    'targets': [3], /* column index */
                     "type": "date-eu"
                 }
 
             ]
-            , 'pageLength': 25,
-
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
- 
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        } );
- 
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append('<option value="' + d + '">' + d + '</option>');
-                    } );
-                } );
-            }
-        } );
-    } );
-
-    var table = $('#EventFixtures').DataTable({
-        // ... skipped ...
+            , "paging": false
+        });
     });
 
-    $('form').on('submit', function(e){
-        var $form = $(this);
+</script>
 
-        // Iterate over all checkboxes in the table
-        table.$('input[type="checkbox"]').each(function(){
-            // If checkbox doesn't exist in DOM
-            if(!$.contains(document, this)){
-                // If checkbox is checked
-                if(this.checked){
-                    // Create a hidden element 
-                    $form.append(
-                        $('<input>')
-                        .attr('type', 'hidden')
-                        .attr('name', this.name)
-                        .val(this.value)
-                    );
-                }
-            } 
-        });          
+<script>
+
+    //get all td with actionclass in table
+    $("tbody tr td.myDate").each(function () {
+
+        $hiddenValue = $(this).find("input[type=hidden]").val();
+
+        var d = new Date($hiddenValue);
+
+        this.innerHTML = convertUTCDateToLocalDate(d);
+
     });
+
+    function convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours - offset);
+        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
+        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+
+        return da + ' ' + mo + ' ' + pad(newDate.getHours(), 2) + ':' + pad(newDate.getMinutes(), 2);
+
+    }
+
+    function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
 
 </script>

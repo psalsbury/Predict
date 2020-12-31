@@ -2,6 +2,14 @@
 @model List<Predict.Models.EventPoolPlayerPositionHistory>
 @{
     var nbrPlayersInPool = ViewBag.NumberPlayers;
+    ViewBag.Title = ViewBag.PlayerName + "'s Posn History";
+    var cameFromHomeScreen = true;
+    string referencePage = HttpContext.Current.Request.UrlReferrer.ToString();
+    if (referencePage.Contains("PredictionsConsolidated/"))
+    {
+        cameFromHomeScreen = false;
+    }
+
 }
 
 <nav aria-label="breadcrumb">
@@ -9,6 +17,13 @@
         <li class="breadcrumb-item">
             <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
         </li>
+        @if(!cameFromHomeScreen)
+        {
+            <li class="breadcrumb-item">
+                <a href="@referencePage">Predictions</a>
+            </li>
+        }
+
         <li class="breadcrumb-item active" aria-current="page">Position Graph</li>
     </ol>
 </nav>
@@ -16,10 +31,18 @@
 <script src="~/plugins/morris/raphael.min.js"></script>
 <script src="~/plugins/morris/morris.min.js"></script>
 
-<div class="col-sm-12 text-center">
-    <label class="label label-success">Position Chart</label>
-    <div id="graph"></div>
-</div>
+@if (Model.Count == 0)
+{
+    <text><h1 style="text-align:center">No Data To Display</h1></text>
+}
+else
+{
+    <div class="col-sm-12 text-center">
+        <label class="label label-success">Position Chart</label>
+        <div id="graph"></div>
+    </div>
+}
+
 
 <script>
     var day_data = [

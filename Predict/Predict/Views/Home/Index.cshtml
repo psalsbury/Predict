@@ -1,6 +1,6 @@
 ﻿@model Predict.Models.EventPlayer
 <div class="style:">
-    @if (Request.IsAuthenticated)
+    @if (Context.User.Identity.IsAuthenticated)
     {
         @Html.Partial("LoggedOn")
     }

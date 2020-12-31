@@ -18,6 +18,12 @@
 {
     <input class="btn btn-primary alignleft" title="Click to select let the computer pick your predictions for you." type="button" value="Lucky Dip" onclick="javascript:LuckyDip();" id="LuckyD" name="LuckyD">
 }
+@if (Model.OtherUserViewing)
+{
+    <a href="/PositionHistory/ShowHistory?eventId=@Model.EventId&poolid=@Model.Pool.Id&playerid=@Model.UserId">
+        <input type="button" class="btn btn-primary alignleft" value="Posn History">
+    </a>
+}
 <input type="button" class="btn btn-primary alignright" data-toggle="modal" data-target="#myModal" value="Colour Key">
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
@@ -355,7 +361,7 @@
                         @if(Model.Pool!=null)
                         {
                             <td>
-                                <b>@Model.Pool.WinMarginPoints + @Model.Pool.CorrectResultPoints</b> Points
+                                <b>@(Model.Pool.WinMarginPoints + Model.Pool.CorrectResultPoints)</b> Points
                             </td>
                         }
                     </tr>

@@ -1,0 +1,38 @@
+﻿@model List<Predict.Models.League>
+
+@{
+    ViewBag.Title = "League List";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Admin/AdminHome">Admin Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">League List</li>
+    </ol>
+</nav>
+
+<p>
+    @Html.ActionLink("Create New League", "EditLeague", new { leagueId = 0 })
+</p>
+
+<table id="leagues" name="leagues" class="table table-bordered table-hover">
+<thead>
+    <tr>
+
+        <th style="text-align: left; vertical-align: middle;">League Name</th>
+        <th style="text-align: left; vertical-align: middle;">RapidApiId</th>
+        <th style="text-align: left; vertical-align: middle;">Created Date</th>
+        <th>&nbsp;</th>
+    </tr>
+</thead>
+@foreach (var item in Model)
+{
+    <tr>
+        <td style="text-align: left; vertical-align: middle;">@item.LeagueName</td>
+        <td style="text-align: left; vertical-align: middle;">@item.RapidApiLeagueId</td>
+        <td style="text-align: left; vertical-align: middle;">@item.CreatedDateTime.ToString("g")</td>
+        <td style="text-align: left; vertical-align: middle;">@Html.ActionLink("Edit", "EditLeague", new { leagueId = item.Id })</td>
+    </tr>
+}
+ </table>

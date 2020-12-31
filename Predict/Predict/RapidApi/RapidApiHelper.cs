@@ -25,7 +25,6 @@ namespace Predict.RapidApi
             // Weeks start on same weekday as first fixture for the league
             // Months are whole calendar months
 
-
             var leagueEventGenerations = context.LeagueEventGenerations
                 .Include(a => a.League)
                 .Where(a => a.Enabled == true).ToList();
@@ -153,7 +152,6 @@ namespace Predict.RapidApi
                 }
 
             }
-
 
         }
 
@@ -306,7 +304,6 @@ namespace Predict.RapidApi
                 context.Dispose();
             }
         }
-
 
         public static void GetRapidApiResults()
         {

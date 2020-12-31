@@ -136,6 +136,7 @@ namespace Predict.Helper
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
+            // Get all the events that the logged on user is participating in
             var eventPlayers = context.EventPlayers
                 .Include(t => t.Event)
                 .Where(e => e.PlayerId == userId && e.Enabled == true)

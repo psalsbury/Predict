@@ -14,7 +14,6 @@ namespace Predict.Controllers
     public class PoolsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         public PoolsController()
         {
             _context = new ApplicationDbContext();

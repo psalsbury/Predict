@@ -30,6 +30,10 @@ namespace Predict.Controllers
                 .Where(p => p.EventId == eventId)
                 .OrderBy(a => a.Fixture.FixtureDateTime).ToList();
 
+            var showKoStats = _context.KoFixtures.Any(a => a.EventId == eventId);
+
+            ViewBag.ShowKoStats = showKoStats;
+            ViewBag.EventId = eventId;
             return View(eventFixtures);
         }
 

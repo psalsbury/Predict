@@ -343,6 +343,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Api\EventFixturesController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -355,6 +356,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KoFixturePredictionsController.cs" />
     <Compile Include="Controllers\KoFixturesController.cs" />
+    <Compile Include="Controllers\LeaguesController.cs" />
     <Compile Include="Controllers\LeagueTablesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
@@ -547,6 +549,8 @@
     <Content Include="Views\Shared\EmailNotFound.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\PositionHistory\ShowHistory.cshtml" />
+    <Content Include="Views\Leagues\LeaguesIndex.cshtml" />
+    <Content Include="Views\Leagues\EditLeague.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

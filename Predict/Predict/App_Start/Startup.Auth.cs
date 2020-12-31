@@ -35,6 +35,7 @@ namespace Predict
                             (manager, user) => user.GenerateUserIdentityAsync(manager))
                 },
                 ExpireTimeSpan = TimeSpan.FromMinutes(10080) // 1 week
+                ,SlidingExpiration = true
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
