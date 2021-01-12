@@ -6,39 +6,44 @@
 @{
     var eventPlayers = (List<EventPlayer>)Session["EventPlayers"];
     var playerId = User.Identity.GetUserId();
+    ViewBag.Title = "Your Comps";
 }
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Your Comps</li>
+    </ol>
+</nav>
 
 @using (Html.BeginForm("Save", "EventPlayers"))
 {
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <li class="active">
+            <li class="active" onclick="myFunction(true)">
                 <a href="#tab_1" data-toggle="tab">Upcoming</a>
             </li>
-            <li>
+            <li onclick="myFunction(false)">
                 <a href="#tab_2" data-toggle="tab">Active/Completed</a>
             </li>
         </ul>
     </div>
 
-    
+
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
 
-
-            
-            <table class="table" id="EventPlayers">
+            <table id="EventPlayers" class="table table-hover">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.EventName)
                     </th>
-                    <th>Playing</th>
-                    <th>Home</th>
+                    <th>Join</th>
+                    <th>&nbsp;</th>
                 </tr>
 
                 @foreach (var item in Model.Where(e => e.StartDateTime >= DateTime.UtcNow).OrderBy(a => a.StartDateTime))
                 {
-                    <tr>
+                    <tr height="60">
                         <td>
                             @Html.DisplayFor(modelItem => item.EventName)
                         </td>
@@ -50,63 +55,81 @@
                         </td>
                         <td>
                             @if (exists)
-                            { 
-                                <input  class="btn btn-primary" value="Home" title="Visit Home Page" type="button" onclick="javascript:window.location='/?eventid=@item.Id'">
+                            {
+                            <a class="btn btn-info" href='@Url.Action("Index", "Home", new { eventId = item.Id})'>
+                                <i class="fa fa-home"></i>&nbsp; Home
+                            </a>
                             }
                         </td>
                     </tr>
                 }
             </table>
-
-            
 
         </div>
         <div class="tab-pane" id="tab_2">
 
-
-            
-            <table class="table">
+            <table class="table table-hover" id="EventPlayers2">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.EventName)
                     </th>
-                    <th>Playing</th>
-                    <th>Home</th>
+                    <th>End Date</th>
+                    <th>&nbsp;</th>
                 </tr>
 
-                @foreach (var item in Model.Where(e => e.StartDateTime < DateTime.UtcNow))
+                @foreach (var item in Model.Where(e => e.StartDateTime < DateTime.UtcNow).OrderByDescending(a => a.EndDateTime))
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EventName)
-                        </td>
-                        <td>
-                            @{ var exists = eventPlayers.Exists(a => a.EventId == item.Id); }
-                            @(exists?"Yes":"No")
-                        </td>
-                        <td>
-                            @if (exists)
-                            { 
-                                <input  class="btn btn-primary" value="Home" title="Visit Home Page" type="button" onclick="javascript:window.location='/?eventid=@item.Id'">
-                            }
-                        </td>
-                    </tr>
+                    var exists = eventPlayers.Exists( a => a.EventId == item.Id);
+                    if (exists)
+                    {
+                        <tr height="60">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EventName)
+                            </td>
+                            <td>
+                                @item.EndDateTime.ToString("dd MMM yyyy")
+                            </td>
+                            <td>
+                                <a class="btn btn-info" href='@Url.Action("Index", "Home", new { eventId = item.Id})'>
+                                    <i class="fa fa-home"></i>&nbsp; Home
+                                </a>
+                            </td>
+                        </tr>
+                    }
                 }
             </table>
 
-
-
         </div>
     </div>
 
 
+    <div id="myDIV">
+        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+        <input type="submit" id="save" value="Save" class="btn btn-success alignleft" />
 
-    <div class="form-group">
-        <div class="col-md-offset-1 col-md-10">
-            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Save" class="btn btn-success"/>
-        </div>
+        <input type="button"
+               id="add"
+               value="Add/Edit Comps"
+               class="btn btn-primary alignright"
+               onclick="location.href = '@Url.Action("EventsIndex", "Events") '" />
+
     </div>
-
 }
+<script>
+    function myFunction(showButton) {
+        var x = document.getElementById("myDIV");
+        if (showButton === true) {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
 
+    $(document).ready(function() {
+        $('#EventPlayers').DataTable();
+    });
+
+    $(document).ready(function() {
+        $('#EventPlayers2').DataTable();
+    } );
+</script>

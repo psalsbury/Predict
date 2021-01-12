@@ -31,7 +31,7 @@ namespace Predict.Controllers
         }
 
         // GET: Results
-        public ActionResult GroupGameResults(int eventId)
+        public ActionResult GroupGameResults(int id)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -40,12 +40,18 @@ namespace Predict.Controllers
             var groupGameResultsViewModel = new GroupGameResultsViewModel();
 
             var eventFixtures = _context.EventFixtures
+                .Include(a => a.Fixture)
+                .Include(l => l.Fixture.League)
                 .Include(b => b.Fixture.HomeTeam)
                 .Include(b => b.Fixture.AwayTeam)
-                .Where(p => p.EventId == eventId).ToList()
+                .Where(p => p.EventId == id).ToList()
                 .OrderBy(p => p.Fixture.FixtureDateTime).ToList();
 
+            var myEvent = Helper.Cache.GetCachedEvent(id);
+
             groupGameResultsViewModel.EventFixtures = eventFixtures;
+            ViewBag.EventId = id;
+            ViewBag.EventName = myEvent.EventName;
 
             return View(groupGameResultsViewModel);
         }

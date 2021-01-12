@@ -71,10 +71,10 @@ namespace Predict.RapidApi
                     {
                         if (dateToCheck > DateTime.UtcNow)
                         {
-                            // If the first fixture is in the future, then set up the first event to be to 15 or end of month
-                            if (dateToCheck.Day <= 15)
+                            // If the first fixture is in the future, then set up the first event to be to 16 or end of month
+                            if (dateToCheck.Day <= 16)
                             {
-                                endDate = dateToCheck.AddDays(15 - dateToCheck.Day);
+                                endDate = dateToCheck.AddDays(16 - dateToCheck.Day);
                             }
                             else
                             {
@@ -84,16 +84,16 @@ namespace Predict.RapidApi
                         else
                         {
                             // Get next 1st of month, or 16th of month
-                            if (DateTime.UtcNow.Day <= 15)
+                            if (DateTime.UtcNow.Day <= 16)
                             {
                                 // 16th of current month
-                                dateToCheck = DateTime.UtcNow.AddDays(15 - DateTime.UtcNow.Day);
+                                dateToCheck = DateTime.UtcNow.Date.AddDays(16 - DateTime.UtcNow.Date.Day);
                                 endDate = new DateTime(dateToCheck.AddMonths(1).Year, dateToCheck.AddMonths(1).Month, 1).AddDays(-1);
                             }
                             else
                             {
                                 // first of next month
-                                dateToCheck = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(1).Month, 1);
+                                dateToCheck = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(1).Month, 1).Date;
                                 endDate = dateToCheck.AddDays(14);
                             }
                         }
@@ -158,7 +158,7 @@ namespace Predict.RapidApi
         private static void CreateEvent(LeagueEventGeneration leagueEventGeneration, DateTime startDate, DateTime endDate, string eventName, ApplicationDbContext context)
         {
 
-            var endDateToUse = endDate.AddDays(1); // Linq doesnt like .AddDays. Add 1 day to include fixtures with that date date
+            var endDateToUse = endDate.AddDays(1); // Linq doesnt like AddDays. Add 1 day to include fixtures with that date date
             var fixtures = context.Fixtures.Where(a => a.ResultProcessed == false
                                                        && a.LeagueId == leagueEventGeneration.League.Id
                                                        && a.FixtureDateTime >= startDate
@@ -171,8 +171,6 @@ namespace Predict.RapidApi
 
             // Find the default pool
             var defaultPool = context.Pools.First(a => a.DefaultPoolForEvent == true);
-
-            var alreadyExists = context.EventGenerations.Count(a => a.LeagueEventGenerationId == leagueEventGeneration.Id);
 
             // Event has not been created, so create it.
             var myEvent = new Event
@@ -226,7 +224,6 @@ namespace Predict.RapidApi
             }
 
             context.SaveChanges();
-
         }
 
         public static void DailyRapidApiLeagueCheck()

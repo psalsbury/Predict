@@ -20,7 +20,7 @@ namespace Predict.Controllers
 
         private bool CheckUserIsValid()
         {
-            if (!User.Identity.IsAuthenticated || !User.IsInRole("Admin")) return false;
+            if (!User.Identity.IsAuthenticated) return false;
             return true;
         }
 
@@ -32,7 +32,16 @@ namespace Predict.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var events = _context.Events.ToList();
+            var isAdmin = User.IsInRole("Admin");
+            var playerId = User.Identity.GetUserId();
+
+            // Return Events that have not yet started
+            var events = _context.Events.Where(a => (a.StartDateTime >= DateTime.UtcNow
+                                                     || a.StartDateTime == DateTime.MinValue)
+                                                    && (isAdmin || a.CreatedByPlayerId== playerId))
+                .OrderBy(a => a.StartDateTime)                                    
+                .ToList();
+
             return View(events);
         }
 

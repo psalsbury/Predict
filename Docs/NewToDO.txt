@@ -47,7 +47,5 @@ End Date
 EDit Fixtures
 
 
----> create api to add/remove a fixture. Call this when tick or untick check box when adding fixtures to a comp
 
---> 
  

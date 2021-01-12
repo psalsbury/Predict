@@ -17,7 +17,6 @@ namespace Predict.Controllers.Api
     public class PoolPlayersController : ApiController
     {
         private readonly ApplicationDbContext _context;
-
         public PoolPlayersController()
         {
             _context = new ApplicationDbContext();

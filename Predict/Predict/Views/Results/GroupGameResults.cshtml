@@ -1,15 +1,17 @@
 ﻿@model Predict.ViewModels.GroupGameResultsViewModel
 
 @{
-    ViewBag.Title = "Fixture Results";
+    ViewBag.Title = @ViewBag.EventName  + " Fixtures";
 }
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="~/">Home</a>
+            <a href="/Events/EventsIndex">Comps Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Group Results</li>
+        <li class="breadcrumb-item">
+            <a href="/Events/EventsIndex">Comps List</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Comp Fixtures</li>
     </ol>
 </nav>
 <div>
@@ -18,52 +20,53 @@
         <thead>
         <tr>
 
-            <th class="hidden-xs" style="text-align: center; vertical-align: middle;"></th>
+            <th class="hidden-xs hidden-sm" style="text-align: center; vertical-align: middle;"></th>
             <th style="text-align: center; vertical-align: middle;">Game</th>
             <th style="text-align: center; vertical-align: middle;">
-                Fixture Date/Time
+                Fixture Time
             </th>
         </tr>
         </thead>
-        @for (var i = 0; i < Model.Fixtures.Count(); i++)
+        @for (var i = 0; i < Model.EventFixtures.Count(); i++)
         {
             <tr>
-                <td class="hidden-xs" style="text-align: center; vertical-align: middle;" witdth="25%">
-                    <b> @Model.EventTeams.Find(m => m.TeamId == Model.Fixtures[i].HomeTeam.Id && m.EventId == Model.Fixtures[i].EventId).League</b>
+
+                <td class="hidden-xs hidden-sm" style="text-align: center; vertical-align: middle;" witdth="25%">
+                    <b> @Model.EventFixtures[i].Fixture.League.ShortLeagueName </b>
                 </td>
 
                 <td style="text-align: center; vertical-align: middle;" witdth="50%">
                     <div class="container-fluid">
                         <div class="row vertical-middle text-center">
-                            <div class="col-sm-6 text-center">
+                            <div class="col-sm-6 text-center ; row no-gutters">
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.Fixtures[i].HomeTeam.FlagFileLocation)" height="20"/>
+                                            <img src="@Url.Content(Model.EventFixtures[i].Fixture.HomeTeam.FlagFileLocation)" height="20" />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
-                                            @Html.DisplayFor(m => m.Fixtures[i].HomeTeam.TeamName)
+                                            @Html.DisplayFor(m => m.EventFixtures[i].Fixture.HomeTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @Html.DisplayFor(m => m.Fixtures[i].HomeResult, new {@class = "control-label col-md-2"})
+                                            @Html.DisplayFor(m => m.EventFixtures[i].Fixture.HomeResult, new { @class = "control-label col-md-2" })
                                         </td>
                                     </tr>
                                 </table>
                             </div>
 
-                            <div class="col-sm-6 text-center">
+                            <div class="col-sm-6 text-center ; row no-gutters">
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.Fixtures[i].AwayTeam.FlagFileLocation)" height="20"/>
+                                            <img src="@Url.Content(Model.EventFixtures[i].Fixture.AwayTeam.FlagFileLocation)" height="20" />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
-                                            @Html.DisplayFor(m => m.Fixtures[i].AwayTeam.TeamName)
+                                            @Html.DisplayFor(m => m.EventFixtures[i].Fixture.AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: left" width="20%">
-                                            @Html.DisplayFor(m => m.Fixtures[i].AwayResult, new {@class = "control-label col-md-2"})
+                                            @Html.DisplayFor(m => m.EventFixtures[i].Fixture.AwayResult, new { @class = "control-label col-md-2" })
                                         </td>
                                     </tr>
                                 </table>
@@ -73,7 +76,7 @@
                 </td>
 
                 <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
-                    @Html.Hidden("FixtureDateTime", Model.Fixtures[i].FixtureDateTime.ToLongDateString() + " " + Model.Fixtures[i].FixtureDateTime.ToShortTimeString())
+                    @Html.Hidden("FixtureDateTime", Model.EventFixtures[i].Fixture.FixtureDateTime.ToLongDateString() + " " + Model.EventFixtures[i].Fixture.FixtureDateTime.ToShortTimeString())
 
                 </td>
 

@@ -166,9 +166,7 @@ namespace Predict.Controllers
 
                             }
                         }
-                        
                     }
-
                 }
             }
 

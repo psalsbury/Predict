@@ -55,6 +55,7 @@ namespace Predict.Controllers.Api
 
             if (!allOk)
                 return BadRequest("Invalid parameters");
+
             // Add fixture to the event
             var eventFixture = new EventFixture
             {
@@ -86,7 +87,7 @@ namespace Predict.Controllers.Api
             if (fixture == null)
                 return false;
 
-            if (myEvent.CreatedByPlayerId != playerId)
+            if (!(myEvent.CreatedByPlayerId == playerId || User.IsInRole("Admin")))
                 return false;
 
             return true;

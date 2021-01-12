@@ -13,7 +13,7 @@
         <li class="breadcrumb-item">
             <a href="/Events/EventsIndex">Comps List</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Comp Fixtures</li>
+        <li class="breadcrumb-item active" aria-current="page">Add Fixtures</li>
     </ol>
 </nav>
 @using (Html.BeginForm("GetFixturesForLeague", "EventFixtures"))
@@ -62,11 +62,11 @@
                 <td style="vertical-align: middle;" class="row no-gutters">
                     @if (exists)
                     {
-                        <button class="btn btn-danger js-delete btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id">X</button>
+                        <button class="btn btn-danger js-delete btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id"><i class="fa fa-minus"></i></button>
                     }
                     else
                     {
-                        <button class="btn btn-success js-add btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id">+</button>
+                        <button class="btn btn-success js-add btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id"><i class="fa fa-plus"></i></button>
                     }
                </td>
 
@@ -76,10 +76,10 @@
                             <div class="col-sm-6 text-left ; row no-gutters">
                                 <table width="100%" cellpadding="0">
                                     <tr>
-                                        <td>
+                                        <td border="1" width="15%">
                                             <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20"/>
                                         </td>
-                                        <td style="text-align: left" width="60%">
+                                        <td style="text-align: left">
                                             &nbsp;
                                             @item.HomeTeam.TeamName
                                         </td>
@@ -90,10 +90,10 @@
                             <div class="col-sm-6 text-left ; row no-gutters">
                                 <table width="100%">
                                     <tr>
-                                        <td>
-                                            <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20"/>
+                                        <td border="1" width="15%">
+                                            <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20" />
                                         </td>
-                                        <td style="text-align: left" width="60%">
+                                        <td style="text-align: left">
                                             &nbsp;
                                             @item.AwayTeam.TeamName
                                         </td>
@@ -119,25 +119,22 @@ else
 }
 
 <script>
-
-
     $("#EventFixtures").on("click",
         ".js-add",
         function () {
             var button = $(this);
-            $(button.html(''));
-            $(button.attr('class', 'fa fa-refresh fa-spin'));
+            $(button.html("<i class='fa fa-refresh fa-spin'></i>"));
             $.ajax(
                 {
                     url: "../api/EventFixtures/Add/" + button.attr("dataEventId") + "/" + button.attr("dataFixtureId"),
                     method: "POST",
                     success: function() {
                         $(button.attr('class', 'btn btn-danger js-delete btn-sm'));
-                        $(button.html('X'));
+                        $(button.html("<i class='fa fa-minus'></i>"));
                     },
-                    error: function () {
+                    error: function (request, error) {
                         $(button.attr('class', 'btn btn-success js-add btn-sm'));
-                        $(button.html('+'));
+                        $(button.html("<i class='fa fa-plus'></i>"));
                     }
                 });
         });
@@ -147,27 +144,23 @@ else
         ".js-delete",
         function () {
             var button = $(this);
-            $(button.html(''));
-            $(button.attr('class', 'fa fa-refresh fa-spin'));
+            $(button.html("<i class='fa fa-refresh fa-spin'></i>"));
             $.ajax(
                 {
                     url: "../api/EventFixtures/Delete/" + button.attr("dataEventId") + "/" + button.attr("dataFixtureId"),
                     method: "POST",
                     success: function () {
                         $(button.attr('class', 'btn btn-success js-add btn-sm'));
-                        $(button.html('+'));
+                        $(button.html("<i class='fa fa-plus'></i>"));
                     },
-                    error: function() { 
+                    error: function () {
                         $(button.attr('class', 'btn btn-danger js-delete btn-sm'));
-                        $(button.html('X'));
+                        $(button.html("<i class='fa fa-minus'></i>"));
                     }
                 });
         });
 
-
-
 </script>
-
 
 <script>
 

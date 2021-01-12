@@ -71,15 +71,16 @@
             var button = $(this);
             bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " pool?",
                 function(result) {
-                    $.ajax(
-                        {
-                            url: "../api/poolPlayers/delete/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
+                    if (result) {
+                        $.ajax(
+                            {
+                                url: "../api/poolPlayers/delete/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
                             method: "POST",
                             success: function() {
                                 $(button.closest("tr")).fadeOut(1000);
                             }
                         });
-
+                    }
 
                 });
         });

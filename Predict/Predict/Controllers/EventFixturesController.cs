@@ -128,7 +128,6 @@ namespace Predict.Controllers
             if (changesMade == true)
             {
                 Helper.Cache.UpdateEventStartEnd(_context, eventFixtureViewModel.Event.Id);
-                
             }
 
             return RedirectToAction("EventsIndex", "Events");

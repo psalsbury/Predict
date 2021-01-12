@@ -5,17 +5,16 @@
 @model IEnumerable<Predict.Models.Event>
 
 @{
-    ViewBag.Title = "Competitions";
+    ViewBag.Title = "Add/Edit Comps";
 }
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/Events/EventsIndex">Comps Home</a>
+            <a href="/EventPlayers">Your Comps</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Comps List</li>
     </ol>
 </nav>
-
 
 @{
     var playerId = User.Identity.GetUserId();
@@ -25,18 +24,16 @@
 {
     @Html.AntiForgeryToken()
 
-    <p>
-        @Html.ActionLink("Create New Event", "AddEvent", new { eventId = ViewBag.EventId })
-    </p>
-
     <table class="table" id="Events">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EventName)
-            </th>
-            <th>Start Date</th>
-            <th>End Date</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EventName)
+                </th>
+                <th class="hidden-xs">Start Date</th>
+                <th class="hidden-xs">End Date</th>
+            </tr>
+        </thead>
 
         @foreach (var item in Model)
         {
@@ -44,39 +41,32 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EventName)
                 </td>
-                <td>
-                    @item.StartDateTime.ToString("dd MMM yy")
+                <td class="hidden-xs">
+                    @item.StartDateTime.ToString("f")
+                </td>
+                <td class="hidden-xs">
+                    @item.EndDateTime.ToString("f")
                 </td>
                 <td>
-                    @item.EndDateTime.ToString("dd MMM yy")
-                </td>
-                <td>
-                    <input type="button"
-                           value="Add Fixtures"
-                           class="btn btn-success"
-                           onclick="location.href = '@Url.Action("Index", "EventFixtures", new {id = item.Id}) '" />
-                    
-                    <input type="button"
-                           value="Show Fixtures"
-                           class="btn btn-primary"
-                           onclick="location.href = '@Url.Action("Index", "EventFixtures", new {id = item.Id}) '" />
-                    
-                    <input type="button"
-                           value="Delete"
-                           class="btn btn-danger"
-                           onclick="location.href = '@Url.Action("Index", "EventFixtures", new {id = item.Id}) '" />
 
-                    @if (@User.IsInRole("Admin"))
-                    {
-                        <input type="button"
-                               value="KO Fixtures"
-                               class="btn btn-success"
-                               onclick="location.href = '@Url.Action("Index", "KoFixtures", new {id = item.Id}) '" />
-                    }
-                    <input type="button"
-                           value="Edit"
-                           class="btn btn-info"
-                           onclick="location.href = '@Url.Action("EditEvent", "Events", new {id = item.Id}) '" />
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default">Action</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="@Url.Action("Index", "EventFixtures", new {id = item.Id}) ">Add Fixtures</a></li>
+                            <li><a href="@Url.Action("GroupGameResults", "Results", new {id = item.Id}) ">Show Fixtures</a></li>
+                            @if (@User.IsInRole("Admin"))
+                            {
+                                <li><a href="@Url.Action("Index", "KoFixtures", new {id = item.Id}) ">KO Fixtures</a></li>
+                            }
+                            <li><a href="@Url.Action("EditEvent", "Events", new {id = item.Id})">Edit</a></li>
+                            <li class="divider"></li>
+                            <li class="js-delete" dataEventId ="@item.Id" dataEventName="@item.EventName"><a href="#">Delete Comp</a></li>
+                        </ul>
+                    </div>
 
                 </td>
             </tr>
@@ -84,4 +74,34 @@
     </table>
 }
 
+<input type="button"
+       id="add"
+       value="Create New Comp"
+       class="btn btn-primary alignright"
+       onclick="location.href = '@Url.Action("AddEvent", "Events") '" />
 
+<script src="~/Scripts/bootbox.js"></script>
+
+<script>
+
+
+    $("#Events").on("click",
+        ".js-delete",
+        function() {
+            var button = $(this);
+            bootbox.confirm("Are you sure you want to delete the " + button.attr("dataEventName") + " comp?",
+                function (result) {
+                    if (result) {
+                            $.ajax(
+                            {
+                                url: "../api/events/delete/" + button.attr("dataEventID"),
+                                method: "POST",
+                                success: function() {
+                                    $(button.closest("tr")).fadeOut(1000); }
+                            });
+                    }
+
+                });
+        });
+
+</script>

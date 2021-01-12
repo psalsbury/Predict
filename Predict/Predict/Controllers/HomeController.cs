@@ -47,7 +47,8 @@ namespace Predict.Controllers
                     forcePoolRefresh = true;
                 }
 
-                SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, false, forcePoolRefresh);
+                // Used forcePoolRefresh as forceRefresh as fixtures could be added to a comp and that needs refreshing on users home page
+                SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, forcePoolRefresh, forcePoolRefresh);
 
             }
             return View(eventPlayer);
