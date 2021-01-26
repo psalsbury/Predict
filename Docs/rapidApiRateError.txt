@@ -1,0 +1,21 @@
+?response
+"StatusCode: 429, Content-Type: application/json, Content-Length: 99)"
+    Content: "{\"message\":\"You have exceeded the rate limit per minute for your plan, BASIC, by the API provider\"}"
+    ContentEncoding: ""
+    ContentLength: 99
+    ContentType: "application/json"
+    Cookies: Count = 0
+    ErrorException: null
+    ErrorMessage: null
+    Headers: Count = 8
+    IsSuccessful: false
+    ProtocolVersion: {1.1}
+    RawBytes: {byte[99]}
+    Request: {RestSharp.RestRequest}
+    ResponseStatus: Completed
+    ResponseUri: {https://api-football-v1.p.rapidapi.com/v2/odds/league/2790/bookmaker/8?page=1}
+    Server: "RapidAPI-1.2.7"
+    StatusCode: 429
+    StatusDescription: "Too Many Requests"
+?response.api
+error CS1061: 'IRestResponse' does not contain a definition for 'api' and no accessible extension method 'api' accepting a first argument of type 'IRestResponse' could be found (are you missing a using directive or an assembly reference?)

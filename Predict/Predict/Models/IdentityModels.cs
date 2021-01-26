@@ -36,6 +36,8 @@ namespace Predict.Models
         public DbSet<EventFixture> EventFixtures { get; set; }
         public DbSet<EventGeneration> EventGenerations { get; set; }
         public DbSet<FixturePrediction> FixturePredictions { get; set; }
+        public DbSet<FixtureOddsByScore> FixtureOddsByScores{ get; set; }
+        public DbSet<FixtureOddsByResult> FixtureOddsByResults { get; set; }
         public DbSet<BonusQuestion> BonusQuestions { get; set; }
         public DbSet<BonusQuestionPrediction> BonusQuestionPredictions { get; set; }
         public DbSet<League> Leagues { get; set; }

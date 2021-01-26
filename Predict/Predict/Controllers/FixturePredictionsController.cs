@@ -104,7 +104,15 @@ namespace Predict.Controllers
                 }
             }
 
-            // If there are any fixtures in the future, set the property so the luck dip/clear buttons are available
+            // Get list of fixtures that have at least one result odds entry
+            var listOfIds = (from m in eventFixtures where m.Fixture.RapidApiFixtureId != null select m.Fixture.RapidApiFixtureId);
+            var listOfRapidApiFixturesWithResultOdds = (from m in _context.FixtureOddsByResults where listOfIds.Contains(m.RapidApiFixtureId) select m.RapidApiFixtureId).Distinct().ToList();
+            var listOfRapidApiFixturesWithScoreOdds = (from m in _context.FixtureOddsByScores where listOfIds.Contains(m.RapidApiFixtureId) select m.RapidApiFixtureId).Distinct().ToList();
+
+            fixturePredictionsViewModel.RapidApiFixtureIdsWithResultOdds = listOfRapidApiFixturesWithResultOdds;
+            fixturePredictionsViewModel.RapidApiFixtureIdsWithScoreOdds = listOfRapidApiFixturesWithScoreOdds;
+
+            // If there are any fixtures in the future, set the property so the lucky dip/clear buttons are available
             fixturePredictionsViewModel.AnyFixturesInTheFuture =
                 fixturePredictions.Any(a => a.EventFixture.Fixture.FixtureDateTime > DateTime.UtcNow);
 

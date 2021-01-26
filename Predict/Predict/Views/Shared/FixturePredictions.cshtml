@@ -1,4 +1,5 @@
-﻿@model Predict.ViewModels.FixturePredictionsViewModel
+﻿@using System.Web.UI.WebControls
+@model Predict.ViewModels.FixturePredictionsViewModel
 @{
     ViewBag.Title = "Fixture Predictions";
 }
@@ -27,6 +28,30 @@
 <input type="button" class="btn btn-primary alignright" data-toggle="modal" data-target="#myModal" value="Colour Key">
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
+
+
+    <!-- / MODAL FORM FOR MEMBER INFORMATION -->
+    <div class="modal fade" id="modal-odds">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Odds</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Odds</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
     @Html.HiddenFor(m => m.EventId)
     <table id="predictions" name="predictions" class="table table-bordered table-hover">
         <thead>
@@ -44,6 +69,9 @@
         @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
         {
             var rowColour = "";
+            var haveFixtureResultOdds = Model.RapidApiFixtureIdsWithResultOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
+            var haveFixtureScoreOdds = Model.RapidApiFixtureIdsWithScoreOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
+
             if (Model.FixturePredictions[i].CorrectScore ?? false)
             {
                 rowColour = "#d9f2e6"; // Green
@@ -156,11 +184,27 @@
                         </div>
                     </div>
                 </td>
+                <td witdth="25%" style="text-align: center; vertical-align: middle" > 
 
-                <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
-                    @Html.Hidden("FixtureDateTime", Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToLongDateString() + " " + Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToShortTimeString())
+                    <table width="100%" style="border-right:none;border-left:none;border-bottom:none;border-top:none">
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle;" class="myDate">
+                                @Html.Hidden("FixtureDateTime", Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToLongDateString() + " " + Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToShortTimeString())
+                            </td>
+                        </tr>
+                        @if (haveFixtureResultOdds || haveFixtureScoreOdds)
+                        {
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle; font-size: 11px;">
 
+                                    <a href="#"><span class="label label-info" data-title="@Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId" data-title2="@Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName vs @Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName" data-toggle="modal" data-target="#modal-odds">Odds</span></a>
+
+                                </td>
+                            </tr>
+                        }
+                    </table>
                 </td>
+    
             </tr>
         }
     </table>
@@ -411,3 +455,29 @@
         float: right;
     }
 </style>
+
+
+<script>
+    $('#modal-odds').on('show.bs.modal', function (event) {
+        var button  = $(event.relatedTarget); // Button that triggered the modal 
+        var modal   = $(this);
+        var rapidApiFixtureId = button.data('title');
+        var title = button.data('title2');
+
+        // Ajax call to get the content of the modal form
+        $.ajax({
+            type: "GET",
+            url: "/api/FixtureOddsByResults/GetOddsByResultsForFixture/" + rapidApiFixtureId,
+            success: function (data) {
+
+                modal.find('.modal-body').html(data);
+            },
+            error: function (request, error) {
+                alert("No data found");
+            }
+        });
+
+        modal.find('.modal-title').text(title);
+    });
+</script>
+

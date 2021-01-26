@@ -1,23 +1,13 @@
-When viewing prediction stats for events with KO, make the KO stats available through the link shown on the home page
 
 logging off when session has expired takes me to 
 http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff
 I then get an error if I try to log on
 
-all fixtures screen --> show all fixtures. Add date range and drop down list for leagues, select all
-	--> when a fixture is checked highlight the row
-	--> find a way of making the checkbox consistent for the rows that are not currnetly shown (search datatable checkbox)
-
-
-add notification when new comps are created (little icon at the top)
-
-bcc me on activation email
+add notification when new comps are created. Do this for auto created comps where the user is playing one currently. (little icon at the top)
 
 WHEN MESSAGE IS SENT GO TO A THANK YOU FOR SENDING MESSAGE SCREEN
 
 when time is running out to enter predictions, show a modal pop up to remind them
-
-was on the home screen in second position. update was made to change my position but f5'ing the home screen didnt update my position. Need to check if cache is updating correctly for the event so the f5'in knows when to refesh
 
   select *
   from [dbo].[EventPoolPlayerPositionHistory]
@@ -28,23 +18,33 @@ was on the home screen in second position. update was made to change my position
 Add columns SeasonStart & SeasonEnd to Leagues Table. Update from rapid API response. 
 
 
-Comp Dashboard
+Footy quiz section?
 
+You Prediction Stats
+	--> Number of comps entered
+	--> Number of 1st, 2nd and 3rd places
+	--> Most frequently predicted scorelines (with percentage of CS, CR)
+	--> Teams involved in the most correct score predictions
+	--> Teams involved in the most correct result predictions
+	
+--> Odds tables --> delete ods after the game has been played where a prediction has not been made for that result/score
 
-Upcoming Comps
+Make the home screen more appealing
 
-Create a Comp
+help document needs revamp
 
-manage comps
+Change logging to log errors + when someone hits the home screen (so i can see who is using the site)
 
-Completed Comps
+Associate euro 2021 to rapid api (if possible)
 
+on the leagues screen have a button to update via rapid api
 
-Comp lists
-Comp Name
-Start DAte
-End Date
-EDit Fixtures
+-- call spUpdateCleanDatabase daily
+
+-- when entering fixture predictions, have as a heading the name of the event/comp
+
+-- create non clustered index on rapidapiFixtureId on the [dbo].[FixtureOddsByScores] table
+
 
 
 

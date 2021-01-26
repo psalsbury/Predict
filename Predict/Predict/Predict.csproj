@@ -345,6 +345,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\EventFixturesController.cs" />
     <Compile Include="Controllers\Api\EventsController.cs" />
+    <Compile Include="Controllers\Api\FixtureOddsByResultsController.cs" />
+    <Compile Include="Controllers\Api\FixtureOddsByScoresController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -399,6 +401,10 @@
     <Compile Include="Migrations\202012221932487_AutoGen.Designer.cs">
       <DependentUpon>202012221932487_AutoGen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101242151196_odds.cs" />
+    <Compile Include="Migrations\202101242151196_odds.Designer.cs">
+      <DependentUpon>202101242151196_odds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -410,7 +416,9 @@
     <Compile Include="Models\EventPlayer.cs" />
     <Compile Include="Models\EventPool.cs" />
     <Compile Include="Models\Fixture.cs" />
+    <Compile Include="Models\FixtureOddsByResult.cs" />
     <Compile Include="Models\FixturePrediction.cs" />
+    <Compile Include="Models\FixtureOddsByScore.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
@@ -429,6 +437,7 @@
     <Compile Include="RapidApi\RapidApiFixtureCheck.cs" />
     <Compile Include="RapidApi\RapidApiHelper.cs" />
     <Compile Include="RapidApi\RapidAPIFixtures.cs" />
+    <Compile Include="RapidApi\RapidApiOdds.cs" />
     <Compile Include="RapidApi\RapidApiResultCheck.cs" />
     <Compile Include="ScheduledTasks\ExecuteTaskServiceCallJob .cs" />
     <Compile Include="ScheduledTasks\ExecuteTaskServiceCallScheduler.cs" />
@@ -579,6 +588,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012221932487_AutoGen.resx">
       <DependentUpon>202012221932487_AutoGen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101242151196_odds.resx">
+      <DependentUpon>202101242151196_odds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

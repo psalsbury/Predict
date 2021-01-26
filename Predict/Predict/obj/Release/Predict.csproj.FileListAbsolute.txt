@@ -580,3 +580,4 @@ C:\repos\Predict\Predict\Predict\bin\Quartz.xml
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.AdddPoolPlayerEmailSent.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.DateTime2.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.AutoGen.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.odds.resources

@@ -23,8 +23,9 @@ namespace Predict.ScheduledTasks
                         try
                         {
                             // Check if result is needed to be checked
-                            RapidApiHelper.GetRapidApiResults();
-                            RapidApiHelper.DailyRapidApiLeagueCheck();
+                            RapidApiHelper.GetRapidApiResults();        // Check to see if any fixtures have finished. IF they have, make a call to get the result
+                            RapidApiHelper.DailyRapidApiLeagueCheck();  // Called once per day to ensure that all fixtures are up to date
+
                         }
                         catch (Exception ex)
                         {

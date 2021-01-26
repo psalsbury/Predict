@@ -7,6 +7,10 @@ namespace Predict.ViewModels
     {
         public List<FixturePrediction> FixturePredictions { get; set; }
 
+        public List<int> RapidApiFixtureIdsWithResultOdds { get; set; }
+
+        public List<int> RapidApiFixtureIdsWithScoreOdds { get; set; }
+
         public string UserId { get; set; }
 
         public bool OtherUserViewing { get; set; }
