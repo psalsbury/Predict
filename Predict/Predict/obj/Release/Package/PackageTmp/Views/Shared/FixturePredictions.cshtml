@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Fixture Predictions";
 }
+
 @if (!Model.OtherUserViewing)
 {
     <nav aria-label="breadcrumb">
@@ -31,7 +32,7 @@
 
 
     <!-- / MODAL FORM FOR MEMBER INFORMATION -->
-    <div class="modal fade" id="modal-odds">
+    <div class="modal fade" id="modal-odds"  role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,7 +54,7 @@
     </div>
 
     @Html.HiddenFor(m => m.EventId)
-    <table id="predictions" name="predictions" class="table table-bordered table-hover">
+    <table id="predictions" name="predictions" class="table table-bordered" max-width="500px">
         <thead>
             <tr>
 
@@ -196,9 +197,7 @@
                         {
                             <tr>
                                 <td style="text-align: center; vertical-align: middle; font-size: 11px;">
-
-                                    <a href="#"><span class="label label-info" data-title="@Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId" data-title2="@Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName vs @Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName" data-toggle="modal" data-target="#modal-odds">Odds</span></a>
-
+                                    <button type="button" class="label label-info" data-toggle="modal" data-target="#modal-odds" data-title="@Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId" data-title2="@Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName" data-title3="@Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName">odds</button>
                                 </td>
                             </tr>
                         }
@@ -462,15 +461,19 @@
         var button  = $(event.relatedTarget); // Button that triggered the modal 
         var modal   = $(this);
         var rapidApiFixtureId = button.data('title');
-        var title = button.data('title2');
+        var homeTeam = button.data('title2');
+        var awayTeam = button.data('title3');
+        var title = homeTeam + " vs " + awayTeam;
 
         // Ajax call to get the content of the modal form
         $.ajax({
             type: "GET",
             url: "/api/FixtureOddsByResults/GetOddsByResultsForFixture/" + rapidApiFixtureId,
             success: function (data) {
-
-                modal.find('.modal-body').html(data);
+                var htmlTable = data.toString();
+                htmlTable = htmlTable.replace("{0}", homeTeam);
+                htmlTable = htmlTable.replace("{1}", awayTeam);
+                modal.find('.modal-body').html(htmlTable);
             },
             error: function (request, error) {
                 alert("No data found");

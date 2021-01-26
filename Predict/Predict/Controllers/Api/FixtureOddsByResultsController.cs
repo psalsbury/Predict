@@ -24,9 +24,9 @@ namespace Predict.Controllers.Api
         {
             var fixtureOddsByResult= _context.FixtureOddsByResults.FirstOrDefault(o => o.RapidApiFixtureId == rapidApiFixtureId);
 
-            var row = "<table class='table table-bordered table - hover'><tr><td>Home Win</td><td>" + fixtureOddsByResult.HomeOdds + "</td></tr>";
+            var row = "<table class='table table-striped'><tr><td>{0}</td><td>" + fixtureOddsByResult.HomeOdds + "</td></tr>";
             row += "<tr><td>Draw</td><td>" + fixtureOddsByResult.DrawOdds + "</td></tr>";
-            row += "<tr><td>Away</td><td>" + fixtureOddsByResult.AwayOdds + "</td></tr><table>";
+            row += "<tr><td>{1}</td><td>" + fixtureOddsByResult.AwayOdds + "</td></tr><table>";
 
             // return html needed to show
             return row;
