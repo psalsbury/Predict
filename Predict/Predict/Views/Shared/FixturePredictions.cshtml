@@ -45,7 +45,7 @@
                     <p>Odds</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -54,7 +54,7 @@
     </div>
 
     @Html.HiddenFor(m => m.EventId)
-    <table id="predictions" name="predictions" class="table table-bordered" max-width="500px">
+    <table id="predictions" name="predictions" class="table table-bordered" style="max-width:8000px;">
         <thead>
             <tr>
 
@@ -100,7 +100,7 @@
                 <td style="text-align: left; vertical-align: middle;" witdth="50%">
                     <div class="container-fluid">
                         <div class="row vertical-middle text-center">
-                            <div class="col-sm-6 text-left ; row no-gutters">
+                            <div class="row no-gutters">
                                 <table width="100%" cellpadding="0">
                                     <tr>
                                         <td>
@@ -141,8 +141,7 @@
                                     </tr>
                                 </table>
                             </div>
-
-                            <div class="col-sm-6 text-left ; row no-gutters">
+                            <div class="row no-gutters">
                                 <table width="100%">
                                     <tr>
                                         <td>
