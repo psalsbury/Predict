@@ -50,3 +50,7 @@ on the leagues screen have a button to update via rapid api
 -- check if user is logged in for odds api
 
 -- add into odds dialog, the score odds for the correct score, and the predicted score
+
+-- prevent seeing prediction scoreline odds if viewing someone elses stats and the fixture date has not passed
+
+--create index on fixtures table for rapidapifixtureid (for overnight update)

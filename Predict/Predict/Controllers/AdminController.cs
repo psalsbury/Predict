@@ -1,4 +1,5 @@
-﻿using Predict.Models;
+﻿using System;
+using Predict.Models;
 using System.Web.Mvc;
 
 namespace Predict.Controllers
@@ -44,7 +45,7 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var rapidApiLeagueId = 2790;
-            RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId);
+            RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId, DateTime.MinValue);
 
             return RedirectToAction("AdminHome", "Admin");
         }
@@ -56,7 +57,7 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var rapidApiLeagueId = 2794;
-            RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId);
+            RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId, DateTime.MinValue);
 
             return RedirectToAction("AdminHome", "Admin");
         }

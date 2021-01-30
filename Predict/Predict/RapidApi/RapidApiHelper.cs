@@ -70,8 +70,11 @@ namespace Predict.RapidApi
                     var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null && a.DailyRapidApiCheck==true);
                     foreach (var league in leagues)
                     {
+                        // Find the earliest date that has a results that has not been processed
+                        var earliestDate = context.Fixtures.Where(a => a.ResultProcessed == false && a.LeagueId == league.Id).Min(f => f.FixtureDateTime);
+
                         // Update the whole league for this league
-                        FixturesByLeague(league.RapidApiLeagueId ?? 0);
+                        FixturesByLeague(league.RapidApiLeagueId ?? 0, earliestDate.Date);
 
                         // Get the odds for this league
                         OddsByLeagueAndBookmaker(league.RapidApiLeagueId ?? 0);
@@ -120,12 +123,12 @@ namespace Predict.RapidApi
                     if (rapidApiResultCheck.FixtureDateTime.Date < DateTime.UtcNow.Date)
                     {
                         // If the date of the fixture is less than today then get all results
-                        RapidApiHelper.FixturesByLeague(rapidApiLeagueId);
+                        RapidApiHelper.FixturesByLeague(rapidApiLeagueId, rapidApiResultCheck.FixtureDateTime.Date);
                     }
                     else
                     {
                         // If the date of the fixture is today, then get the results for today only
-                        RapidApiHelper.FixturesByLeagueByDate(rapidApiLeagueId, DateTime.UtcNow);
+                        RapidApiHelper.FixturesByLeagueByDate(rapidApiLeagueId, DateTime.UtcNow.Date);
                     }
 
                     checkPerformed = true;
@@ -196,13 +199,13 @@ namespace Predict.RapidApi
                 var resultDate = dateToUpdate.Year + "-" + dateToUpdate.Month.ToString("D2") + "-" +
                                  dateToUpdate.Day.ToString("D2");
 
-                Logger.Info("FixturesByLeagueByDate - League = {0}, Date = {2}", rapidApiLeagueId, resultDate);
+                Logger.Info("FixturesByLeagueByDate - League = {0}, Date = {1}", rapidApiLeagueId, resultDate);
 
                 var baseUrl = RapidApiFixtureUrl + rapidApiLeagueId + "/" + resultDate + "?" + Timezone;
                 var response = MakeRapidApiCall(baseUrl);
 
                 if (response != null)
-                    UpdateFixtures(response);
+                    UpdateFixtures(response, dateToUpdate);
             }
             catch (Exception e)
             {
@@ -210,18 +213,18 @@ namespace Predict.RapidApi
             }
         }
 
-        public static void FixturesByLeague(int rapidApiLeagueId)
+        public static void FixturesByLeague(int rapidApiLeagueId, DateTime earliestTime)
         {
 
             try
             {
-                Logger.Info("FixturesByLeague - League = {0}", rapidApiLeagueId);
+                Logger.Info("FixturesByLeague - League = {0}, EarliestDate = {1}", rapidApiLeagueId, earliestTime);
 
                 var baseUrl = RapidApiFixtureUrl + rapidApiLeagueId + "?"+ Timezone;
                 var response = MakeRapidApiCall(baseUrl);
 
                 if(response!=null)
-                    UpdateFixtures(response);
+                    UpdateFixtures(response, earliestTime);
 
             }
             catch (Exception e)
@@ -448,7 +451,7 @@ namespace Predict.RapidApi
             return foundExistingInDb;
         }
 
-        private static void UpdateFixtures(IRestResponse response)
+        private static void UpdateFixtures(IRestResponse response, DateTime earliestDate)
         {
             var context = new ApplicationDbContext();
             var jsonSerializer = new JsonSerializer();
@@ -457,13 +460,12 @@ namespace Predict.RapidApi
             var teams = context.Teams.ToList();
             var newResultFound = false;
             var eventsWithChangedFixtureDateTime = new List<short>();
-            var currentDate = DateTime.UtcNow.Date;
 
             try
             {
                 // loop through all fixtures in the future
                 foreach (var rapidApiFixture in rapidApiFixtures.api.fixtures.Where(f =>
-                    f.event_date.Date >= currentDate))
+                    f.event_date.Date >= earliestDate))
                 {
 
                     var rapidApiLeague = rapidApiFixture.league;

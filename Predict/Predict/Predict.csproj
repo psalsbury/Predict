@@ -345,8 +345,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\EventFixturesController.cs" />
     <Compile Include="Controllers\Api\EventsController.cs" />
-    <Compile Include="Controllers\Api\FixtureOddsByResultsController.cs" />
-    <Compile Include="Controllers\Api\FixtureOddsByScoresController.cs" />
+    <Compile Include="Controllers\Api\FixtureOddsController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />

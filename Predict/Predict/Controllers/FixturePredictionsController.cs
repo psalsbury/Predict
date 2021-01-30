@@ -121,6 +121,7 @@ namespace Predict.Controllers
 
             fixturePredictionsViewModel.UserId = userId;
             fixturePredictionsViewModel.EventId = eventId;
+            fixturePredictionsViewModel.EventName = Helper.Cache.GetCachedEvent(eventId).EventName;
 
             return fixturePredictionsViewModel;
         }

@@ -1,5 +1,6 @@
 ﻿using Predict.Models;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 
 namespace Predict.ViewModels
 {
@@ -16,6 +17,8 @@ namespace Predict.ViewModels
         public bool OtherUserViewing { get; set; }
 
         public short EventId { get; set; }
+
+        public string EventName { get; set; }
 
         public bool IsPremiumPlayer { get; set; }
 

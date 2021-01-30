@@ -141,3 +141,30 @@
 2021-01-27 22:30:34.8334 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 30/01/2021 16:55:00
 2021-01-27 22:30:34.8334 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
 2021-01-27 22:30:34.8334 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 26/02/2021 22:30:34
+2021-01-27 22:35:38.3027 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-01-27 22:35:38.3774 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-01-27 22:35:38.4064 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-01-27 22:35:38.4383 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-01-27 22:35:38.4503 INFO RAMJobStore initialized.
+2021-01-27 22:35:38.4552 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-01-27 22:35:38.4552 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-01-27 22:35:38.4552 INFO Quartz scheduler version: 3.2.2.0
+2021-01-27 22:35:38.4552 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-01-27 22:35:38.6128 INFO Startup Configuration - Start
+2021-01-27 22:35:38.6128 INFO SetEventCache - Start
+2021-01-27 22:35:38.6717 INFO SetCachedItem = setting cache for Events
+2021-01-27 22:35:38.6717 INFO SetCachedItem = setting cache for Events, with Expiry Date of 26/02/2021 22:35:38
+2021-01-27 22:35:38.6766 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-01-27 22:35:38.6766 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-01-27 22:35:38.7145 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 28/01/2021 21:55:00
+2021-01-27 22:35:38.7145 INFO SetNextResultCheckDateTime - Set League 2794 next check date to 30/01/2021 16:55:00
+2021-01-27 22:35:38.7145 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-01-27 22:35:38.7145 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 26/02/2021 22:35:38
+2021-01-27 22:36:00.0864 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 28/01/2021 00:00:00
