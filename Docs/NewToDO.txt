@@ -53,4 +53,4 @@ on the leagues screen have a button to update via rapid api
 
 -- prevent seeing prediction scoreline odds if viewing someone elses stats and the fixture date has not passed
 
---create index on fixtures table for rapidapifixtureid (for overnight update)
+-- remove  alert("No data found"); from odds dialog. default message to 'no odds found'

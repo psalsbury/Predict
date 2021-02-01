@@ -75,9 +75,9 @@ namespace Predict.RapidApi
 
                         // Update the whole league for this league
                         FixturesByLeague(league.RapidApiLeagueId ?? 0, earliestDate.Date);
-
+                        
                         // Get the odds for this league
-                        OddsByLeagueAndBookmaker(league.RapidApiLeagueId ?? 0);
+                        OddsByLeagueAndBookmaker(league.RapidApiLeagueId ?? 0, earliestDate);
 
                         // Check to see if all results are processed for this league, and if so 
                         // set the flag to stop checking each day
@@ -233,7 +233,7 @@ namespace Predict.RapidApi
             }
         }
 
-        public static void OddsByLeagueAndBookmaker(int rapidApiLeagueId)
+        private static void OddsByLeagueAndBookmaker(int rapidApiLeagueId, DateTime earliestDateTime)
         {
             try
             {
@@ -249,12 +249,12 @@ namespace Predict.RapidApi
                     if (response == null)
                     {
                         pageNbr = 0;
-                        Logger.Info("FixturesByOdds (null response) - League = {0}, pageNbr = {1}", rapidApiLeagueId, pageNbr);
+                        Logger.Info("OddsByLeagueAndBookmaker (null response) - League = {0}, pageNbr = {1}", rapidApiLeagueId, pageNbr);
                     }
                     else
                     {
-                        pageNbr = UpdateOdds(response); // This will return the next page to process. If 0, then no more pages
-                        Logger.Info("FixturesByOdds - League = {0}, pageNbr = {1}", rapidApiLeagueId, pageNbr);
+                        pageNbr = UpdateOdds(response, earliestDateTime); // This will return the next page to process. If 0, then no more pages
+                        Logger.Info("OddsByLeagueAndBookmaker - League = {0}, pageNbr = {1}", rapidApiLeagueId, pageNbr);
                     }
                 }
             }
@@ -298,14 +298,13 @@ namespace Predict.RapidApi
             }
         }
 
-        private static int UpdateOdds(IRestResponse response)
+        private static int UpdateOdds(IRestResponse response, DateTime earliestDateTime)
         {
-
             var context = new ApplicationDbContext();
             var jsonSerializer = new JsonSerializer();
             var rapidApiOddsRoot = jsonSerializer.Deserialize<RapidApiOdds.Root>(response);
-            var foundExistingOddsInMatchWinners = false;
-            var foundExistingOddsInExactScore = false;
+            var currentPage = rapidApiOddsRoot.api.paging.current;
+            var lastPage = rapidApiOddsRoot.api.paging.total;
 
             if (rapidApiOddsRoot.api == null)
                 return 0;
@@ -314,12 +313,13 @@ namespace Predict.RapidApi
             {
                 var rapidApiFixtureId = rapidApiOdds.fixture.fixture_id;
 
+                // Loop through all the bookmakers (we only want 1 bookmaker)
                 foreach (var rapidApiBookmaker in rapidApiOdds.bookmakers)
                 {
-                    //bookmaker 8 = bet365
+                    // Bookmaker 8 = bet365
                     var rapidApiBookmakerId = rapidApiBookmaker.bookmaker_id;
                     if (rapidApiBookmakerId != 8)
-                        break;
+                        continue; // skip the rest of the code and get the item in the foreach loop
 
                     foreach (var rapidApiBet in rapidApiBookmaker.bets)
                     {
@@ -329,10 +329,10 @@ namespace Predict.RapidApi
                         var rapidApiOddsLabelId = rapidApiBet.label_id;
 
                         if (rapidApiOddsLabelId == 1)
-                            foundExistingOddsInMatchWinners = ProcessMatchWinner(context, rapidApiFixtureId, rapidApiBet.values);
+                            ProcessMatchWinner(context, rapidApiFixtureId, rapidApiBet.values);
 
                         if (rapidApiOddsLabelId == 10)
-                            foundExistingOddsInExactScore = ProcessExactScore(context, rapidApiFixtureId, rapidApiBet.values);
+                            ProcessExactScore(context, rapidApiFixtureId, rapidApiBet.values);
 
                     }
 
@@ -340,44 +340,24 @@ namespace Predict.RapidApi
             }
             context.Dispose();
 
-            // To limit the amount of calls
-            // always start with page 1
-            // then go to the last page, unless there is only one page
-            // stop when we have found an existing entry, or we have just processed page 2
-
-            var currentPage = rapidApiOddsRoot.api.paging.current;
-            var lastPage = rapidApiOddsRoot.api.paging.total;
-
-            if (currentPage == 1 && lastPage> 1)
-            {
-                return lastPage;
-            }
-            else if(currentPage==1 && lastPage ==1)
-            {
-                return 0;
-            }
-            else if (foundExistingOddsInMatchWinners==true && foundExistingOddsInExactScore==true)
-            {
-                return 0;
-            }
-            else if (currentPage == 2) // we are going backwards, and will already have called for page 1
+            // return the next page to process. 0 means stop processing
+            if(currentPage==lastPage)
             {
                 return 0;
             }
             else
             {
-                return currentPage - 1;
+                return currentPage + 1;
             }
         }
 
-        private static bool ProcessExactScore(ApplicationDbContext context, int rapidApiFixtureId, List<RapidApiOdds.Value> rapidApiBetValues)
+        private static void ProcessExactScore(ApplicationDbContext context, int rapidApiFixtureId, List<RapidApiOdds.Value> rapidApiBetValues)
         {
-            var foundExistingInDb = false;
-
             foreach (var rapidApiBetValue in rapidApiBetValues)
             {
                 var betValue = rapidApiBetValue.value.ToString();
                 var odds = System.Convert.ToDecimal(rapidApiBetValue.odd);
+                var addOrUpdate = false;
 
                 string[] betSplit = betValue.Split(':');
                 var homeScore = System.Convert.ToInt16(betSplit[0]);
@@ -390,27 +370,37 @@ namespace Predict.RapidApi
                 {
                     fixtureOddsByScore = new FixtureOddsByScore
                     {
-                        RapidApiFixtureId = rapidApiFixtureId, HomeScore = homeScore, AwayScore = awayScore, Odds = odds, CreatedDateTime = DateTime.UtcNow,
-                        ModifiedDateTime = DateTime.UtcNow
+                        RapidApiFixtureId = rapidApiFixtureId
+                        , HomeScore = homeScore
+                        , AwayScore = awayScore
+                        , CreatedDateTime = DateTime.UtcNow
                     };
-                    context.FixtureOddsByScores.Add(fixtureOddsByScore);
+                    addOrUpdate = true;
                 }
                 else
                 {
-                    foundExistingInDb = true;
+                    if (fixtureOddsByScore.Odds != odds)
+                    {
+                        fixtureOddsByScore.Odds = odds;
+                        addOrUpdate = true;
+                    }
+
                 }
 
+                // If a new record or a change to the existing record, then save to the db
+                if (addOrUpdate)
+                {
+                    fixtureOddsByScore.ModifiedDateTime = DateTime.UtcNow;
+                    context.FixtureOddsByScores.AddOrUpdate(fixtureOddsByScore);
+                }
             }
 
             context.SaveChanges();
-
-            // Return back whether we have found an odd that already exists
-            return foundExistingInDb;
         }
 
-        private static bool ProcessMatchWinner(ApplicationDbContext context, int rapidApiFixtureId, List<RapidApiOdds.Value> rapidApiBetValues)
+        private static void ProcessMatchWinner(ApplicationDbContext context, int rapidApiFixtureId, List<RapidApiOdds.Value> rapidApiBetValues)
         {
-            var foundExistingInDb = false;
+            var addOrUpdate = false;
             var fixtureOddsByResult = context.FixtureOddsByResults.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
             if (fixtureOddsByResult == null)
             {
@@ -418,37 +408,50 @@ namespace Predict.RapidApi
                 {
                     RapidApiFixtureId = rapidApiFixtureId,
                     CreatedDateTime = DateTime.UtcNow,
-                    ModifiedDateTime = DateTime.UtcNow
+
                 };
-
-                foreach (var rapidApiBetValue in rapidApiBetValues)
-                {
-                    var betValue = rapidApiBetValue.value.ToString();
-                    if (betValue == "Home")
-                    {
-                        fixtureOddsByResult.HomeOdds = System.Convert.ToDecimal(rapidApiBetValue.odd);
-                    }
-                    else if (betValue == "Away")
-                    {
-                        fixtureOddsByResult.AwayOdds = System.Convert.ToDecimal(rapidApiBetValue.odd);
-                    }
-                    else if (betValue == "Draw")
-                    {
-                        fixtureOddsByResult.DrawOdds = System.Convert.ToDecimal(rapidApiBetValue.odd);
-                    }
-
-                }
-                context.FixtureOddsByResults.Add(fixtureOddsByResult);
+                addOrUpdate = true;
             }
-            else
+
+            // Loop through the 3 different results and update the relevant property
+            foreach (var rapidApiBetValue in rapidApiBetValues)
             {
-                foundExistingInDb = true;
+                var betValue = rapidApiBetValue.value.ToString();
+                if (betValue == "Home")
+                {
+                    // If an existing record and the odds have changed then ensure addOrUpdate is set to true to save to the dv
+                    if (!addOrUpdate && fixtureOddsByResult.HomeOdds != System.Convert.ToDecimal(rapidApiBetValue.odd))
+                        addOrUpdate = true;
+
+                    fixtureOddsByResult.HomeOdds = System.Convert.ToDecimal(rapidApiBetValue.odd);
+                }
+                else if (betValue == "Away")
+                {
+
+                    // If an existing record and the odds have changed then ensure addOrUpdate is set to true to save to the dv
+                    if (!addOrUpdate && fixtureOddsByResult.AwayOdds != System.Convert.ToDecimal(rapidApiBetValue.odd))
+                        addOrUpdate = true;
+
+                    fixtureOddsByResult.AwayOdds = System.Convert.ToDecimal(rapidApiBetValue.odd);
+                }
+                else if (betValue == "Draw")
+                {
+
+                    // If an existing record and the odds have changed then ensure addOrUpdate is set to true to save to the dv
+                    if (!addOrUpdate && fixtureOddsByResult.DrawOdds != System.Convert.ToDecimal(rapidApiBetValue.odd))
+                        addOrUpdate = true;
+
+                    fixtureOddsByResult.DrawOdds = System.Convert.ToDecimal(rapidApiBetValue.odd);
+                }
             }
 
-            context.SaveChanges();
+            if (addOrUpdate)
+            {
+                fixtureOddsByResult.ModifiedDateTime = DateTime.UtcNow;
+                context.FixtureOddsByResults.AddOrUpdate(fixtureOddsByResult);
+                context.SaveChanges();
+            }
 
-            // Return back whether we have found an odd that already exists
-            return foundExistingInDb;
         }
 
         private static void UpdateFixtures(IRestResponse response, DateTime earliestDate)

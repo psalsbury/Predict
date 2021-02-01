@@ -357,7 +357,7 @@ BEGIN
 	FROM dbo.EventPoolPlayers AS PP
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
-	LEFT OUTER JOIN dbo.EventPoolPlayerPositionHistory AS PPPH ON PPPH.PlayerId = PP.PlayerId AND PPPH.PoolId = PP.PoolId AND PPPH.PositionDate = @dteDate
+	LEFT OUTER JOIN dbo.EventPoolPlayerPositionHistory AS PPPH ON PPPH.PlayerId = PP.PlayerId AND PPPH.PoolId = PP.PoolId AND PPPH.EventId = PP.EventID AND PPPH.PositionDate = @dteDate
 	WHERE PPPH.PlayerId IS NULL;
 
 	/* Update Fixtures to be processed */
