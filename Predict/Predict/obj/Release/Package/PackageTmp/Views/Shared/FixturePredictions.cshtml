@@ -1,7 +1,7 @@
 ﻿@using System.Web.UI.WebControls
 @model Predict.ViewModels.FixturePredictionsViewModel
 @{
-    ViewBag.Title = @Model.EventName + " Predictions";
+    ViewBag.Title = @Model.EventName;
 }
 
 @if (!Model.OtherUserViewing)
@@ -204,7 +204,8 @@
                                                     data-title5="@Model.FixturePredictions[i].EventFixture.Fixture.AwayResult"
                                                     data-title6="@Model.FixturePredictions[i].HomePrediction"
                                                     data-title7="@Model.FixturePredictions[i].AwayPrediction"
-                                                    data-title8="@i">
+                                                    data-title8="@i"
+                                                    data-title9="">
                                                 Odds
                                             </button>
                                         </td>
@@ -502,7 +503,7 @@
                 // Ajax call to get the content of the modal form
                 $.ajax({
                     type: "GET",
-                    url: "/api/FixtureOdds/GetOddsByResultsForFixture/" + rapidApiFixtureId + "/" + homeResult + "/" + awayResult + "/" + homePrediction + "/" + awayPrediction,
+                    url: "/api/FixtureOdds/GetOddsByResultsForFixture/" + rapidApiFixtureId + "/" + homeResult + "/" + awayResult + "/" + homePrediction + "/" + awayPrediction + "/@Model.OtherUserViewing" ,
                     success: function (data) {
                         var htmlTable = data.toString();
                         htmlTable = "<p><i>Odds are a snapshot before the game started</i><p>" + htmlTable;
@@ -511,7 +512,7 @@
                         modal.find('.modal-body').html(htmlTable);
                     },
                     error: function (request, error) {
-                        alert("No data found");
+                        modal.find('.modal-body').html("<p>Sorry, No odds found For this match</p>");
                     }
                 });
 

@@ -5,6 +5,7 @@ using Predict.Helper;
 using Predict.Models;
 using System;
 using System.Configuration;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -238,6 +239,10 @@ namespace Predict.Controllers
                         , CreatedDateTime = DateTime.UtcNow
                         , ModifiedDateTime = DateTime.UtcNow
                     };
+
+                    if (confirmEmailAddress)
+                        player.EmailConfirmedDateTime = DateTime.MinValue;
+
                     context.Players.Add(player);
 
                     if (myEvent != null)
@@ -290,16 +295,8 @@ namespace Predict.Controllers
                         UserManager.AddToRole(user.Id, "Player");
                     }
 
-                    context.SaveChanges();
+                    await Task.Run(() => context.SaveChanges());
                     context.Dispose();
-
-                    //var myEmail = new IdentityMessage
-                    //{
-                    //    Subject = "New Player Registered",
-                    //    Destination = "pete@salsbury.co.uk",
-                    //    Body = user.Email
-                    //};
-                    //Helper.Cache.SendEmail(myEmail);
 
                     if (confirmEmailAddress)
                     {
@@ -308,7 +305,7 @@ namespace Predict.Controllers
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code },
                             Request.Url.Scheme);
                         await UserManager.SendEmailAsync(user.Id, "Confirm your account",
-                            "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                            "Thank you for registering  with predictioncomp.com.<br><br>Please confirm your account by clicking this link <a href=\"" + callbackUrl + "\">" + callbackUrl + "</a>");
                         return RedirectToAction("RegisterSendCodeNotification", "Account");
                     }
                     else
@@ -333,6 +330,21 @@ namespace Predict.Controllers
         {
             if (userId == null || code == null) return View("Error");
             var result = await UserManager.ConfirmEmailAsync(userId, code);
+
+            // If user successfully clicked on the email link to activate account, then set the db
+            var context = new ApplicationDbContext();
+
+            var player = context.Players.FirstOrDefault(a => a.Id == userId);
+            if (player != null)
+            {
+                player.EmailConfirmedDateTime = DateTime.UtcNow;
+                player.ModifiedDateTime = DateTime.UtcNow;
+                context.Players.AddOrUpdate(player);
+                await Task.Run(() => context.SaveChanges());
+            }
+
+            context.Dispose();
+
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 

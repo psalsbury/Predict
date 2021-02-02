@@ -41,16 +41,8 @@ on the leagues screen have a button to update via rapid api
 
 -- call spUpdateCleanDatabase daily
 
--- when entering fixture predictions, have as a heading the name of the event/comp
-
 -- create non clustered index on rapidapiFixtureId on the [dbo].[FixtureOddsByScores] table
 
 -- email confirmed date on players not being updated
 
--- check if user is logged in for odds api
 
--- add into odds dialog, the score odds for the correct score, and the predicted score
-
--- prevent seeing prediction scoreline odds if viewing someone elses stats and the fixture date has not passed
-
--- remove  alert("No data found"); from odds dialog. default message to 'no odds found'

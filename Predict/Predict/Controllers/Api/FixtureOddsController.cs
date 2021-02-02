@@ -22,9 +22,11 @@ namespace Predict.Controllers.Api
         }
 
         [HttpGet]
-        [Route("api/FixtureOdds/GetOddsByResultsForFixture/{rapidApiFixtureId}/{homeResult}/{awayResult}/{homePrediction}/{awayPrediction}")]
-        public string GetOddsByResultsForFixture(int rapidApiFixtureId, int homeResult, int awayResult, int homePrediction, int awayPrediction)
+        [Route("api/FixtureOdds/GetOddsByResultsForFixture/{rapidApiFixtureId}/{homeResult}/{awayResult}/{homePrediction}/{awayPrediction}/{otherUserViewing}")]
+        public string GetOddsByResultsForFixture(int rapidApiFixtureId, int homeResult, int awayResult, int homePrediction, int awayPrediction, bool otherUserViewing)
         {
+            if (!User.Identity.IsAuthenticated)
+                throw new Exception("User not authorized");
 
             var green = "#E8FBE1";
             var red = "#FFDBDB";
@@ -34,63 +36,67 @@ namespace Predict.Controllers.Api
             var drawColor = "";
             var awayColor = "";
             var predCorrect = false;
+            string row = "";
 
             var fixtureOddsByResult =
                 _context.FixtureOddsByResults.FirstOrDefault(o => o.RapidApiFixtureId == rapidApiFixtureId);
 
-            if (homeResult >= 0)
+            // Only calculate the colour of the row if its the user looking at his own predictions
+            if (!otherUserViewing)
             {
-                if (homeResult > awayResult)
+                if (homeResult >= 0)
                 {
-                    homeColor = green;
+                    if (homeResult > awayResult)
+                    {
+                        homeColor = green;
+                    }
+                    else if (homeResult == awayResult)
+                    {
+                        drawColor = green;
+                    }
+                    else
+                    {
+                        awayColor = green;
+                    }
                 }
-                else if (homeResult == awayResult)
-                {
-                    drawColor = green;
-                }
-                else
-                {
-                    awayColor = green;
-                }
-            }
 
-            if (homePrediction >= 0)
-            {
-                if (homePrediction > awayPrediction)
+                if (homePrediction >= 0)
                 {
-                    if (homeColor != green && homeResult >= 0)
+                    if (homePrediction > awayPrediction)
                     {
-                        homeColor = red;
+                        if (homeColor != green && homeResult >= 0)
+                        {
+                            homeColor = red;
+                        }
+                        else if (homeResult == -1)
+                        {
+                            homeColor = amber;
+                        }
                     }
-                    else if (homeResult == -1)
+                    else if (homePrediction == awayPrediction)
                     {
-                        homeColor = amber;
-                    }
-                }
-                else if (homePrediction == awayPrediction)
-                {
 
-                    if (drawColor != green && homeResult >= 0)
-                    {
-                        drawColor = red;
+                        if (drawColor != green && homeResult >= 0)
+                        {
+                            drawColor = red;
+                        }
+                        else if (homeResult == -1)
+                        {
+                            drawColor = amber;
+                        }
                     }
-                    else if (homeResult == -1)
+                    else
                     {
-                        drawColor = amber;
-                    }
-                }
-                else
-                {
 
-                    if (awayColor != green && homeResult >= 0)
-                    {
-                        awayColor = red;
+                        if (awayColor != green && homeResult >= 0)
+                        {
+                            awayColor = red;
+                        }
+                        else if (homeResult == -1)
+                        {
+                            awayColor = amber;
+                        }
                     }
-                    else if (homeResult == -1)
-                    {
-                        awayColor = amber;
-                    }
-
                 }
             }
 
@@ -100,7 +106,6 @@ namespace Predict.Controllers.Api
                                                                                  (a.HomeScore == homePrediction &&
                                                                                      a.AwayScore == awayPrediction)));
 
-            string row = "";
             if (fixtureOddsByResult != null)
             {
 
@@ -109,6 +114,10 @@ namespace Predict.Controllers.Api
                 row += "<tr bgcolor='" + drawColor + "'><td>Draw</td><td>" + fixtureOddsByResult.DrawOdds + "</td></tr>";
                 row += "<tr bgcolor='" + awayColor + "'><td>{1}</td><td>" + fixtureOddsByResult.AwayOdds + "</td></tr></table>";
             }
+
+            // If another user is viewing the odds for a player, then dont show the odds for the predicted score;
+            if (otherUserViewing)
+                return row;
 
             var predictionScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homePrediction && a.AwayScore == awayPrediction);
             if (predictionScore != null)
