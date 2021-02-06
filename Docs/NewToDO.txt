@@ -27,7 +27,6 @@ You Prediction Stats
 	--> Teams involved in the most correct score predictions
 	--> Teams involved in the most correct result predictions
 	
---> Odds tables --> delete ods after the game has been played where a prediction has not been made for that result/score
 
 Make the home screen more appealing
 
@@ -43,6 +42,9 @@ on the leagues screen have a button to update via rapid api
 
 -- create non clustered index on rapidapiFixtureId on the [dbo].[FixtureOddsByScores] table
 
--- email confirmed date on players not being updated
+-- add up/down/side image to represent movement in the table
+
+-- Euro 2021 KO stage/View predictions
+
 
 

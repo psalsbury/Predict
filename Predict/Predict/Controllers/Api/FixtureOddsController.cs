@@ -8,7 +8,7 @@ using Predict.Dtos;
 using Predict.Helper;
 using Predict.Models;
 using Quartz.Impl.Matchers;
-
+using System.Data.Entity;
 
 namespace Predict.Controllers.Api
 {
@@ -19,6 +19,134 @@ namespace Predict.Controllers.Api
         public FixtureOddsController()
         {
             _context = new ApplicationDbContext();
+        }
+
+
+        [HttpGet]
+        [Route("api/FixtureOdds/GetBettingResultsForComp/{eventId}/{playerId}")]
+
+        public string GetBettingResultsForComp(int eventId, string playerId)
+        {
+            if (!User.Identity.IsAuthenticated)
+                throw new Exception("User not authorized");
+
+            Decimal moneyWonResults=0;
+            Decimal moneyWonScore = 0;
+            short correctResults = 0;
+            short correctScores = 0;
+
+            // count of number of fixtures in this event with results
+            var eventFixtures = _context.EventFixtures
+                .Include(f => f.Fixture)
+                .Where(a => a.EventId == eventId)
+                .Where(f => f.Fixture.ResultProcessed == true);
+
+            var fixturePredictions = (from m in _context.FixturePredictions where m.PlayerId==playerId && eventFixtures.Any(a => a.FixtureId==m.FixtureId) select m).ToList();
+
+            var numberOfCompletedFixtures = eventFixtures.Count();
+
+            var listOfIds = (from m in eventFixtures where m.EventId==eventId && m.Fixture.ResultProcessed==true && m.Fixture.RapidApiFixtureId != null select m.Fixture.RapidApiFixtureId);
+            var listOfRapidApiFixturesWithResultOdds = (from m in _context.FixtureOddsByResults where listOfIds.Contains(m.RapidApiFixtureId) select m).Distinct().ToList();
+            var listOfRapidApiFixturesWithScoreOdds = (from m in _context.FixtureOddsByScores where listOfIds.Contains(m.RapidApiFixtureId) select m).Distinct().ToList();
+
+            foreach (var eventFixture in eventFixtures)
+            {
+
+                var fixturePrediction =
+                    fixturePredictions.FirstOrDefault(f => f.FixtureId == eventFixture.FixtureId);
+
+                if (fixturePrediction != null)
+                {
+
+                    // Check if the actual score was correct
+                    if (fixturePrediction.HomePrediction == eventFixture.Fixture.HomeResult &&
+                        fixturePrediction.AwayPrediction == eventFixture.Fixture.AwayResult)
+                    {
+
+                        var scoreOdds = listOfRapidApiFixturesWithScoreOdds
+                            .FirstOrDefault(a => a.RapidApiFixtureId == eventFixture.Fixture.RapidApiFixtureId
+                                                 && a.HomeScore == fixturePrediction.HomePrediction
+                                                 && a.AwayScore == fixturePrediction.AwayPrediction);
+
+                        if (scoreOdds != null)
+                        {
+                            correctScores += 1;
+                            moneyWonScore += scoreOdds.Odds;
+                        }
+                    }
+
+                    // Now check if the result was correct
+                    var predictedResult = "draw";
+                    var actualResult = "draw";
+                    
+                    if (fixturePrediction.HomePrediction > fixturePrediction.AwayPrediction)
+                    {
+                        predictedResult = "home";
+                    }
+                    else if (fixturePrediction.HomePrediction < fixturePrediction.AwayPrediction)
+                    {
+                        predictedResult = "away";
+                    }
+
+                    if (eventFixture.Fixture.HomeResult > eventFixture.Fixture.AwayResult)
+                    {
+                        actualResult = "home";
+                    }
+                    else if (eventFixture.Fixture.HomeResult < eventFixture.Fixture.AwayResult)
+                    {
+                        actualResult = "away";
+                    }
+
+                    var resultOdds = listOfRapidApiFixturesWithResultOdds
+                        .FirstOrDefault(a => a.RapidApiFixtureId == eventFixture.Fixture.RapidApiFixtureId);
+
+                    if (resultOdds != null)
+                    {
+                        if (predictedResult == actualResult)
+                        {
+                            correctResults += 1;
+                            if (predictedResult == "home")
+                            {
+                                moneyWonResults += resultOdds.HomeOdds;
+                            }
+                            else if (predictedResult == "draw")
+                            {
+                                moneyWonResults += resultOdds.DrawOdds;
+                            }
+                            else if (predictedResult == "away")
+                            {
+                                moneyWonResults += resultOdds.AwayOdds;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            var profitLossResults = (moneyWonResults - Convert.ToDecimal(eventFixtures.Count()));
+            var profitLossScores = (moneyWonScore - Convert.ToDecimal(eventFixtures.Count()));
+            var profitLossResultsFont = "";
+            var profitLossScoresFont = "";
+
+            profitLossResultsFont = "<font style='font-size: 20px; color:" + (profitLossResults > 0 ? "green": (profitLossResults==0 ? "black" : "red")) + ";'>";
+
+            profitLossScoresFont = "<font style='font-size: 20px; color:" + (profitLossScores > 0 ? "green" : (profitLossScores == 0 ? "black" : "red")) + ";'>";
+
+            var row = "<h3>If you had bet £1 on each fixture...</h3>"
+                      + "<table class='table table-bordered'>"
+                      + "<tr><td>&nbsp;</td><td>Result Bets</td><td>Correct Score Bets</td></tr>"
+                      + "<tr><td>Nbr Fixtures</td><td>" + eventFixtures.Count().ToString() + "</td><td>"
+                      + eventFixtures.Count().ToString() + "</td></tr>"
+                      + "<tr><td>Nbr Correct</td><td>" + correctResults + "</td><td>" + correctScores + "</td></tr>"
+                      + "<tr><td>Bet Amount</td><td>£" + eventFixtures.Count().ToString() + "</td><td>£"
+                      + eventFixtures.Count().ToString() + "</td></tr>"
+                      + "<tr><td>Return</td><td>£" + moneyWonResults + "</td><td>£" + moneyWonScore + "</td></tr>"
+                      + "<tr><td>Profit/Loss</td><td>" + profitLossResultsFont + "£" + profitLossResults + (profitLossResultsFont != ""?"</font>":"")
+                      + "</td><td>" + profitLossScoresFont + "£" + profitLossScores +(profitLossScoresFont != "" ? "</font>" : "") + "</td></tr>"
+                      + "</table>";
+
+            return row;
+
         }
 
         [HttpGet]

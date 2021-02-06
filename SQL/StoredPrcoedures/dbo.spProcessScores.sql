@@ -332,7 +332,7 @@ BEGIN
 	SET PPPH.PoolPosition = PP.PoolPosition
 		, PPPH.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.EventPoolPlayerPositionHistory AS PPPH
-	INNER JOIN dbo.EventPoolPlayers AS PP ON PP.PoolId = PPPH.PoolId AND PP.PlayerId = PPPH.PlayerId
+	INNER JOIN dbo.EventPoolPlayers AS PP ON PP.PoolId = PPPH.PoolId AND PP.PlayerId = PPPH.PlayerId AND PP.EventId = PPPH.EventId
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 	WHERE PPPH.PositionDate = @dteDate
