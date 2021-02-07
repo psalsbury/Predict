@@ -34,7 +34,7 @@ help document needs revamp
 
 Change logging to log errors + when someone hits the home screen (so i can see who is using the site)
 
-Associate euro 2021 to rapid api (if possible)
+Associate euro 2021 to rapid api (if possible) -->      "league_id": 403,
 
 on the leagues screen have a button to update via rapid api
 
@@ -45,6 +45,8 @@ on the leagues screen have a button to update via rapid api
 -- add up/down/side image to represent movement in the table
 
 -- Euro 2021 KO stage/View predictions
+
+-- ADd league errors if length too long. need validation on client side
 
 
 

@@ -18,7 +18,7 @@
 
 <table width="100%">
     <tr>
-        <td>
+        <td width="33%">
 
             @if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
             {
@@ -30,12 +30,16 @@
                     <input type="button" class="btn btn-primary alignleft" value="Posn History">
                 </a>
             }
+            else
+            {
+                <text>&nbsp;</text>
+            }
         </td>
-        <td align="center">
+        <td align="center"  width="33%">
             <input class="btn btn-primary" type="button" value="Bet Returns" id="oddsReturns" name="oddsReturns" data-toggle="modal" data-target="#modal-returns">
         </td>
 
-        <td>
+        <td  width="33%">
             <input type="button" class="btn btn-primary alignright" data-toggle="modal" data-target="#myModal" value="Colour Key">
         </td>
     </tr>

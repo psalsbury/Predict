@@ -66,12 +66,21 @@ namespace Predict.RapidApi
                 if (performUpdate)
                 {
                     Logger.Info("DailyRapidApiLeagueCheck --> Performing daily league update");
+                    var rapidApiLeaguesChecked = new Dictionary<int, bool> ();
 
-                    var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null && a.DailyRapidApiCheck==true);
+                    // Ordered by Descending date for euro/world cup where a catch all league will be created last for the KO fixtures when created
+                    var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null && a.DailyRapidApiCheck==true).OrderByDescending(a => a.ModifiedDateTime);
                     foreach (var league in leagues)
                     {
+                        // If this league has already been checked then skip (leagues broken down for euros and world cup)
+                        if(rapidApiLeaguesChecked.ContainsKey(league.RapidApiLeagueId??0))
+                            continue;
+                            
                         // Find the earliest date that has a results that has not been processed
-                        var earliestDate = context.Fixtures.Where(a => a.ResultProcessed == false && a.LeagueId == league.Id).Min(f => f.FixtureDateTime);
+                        DateTime earliestDate = DateTime.UtcNow.Date;
+
+                        if (context.Fixtures.Any(a => a.ResultProcessed == false && a.LeagueId == league.Id))
+                            earliestDate= context.Fixtures.Where(a => a.ResultProcessed == false && a.LeagueId == league.Id).Min(f => f.FixtureDateTime);
 
                         // Update the whole league for this league
                         FixturesByLeague(league.RapidApiLeagueId ?? 0, earliestDate.Date);
@@ -91,6 +100,8 @@ namespace Predict.RapidApi
                             context.Leagues.AddOrUpdate(league);
                             context.SaveChanges();
                         }
+
+                        rapidApiLeaguesChecked.Add(league.RapidApiLeagueId??0,true);
                     }
 
                     // Check if events need to be created.
@@ -485,7 +496,7 @@ namespace Predict.RapidApi
                     if (rapidApiFixture.event_date.IsDaylightSavingTime())
                     {
                         // Change time to UTC
-                        rapidApiFixture.event_date = rapidApiFixture.event_date.AddHours(-1);
+                        rapidApiFixture.event_date = rapidApiFixture.event_date.ToUniversalTime();
                     }
 
                     var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
@@ -600,6 +611,8 @@ namespace Predict.RapidApi
         {
             var team = context.Teams.FirstOrDefault(t => t.RapidApiTeamId == rapidApiTeamId);
             teamName = teamName.Replace(" United", " Utd");
+            teamName = teamName.Replace(" Wednesday", " Wed");
+
             var changeMade = false;
             if (team == null)
             {

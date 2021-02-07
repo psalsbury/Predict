@@ -21,7 +21,6 @@ namespace Predict.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-
         [HttpGet]
         [Route("api/FixtureOdds/GetBettingResultsForComp/{eventId}/{playerId}")]
 
@@ -134,8 +133,8 @@ namespace Predict.Controllers.Api
 
             var row = "<h3>If you had bet £1 on each fixture...</h3>"
                       + "<table class='table table-bordered'>"
-                      + "<tr><td>&nbsp;</td><td>Result Bets</td><td>Correct Score Bets</td></tr>"
-                      + "<tr><td>Nbr Fixtures</td><td>" + eventFixtures.Count().ToString() + "</td><td>"
+                      + "<tr><td>&nbsp;</td><td><b>Result Bets</b></td><td><b>Correct Score Bets</b></td></tr>"
+                      + "<tr><td>Fixtures Played</td><td>" + eventFixtures.Count().ToString() + "</td><td>"
                       + eventFixtures.Count().ToString() + "</td></tr>"
                       + "<tr><td>Nbr Correct</td><td>" + correctResults + "</td><td>" + correctScores + "</td></tr>"
                       + "<tr><td>Bet Amount</td><td>£" + eventFixtures.Count().ToString() + "</td><td>£"
