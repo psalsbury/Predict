@@ -34,6 +34,7 @@ namespace Predict.Controllers.Api
             short correctResults = 0;
             short correctScores = 0;
 
+
             // count of number of fixtures in this event with results
             var eventFixtures = _context.EventFixtures
                 .Include(f => f.Fixture)
@@ -42,7 +43,7 @@ namespace Predict.Controllers.Api
 
             var fixturePredictions = (from m in _context.FixturePredictions where m.PlayerId==playerId && eventFixtures.Any(a => a.FixtureId==m.FixtureId) select m).ToList();
 
-            var numberOfCompletedFixtures = eventFixtures.Count();
+            var nbrFixturesPredicted = fixturePredictions.Count;
 
             var listOfIds = (from m in eventFixtures where m.EventId==eventId && m.Fixture.ResultProcessed==true && m.Fixture.RapidApiFixtureId != null select m.Fixture.RapidApiFixtureId);
             var listOfRapidApiFixturesWithResultOdds = (from m in _context.FixtureOddsByResults where listOfIds.Contains(m.RapidApiFixtureId) select m).Distinct().ToList();
@@ -134,7 +135,7 @@ namespace Predict.Controllers.Api
             var row = "<h3>If you had bet £1 on each fixture...</h3>"
                       + "<table class='table table-bordered'>"
                       + "<tr><td>&nbsp;</td><td><b>Result Bets</b></td><td><b>Correct Score Bets</b></td></tr>"
-                      + "<tr><td>Fixtures Played</td><td>" + eventFixtures.Count().ToString() + "</td><td>"
+                      + "<tr><td>Nbr Fixtures</td><td>" + nbrFixturesPredicted.ToString() + "</td><td>"
                       + eventFixtures.Count().ToString() + "</td></tr>"
                       + "<tr><td>Nbr Correct</td><td>" + correctResults + "</td><td>" + correctScores + "</td></tr>"
                       + "<tr><td>Bet Amount</td><td>£" + eventFixtures.Count().ToString() + "</td><td>£"
