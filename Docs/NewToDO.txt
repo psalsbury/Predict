@@ -48,5 +48,6 @@ on the leagues screen have a button to update via rapid api
 
 -- ADd league errors if length too long. need validation on client side
 
+-- reverse sort order on https://predictioncomp.com/EventPools/EventsLinkedToPool/2
 
 

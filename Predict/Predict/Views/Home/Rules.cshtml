@@ -1,30 +1,44 @@
 ﻿@{
-    ViewBag.Title = "Rules";
+    ViewBag.Title = "Site Information";
 }
 
-<h2>Introduction</h2>
+<h3><i>What is PredictionComp.com?</i></h3>
 <p>
-    As well as offering standard prediction competitions, this site offers each user the ability to set up their own prediction competitions by selecting your own fixtures and scoring.
+    PredictionComp.com offers each member the chance to compete with other members to correctly guess the outcome of football matches.
+    <br /><br />
+    Members can select to participate in pre-organised comps, such as 2 weekly Premier league or championship fixtures, or you can
+    create your own comps by selecting your own fixtures.
+    <br /><br />
+    Members can also set up their own pools to compete in smaller groups. This will suit members wanting to compete with their friends
+    or work colleagues.
 
-    Each competition will test your skill and judgement in predicting the outcome of football matches.
-    You will need to make a series of predictions to gain points, the more predictions you get right, the greater your score will be.
+</p>
+<h3><i>How do I register?</i></h3>
+<p>
+    Registration is easy and free. Click on 'Register' at the top right and enter your details.
+    As part of the registration you will need to enter your name, password, email address and the first comp you want to enter.
+    <br /><br />
+    Once registered you can add yourself to other comps by clicking on 'Your Comps' from the left hand menu.
+    <br /><br />
 </p>
 
-<p>
-    When you register you will be asked which competition you would like to enter, but once registered you can add yourself to other comps by clicking on 'Your Comps' in the left hand menu.
-</p>
+<h3><i>How does it work?</i></h3>
 
-<p>Each prediction competition has its own home page where you can see your score, position graph and update your prediction etc. A screenshot is as follows:</p>
-<img src="~/images/screenshots/homepage.png"/>
-<br/>
+<p>Each prediction competition has its own home page where you can see your score, position and number of members in each pool. A screenshot is as follows:</p>
+<img src="~/images/screenshots/homepage.png" />
+<br />
+
+<br />You can also see stats about each game that show how many people have predicted a home win/draw/away win. This includes a breakdown by score. An example is as follows:
+<br /><br/>
+<img src="~/images/screenshots/stats.png" />
+<br />
+
+<h3><i>How does the scoring work?</i></h3>
 
 <p>
-    <h2>Football Matches</h2>
+    Each time a member competes in a comp they will be entered into the 'Global Pool'. This is the default pool that everyone is entered into. The default pool has the following scoring:
 </p>
-<p>
-    The scoring for football matches is as follows:
-</p>
-<table class="table table-striped">
+<table class="table table-sm">
     <tr>
         <td>&nbsp;</td>
         <td>
@@ -36,7 +50,7 @@
         <td>5</td>
     </tr>
     <tr>
-        <td>Correct Result & Winning Margin (Excludes draws)</td>
+        <td>Correct Result & Winning Margin</td>
         <td>3</td>
     </tr>
     <tr>
@@ -48,89 +62,38 @@
         <td>0</td>
     </tr>
 </table>
+<br />
+If you create your own pool, you can set up your own scoring system. i.e. you can define how many points to award for a correct score/result and win margin
+
+<h3><i>How do I set up my own pool?</i></h3>
+
+Setting up your own pool is easy. Once registered, if you tap on 'Your Pools' on the left had menu you will be presented with the following screen:
+<br />
+<br />
+<img src="~/images/screenshots/YourPoolsScreenpng.png" />
 <br/>
-<p>
-    <b></b>For example, if Nottingham Forest were playing Liverpool and you predicted Nottingham Forest win the game 2 0. The following scores would apply
-</p>
-<table class="table table-striped">
-    <tr>
-        <td>
-            <b>Actual Result</b>
-        </td>
-        <td>
-            <b>You Score</b>
-        </td>
-    </tr>
-    <tr>
-        <td>Nottingham Forest 2 Liverpool 0 (Correct score predicted)</td>
-        <td>5</td>
-    </tr>
-    <tr>
-        <td>Nottingham Forest 4 Liverpool 2 (Correct result and win margin predicted)</td>
-        <td>3</td>
-    </tr>
-    <tr>
-        <td>Nottingham Forest 5 Liverpool 1 (Forest win, as you predicted)</td>
-        <td>2</td>
-    </tr>
-    <tr>
-        <td>Nottingham Forest 0 Liverpool 0</td>
-        <td>0</td>
-    </tr>
-</table>
-<p>You can enter and change your prediction right up to the kick off time</p>
+From here you can
+<br /><br />
+<ul>
+    <li>Join an existing pool that someone else has created</li>
+    <li>Manage your membership to existing pools</li>
+    <li>Create a new pool</li>
+    <li>Manage pools that you have created</li>
+</ul>
+<br />
+When you set up and manage a pool you can manage the scoring system and the members that have joined your pool.
 
-<p>
-    <h2>Knock Out (KO) Stage</h2>
-</p>
+<h3><i>How do I enter my predictions?</i></h3>
+On the home page for your comp you you will have a box, similar to the following
+<br/>
+<img src="~/images/screenshots/PredictionsBox.png" />
+<br/><br/>
+<p>Clicking on this box will take you to the screen to enter your predictions. </p>
+<br/>
+When games have beel played you will also have the option to see what you would have won from the bookies, had you placed a £1 bet on each of the fixtures. TAn Example of this screen is as follows:
+<br/><br />
+<img src="~/images/screenshots/betting.png" />
 
-<p>
-    For Prediction competitions that have a knock out stage like the world cup or the euros, your job is to predict which teams will qualify for that stage. The Last 16 should be relatively simple, but predicting
-    who will progress further than that will be difficult. This is represented
-    in the score achieved for correct predictions .
-</p>
-<table class="table table-hover">
-    <tr>
-        <td>&nbsp;</td>
-        <td>
-            <b>Score</b>
-        </td>
-    </tr>
-    <tr>
-    <tr>
-        <td>Last 16</td>
-        <td>1</td>
-    </tr>
-    <tr>
-        <td>Quarter Finalist</td>
-        <td>2</td>
-    </tr>
-    <tr>
-        <td>Semi Finalist</td>
-        <td>4</td>
-    </tr>
-    <tr>
-        <td>Finalist</td>
-        <td>6</td>
-    </tr>
-    <tr>
-        <td>Winner</td>
-        <td>10</td>
-    </tr>
-</table>
-<p>
-You can pick any teams for each stage of the knock out phase, if the same team is repeated in the same stage then only the first
-occurrence of the team will count. When selecting the knock out fixtures there is an option to 'autofill' each of the group stages. For the Last 16
-teams, this is worked out be selecting the teams that would qualify from the group phase based on your predictions. For the other stages
-for each fixture, the team that performed the best in the group stage will be selected to progress.
-
-
-<p>
-    <B>
-        <font color="red"> KNOCK OUT PREDICTIONS MUST BE ENTERED BEFORE THE FIRST FIXTURE OF THE TOURNAMENT KICKS OFF</font>
-    </B>
-</p>
-</table>
-<p>Your email address will not be passed onto any other organisations. Your details will remain safe.
+<br/><br/>
 <p>If you have any further questions or if you get any error messages or cannot login then please send a message using the 'Contact Us' option under the 'Help' menu.
 <P>Good luck.</P>

@@ -34,7 +34,6 @@ namespace Predict.Controllers.Api
             short correctResults = 0;
             short correctScores = 0;
 
-
             // count of number of fixtures in this event with results
             var eventFixtures = _context.EventFixtures
                 .Include(f => f.Fixture)
@@ -123,8 +122,8 @@ namespace Predict.Controllers.Api
 
             }
 
-            var profitLossResults = (moneyWonResults - Convert.ToDecimal(eventFixtures.Count()));
-            var profitLossScores = (moneyWonScore - Convert.ToDecimal(eventFixtures.Count()));
+            var profitLossResults = (moneyWonResults - Convert.ToDecimal(nbrFixturesPredicted));
+            var profitLossScores = (moneyWonScore - Convert.ToDecimal(nbrFixturesPredicted));
             var profitLossResultsFont = "";
             var profitLossScoresFont = "";
 
@@ -136,10 +135,10 @@ namespace Predict.Controllers.Api
                       + "<table class='table table-bordered'>"
                       + "<tr><td>&nbsp;</td><td><b>Result Bets</b></td><td><b>Correct Score Bets</b></td></tr>"
                       + "<tr><td>Nbr Fixtures</td><td>" + nbrFixturesPredicted.ToString() + "</td><td>"
-                      + eventFixtures.Count().ToString() + "</td></tr>"
+                      + nbrFixturesPredicted.ToString() + "</td></tr>"
                       + "<tr><td>Nbr Correct</td><td>" + correctResults + "</td><td>" + correctScores + "</td></tr>"
-                      + "<tr><td>Bet Amount</td><td>£" + eventFixtures.Count().ToString() + "</td><td>£"
-                      + eventFixtures.Count().ToString() + "</td></tr>"
+                      + "<tr><td>Bet Amount</td><td>£" + nbrFixturesPredicted.ToString() + "</td><td>£"
+                      + nbrFixturesPredicted.ToString() + "</td></tr>"
                       + "<tr><td>Return</td><td>£" + moneyWonResults + "</td><td>£" + moneyWonScore + "</td></tr>"
                       + "<tr><td>Profit/Loss</td><td>" + profitLossResultsFont + "£" + profitLossResults + (profitLossResultsFont != ""?"</font>":"")
                       + "</td><td>" + profitLossScoresFont + "£" + profitLossScores +(profitLossScoresFont != "" ? "</font>" : "") + "</td></tr>"
