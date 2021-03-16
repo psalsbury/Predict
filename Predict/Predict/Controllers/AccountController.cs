@@ -7,9 +7,13 @@ using System;
 using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using NLog;
+using Predict.GoogleCaptcha;
 using RegisterViewModel = Predict.ViewModels.RegisterViewModel;
 
 namespace Predict.Controllers
@@ -87,6 +91,13 @@ namespace Predict.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid) return View(model);
+            var captchaResponse = Request["g-recaptcha-response"];
+            var response = ValidateCaptcha(captchaResponse);
+            if (!response)
+            {
+                ModelState.AddModelError("", "Please Complete Google Captcha");
+                return View(model);
+            }
 
             var user = UserManager.FindByEmail(model.Email);
 
@@ -210,12 +221,22 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            var context = new ApplicationDbContext();
+
+            var captchaResponse = Request["g-recaptcha-response"];
+            var response = ValidateCaptcha(captchaResponse);
+            if (!response)
+            {
+                ModelState.AddModelError("Captcha", "Please Complete Google Captcha");
+                model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                return View("Register", model);
+            }
+
             var confirmEmailAddress = System.Convert.ToBoolean(ConfigurationManager.AppSettings["ConfirmEmailOnRegister"]);
             
             if(model.Email.Contains("thinkmoney.co.uk"))
                 confirmEmailAddress = false;
 
-            var context = new ApplicationDbContext();
             if (ModelState.IsValid)
             {
                 if (model.Password != model.ConfirmPassword)
@@ -564,6 +585,30 @@ namespace Predict.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        public bool ValidateCaptcha(string response)
+        {
+            bool isLocal = HttpContext.Request.IsLocal;
+            if (isLocal)
+            {
+                return true;
+            }
+            else
+            {
+                string secret = "6LdmK4IaAAAAAKASSz-RCWhCPPPSP9demqX0sGu0";
+
+                var client = new WebClient();
+                var reply = client.DownloadString(string.Format(
+                    "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
+
+                GoogleCaptchaResponse myDeserializedClass = JsonConvert.DeserializeObject<GoogleCaptchaResponse>(reply);
+                _logger.Log(LogLevel.Info, reply);
+
+                return myDeserializedClass.success;
+            }
+
+  
         }
 
         #region Helpers

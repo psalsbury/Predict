@@ -51,3 +51,14 @@ on the leagues screen have a button to update via rapid api
 -- reverse sort order on https://predictioncomp.com/EventPools/EventsLinkedToPool/2
 
 
+captcha
+key for putting in html
+6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez
+
+
+secret key
+6LdmK4IaAAAAAKASSz-RCWhCPPPSP9demqX0sGu0
+
+    <add key="GoogleSiteKey" value ="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez" />
+    <add key="GoogleSecretKey" value ="6LdmK4IaAAAAAKASSz-RCWhCPPPSP9demqX0sGu0" />
+

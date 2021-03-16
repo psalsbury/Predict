@@ -6,36 +6,37 @@
         ViewBag.Title = "Your Account";
     }
 }
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-@using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form", id = "RegisterForm"}))
+@using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "RegisterForm" }))
 {
     @Html.AntiForgeryToken()
-    <hr/>
-    @Html.ValidationSummary("", new {@class = "text-danger"})
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @if (Model.Id == null)
             {
-                @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             }
             else
             {
-                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", @readonly = "readonly"})
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
             }
 
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.DisplayName, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.DisplayName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @if (Model.Id == null)
             {
-                @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})
+                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" })
             }
             else
             {
-                @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control", @readonly = "readonly"})
+                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @readonly = "readonly" })
             }
         </div>
     </div>
@@ -44,7 +45,7 @@
     if (Model.Id == null)
     {
         <div class="form-group">
-            @Html.LabelFor(m => m.EventId, new {@class = "col-md-2 control-label"})
+            @Html.LabelFor(m => m.EventId, new { @class = "col-md-2 control-label" })
 
             <div class="col-md-10">
 
@@ -66,34 +67,43 @@
     if (Model.Id == null)
     {
         <div class="form-group">
-            @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label"})
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+                <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
+                </div>
+                <br/>
                 <input type="submit" id="btnSubmit" class="btn btn-success" value="@(Model.Id == null ? "Register" : "Update")"/>
             </div>
-        </div>
+         </div>
 
         @Html.HiddenFor(m => m.Id)
     }
 }
 
 
-<script>
-    $(document).ready(function() {
 
-        $("#RegisterForm").submit(function(e) {
+<script>
+    function onSubmit(token) {
+        document.getElementById("RegisterForm").submit();
+    }
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#RegisterForm").submit(function (e) {
 
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);

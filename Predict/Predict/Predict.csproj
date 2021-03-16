@@ -377,6 +377,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GoogleCaptcha\GoogleCaptchaResponse.cs" />
     <Compile Include="Helper\EventTeam.cs" />
     <Compile Include="Helper\LeagueTableTeamThirdPlaceHelper.cs" />
     <Compile Include="Helper\SessionHelper.cs" />
