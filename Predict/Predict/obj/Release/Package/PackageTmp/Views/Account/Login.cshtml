@@ -1,16 +1,19 @@
 ﻿@model Predict.Models.LoginViewModel
-@{
-    ViewBag.Title = "Log in";
-}
+
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
+
+<div  class="col-md-12" style="        background-image: url('../images/footyimage.jpg');
+                                      background-repeat: no-repeat;
+                                      background-color: rgba(255,255,255,0.6);
+                                      background-blend-mode: lighten;
+                                      background-size: cover; ">
+<div>
+    <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form", id = "LoginForm" }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Log in to your account</h4>
-                <hr/>
+                <br/>
                 @Html.ValidationSummary("", new { @class = "text-danger" })
 
                 <div class="form-group">
@@ -40,7 +43,8 @@
 
                         <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
                         </div>
-                        <input type="submit" value="Log in" class="btn btn-default"/>
+                        <br/>
+                        <input type="submit" value="Log in" class="btn btn-success"/>
                     </div>
                 </div>
 
@@ -57,6 +61,7 @@
         </section>
     </div>*@
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

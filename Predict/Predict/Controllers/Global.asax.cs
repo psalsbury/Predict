@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using Predict.App_Start;
 using System.Web;
 using System.Web.Http;

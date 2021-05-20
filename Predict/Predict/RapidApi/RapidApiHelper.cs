@@ -629,10 +629,10 @@ namespace Predict.RapidApi
             }
             else
             {
-                if (team.TeamName != teamName || team.TeamFlag != logo)
+                // Not updating the logo as this could be changed manually by me
+                if (team.TeamName != teamName)
                 {
                     team.TeamName = teamName;
-                    team.TeamFlag = logo;
                     changeMade = true;
                 }
             }

@@ -1,0 +1,204 @@
+2021-05-18 00:00:00.0177 INFO DailyRapidApiLeagueCheck --> lastDate = 5/17/2021 12:00:00 AM, Now = 5/18/2021 12:00:00 AM
+2021-05-18 00:00:00.3614 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 5/19/2021 12:00:00 AM
+2021-05-18 00:00:00.3614 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2021-05-18 00:00:00.4396 INFO FixturesByLeague - League = 403, EarliestDate = 6/15/2021 12:00:00 AM
+2021-05-18 00:00:01.6427 INFO FixturesByOdds - League = 403
+2021-05-18 00:00:03.1427 INFO OddsByLeagueAndBookmaker - League = 403, pageNbr = 0
+2021-05-18 00:00:03.1583 INFO FixturesByLeague - League = 2790, EarliestDate = 5/18/2021 12:00:00 AM
+2021-05-18 00:00:04.0490 INFO FixturesByOdds - League = 2790
+2021-05-18 00:00:09.2365 INFO OddsByLeagueAndBookmaker - League = 2790, pageNbr = 2
+2021-05-18 00:00:14.7521 INFO OddsByLeagueAndBookmaker - League = 2790, pageNbr = 3
+2021-05-18 00:00:20.7209 INFO OddsByLeagueAndBookmaker - League = 2790, pageNbr = 4
+2021-05-18 00:00:25.5491 INFO OddsByLeagueAndBookmaker - League = 2790, pageNbr = 0
+2021-05-18 00:00:25.5647 INFO FixturesByLeague - League = 2794, EarliestDate = 5/22/2021 12:00:00 AM
+2021-05-18 00:00:26.3616 INFO FixturesByOdds - League = 2794
+2021-05-18 00:00:29.3616 INFO OddsByLeagueAndBookmaker - League = 2794, pageNbr = 2
+2021-05-18 00:00:31.8148 INFO OddsByLeagueAndBookmaker - League = 2794, pageNbr = 0
+2021-05-18 01:49:44.8843 INFO {
+  "success": false,
+  "error-codes": [
+    "invalid-input-response"
+  ]
+}
+2021-05-18 01:49:57.0093 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T08:49:46Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 01:49:57.0875 INFO Account - Login (HttpPost) - andrewmcmahon0909@gmail.com logged in
+2021-05-18 04:30:27.0857 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T11:30:17Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 04:30:27.1639 INFO Account - Login (HttpPost) - oliviamcmahon2@gmail.com logged in
+2021-05-18 04:38:23.9486 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T11:37:48Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 04:38:52.6046 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T11:38:37Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 04:51:44.1436 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T11:51:36Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 04:51:44.2061 INFO Account - Login (HttpPost) - danielruxton@hotmail.co.uk logged in
+2021-05-18 05:16:39.8909 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:16:05Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:21:13.7683 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:20:30Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:23:00.5505 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:21:15Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:23:33.0039 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:23:10Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:28:05.1937 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:27:31Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:28:46.6003 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:28:06Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:29:17.6931 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:28:47Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:47:12.9841 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T12:47:09Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 05:47:13.0462 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2021-05-18 06:07:50.9302 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T13:07:18Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 06:31:49.4878 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T13:31:13Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 06:33:46.0347 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T13:33:23Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 06:33:46.0660 INFO Account - Login (HttpPost) - Wilky72@hotmail.co.uk logged in
+2021-05-18 06:38:07.8320 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T13:37:04Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 06:41:06.8957 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T13:40:31Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 06:41:56.0679 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T13:41:44Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 06:42:13.7399 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T13:41:56Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:07:11.9854 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:06:59Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:07:12.0479 INFO Account - Login (HttpPost) - martin.ferry@strath.ac.uk logged in
+2021-05-18 07:10:24.9245 INFO SetCachedItem = setting cache for ForceUpdate*bd6256b3-2fb5-41e7-9633-a068c6ba7f64*1
+2021-05-18 07:10:24.9245 INFO SetCachedItem = setting cache for ForceUpdate*bd6256b3-2fb5-41e7-9633-a068c6ba7f64*1, with Expiry Date of 6/17/2021 2:10:24 PM
+2021-05-18 07:13:48.2857 INFO SetCachedItem = setting cache for ForceUpdate*bd6256b3-2fb5-41e7-9633-a068c6ba7f64*1
+2021-05-18 07:13:48.2857 INFO SetCachedItem = setting cache for ForceUpdate*bd6256b3-2fb5-41e7-9633-a068c6ba7f64*1, with Expiry Date of 6/17/2021 2:13:48 PM
+2021-05-18 07:29:38.4042 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:26:59Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:31:57.1395 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:31:40Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:33:09.8743 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:32:13Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:33:36.2026 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:33:16Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:36:55.2196 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:36:37Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:39:26.5334 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:38:41Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:40:18.9089 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:39:49Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 07:46:51.3012 INFO {
+  "success": false,
+  "error-codes": [
+    "invalid-input-response"
+  ]
+}
+2021-05-18 07:47:19.7388 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T14:46:52Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 07:47:19.8170 INFO Account - Login (HttpPost) - Wilky72@hotmail.co.uk logged in
+2021-05-18 08:12:26.5912 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T15:11:44Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-05-18 08:25:26.9723 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T15:24:35Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 08:25:41.1284 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T15:25:27Z",
+  "hostname": "predictioncomp.com"
+}
+2021-05-18 08:29:33.6274 INFO {
+  "success": true,
+  "challenge_ts": "2021-05-18T15:28:10Z",
+  "hostname": "predictioncomp.com"
+}

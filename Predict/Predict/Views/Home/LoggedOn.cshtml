@@ -1,4 +1,5 @@
-﻿@using Microsoft.Ajax.Utilities
+﻿@using System.Web.UI.WebControls
+@using Microsoft.Ajax.Utilities
 @using Microsoft.AspNet.Identity
 @using Predict.Models
 @using Predict.ViewModels
@@ -63,7 +64,6 @@
         var firstPass = true;
 
         <div class="row">
-
 
             @if (nbrFixturePredictionsToEnter > 0)
             {
@@ -273,6 +273,30 @@
 
             firstPass = false;
         }
+
+        if (poolInfoViewModels.Count() < ViewBag.nbrPoolsInEvent)
+        {
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-@koPredictionBox">
+                        <div class="inner">
+                            <h3>
+                                @ViewBag.nbrPoolsInEvent<sup style="font-size: 20px"> </sup>
+                            </h3>
+                            <p>Pools competing</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="~/Table/BestPools?eventid=@eventId" class="small-box-footer">
+                            View them here <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
 
     }
 }

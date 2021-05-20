@@ -34,7 +34,7 @@
             <th>Pool Linked to this Comp</th>
         </tr>
 
-        @foreach (var item in Model.Events.OrderBy(a => a.StartDateTime))
+        @foreach (var item in Model.Events.OrderByDescending(a => a.StartDateTime))
         {
             <tr>
                 <td>
@@ -64,14 +64,11 @@
         }
     </table>
 
-
-
-    <div class="form-group">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="form-group">
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
             <input type="submit" value="Save" class="btn btn-success" />
         </div>
-    </div>
 
-}
+    }
+<br/>
 

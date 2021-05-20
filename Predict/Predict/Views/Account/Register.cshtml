@@ -1,115 +1,117 @@
 ﻿@model Predict.ViewModels.RegisterViewModel
-@{
-    ViewBag.Title = "Register";
-    if (Model.Id != "")
-    {
-        ViewBag.Title = "Your Account";
-    }
-}
+
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-@using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "RegisterForm" }))
-{
-    @Html.AntiForgeryToken()
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @if (Model.Id == null)
-            {
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            }
-            else
-            {
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
-            }
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DisplayName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @if (Model.Id == null)
-            {
-                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" })
-            }
-            else
-            {
-                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @readonly = "readonly" })
-            }
-        </div>
-    </div>
+<div  class="col-md-12" style="background-image: url('../images/footyimage.jpg'); background-repeat: no-repeat; background-color: rgba(255, 255, 255, 0.6); background-blend-mode: lighten; background-size: cover;">
+    <div>
 
 
-    if (Model.Id == null)
-    {
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventId, new { @class = "col-md-2 control-label" })
+        @using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form", id = "RegisterForm"}))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Your Account</h4>
 
-            <div class="col-md-10">
-
-                <select name="@Html.NameFor(m => m.EventId)" id="@Html.IdFor(m => m.EventId)" class="form-control">
-
-                    @if (Model.Events != null)
+            @Html.ValidationSummary("", new {@class = "text-danger"})
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+                <div class="col-md-8">
+                    @if (Model.Id == null)
                     {
-                        foreach (var item in Model.Events)
-                        {
-                            <option value="@item.Id"> @item.EventName </option>
-                        }
+                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
                     }
-                </select>
-            </div>
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control", @readonly = "readonly"})
+                    }
 
-        </div>
-    }
-
-    if (Model.Id == null)
-    {
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
                 </div>
-                <br/>
-                <input type="submit" id="btnSubmit" class="btn btn-success" value="@(Model.Id == null ? "Register" : "Update")"/>
             </div>
-         </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DisplayName, new {@class = "col-md-2 control-label"})
+                <div class="col-md-8">
+                    @if (Model.Id == null)
+                    {
+                        @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control", @readonly = "readonly"})
+                    }
+                </div>
+            </div>
 
-        @Html.HiddenFor(m => m.Id)
-    }
-}
+
+            if (Model.Id == null)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EventId, new {@class = "col-md-2 control-label"})
+
+                    <div class="col-md-8">
+
+                        <select name="@Html.NameFor(m => m.EventId)" id="@Html.IdFor(m => m.EventId)" class="form-control">
+
+                            @if (Model.Events != null)
+                            {
+                                foreach (var item in Model.Events)
+                                {
+                                    <option value="@item.Id"> @item.EventName </option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                </div>
+            }
+
+            if (Model.Id == null)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
+                    <div class="col-md-8">
+                        @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label"})
+                    <div class="col-md-8">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
+                        </div>
+                        <br/>
+                        <input type="submit" id="btnSubmit" class="btn btn-success" value="@(Model.Id == null ? "Register" : "Update")"/>
+                    </div>
+                </div>
+
+                @Html.HiddenFor(m => m.Id)
+            }
+
+        }
+        <br/>
+            </div>
+    </div>
 
 
+    <script>
+        function onSubmit(token) {
+            document.getElementById("RegisterForm").submit();
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
 
-<script>
-    function onSubmit(token) {
-        document.getElementById("RegisterForm").submit();
-    }
-</script>
-<script>
-    $(document).ready(function () {
+            $("#RegisterForm").submit(function (e) {
 
-        $("#RegisterForm").submit(function (e) {
+                //disable the submit button
+                $("#btnSubmit").attr("disabled", true);
 
-            //disable the submit button
-            $("#btnSubmit").attr("disabled", true);
+                return true;
 
-            return true;
-
+            });
         });
-    });
-</script>
+    </script>

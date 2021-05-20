@@ -47,6 +47,9 @@ namespace Predict.Controllers
                     forcePoolRefresh = true;
                 }
 
+                var nbrPoolsInEvent = _context.EventPools.Count(a => a.EventId == eventId);
+                ViewBag.nbrPoolsInEvent = nbrPoolsInEvent;
+
                 // Used forcePoolRefresh as forceRefresh as fixtures could be added to a comp and that needs refreshing on users home page
                 SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, forcePoolRefresh, forcePoolRefresh);
 

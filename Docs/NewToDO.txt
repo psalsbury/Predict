@@ -1,3 +1,4 @@
+check why countdown says 5 days
 
 logging off when session has expired takes me to 
 http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff

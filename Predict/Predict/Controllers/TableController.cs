@@ -50,12 +50,33 @@ namespace Predict.Controllers
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
         }
 
+        [HttpGet]
+        public ActionResult BestPools(short eventId, int? page)
+        {
+            var pageNumber = page ?? 1;
+            var pageSize = PAGE_SIZE;
+
+            ViewBag.PoolName = "Best Pools";
+            var tableViewModels = GetBestPoolsTableViewModel(eventId);
+            ViewBag.EventId = eventId;
+
+            return View(tableViewModels.ToPagedList(pageNumber, pageSize));
+        }
+
         private List<TableViewModel> GetTableViewModel(short eventId, int poolId)
         {
             var tableViewModels = _context.Database.SqlQuery<TableViewModel>(
                 "spGetTable @intEventId, @intPoolId"
                 , new SqlParameter("@intEventId", eventId)
                 , new SqlParameter("@intPoolId", poolId)).ToList();
+            return tableViewModels;
+        }
+
+        private List<BestPoolsTableViewModel> GetBestPoolsTableViewModel(short eventId)
+        {
+            var tableViewModels = _context.Database.SqlQuery<BestPoolsTableViewModel>(
+                "spGetBestPoolsTable @intEventId"
+                , new SqlParameter("@intEventId", eventId)).ToList();
             return tableViewModels;
         }
     }

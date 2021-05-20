@@ -442,6 +442,7 @@
     <Compile Include="ScheduledTasks\ExecuteTaskServiceCallJob .cs" />
     <Compile Include="ScheduledTasks\ExecuteTaskServiceCallScheduler.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BestPoolsTableViewModel.cs" />
     <Compile Include="ViewModels\BonusQuestionPredictionsViewModel.cs" />
     <Compile Include="ViewModels\EventFixturesViewModel.cs" />
     <Compile Include="ViewModels\EventPoolsViewModel.cs" />

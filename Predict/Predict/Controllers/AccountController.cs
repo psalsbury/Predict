@@ -221,7 +221,14 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+            try
+            {
+
+
             var context = new ApplicationDbContext();
+
+            _logger.Log(LogLevel.Info, model.Email + " has registered");
 
             var captchaResponse = Request["g-recaptcha-response"];
             var response = ValidateCaptcha(captchaResponse);
@@ -250,6 +257,8 @@ namespace Predict.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    _logger.Log(LogLevel.Info, model.Email + " Evenyt id = " + model.EventId);
                     var myEvent = context.Events.FirstOrDefault(a => a.Id == model.EventId);
 
                     var player = new Player
@@ -263,6 +272,8 @@ namespace Predict.Controllers
 
                     if (confirmEmailAddress)
                         player.EmailConfirmedDateTime = DateTime.MinValue;
+
+                    _logger.Log(LogLevel.Info, model.Email + " Adding player, Display name = " + model.DisplayName);
 
                     context.Players.Add(player);
 
@@ -306,6 +317,8 @@ namespace Predict.Controllers
                         }
                     }
 
+                    _logger.Log(LogLevel.Info, model.Email + " player saved ok");
+
                     // If this is me, then the pool will not yet have been created
                     if (user.Email == "pete@salsbury.co.uk")
                     {
@@ -316,10 +329,16 @@ namespace Predict.Controllers
                         UserManager.AddToRole(user.Id, "Player");
                     }
 
+                    _logger.Log(LogLevel.Info, model.Email + " role saved ok");
+
                     await Task.Run(() => context.SaveChanges());
                     context.Dispose();
 
-                    if (confirmEmailAddress)
+                    _logger.Log(LogLevel.Info, model.Email + " changes saved to database ok");
+
+                        _logger.Log(LogLevel.Info, model.Email + " confirm email address = " + confirmEmailAddress.ToString());
+
+                        if (confirmEmailAddress)
                     {
                         // Send an email with this link
                         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -342,6 +361,15 @@ namespace Predict.Controllers
 
             model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
             return View("Register", model);
+
+            }
+
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Info,model.Email + " has errored. Error is as follows --> " + e.Message);
+                throw;
+            }
+
         }
 
         //

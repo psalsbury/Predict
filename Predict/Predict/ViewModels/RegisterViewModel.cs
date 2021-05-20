@@ -7,8 +7,9 @@ namespace Predict.ViewModels
     public class RegisterViewModel : Models.RegisterViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [StringLength(30, ErrorMessage = "The {0} cannot exceed {1} characters.", MinimumLength = 1)]
         [Display(Name = "Display Name")]
+
         public string DisplayName { get; set; }
 
         [Display(Name = "Player Name")] public string PlayerName { get; set; }
