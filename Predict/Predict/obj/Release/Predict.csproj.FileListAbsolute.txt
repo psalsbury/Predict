@@ -581,3 +581,4 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.AdddPoolPlayerEm
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.DateTime2.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.AutoGen.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.odds.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.SupportTeamId.resources

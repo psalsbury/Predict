@@ -26,6 +26,10 @@ namespace Predict.Controllers
                 if (eventId == 0)
                 {
                     eventPlayer = SessionHelper.GetOrderedEventsForPlayers(Session).FirstOrDefault();
+                    if (eventPlayer != null)
+                    {
+                        eventId = eventPlayer.EventId;
+                    }
                 }
                 else
                 {
@@ -67,7 +71,7 @@ namespace Predict.Controllers
         public ActionResult SendMessage()
         {
             var message = Request["message"];
-            var from = User.Identity.Name;
+            var from = User.Identity.Name + " " + Request["email"];
 
             var emailMesesage = new IdentityMessage
             {

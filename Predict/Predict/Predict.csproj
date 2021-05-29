@@ -405,6 +405,10 @@
     <Compile Include="Migrations\202101242151196_odds.Designer.cs">
       <DependentUpon>202101242151196_odds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105292121383_SupportTeamId.cs" />
+    <Compile Include="Migrations\202105292121383_SupportTeamId.Designer.cs">
+      <DependentUpon>202105292121383_SupportTeamId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -562,6 +566,8 @@
     <Content Include="Views\PositionHistory\ShowHistory.cshtml" />
     <Content Include="Views\Leagues\LeaguesIndex.cshtml" />
     <Content Include="Views\Leagues\EditLeague.cshtml" />
+    <Content Include="Views\Account\UpdateRegister.cshtml" />
+    <Content Include="Views\Account\ResendEmailToken.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -592,6 +598,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101242151196_odds.resx">
       <DependentUpon>202101242151196_odds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105292121383_SupportTeamId.resx">
+      <DependentUpon>202105292121383_SupportTeamId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

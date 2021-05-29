@@ -1,7 +1,0 @@
-2020-10-05 17:16:55.7189 INFO Startup Configuration - Start
-2020-10-05 17:16:55.7429 INFO SetEventCache - Start
-2020-10-05 17:16:55.7915 INFO SetCachedItem = setting cache for Events
-2020-10-05 17:16:55.7995 INFO SetNextResultCheckDateTime - Start - roundUp = False
-2020-10-05 17:16:55.7995 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
-2020-10-05 17:16:55.8324 INFO SetNextResultCheckDateTime - Set League 2790 next check date to 05/10/2020 16:16:55
-2020-10-05 17:16:55.8324 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime

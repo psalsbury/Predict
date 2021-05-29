@@ -14,6 +14,8 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using NLog;
 using Predict.GoogleCaptcha;
+using Predict.ViewModels;
+using Quartz;
 using RegisterViewModel = Predict.ViewModels.RegisterViewModel;
 
 namespace Predict.Controllers
@@ -56,14 +58,15 @@ namespace Predict.Controllers
             var player = context.Players.FirstOrDefault(p => p.Id == userId);
             var user = context.Users.FirstOrDefault(p => p.Id == userId);
 
-            var registerViewModel = new RegisterViewModel
+            var registerViewModel = new UpdateRegisterViewModel()
             {
                 Id = player.Id,
                 DisplayName = player.DisplayName,
-                PlayerName = player.PlayerName,
-                Email = user.Email
+                Email = user.Email,
+                SupportTeamId = player.SupportTeamId,
+                Teams = context.Teams.ToList()
             };
-            return View("Register", registerViewModel);
+            return View("UpdateRegister", registerViewModel);
         }
 
         // GET: /Account/RegisterSendCodeNotification
@@ -90,45 +93,57 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid) return View(model);
-            var captchaResponse = Request["g-recaptcha-response"];
-            var response = ValidateCaptcha(captchaResponse);
-            if (!response)
+            try
             {
-                ModelState.AddModelError("", "Please Complete Google Captcha");
-                return View(model);
-            }
 
-            var user = UserManager.FindByEmail(model.Email);
-
-            if (user != null && !UserManager.IsEmailConfirmed(user.Id))
-            {
-                ModelState.AddModelError("", "Email has not been confirmed");
-                return View(model);
-            }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    _logger.Info("Account - Login (HttpPost) - {0} logged in", model.Email);
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                if (!ModelState.IsValid) return View(model);
+                var captchaResponse = Request["g-recaptcha-response"];
+                var response = ValidateCaptcha(captchaResponse);
+                if (!response)
+                {
+                    ModelState.AddModelError("", "Please Complete Google Captcha");
                     return View(model);
+                }
+
+                var user = UserManager.FindByEmail(model.Email);
+
+                if (user != null && !UserManager.IsEmailConfirmed(user.Id))
+                {
+                    ModelState.AddModelError("", "Email has not been confirmed");
+                    return View(model);
+                }
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
+                var result =
+                    await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        _logger.Info("Account - Login (HttpPost) - {0} logged in", model.Email);
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+            }
+
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Info, model.Email + " has errored logging in. Error is as follows --> " + e.Message);
+
+                throw;
             }
         }
 
         //
-        // GET: /Account/VerifyCode
-        [AllowAnonymous]
+    // GET: /Account/VerifyCode
+    [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login
@@ -182,36 +197,28 @@ namespace Predict.Controllers
         // POST: /Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateRegister(RegisterViewModel model)
+        public ActionResult UpdateRegister(UpdateRegisterViewModel model)
         {
-            // Not implemented yet.
-            if (ModelState.IsValid)
-            {
-                var context = new ApplicationDbContext();
-                var userId = User.Identity.GetUserId();
-                var user = context.Users.FirstOrDefault(p => p.Id == userId);
-                var player = context.Players.FirstOrDefault(p => p.Id == model.Id);
-                var passwordHasher = new PasswordHasher();
 
-                if (passwordHasher.VerifyHashedPassword(user.PasswordHash, model.Password)
-                    != PasswordVerificationResult.Failed)
-                {
-                    // password is correct 
-                    player.DisplayName = model.DisplayName;
-                    context.SaveChanges();
-                }
-                else
-                {
-                    ModelState.AddModelError("Password", "Password is incorrect");
-                    return View("Register", model);
-                }
-            }
-            else
-            {
-                return View("Register", model);
-            }
+            var context = new ApplicationDbContext();
+            var userId = User.Identity.GetUserId();
+            var player = context.Players.FirstOrDefault(p => p.Id == model.Id);
 
-            _logger.Info("Account - Register (HttpPost) - {0} registered", model.Email);
+            if (player != null && (player.DisplayName != model.DisplayName | player.SupportTeamId != model.SupportTeamId))
+            {
+
+                var nbrWithSameDisplayName = context.Players.Count(a => a.DisplayName == model.DisplayName && a.Id != model.Id);
+                if (nbrWithSameDisplayName != 0)
+                {
+                    ModelState.AddModelError("","This display name is already taken");
+                    return View("UpdateRegister", model);
+                }
+
+                player.DisplayName = model.DisplayName;
+                player.SupportTeamId = model.SupportTeamId;
+                context.Players.AddOrUpdate(player);
+                context.SaveChanges();
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -225,148 +232,155 @@ namespace Predict.Controllers
             try
             {
 
+                var context = new ApplicationDbContext();
 
-            var context = new ApplicationDbContext();
+                _logger.Log(LogLevel.Info, model.Email + " has registered");
 
-            _logger.Log(LogLevel.Info, model.Email + " has registered");
-
-            var captchaResponse = Request["g-recaptcha-response"];
-            var response = ValidateCaptcha(captchaResponse);
-            if (!response)
-            {
-                ModelState.AddModelError("Captcha", "Please Complete Google Captcha");
-                model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
-                return View("Register", model);
-            }
-
-            var confirmEmailAddress = System.Convert.ToBoolean(ConfigurationManager.AppSettings["ConfirmEmailOnRegister"]);
-            
-            if(model.Email.Contains("thinkmoney.co.uk"))
-                confirmEmailAddress = false;
-
-            if (ModelState.IsValid)
-            {
-                if (model.Password != model.ConfirmPassword)
+                var captchaResponse = Request["g-recaptcha-response"];
+                var response = ValidateCaptcha(captchaResponse);
+                if (!response)
                 {
-                    ModelState.AddModelError("Password", "The password and confirmation password do not match.");
+                    ModelState.AddModelError("Captcha", "Please Complete Google Captcha");
                     model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
                     return View("Register", model);
                 }
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = !confirmEmailAddress };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var confirmEmailAddress = System.Convert.ToBoolean(ConfigurationManager.AppSettings["ConfirmEmailOnRegister"]);
+                
+                if(model.Email.Contains("thinkmoney.co.uk"))
+                    confirmEmailAddress = false;
+
+                if (ModelState.IsValid)
                 {
-
-                    _logger.Log(LogLevel.Info, model.Email + " Evenyt id = " + model.EventId);
-                    var myEvent = context.Events.FirstOrDefault(a => a.Id == model.EventId);
-
-                    var player = new Player
+                    if (model.Password != model.ConfirmPassword)
                     {
-                        Id = user.Id
-                        , DisplayName = model.DisplayName
-                        , PlayerName = model.DisplayName // both the same//
-                        , CreatedDateTime = DateTime.UtcNow
-                        , ModifiedDateTime = DateTime.UtcNow
-                    };
+                        ModelState.AddModelError("Password", "The password and confirmation password do not match.");
+                        model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                        return View("Register", model);
+                    }
 
-                    if (confirmEmailAddress)
-                        player.EmailConfirmedDateTime = DateTime.MinValue;
-
-                    _logger.Log(LogLevel.Info, model.Email + " Adding player, Display name = " + model.DisplayName);
-
-                    context.Players.Add(player);
-
-                    if (myEvent != null)
+                    var nbrWithSameDisplayName = context.Players.Count(a => a.DisplayName == model.DisplayName);
+                    if (nbrWithSameDisplayName != 0)
                     {
-                        var eventPlayer = new EventPlayer
+                        ModelState.AddModelError("Password", "This display name is already taken");
+                        model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                        return View("Register", model);
+                    }
+
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = !confirmEmailAddress };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+
+                        _logger.Log(LogLevel.Info, model.Email + " Event id = " + model.EventId);
+                        var myEvent = context.Events.FirstOrDefault(a => a.Id == model.EventId);
+
+                        var player = new Player
                         {
-                            EventId = model.EventId,
-                            PlayerId = user.Id,
-                            Enabled = true,
-                            CreatedDateTime = DateTime.UtcNow,
-                            ModifiedDateTime = DateTime.UtcNow
+                            Id = user.Id
+                            , DisplayName = model.DisplayName
+                            , PlayerName = model.DisplayName // both the same//
+                            , CreatedDateTime = DateTime.UtcNow
+                            , ModifiedDateTime = DateTime.UtcNow
                         };
-                        context.EventPlayers.Add(eventPlayer);
 
-                        var defaultPoolId = myEvent.DefaultPoolId;
-                        if (defaultPoolId > 0)
+                        if (confirmEmailAddress)
+                            player.EmailConfirmedDateTime = DateTime.MinValue;
+
+                        _logger.Log(LogLevel.Info, model.Email + " Adding player, Display name = " + model.DisplayName);
+
+                        context.Players.Add(player);
+
+                        if (myEvent != null)
                         {
-                            // Add the player to be associated to the global pool
-                            var poolPlayer = new PoolPlayer
+                            var eventPlayer = new EventPlayer
                             {
-                                Enabled = true,
-                                CreatedDateTime = DateTime.UtcNow,
-                                ModifiedDateTime = DateTime.UtcNow,
-                                PlayerId = user.Id,
-                                PoolId = defaultPoolId
-                            };
-                            context.PoolPlayers.Add(poolPlayer);
-
-                            var globalPoolPlayer = new EventPoolPlayer
-                            {
-                                PoolId = defaultPoolId,
-                                PlayerId = user.Id,
                                 EventId = model.EventId,
-                                AdminApprovedDateTime = DateTime.UtcNow,
+                                PlayerId = user.Id,
                                 Enabled = true,
                                 CreatedDateTime = DateTime.UtcNow,
                                 ModifiedDateTime = DateTime.UtcNow
                             };
-                            context.EventPoolPlayers.Add(globalPoolPlayer);
+                            context.EventPlayers.Add(eventPlayer);
+
+                            var defaultPoolId = myEvent.DefaultPoolId;
+                            if (defaultPoolId > 0)
+                            {
+                                // Add the player to be associated to the global pool
+                                var poolPlayer = new PoolPlayer
+                                {
+                                    Enabled = true,
+                                    CreatedDateTime = DateTime.UtcNow,
+                                    ModifiedDateTime = DateTime.UtcNow,
+                                    PlayerId = user.Id,
+                                    PoolId = defaultPoolId
+                                };
+                                context.PoolPlayers.Add(poolPlayer);
+
+                                var globalPoolPlayer = new EventPoolPlayer
+                                {
+                                    PoolId = defaultPoolId,
+                                    PlayerId = user.Id,
+                                    EventId = model.EventId,
+                                    AdminApprovedDateTime = DateTime.UtcNow,
+                                    Enabled = true,
+                                    CreatedDateTime = DateTime.UtcNow,
+                                    ModifiedDateTime = DateTime.UtcNow
+                                };
+                                context.EventPoolPlayers.Add(globalPoolPlayer);
+                            }
                         }
+
+                        _logger.Log(LogLevel.Info, model.Email + " player saved ok");
+
+                        // If this is me, then the pool will not yet have been created
+                        if (user.Email == "pete@salsbury.co.uk")
+                        {
+                            UserManager.AddToRole(user.Id, "Admin");
+                        }
+                        else
+                        {
+                            UserManager.AddToRole(user.Id, "Player");
+                        }
+
+                        _logger.Log(LogLevel.Info, model.Email + " role saved ok");
+
+                        await Task.Run(() => context.SaveChanges());
+                        context.Dispose();
+
+                        _logger.Log(LogLevel.Info, model.Email + " changes saved to database ok");
+
+                            _logger.Log(LogLevel.Info, model.Email + " confirm email address = " + confirmEmailAddress.ToString());
+
+                            if (confirmEmailAddress)
+                        {
+                            // Send an email with this link
+                            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code },
+                                Request.Url.Scheme);
+                            await UserManager.SendEmailAsync(user.Id, "Confirm your account",
+                                "Thank you for registering  with predictioncomp.com.<br><br>Please confirm your account by clicking this link <a href=\"" + callbackUrl + "\">" + callbackUrl + "</a>");
+                            return RedirectToAction("RegisterSendCodeNotification", "Account");
+                        }
+                        else
+                        {
+                            await SignInManager.SignInAsync(user, false, false);
+                        }
+
+                        return RedirectToAction("Index", "Home");
                     }
 
-                    _logger.Log(LogLevel.Info, model.Email + " player saved ok");
-
-                    // If this is me, then the pool will not yet have been created
-                    if (user.Email == "pete@salsbury.co.uk")
-                    {
-                        UserManager.AddToRole(user.Id, "Admin");
-                    }
-                    else
-                    {
-                        UserManager.AddToRole(user.Id, "Player");
-                    }
-
-                    _logger.Log(LogLevel.Info, model.Email + " role saved ok");
-
-                    await Task.Run(() => context.SaveChanges());
-                    context.Dispose();
-
-                    _logger.Log(LogLevel.Info, model.Email + " changes saved to database ok");
-
-                        _logger.Log(LogLevel.Info, model.Email + " confirm email address = " + confirmEmailAddress.ToString());
-
-                        if (confirmEmailAddress)
-                    {
-                        // Send an email with this link
-                        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code },
-                            Request.Url.Scheme);
-                        await UserManager.SendEmailAsync(user.Id, "Confirm your account",
-                            "Thank you for registering  with predictioncomp.com.<br><br>Please confirm your account by clicking this link <a href=\"" + callbackUrl + "\">" + callbackUrl + "</a>");
-                        return RedirectToAction("RegisterSendCodeNotification", "Account");
-                    }
-                    else
-                    {
-                        await SignInManager.SignInAsync(user, false, false);
-                    }
-
-                    return RedirectToAction("Index", "Home");
+                    AddErrors(result);
                 }
 
-                AddErrors(result);
-            }
-
-            model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
-            return View("Register", model);
+                model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                return View("Register", model);
 
             }
 
             catch (Exception e)
             {
-                _logger.Log(LogLevel.Info,model.Email + " has errored. Error is as follows --> " + e.Message);
+                _logger.Log(LogLevel.Info,model.Email + " has errored registering. Error is as follows --> " + e.Message);
                 throw;
             }
 
@@ -377,25 +391,107 @@ namespace Predict.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null) return View("Error");
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-
-            // If user successfully clicked on the email link to activate account, then set the db
-            var context = new ApplicationDbContext();
-
-            var player = context.Players.FirstOrDefault(a => a.Id == userId);
-            if (player != null)
+            try
             {
-                player.EmailConfirmedDateTime = DateTime.UtcNow;
-                player.ModifiedDateTime = DateTime.UtcNow;
-                context.Players.AddOrUpdate(player);
-                await Task.Run(() => context.SaveChanges());
+
+                _logger.Log(LogLevel.Info, "confirming email starting");
+                _logger.Log(LogLevel.Info, "userid --> " + userId);
+                _logger.Log(LogLevel.Info, "code --> " + code);
+
+                if (userId == null || code == null) return View("Error");
+
+                _logger.Log(LogLevel.Info, "both vars are not null");
+                var result = await UserManager.ConfirmEmailAsync(userId, code);
+                if (result.Succeeded)
+                {
+                    _logger.Log(LogLevel.Info, "email confirmed");
+                    // If user successfully clicked on the email link to activate account, then set the db
+                    var context = new ApplicationDbContext();
+
+                    var player = context.Players.FirstOrDefault(a => a.Id == userId);
+                    if (player != null)
+                    {
+                        player.EmailConfirmedDateTime = DateTime.UtcNow;
+                        player.ModifiedDateTime = DateTime.UtcNow;
+                        context.Players.AddOrUpdate(player);
+                        await Task.Run(() => context.SaveChanges());
+                    }
+
+                    context.Dispose();
+                    return View("ConfirmEmail");
+                }
+                else
+                {
+                    _logger.Log(LogLevel.Info, "email not confirmed");
+                    _logger.Log(LogLevel.Info, result.Errors.First);
+                    return View("Error");
+                }
+
             }
-
-            context.Dispose();
-
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Info,  e.Message);
+                throw;
+            }
         }
+
+        // GET: /Account/Login
+        [AllowAnonymous]
+        public ActionResult ResendEmailToken(string returnUrl)
+        {
+            var resendEmailTokenModel = new ResendEmailTokenModel();
+            ViewBag.ReturnUrl = returnUrl;
+            return View(resendEmailTokenModel);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResendEmailToken(ResendEmailTokenModel resendEmailTokenModel)
+        {
+           var user = UserManager.FindByName(resendEmailTokenModel.Email);
+            if (user != null)
+            {
+                if (!user.EmailConfirmed)
+                {
+                    string code = UserManager.GenerateEmailConfirmationToken(user.Id);
+
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code },
+                        Request.Url.Scheme);
+ 
+                    UserManager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+                    return RedirectToAction("RegisterSendCodeNotification", "Account");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email Address already confirmed");
+                    return View(resendEmailTokenModel);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Email Address Not Found");
+                return View(resendEmailTokenModel);
+            }
+        }
+
+        //private void SendEmailConfirmationToken(string email);
+        //{
+        //    var user = UserManager.FindByName(email);
+        //    //if (user != null)
+        //    //{
+        //    //    if (!user.EmailConfirmed)
+        //    //    {
+        //    //        string code = manager.GenerateEmailConfirmationToken(user.Id);
+        //    //        string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
+        //    //        manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+
+        //    //        FailureText.Text = "Confirmation email sent. Please view the email and confirm your account.";
+        //    //        ErrorMessage.Visible = true;
+        //    //        ResendConfirm.Visible = false;
+        //    //    }
+        //    //}
+        //}
 
         //
         // GET: /Account/ForgotPassword
@@ -617,26 +713,37 @@ namespace Predict.Controllers
 
         public bool ValidateCaptcha(string response)
         {
-            bool isLocal = HttpContext.Request.IsLocal;
-            if (isLocal)
+            try
             {
-                return true;
+
+                bool isLocal = HttpContext.Request.IsLocal;
+                if (isLocal)
+                {
+                    return true;
+                }
+                else
+                {
+                    string secret = "6LdmK4IaAAAAAKASSz-RCWhCPPPSP9demqX0sGu0";
+
+                    var client = new WebClient();
+                    var reply = client.DownloadString(string.Format(
+                        "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
+
+                    GoogleCaptchaResponse myDeserializedClass =
+                        JsonConvert.DeserializeObject<GoogleCaptchaResponse>(reply);
+                    _logger.Log(LogLevel.Info, reply);
+
+                    return myDeserializedClass.success;
+                }
             }
-            else
+            catch (Exception e)
             {
-                string secret = "6LdmK4IaAAAAAKASSz-RCWhCPPPSP9demqX0sGu0";
+                {
+                    _logger.Log(LogLevel.Info, " Google captcha has failed. Error is as follows --> " + e.Message);
 
-                var client = new WebClient();
-                var reply = client.DownloadString(string.Format(
-                    "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
-
-                GoogleCaptchaResponse myDeserializedClass = JsonConvert.DeserializeObject<GoogleCaptchaResponse>(reply);
-                _logger.Log(LogLevel.Info, reply);
-
-                return myDeserializedClass.success;
+                    return true;
+                }
             }
-
-  
         }
 
         #region Helpers

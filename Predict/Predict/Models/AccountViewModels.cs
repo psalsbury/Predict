@@ -56,6 +56,14 @@ namespace Predict.Models
         [Display(Name = "Remember me?")] public bool RememberMe { get; set; }
     }
 
+    public class ResendEmailTokenModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+
     public class RegisterViewModel
     {
         [Required]

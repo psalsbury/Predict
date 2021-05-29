@@ -10,6 +10,10 @@
 @using (Html.BeginForm("SendMessage", "Home"))
 
 {
+    @Html.Label("Email Address")
+    @Html.TextBox("email", "",new {@class = "form-control"})
+
+    @Html.Label("Your Query")
     @Html.TextArea("message", new {@class = "form-control", rows = 8})
     <br/>
 
@@ -18,7 +22,7 @@
         <input type="submit" value="Send" class="btn btn-success" onclick="return ValidateForm()"/>
     </div>
 }
-<script>
+<script type="text/javascript">
 
     function ValidateForm() {
 
@@ -26,7 +30,15 @@
             alert("Please enter a message");
             return false;
         }
+
+        if (document.getElementById("email").value === "") {
+            alert("Please enter an email address");
+            return false;
+        }
+
+
         return true;
     }
 
 </script>
+

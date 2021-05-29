@@ -1,0 +1,47 @@
+﻿@model Predict.Models.ResendEmailTokenModel
+
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<div class="col-md-12" style="        background-image: url('../images/footyimage.jpg');
+                                      background-repeat: no-repeat;
+                                      background-color: rgba(255,255,255,0.6);
+                                      background-blend-mode: lighten;
+                                      background-size: cover; ">
+    <div>
+        <section id="loginForm">
+            @using (Html.BeginForm("ResendEmailToken", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "LoginForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Resend Email Activation Code</h4>
+                <br />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+
+                        <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
+                        </div>
+                        <br />
+                        <input type="submit" value="Send Email" class="btn btn-success" />
+                    </div>
+                </div>
+
+            }
+        </section>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

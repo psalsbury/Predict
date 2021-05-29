@@ -21,6 +21,8 @@ namespace Predict.Models
         
         [DefaultValue("false")] public bool PremiumPlayer { get; set; }
 
+        public int? SupportTeamId { get; set; }
+
         [ForeignKey("Id")] public ApplicationUser AspNetUser { get; set; }
 
         [Column(TypeName = "datetime2")] public DateTime CreatedDateTime { get; set; }
