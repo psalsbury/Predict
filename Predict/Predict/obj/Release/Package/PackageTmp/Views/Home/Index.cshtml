@@ -1,8 +1,12 @@
 ﻿@model Predict.Models.EventPlayer
 <div class="style:">
-    @if (Context.User.Identity.IsAuthenticated)
+    @if (Context.User.Identity.IsAuthenticated && Model != null)
     {
         @Html.Partial("LoggedOn")
+    }
+    else if (Context.User.Identity.IsAuthenticated && Model == null)
+    {
+        @Html.Partial("LoggedOnNoEvents")
     }
     else
     {

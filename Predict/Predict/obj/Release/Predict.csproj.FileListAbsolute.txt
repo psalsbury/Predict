@@ -582,3 +582,4 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.DateTime2.resour
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.AutoGen.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.odds.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.SupportTeamId.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.PredsEntered.resources

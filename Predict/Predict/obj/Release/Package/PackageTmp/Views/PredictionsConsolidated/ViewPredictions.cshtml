@@ -1,7 +1,10 @@
-﻿@model Predict.ViewModels.PredictionsConsolidatedViewModel
+﻿@using Microsoft.AspNet.Identity
+@model Predict.ViewModels.PredictionsConsolidatedViewModel
 
 @{
     ViewBag.Title = Model.Player.DisplayName + "'s Predictions";
+    var showKOpPreds = DateTime.UtcNow > System.Convert.ToDateTime("23 Jun 2021 19:00" )? true : false;
+    var showKBonusPreds = DateTime.UtcNow > System.Convert.ToDateTime("11 Jul 2021 19:00" )? true : false;
 }
 
 <nav aria-label="breadcrumb">
@@ -59,8 +62,15 @@ else
         {
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
-
-                @Html.Partial("KoFixturePredictions", Model.KoFixturePredictionViewModel)
+                
+                @if (showKOpPreds | Model.PlayerId == User.Identity.GetUserId())
+                {
+                    @Html.Partial("KoFixturePredictions", Model.KoFixturePredictionViewModel)
+                }
+                else
+                {
+                    <h2>Predictions will be shown after the group matches have completed</h2>
+                }
 
             </div>
         }
@@ -68,18 +78,30 @@ else
         @if (Model.BonusQuestionPredictionsViewModel != null)
         {
             <div class="tab-pane" id="tab_3">
-
-                @Html.Partial("BonusQuestionPredictions", Model.BonusQuestionPredictionsViewModel)
-
+                
+                @if (showKBonusPreds | Model.PlayerId == User.Identity.GetUserId())
+                {
+                    @Html.Partial("BonusQuestionPredictions", Model.BonusQuestionPredictionsViewModel)
+                }
+                else
+                {
+                    <h2>Predictions will be shown after the final has started</h2>
+                }
             </div>
         }
 
         @if (Model.KoFixturePredictionViewModel != null)
         {
             <div class="tab-pane" id="tab_4">
-
-                @Html.Partial("LeagueTables", Model.LeagueTablesViewModel)
-
+                
+                @if (showKOpPreds | Model.PlayerId == User.Identity.GetUserId())
+                {
+                    @Html.Partial("LeagueTables", Model.LeagueTablesViewModel)
+                }
+                else
+                {
+                    <h2>Predictions will be shown after the group matches have completed</h2>
+                }
             </div>
         }
 

@@ -1,7 +1,8 @@
-﻿@model Predict.ViewModels.StatsKoViewModel
+﻿@using System.Web.UI.WebControls
+@model Predict.ViewModels.StatsKoViewModel
 
 @{
-    ViewBag.Title = "Knock Out Prediction Stats";
+    ViewBag.Title = @ViewBag.PoolName.ToString() + " Knock Out Prediction Stats";
 }
 
 <nav aria-label="breadcrumb">
@@ -10,7 +11,7 @@
             <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-            <a href="/StatsGroup?eventid=@ViewBag.EventId">Game Stats</a>
+            <a href="/StatsGroup?eventid=@ViewBag.EventId&poolid=@ViewBag.PoolId">@ViewBag.PoolName Game Stats</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">KO Stats</li>
     </ol>

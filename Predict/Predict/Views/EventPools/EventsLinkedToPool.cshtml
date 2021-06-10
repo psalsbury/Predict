@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Predict.Models
 @using System.Linq;
+@using Microsoft.Ajax.Utilities
 @model Predict.ViewModels.EventPoolsViewModel
 @{
     ViewBag.Title = "Add Comps to " + ViewBag.PoolName;
@@ -34,11 +35,18 @@
             <th>Pool Linked to this Comp</th>
         </tr>
 
-        @foreach (var item in Model.Events.OrderByDescending(a => a.StartDateTime))
+        @foreach (var item in Model.Events.Where(a => a.StartDateTime >= DateTime.UtcNow.AddMonths(-1)).OrderByDescending(a => a.StartDateTime))
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EventDescription)
+                    @if (item.EventDescription.IsNullOrWhiteSpace())
+                    {
+                        @Html.DisplayFor(modelItem => item.EventName)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.EventDescription)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(a => item.StartDateTime)

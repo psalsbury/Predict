@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Feature Request";
+}
+
+<p>
+
+    Please enter your feature request below, thank you.
+
+</p>
+@using (Html.BeginForm("SendFeatureRequest", "Home"))
+
+{
+    @Html.Label("Email Address")
+    @Html.TextBox("email", "",new {@class = "form-control"})
+
+    @Html.Label("Your Feature Request")
+    @Html.TextArea("message", new {@class = "form-control", rows = 8})
+    <br/>
+
+    <div class="form-group">
+        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+        <input type="submit" value="Send" class="btn btn-success" onclick="return ValidateForm()"/>
+    </div>
+}
+<script type="text/javascript">
+
+    function ValidateForm() {
+
+        if (document.getElementById("message").value === "") {
+            alert("Please enter a feature request");
+            return false;
+        }
+
+        if (document.getElementById("email").value === "") {
+            alert("Please enter an email address");
+            return false;
+        }
+
+
+        return true;
+    }
+
+</script>
+

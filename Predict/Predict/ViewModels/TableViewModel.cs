@@ -17,6 +17,9 @@ namespace Predict.ViewModels
         public int WinMargin { get; set; }
         public int KoScore { get; set; }
         public int TotalScore { get; set; }
+        public int? FixturePredictionsEntered { get; set; }
+        public int? KoPredictionsEntered { get; set; }
+        public int? BonusPredictionsEntered { get; set; }
     }
 
 }

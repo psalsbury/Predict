@@ -12,14 +12,21 @@
             {
                 var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
 
-                foreach (var eventPlayer in eventPlayers)
+                if (eventPlayers != null)
                 {
-                    <li>
-                        <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
-                            <i class="fa fa-trophy"></i> <span>@eventPlayer.Event.EventName</span>
-                        </a>
-                    </li>
 
+                    foreach (var eventPlayer in eventPlayers)
+                    {
+                        if (eventPlayer != null)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
+                                    <i class="fa fa-trophy"></i> <span>@eventPlayer.Event.EventName</span>
+                                </a>
+                            </li>
+                        }
+
+                    }
                 }
 
                 <li>
@@ -73,6 +80,11 @@
                     <li>
                         <a href="@Url.Action("ContactUs", "Home")">
                             <i class="fa fa-envelope"></i> <span>Contact Us</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("FeatureRequest", "Home")">
+                            <i class="fa fa-envelope"></i> <span>Feature Request</span>
                         </a>
                     </li>
                 </ul>

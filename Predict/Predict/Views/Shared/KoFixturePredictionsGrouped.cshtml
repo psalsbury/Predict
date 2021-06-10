@@ -5,6 +5,7 @@
     var nbrKoPredictionsToEnter = (int)Session["nbrFixtures*" + Model.EventId];
     var nbrFixturePredictionsEntered = (int) Session["nbrFixturePredictions*" + Model.EventId];
     var disableAutoFill = nbrKoPredictionsToEnter - nbrFixturePredictionsEntered == 0 ? "" : "disabled";
+    disableAutoFill = Predict.Helper.Cache.HasEventStarted(Model.EventId) ? "disabled" : disableAutoFill;
     string autoFilButtonName="";
 }
 

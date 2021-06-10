@@ -42,7 +42,17 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.SupportTeamId, new { @class = "col-md-2 control-label" })
                 <div class="col-md-8">
-                    @Html.DropDownListFor(m => m.SupportTeamId, new SelectList(Model.Teams, "Id", "TeamName"), new {@class = "col-md-2 control-label"})
+                    
+                    <select name="SupportTeamId" id="SupportTeamId" class="form-control">
+                        <option value="0"> Select Team.. </option>
+                        @if (Model.Teams != null)
+                        {
+                            foreach (var item in Model.Teams)
+                            {
+                                <option value="@item.Id" @(item.Id==Model.SupportTeamId?"selected":"")> @item.TeamName </option>
+                            }
+                        }
+                    </select>
                 </div>
              </div>
 

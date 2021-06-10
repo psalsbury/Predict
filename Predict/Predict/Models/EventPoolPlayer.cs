@@ -42,6 +42,9 @@ namespace Predict.Models
 
         public short TotalScore { get; set; } // Total score (all scores added from above) //
 
+        public int? FixturePredictionsEntered { get; set; }
+        public int? KoPredictionsEntered { get; set; }
+
         [Column(TypeName = "bit")]
         public bool Enabled { get; set; }
 

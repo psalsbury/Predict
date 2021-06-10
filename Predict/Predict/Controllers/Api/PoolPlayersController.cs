@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -155,6 +156,10 @@ namespace Predict.Controllers.Api
                 }
             }
             _context.SaveChanges();
+
+            // Ensure that the number of fixtures entered is correct
+            var eventParam = new SqlParameter("@strPlayerId", playerId);
+            _context.Database.ExecuteSqlCommand("EXEC spUpdateFixturesEntered @strPlayerId", eventParam);
 
             // Send email to pool admin when someone joins
             // May need to change this to be picked up by quartz 1 min job to send outstanding requests if errors

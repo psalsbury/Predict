@@ -536,7 +536,7 @@
             url: "/api/FixtureOdds/GetOddsByResultsForFixture/" + rapidApiFixtureId + "/" + homeResult + "/" + awayResult + "/" + homePrediction + "/" + awayPrediction + "/" + hideColouredOdds,
             success: function (data) {
                 var htmlTable = data.toString();
-                htmlTable = "<p><i>Odds are a snapshot before the game started</i><p>" + htmlTable;
+                htmlTable = "<p><i>Odds are refreshed daily up until kick off</i><p>" + htmlTable;
                 htmlTable = htmlTable.replaceAll("{0}", homeTeam);
                 htmlTable = htmlTable.replaceAll("{1}", awayTeam);
                 modal.find('.modal-body').html(htmlTable);

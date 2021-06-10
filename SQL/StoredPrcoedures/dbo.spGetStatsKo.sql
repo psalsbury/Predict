@@ -10,16 +10,25 @@ GO
 -- Create date: 24 Nov 2019
 -- Description:	Get details for the Ko Games
 -- =============================================
--- EXEC predict.dbo.spGetStatsKo 1
+-- EXEC predictioncomp.dbo.spGetStatsKo 1, 1
 CREATE PROCEDURE dbo.spGetStatsKo 
 (
 	@intEventId INT
+	, @intPoolId INT = 0
 )
 AS
 BEGIN
 
 	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 	SET NOCOUNT ON;
+
+	DECLARE @tblPlayers TABLE (PlayerId NVARCHAR(128));
+
+	INSERT INTO @tblPlayers
+	SELECT DISTINCT EPP.PlayerId
+	FROM EventPoolPlayers AS EPP
+	WHERE EPP.PoolId = CASE WHEN @intPoolId = 0 THEN EPP.PoolId ELSE @intPoolId END
+	AND EPP.Enabled = 1;
 
 	WITH CTE AS
 	(
@@ -30,6 +39,7 @@ BEGIN
 		FROM dbo.KoFixturePredictions AS KOFP
 		INNER JOIN dbo.KoFixtures AS KO ON KO.Id = KOFP.KoFixtureId
 		INNER JOIN dbo.Teams AS T ON T.Id = KOFP.Team1Id
+		INNER JOIN @tblPlayers AS TMP ON TMP.PlayerId = KOFP.PlayerId
 		WHERE KO.EventId = @intEventId
 		GROUP BY KOFP.Team1Id, KO.RoundOf, T.TeamName
 		UNION ALL 
@@ -40,6 +50,7 @@ BEGIN
 		FROM KoFixturePredictions AS KOFP
 		INNER JOIN KoFixtures AS KO ON KO.Id = KOFP.KoFixtureId
 		INNER JOIN dbo.Teams AS T ON T.Id = KOFP.Team2Id
+		INNER JOIN @tblPlayers AS TMP ON TMP.PlayerId = KOFP.PlayerId
 		WHERE KO.EventId = @intEventId
 		GROUP BY KOFP.Team2Id, KO.RoundOf, T.TeamName
 		UNION ALL
@@ -49,6 +60,7 @@ BEGIN
 			, COUNT(1) AS NumberOfPredictions
 		FROM dbo.KoWinningTeamPredictions AS KOWT
 		INNER JOIN dbo.Teams AS T ON T.Id = KOWT.TeamId
+		INNER JOIN @tblPlayers AS TMP ON TMP.PlayerId = KOWT.PlayerId
 		WHERE KOWT.EventId = @intEventId
 		GROUP BY KOWT.TeamId, T.TeamName
 	)

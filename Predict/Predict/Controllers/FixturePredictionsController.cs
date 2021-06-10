@@ -208,6 +208,17 @@ namespace Predict.Controllers
                     }
             }
 
+            var predictionsEntered = fixturePredictionsViewModel.FixturePredictions.Count(a => a.AwayPrediction!=null && a.HomePrediction !=null);
+            var eventPoolPlayers = _context.EventPoolPlayers.Where(a => a.PlayerId == userId && a.EventId == eventId)
+                .ToList();
+
+            foreach (var eventPoolPlayer in eventPoolPlayers)
+            {
+                eventPoolPlayer.FixturePredictionsEntered = predictionsEntered;
+                eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                _context.EventPoolPlayers.AddOrUpdate(eventPoolPlayer);
+            }
+
             _context.SaveChanges();
             SessionHelper.RefreshFixturePredictions(Session, userId, eventId);
 

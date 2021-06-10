@@ -9,6 +9,7 @@
 
     var eventPlayer = Model;
     var eventId = eventPlayer.EventId;
+    var compStarted = Predict.Helper.Cache.HasEventStarted(eventId);
 
     if (eventId > 0)
     {
@@ -88,6 +89,7 @@
             }
             @if (nbrKoPredictionsToEnter > 0)
             {
+                
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-@koPredictionBox">
@@ -100,9 +102,12 @@
                         <div class="icon">
                             <i class="ion ion-ios-football-outline"></i>
                         </div>
-                        <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId" class="small-box-footer">
-                            Enter them here <i class="fa fa-arrow-circle-right"></i>
-                        </a>
+
+                            <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId" class="small-box-footer">
+                                @(compStarted==true?"View":"Enter") them here <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+ 
+
                     </div>
                 </div>
             }
@@ -146,58 +151,65 @@
             </div>
 
         </div>
-
-
-
-        foreach (var poolInfoViewModel in poolInfoViewModels)
+        if (nbrKoPredictionsToEnter > 0 && nbrKoPredictionsEntered < nbrKoPredictionsToEnter)
         {
-            var collapsedBox = "";
-            var image = "fa-minus";
-            if (!firstPass)
-            {
-                collapsedBox = "collapsed-box";
-                image = "fa-plus";
+            <text><p style="color:red;font-size:25px;">
+                    KO Predictions must be entered before 11th June 20:00 BST
+                </p>
+            </text>
+        }
 
-            }
+        <h3>Your Pools</h3>
 
-            <div class="box box-primary @collapsedBox">
+                foreach (var poolInfoViewModel in poolInfoViewModels)
+                {
+                    var collapsedBox = "";
+                    var image = "fa-minus";
+                    if (!firstPass && 1==2) //  added to ensure all pools are expanded
+                    {
+                        collapsedBox = "collapsed-box";
+                        image = "fa-plus";
 
-                <!-- MEMBER INFO dialog -->
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <b>@poolInfoViewModel.PoolName</b> Details
+                    }
 
-                        &nbsp;
-                        <a href="#"><span class="label label-info pull-right" data-toggle="modal" data-target="#modal-@poolInfoViewModel.PoolId">Member Info</span></a>
-                    </h3>
+                    <div class="box box-primary @collapsedBox">
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa @image"></i>
-                        </button>
-                    </div>
-                </div>
+                        <!-- MEMBER INFO dialog -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">
+                                <b>@poolInfoViewModel.PoolName</b> Details
 
-                <!-- / MODAL FORM FOR MEMBER INFORMATION -->
-                <div class="modal fade" id="modal-@poolInfoViewModel.PoolId">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                &nbsp;
+                                <a href="#"><span class="label label-info pull-right" data-toggle="modal" data-target="#modal-@poolInfoViewModel.PoolId">Member Info</span></a>
+                            </h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa @image"></i>
                                 </button>
-                                <h4 class="modal-title">@poolInfoViewModel.PoolName Member Information</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>@poolInfoViewModel.MemberInfo</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                             </div>
                         </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
+
+                        <!-- / MODAL FORM FOR MEMBER INFORMATION -->
+                        <div class="modal fade" id="modal-@poolInfoViewModel.PoolId">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">@poolInfoViewModel.PoolName Member Information</h4>
+                                    </div>
+                                    <div class="modal-body">
+                <p>@poolInfoViewModel.MemberInfo</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+                <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
                 </div>
 
 
@@ -209,12 +221,20 @@
                             <span class="info-box-icon bg-yellow">
                                 <i class="ion ion-ios-people-outline"></i>
                             </span>
+                            
+ 
                             <div class="info-box-content">
 
-                                <span class="info-box-text">Nbr of Members</span>
-                                <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+                                <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                    <span class="info-box-text">Nbr of Members</span>
 
+                                    <span class="label label-info pull-right">Pool Game Info</span>
+
+                                    <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+
+                                </a>
                             </div>
+
                         </li>
 
                         <!-- /.item -->
@@ -269,34 +289,34 @@
                         <!-- /.item -->
                     </ul>
                 </div>
-            </div>
+                </div>
 
-            firstPass = false;
-        }
+                firstPass = false;
+            }
 
-        if (poolInfoViewModels.Count() < ViewBag.nbrPoolsInEvent)
-        {
-            <div class="row">
-                <div class="col-lg-3 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-blue">
-                        <div class="inner">
-                            <h3>
-                                @ViewBag.nbrPoolsInEvent<sup style="font-size: 20px"> </sup>
-                            </h3>
-                            <p>Pools competing</p>
+            if (poolInfoViewModels.Count() < ViewBag.nbrPoolsInEvent)
+            {
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-blue">
+                            <div class="inner">
+                                <h3>
+                                    @ViewBag.nbrPoolsInEvent<sup style="font-size: 20px"> </sup>
+                                </h3>
+                                <p>Pools competing</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="~/Table/BestPools?eventid=@eventId" class="small-box-footer">
+                                View them here <i class="fa fa-arrow-circle-right"></i>
+                            </a>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="~/Table/BestPools?eventid=@eventId" class="small-box-footer">
-                            View them here <i class="fa fa-arrow-circle-right"></i>
-                        </a>
                     </div>
                 </div>
-            </div>
+            }
+
+
         }
-
-
-    }
 }

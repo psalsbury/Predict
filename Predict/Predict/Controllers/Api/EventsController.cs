@@ -56,9 +56,11 @@ namespace Predict.Controllers.Api
 
             _context.Events.Remove(myEvent);
 
-            //Leaving EventGenerations so the audit trail of the generation is maintained.
-
             _context.SaveChanges();
+
+            Helper.Cache.SetEventCache();
+
+            //Leaving EventGenerations so the audit trail of the generation is maintained.
 
             return Ok();
         }

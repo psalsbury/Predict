@@ -13,9 +13,11 @@ namespace Predict.Models
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "Comp Name")]
         public string EventName { get; set; }
 
         [StringLength(100)]
+        [Display(Name = "Comp Description")]
         public string EventDescription { get; set; }
 
         public int DefaultPoolId { get; set; }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Predict.Models.EventFixture>
 
 @{
-    ViewBag.Title = "Games Stats";
+    ViewBag.Title = ViewBag.PoolName.ToString() + " Games Stats";
 }
 
 <nav aria-label="breadcrumb">
@@ -9,13 +9,13 @@
         <li class="breadcrumb-item">
             <a href="/Home/Index?eventid=@Model.First().EventId">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Game Stats</li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.PoolName Game Stats</li>
     </ol>
 </nav>
 
 @if (ViewBag.ShowKoStats == true)
 {
-    <a href="/StatsKO?eventId=@ViewBag.EventId">
+    <a href="/StatsKO?eventId=@ViewBag.EventId&poolid=@ViewBag.PoolId">
         <input type="button" class="btn btn-primary alignleft" value="KO Stats">
     </a>
 }
@@ -82,7 +82,7 @@
                 @Html.Hidden("FixtureDateTime", item.Fixture.FixtureDateTime.ToLongDateString() + " " + item.Fixture.FixtureDateTime.ToShortTimeString())
             </td>
             <td  class="row no-gutters">
-                <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
+                <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId&poolid=@ViewBag.PoolId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
             </td>
 
         </tr>

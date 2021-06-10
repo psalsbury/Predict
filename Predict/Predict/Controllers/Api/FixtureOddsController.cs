@@ -246,7 +246,7 @@ namespace Predict.Controllers.Api
             if (otherUserViewing)
                 return row;
 
-            var predictionScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homePrediction && a.AwayScore == awayPrediction);
+            var predictionScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homePrediction && a.AwayScore == awayPrediction && a.Odds > 0);
             if (predictionScore != null)
             {
                 if(homeResult==homePrediction && awayResult==awayPrediction)
@@ -266,7 +266,7 @@ namespace Predict.Controllers.Api
 
             if (homeResult != homePrediction || awayResult != awayPrediction)
             {
-                var resultScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homeResult && a.AwayScore == awayResult);
+                var resultScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homeResult && a.AwayScore == awayResult && a.Odds > 0);
                 if (resultScore != null)
                 {
                     row += "<p><i>Actual scoreline odds</i><p> " +

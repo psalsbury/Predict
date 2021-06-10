@@ -17,7 +17,7 @@ namespace Predict.Controllers
 
 
         // GET: StatsKO
-        public ActionResult Index(short eventId)
+        public ActionResult Index(short eventId, int poolId = 0)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -25,12 +25,23 @@ namespace Predict.Controllers
 
             var statsKoViewModel = new StatsKoViewModel
             {
-                StatsKoRoundOfs = _context.Database.SqlQuery<StatsKoRoundOf>("spGetStatsKo @intEventId"
+                StatsKoRoundOfs = _context.Database.SqlQuery<StatsKoRoundOf>("spGetStatsKo @intEventId, @intPoolId"
                     , new SqlParameter("@intEventId", eventId)
+                    , new SqlParameter("@intPoolID", poolId)
                 ).ToList()
             };
 
+            var poolName = "";
+            if (poolId != 0)
+            {
+                var pool = _context.Pools.FirstOrDefault(a => a.Id == poolId);
+                if (pool != null)
+                    poolName = pool.PoolName;
+            }
+
             ViewBag.EventId = eventId;
+            ViewBag.PoolId = poolId;
+            ViewBag.PoolName = poolName;
 
             return View(statsKoViewModel);
         }

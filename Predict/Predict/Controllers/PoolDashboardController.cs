@@ -28,11 +28,29 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
+
             var playerId = User.Identity.GetUserId();
+
+            var pools = _context.Pools.Where(a => a.AdminPlayerId == playerId).ToList();
+
+            var nbrPoolsWithComp = (from dr in _context.EventPools
+                join e in _context.Pools on dr.PoolId equals e.Id
+                where e.AdminPlayerId == playerId
+                select dr.PoolId).Distinct().Count();
+
+            var nbrPoolsOwnedButNotJoined = (from dr in _context.EventPoolPlayers
+                join e in _context.Pools on dr.PoolId equals e.Id
+                where e.AdminPlayerId == playerId
+                && dr.PlayerId == playerId
+                && dr.Enabled == true
+                select dr.PoolId).Distinct().Count();
+
             var poolDashboardViewModel = new PoolDashboardViewModel
             {
-                NumberOfPoolsAdminOf = _context.Pools.Count(a => a.AdminPlayerId == playerId)
+                NumberOfPoolsAdminOf = pools.Count()
                 , NumberOfPoolsMemberOf = _context.PoolPlayers.Count(a => a.PlayerId == playerId && a.Enabled==true)
+                , HasPoolWithoutComp = nbrPoolsWithComp < pools.Count() ? true : false
+                , HasOwnedPoolsButNotAMember = nbrPoolsOwnedButNotJoined < pools.Count ? true : false
             };
 
             return View(poolDashboardViewModel);

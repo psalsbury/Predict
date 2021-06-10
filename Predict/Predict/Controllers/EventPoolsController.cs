@@ -171,12 +171,9 @@ namespace Predict.Controllers
                     Helper.SessionHelper.RefreshPlayerPoolInfo(Session, User.Identity.GetUserId(), myEvent.Id);
                     _context.SaveChanges();
                 }
-
             }
 
-  
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "PoolDashboard");
         }
     }
 }

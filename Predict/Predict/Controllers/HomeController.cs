@@ -3,6 +3,7 @@ using Predict.Helper;
 using Predict.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web.Mvc;
 
 namespace Predict.Controllers
@@ -37,25 +38,28 @@ namespace Predict.Controllers
                         ((List<EventPlayer>)Session["EventPlayers"]).First(e => e.EventId == eventId);
                 }
 
-                // If the user has just added themselves to a pool, ensure the home page is refreshed
-                var cacheItem = "ForceUpdate*" + User.Identity.GetUserId() + "*" + eventPlayer.EventId;
-                var forcePoolRefresh = Helper.Cache.GetCachedItem(cacheItem) != null;
-                if (forcePoolRefresh)
+                if (eventPlayer != null)
                 {
-                    Helper.Cache.RemoveCachedItem(cacheItem);
+                    // If the user has just added themselves to a pool, ensure the home page is refreshed
+                    var cacheItem = "ForceUpdate*" + User.Identity.GetUserId() + "*" + eventPlayer.EventId;
+                    var forcePoolRefresh = Helper.Cache.GetCachedItem(cacheItem) != null;
+                    if (forcePoolRefresh)
+                    {
+                        Helper.Cache.RemoveCachedItem(cacheItem);
+                    }
+                    // Also want to set forcePoolRefresh to true if the cached event has been modified
+                    if (eventPlayer.Event.ModifiedDateTime < Helper.Cache.GetCachedEvent(eventPlayer.EventId).ModifiedDateTime)
+                    {
+                        forcePoolRefresh = true;
+                    }
+                    var nbrPoolsInEvent = _context.EventPools.Count(a => a.EventId == eventId && a.Enabled == true);
+                    ViewBag.nbrPoolsInEvent = nbrPoolsInEvent;
+
+                    // Used forcePoolRefresh as forceRefresh as fixtures could be added to a comp and that needs refreshing on users home page
+                    SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, forcePoolRefresh, forcePoolRefresh);
                 }
+ 
 
-                // Also want to set forcePoolRefresh to true if the cached event has been modified
-                if (eventPlayer.Event.ModifiedDateTime < Helper.Cache.GetCachedEvent(eventPlayer.EventId).ModifiedDateTime)
-                {
-                    forcePoolRefresh = true;
-                }
-
-                var nbrPoolsInEvent = _context.EventPools.Count(a => a.EventId == eventId);
-                ViewBag.nbrPoolsInEvent = nbrPoolsInEvent;
-
-                // Used forcePoolRefresh as forceRefresh as fixtures could be added to a comp and that needs refreshing on users home page
-                SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, forcePoolRefresh, forcePoolRefresh);
 
             }
             return View(eventPlayer);
@@ -78,6 +82,29 @@ namespace Predict.Controllers
                 Body = message,
                 Destination = "pete@salsbury.co.uk",
                 Subject = string.Format("Query from {0}", from ?? "Unknown")
+            };
+
+            Cache.SendEmail(emailMesesage);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult FeatureRequest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendFeatureRequest()
+        {
+            var message = Request["message"];
+            var from = User.Identity.Name + " " + Request["email"];
+
+            var emailMesesage = new IdentityMessage
+            {
+                Body = message,
+                Destination = "pete@salsbury.co.uk",
+                Subject = string.Format("Feature Request from {0}", from ?? "Unknown")
             };
 
             Cache.SendEmail(emailMesesage);

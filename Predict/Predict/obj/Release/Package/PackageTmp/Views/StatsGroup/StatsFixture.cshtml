@@ -19,7 +19,7 @@
             <a href="/Home/Index?eventid=@Model.EventId">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="../../StatsGroup?eventid=@Model.EventId">Game Stats</a>
+            <a href="../../StatsGroup?eventid=@Model.EventId&poolid=@ViewBag.PoolId">@ViewBag.PoolName Game Stats</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Data</li>
     </ol>

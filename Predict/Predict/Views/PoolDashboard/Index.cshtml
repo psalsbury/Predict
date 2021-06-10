@@ -72,6 +72,24 @@
             </div>
             <!-- /.info-box -->
         </div>
+
+        if (Model.HasPoolWithoutComp)
+        {
+   
+                <p style="color: red;font-size: medium">
+                    To link your pool to a prediction comp, such as Euro 2021, please select 'Manage Pools', then 'Comps'
+                </p>
+
+        }
+        if (Model.HasOwnedPoolsButNotAMember)
+        {
+     
+                <p style="color: red;font-size: medium">
+                    Don't forget to join your own pool! Click on 'Join a pool' and select your own pools to join it
+                </p>
+          
+        }
+        
     }
 
 </div>

@@ -9,6 +9,8 @@ namespace Predict.ViewModels
     {
         public int NumberOfPoolsAdminOf { get; set; }
         public int NumberOfPoolsMemberOf { get; set; }
+        public bool HasPoolWithoutComp { get; set; }
+        public bool HasOwnedPoolsButNotAMember { get; set; }
 
     }
 }

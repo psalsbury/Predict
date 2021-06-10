@@ -147,6 +147,7 @@ namespace Predict.Helper
             Logger.Info("SetEventCache - Start");
 
             var context = new ApplicationDbContext();
+            var earliestDate = DateTime.Today.AddYears(-4);
 
             var events = context.Events.ToList();
             SetCachedItem("Events", events);

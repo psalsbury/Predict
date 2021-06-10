@@ -44,7 +44,7 @@
                         <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
                         </div>
                         <br/>
-                        <input type="submit" value="Log in" class="btn btn-success"/>
+                        <input type="submit" id="btnSubmit"  value="Log in" class="btn btn-success"/>
                     </div>
                 </div>
 
@@ -72,6 +72,21 @@
 }
 <script>
     function onSubmit(token) {
+
         document.getElementById("LoginForm").submit();
     }
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#LoginForm").submit(function (e) {
+
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+
+            return true;
+
+        });
+    });
 </script>

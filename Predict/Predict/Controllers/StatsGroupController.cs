@@ -18,7 +18,7 @@ namespace Predict.Controllers
         }
 
         // GET: StatsGroup
-        public ActionResult Index(short eventId)
+        public ActionResult Index(short eventId, int poolId = 0)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -30,15 +30,27 @@ namespace Predict.Controllers
                 .Where(p => p.EventId == eventId)
                 .OrderBy(a => a.Fixture.FixtureDateTime).ToList();
 
+            var poolName = "";
+
+            if (poolId != 0)
+            {
+                var pool = _context.Pools.FirstOrDefault(a => a.Id == poolId);
+                if(pool!=null)
+                    poolName = pool.PoolName;
+            }
+
+
             var showKoStats = _context.KoFixtures.Any(a => a.EventId == eventId);
 
             ViewBag.ShowKoStats = showKoStats;
             ViewBag.EventId = eventId;
+            ViewBag.PoolId = poolId;
+            ViewBag.PoolName = poolName;
             return View(eventFixtures);
         }
 
         // GET: StatsFixture
-        public ActionResult StatsFixture(int id, short eventId)
+        public ActionResult StatsFixture(int id, short eventId, int poolId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -52,11 +64,24 @@ namespace Predict.Controllers
                     .SingleOrDefault(f => f.Id == id),
 
                 StatFixturePredictions = _context.Database.SqlQuery<StatFixturePrediction>(
-                    "spGetStatsFixture @intFixtureId"
+                    "spGetStatsFixture @intFixtureId, @intPoolId"
                     , new SqlParameter("@intFixtureId", id)
+                    , new SqlParameter("@intPoolId", poolId)
                 ).ToList()
             };
             statsFixtureViewModel.EventId = eventId;
+
+            var poolName = "";
+
+            if (poolId != 0)
+            {
+                var pool = _context.Pools.FirstOrDefault(a => a.Id == poolId);
+                if (pool != null)
+                    poolName = pool.PoolName;
+            }
+
+            ViewBag.PoolId = poolId;
+            ViewBag.PoolName = poolName;
 
             return View(statsFixtureViewModel);
         }

@@ -278,3 +278,4 @@ C:\repos\Predict\Predict\Predict\obj\Debug\Predict.pdb
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.AutoGen.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.odds.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.SupportTeamId.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.PredsEntered.resources

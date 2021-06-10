@@ -5,6 +5,7 @@ using Predict.ViewModels;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -37,6 +38,7 @@ namespace Predict.Controllers
 
             var userId = User.Identity.GetUserId();
             var eventId = koFixturePredictionViewModel.EventId;
+            var KoPredictionsEntered = 0;
 
             if (Cache.HasEventStarted(eventId))
                 throw new Exception(
@@ -86,6 +88,9 @@ namespace Predict.Controllers
                 _context.KoWinningTeamPredictions.AddOrUpdate(koWinningTeamPrediction);
             }
 
+            if(winningTeamId!=0)
+                KoPredictionsEntered += 1;
+
             // Loop round the rounds to save the rest of the KO predictions
             while (round > 1)
             {
@@ -98,10 +103,22 @@ namespace Predict.Controllers
                     int? team1Id = stringTeam1Id == "" ? 0 : Convert.ToInt32(stringTeam1Id);
                     int? team2Id = stringTeam2Id == "" ? 0 : Convert.ToInt32(stringTeam2Id);
                     if (team1Id == 0)
+                    {
                         team1Id = null;
+                    }
+                    else
+                    {
+                        KoPredictionsEntered += 1;
+                    }
 
                     if (team2Id == 0)
+                    {
                         team2Id = null;
+                    }
+                    else
+                    {
+                        KoPredictionsEntered += 1;
+                    }
 
                     var koFixturePrediction = koFixturePredictions.FirstOrDefault(k => k.KoFixtureId == koFixture.Id);
                     if (koFixturePrediction == null)
@@ -130,6 +147,16 @@ namespace Predict.Controllers
                 }
 
                 round = round / 2;
+            }
+
+            var eventPoolPlayers = _context.EventPoolPlayers.Where(a => a.PlayerId == userId && a.EventId == eventId)
+                .ToList();
+
+            foreach (var eventPoolPlayer in eventPoolPlayers)
+            {
+                eventPoolPlayer.KoPredictionsEntered = KoPredictionsEntered;
+                eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                _context.EventPoolPlayers.AddOrUpdate(eventPoolPlayer);
             }
 
             _context.SaveChanges();
@@ -171,6 +198,7 @@ namespace Predict.Controllers
             return View(koFixturePredictionViewModel);
         }
 
+
         // GET: KOFixturePredictionsGrouped
         // [Route("KoFixturePredictionsGrouped/{eventId}")]
         public ActionResult KoFixturePredictionsGrouped(short eventId)
@@ -182,7 +210,16 @@ namespace Predict.Controllers
             var loggedInUserId = User.Identity.GetUserId();
             var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, loggedInUserId, false, eventId);
 
-            return View(koFixturePredictionViewModel);
+            if (Cache.HasEventStarted(eventId))
+            {
+                koFixturePredictionViewModel.ReadOnly = true;
+                return View("KoFixturePredictions",koFixturePredictionViewModel);
+            }
+            else
+            {
+                return View(koFixturePredictionViewModel);
+            }
+
         }
 
         public KoFixturePredictionViewModel GetKoFixturePredictionViewModel(string loggedInUserId, string userId,

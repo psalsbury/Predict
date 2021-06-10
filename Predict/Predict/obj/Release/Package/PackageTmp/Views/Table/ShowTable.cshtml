@@ -25,6 +25,10 @@
     {
         fromBestPools = true;
     }
+    var nbrFixturePredictionsRequired = 36;
+    var nbrKOPredictionsRequired = 31;
+    var nbrBonusPredictionsRequired = 2;
+
 }
 
 <nav aria-label="breadcrumb">
@@ -85,8 +89,12 @@
 
     @foreach (var tableViewModel in Model)
     {
+
+        var nbrPredictionsEntered = (tableViewModel.FixturePredictionsEntered ??0) + (tableViewModel.KoPredictionsEntered??0) + (tableViewModel.BonusPredictionsEntered??0);
+        var playerHasOutstandingPredictions = (nbrPredictionsEntered < (nbrFixturePredictionsRequired + nbrKOPredictionsRequired  + nbrBonusPredictionsRequired));
+
         supportFlagFileLocation = "";
-        if (tableViewModel.SupportTeamId != null)
+        if (tableViewModel.SupportTeamId != null && tableViewModel.SupportTeamId != 0)
         {
             supportFlagFileLocation = tableViewModel.SupportTeamFlag.Contains("http") ? tableViewModel.SupportTeamFlag : flagFileLocation + "/" + tableViewModel.SupportTeamFlag;
         }
@@ -97,33 +105,43 @@
                 @tableViewModel.PoolPosition.ToString()
             </td>
             <td>
-                <a tabindex="0" data-toggle="popover" data-trigger="focus" data-content="@popupBody">@tableViewModel.DisplayName</a>
+                <a tabindex="0" data-toggle="popover" data-trigger="focus" data-content="@popupBody">
+                    @tableViewModel.DisplayName
+                </a>
+                @if (playerHasOutstandingPredictions)
+                {
+            <font color="red">*</font>
+                }
+
                 @if (supportFlagFileLocation != "")
                 {
                     <text>&nbsp;</text>
                     <img src="@Url.Content(supportFlagFileLocation)" height="20" />
                 }
             </td>
-        <td STYLE="text-align: center">
-            @tableViewModel.CorrectScore.ToString()
-        </td>
-        <td STYLE="text-align: center">
-            @((tableViewModel.CorrectResult + @tableViewModel.WinMargin).ToString())
-        </td>
-        @if (ViewBag.KOFixtures)
-        {
             <td STYLE="text-align: center">
-                @tableViewModel.KoScore.ToString()
+                @tableViewModel.CorrectScore.ToString()
             </td>
-        }
-        <td STYLE="text-align: center">
-            @tableViewModel.TotalScore.ToString()
-        </td>
-    </tr>
+            <td STYLE="text-align: center">
+                @((tableViewModel.CorrectResult + @tableViewModel.WinMargin).ToString())
+            </td>
+            @if (ViewBag.KOFixtures)
+            {
+                <td STYLE="text-align: center">
+                    @tableViewModel.KoScore.ToString()
+                </td>
+            }
+            <td STYLE="text-align: center">
+                @tableViewModel.TotalScore.ToString()
+            </td>
+        </tr>
     }
 
 </table>
-<br/>
+<font color="red">
+* = Predictions not complete
+</font>
+<br/><br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("ShowTable",

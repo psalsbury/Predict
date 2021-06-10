@@ -67,7 +67,9 @@ namespace Predict.Controllers
 
             var eventFixturesViewModel = new EventFixturesViewModel();
 
-            var leagues = _context.Leagues.ToList();
+            var leagues = _context.Fixtures.Where(a => a.FixtureDateTime >= DateTime.UtcNow)
+                .Include(a => a.League)
+                .Select(a => a.League).Distinct().ToList();
 
             eventFixturesViewModel.Leagues = leagues;
             eventFixturesViewModel.Event = Helper.Cache.GetCachedEvent(id);
