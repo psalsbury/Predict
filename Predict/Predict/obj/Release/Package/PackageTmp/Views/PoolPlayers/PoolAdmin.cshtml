@@ -20,10 +20,7 @@
     <thead>
     <tr>
         <th>
-            Player Name
-        </th>
-        <th>
-            Email 
+            Player Details
         </th>
         <th>
             &nbsp
@@ -37,14 +34,16 @@
                 <table>
                     <tr>
                         <td data-toggle="popover" title="Display Name: @Model.PoolPlayers[i].Player.DisplayName" data-content="Date Registered: @Model.PoolPlayers[i].Player.CreatedDateTime">
-                            @Html.DisplayFor(m => m.PoolPlayers[i].Player.PlayerName)
+                            <b>@Html.DisplayFor(m => m.PoolPlayers[i].Player.PlayerName)</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m.PoolPlayers[i].Player.AspNetUser.Email)
                         </td>
                     </tr>
                 </table>
 
-            </td>
-            <td>
-                @Html.DisplayFor(m => m.PoolPlayers[i].Player.AspNetUser.Email)
             </td>
             <td>
                 <button class="btn btn-danger js-delete btn-sm" value="Remove" dataPlayerId="@Model.PoolPlayers[i].PlayerId" dataPoolId="@Model.PoolPlayers[i].PoolId">Remove</button>

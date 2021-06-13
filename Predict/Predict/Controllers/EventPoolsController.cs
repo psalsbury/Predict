@@ -74,7 +74,7 @@ namespace Predict.Controllers
             foreach (Event myEvent in myEvents)
             {
                 var changeMade = false;
-                if (!myEvent.EventStarted)
+                if (!myEvent.EventFinished)
                 {
                     var myEventPool = myEventPools.FirstOrDefault(m => m.EventId == myEvent.Id);
                     var playingIn = Request["event_" + myEvent.Id];
@@ -126,7 +126,7 @@ namespace Predict.Controllers
                             .Where(a => a.PoolId == eventPoolsViewModel.PoolId)
                             .Where(a => a.EventId == myEvent.Id).ToList();
 
-                        //
+                        // TODO THE BELOW STATEMENT IS GETTING ALL PLAYERS IN THE EVENT ... AROUND 800
                         var eventPlayers = _context.EventPlayers.Where(a => a.EventId == myEvent.Id)
                             .Where(a => a.Enabled == true).ToList();
 
@@ -139,7 +139,7 @@ namespace Predict.Controllers
                             {
                                 var eventPoolPlayer =
                                 eventPoolPlayers.FirstOrDefault(a =>
-                                    a.PlayerId == poolPlayer.PlayerId && a.Enabled == false);
+                                    a.PlayerId == poolPlayer.PlayerId);
 
                                 if (eventPoolPlayer == null)
                                 {
@@ -154,7 +154,7 @@ namespace Predict.Controllers
                                         ModifiedDateTime = DateTime.UtcNow
                                     };
                                 }
-                                else
+                                else if (eventPoolPlayer.Enabled==false)
                                 {
                                     eventPoolPlayer.Enabled = true;
                                     eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;

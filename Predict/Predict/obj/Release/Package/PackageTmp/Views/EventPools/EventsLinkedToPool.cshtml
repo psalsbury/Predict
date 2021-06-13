@@ -54,11 +54,11 @@
                 <td>
                     @{ var exists = Model.EventPools.Exists(a => a.EventId == item.Id); }
 
-                    @if (item.EventStarted && exists)
+                    @if (item.EventFinished && exists)
                     {
                         <text>Yes</text>
                     }
-                    else if (item.EventStarted && !exists)
+                    else if (item.EventFinished && !exists)
                     {
                         <text>No</text>
                     }

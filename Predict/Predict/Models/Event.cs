@@ -32,6 +32,10 @@ namespace Predict.Models
         [Column(TypeName = "datetime2")]
         public DateTime EndDateTime { get; set; }
 
+        //public int FixturePredictions{ get; set; }
+        //public int KoPredictions { get; set; }
+        //public int BonusPredictions { get; set; }
+
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateTime { get; set; }
@@ -41,5 +45,7 @@ namespace Predict.Models
         public DateTime ModifiedDateTime { get; set; }
 
         public bool EventStarted => StartDateTime < DateTime.UtcNow;
+
+        public bool EventFinished => DateTime.UtcNow >= EndDateTime;
     }
 }

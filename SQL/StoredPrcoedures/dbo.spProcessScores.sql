@@ -10,7 +10,18 @@ GO
 -- Create date: 17 Feb 2019
 -- Description:	Calculate all the scores
 -- =============================================
--- EXEC dbo.spProcessScores '23 sep 2020'
+/* 
+BEGIN TRAN
+truncate table EventPoolPlayerPositionHistory
+UPDATE FIXTURES SET RESULTPROCESSED = 0 WHERE ID = 1
+
+select * from eventpoolplayers WHERE eventid = 1 AND POOLID = 2 ORDER BY POOLPOSITION 
+
+EXEC dbo.spProcessScores '11 Jun 2021'
+
+select * from eventpoolplayers WHERE eventid = 1 AND POOLID = 2 ORDER BY POOLPOSITION 
+ROLLBACK
+*/
 CREATE PROCEDURE dbo.spProcessScores 
 (
 	@dteDate DATE
@@ -77,6 +88,7 @@ BEGIN
 		, KoScore = 0
 		, BonusScore = 0
 		, TotalScore = 0
+		, PoolPosition = 0
 		, ModifiedDateTime = GETUTCDATE()
 	FROM EventPoolPlayers AS PP
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId;
@@ -155,7 +167,8 @@ BEGIN
 		, PP.[WinMargin] = CTE.WinMargin
 		, PP.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.EventPoolPlayers AS PP
-	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
+	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId
+	WHERE PP.[Enabled] = 1;
 	
 	IF EXISTS(SELECT 1 FROM [dbo].[EventsKo] WHERE EventId IN (SELECT EventID FROM #tmpEvents))
 	BEGIN
@@ -278,6 +291,7 @@ BEGIN
 		INNER JOIN dbo.EventPoolPlayers AS PP ON PP.PlayerId = KOP.PlayerID
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
 		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = PP.EventId
+		WHERE PP.[Enabled] = 1
 		GROUP BY KOP.PlayerID
 			, PP.PoolId
 			, KOP.RoundOf
@@ -301,7 +315,8 @@ BEGIN
 		FROM dbo.EventPoolPlayers AS PP
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
 		INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId
-		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = PP.EventId;
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = PP.EventId
+		WHERE PP.[Enabled] = 1;
 	END;
 
 	/* Update each PlayerPool record with the total score and the position within the league */
@@ -319,13 +334,15 @@ BEGIN
 		FROM dbo.EventPoolPlayers AS PP
 		INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 		INNER JOIN dbo.Players AS PL ON PL.Id = PP.PlayerId
+		WHERE PP.[Enabled] = 1
 	)
 	UPDATE PP
 	SET PP.PoolPosition = CTE.PoolPosition
 		, PP.TotalScore = CTE.TotalScore
 		, PP.ModifiedDateTime = GETUTCDATE()
 	FROM dbo.EventPoolPlayers AS PP
-	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId;
+	INNER JOIN CTE ON CTE.EventId = PP.EventId AND CTE.PoolId = PP.PoolId AND CTE.PlayerId = PP.PlayerId
+	WHERE PP.[Enabled] = 1;
 
 	/* Update the position history */
 	UPDATE PPPH
@@ -336,6 +353,7 @@ BEGIN
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 	WHERE PPPH.PositionDate = @dteDate
+	AND PP.[Enabled] = 1;
 
 	INSERT INTO dbo.EventPoolPlayerPositionHistory
 	(
@@ -358,7 +376,8 @@ BEGIN
 	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
 	INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId
 	LEFT OUTER JOIN dbo.EventPoolPlayerPositionHistory AS PPPH ON PPPH.PlayerId = PP.PlayerId AND PPPH.PoolId = PP.PoolId AND PPPH.EventId = PP.EventID AND PPPH.PositionDate = @dteDate
-	WHERE PPPH.PlayerId IS NULL;
+	WHERE PPPH.PlayerId IS NULL
+	AND PP.[Enabled] = 1;
 
 	/* Update Fixtures to be processed */
 	UPDATE FX

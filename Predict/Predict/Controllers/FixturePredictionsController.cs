@@ -212,13 +212,6 @@ namespace Predict.Controllers
             var eventPoolPlayers = _context.EventPoolPlayers.Where(a => a.PlayerId == userId && a.EventId == eventId)
                 .ToList();
 
-            foreach (var eventPoolPlayer in eventPoolPlayers)
-            {
-                eventPoolPlayer.FixturePredictionsEntered = predictionsEntered;
-                eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
-                _context.EventPoolPlayers.AddOrUpdate(eventPoolPlayer);
-            }
-
             _context.SaveChanges();
             SessionHelper.RefreshFixturePredictions(Session, userId, eventId);
 

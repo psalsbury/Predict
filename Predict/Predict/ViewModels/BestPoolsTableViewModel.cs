@@ -12,10 +12,10 @@ namespace Predict.ViewModels
         public string PoolName { get; set; }
         public int PoolId { get; set; }
         public short EventId { get; set; }
-        public int CorrectScore { get; set; }
-        public int CorrectResult { get; set; }
-        public int WinMargin { get; set; }
-        public int KoScore { get; set; }
-        public int TotalScore { get; set; }
+        public decimal CorrectScore { get; set; }
+        public decimal CorrectResult { get; set; }
+        public decimal WinMargin { get; set; }
+        public decimal KoScore { get; set; }
+        public decimal TotalScore { get; set; }
     }
 }

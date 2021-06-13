@@ -1,8 +1,24 @@
+add 3 columns to Events for number of fixtures/ko fixtures/bonus
+
+add 3 columns to EventPlayers for number of fixtures/ko fixtures/bonus predictions entered
+
+remove 2 columns from EventPlayerPools for the number of predictions entered
+
+if you navugate straight to a pool table it errors (probably becuse there is no referring page). This should not error
+
+change get table sp to use data from eventplayer instead of eventplayerpool
+
 breadcrump for readonly KO fixtures
+
+add feature to allow pool admins to see players in a comp (and add remove)
+
+pools table has a createdatetime of 0001-01-01
 
 when adding a comp name/desc take to make to add fixtures automatically
 
-screen to enter ko predictio results
+screen to enter ko prediction results
+
+feature to freeze predictions at the start of the comp if one of the pools has a freeze predictions option (freeze option a new feature in the pools table)
 
 show all score odds in the odds popup, in a second tab
 

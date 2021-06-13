@@ -16,6 +16,10 @@ namespace Predict.Models
         [Column(TypeName = "bit")]
         public Boolean Enabled { get; set; }
 
+        //public int? FixturePredictionsEntered { get; set; }
+        //public int? KoPredictionsEntered { get; set; }
+        //public int? BonusPredictionsEntered { get; set; }
+
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateTime { get; set; }

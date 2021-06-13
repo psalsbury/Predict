@@ -25,9 +25,18 @@
     {
         fromBestPools = true;
     }
-    var nbrFixturePredictionsRequired = 36;
-    var nbrKOPredictionsRequired = 31;
-    var nbrBonusPredictionsRequired = 2;
+
+    var eventId = System.Convert.ToInt16(ViewBag.EventId.ToString());
+    var nbrFixturePredictionsRequired = 2;
+    var nbrKOPredictionsRequired = 0;
+    var nbrBonusPredictionsRequired = 0;
+
+    if (eventId == 1)
+    {
+        nbrFixturePredictionsRequired = 36;
+        nbrKOPredictionsRequired = 31;
+        nbrBonusPredictionsRequired = 2;
+    }
 
 }
 

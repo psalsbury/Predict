@@ -34,7 +34,7 @@ namespace Predict.Controllers
             var poolPlayers = _context.PoolPlayers
                 .Include(p => p.Player)
                 .Include(u => u.Player.AspNetUser)
-                .Where(p => p.PoolId == id).ToList();
+                .Where(p => p.PoolId == id && p.Enabled==true).ToList();
 
             var globalPoolId =
                 Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
