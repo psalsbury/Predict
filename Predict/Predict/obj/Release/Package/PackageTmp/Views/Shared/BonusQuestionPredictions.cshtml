@@ -47,7 +47,8 @@
                 </td>
 
                 <td>
-                    @if (Model.ReadOnly || Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed)
+                    @if (Model.ReadOnly || Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed || (Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
+
                     {
                         @Html.DisplayFor(m => m.BonusQuestionPredictions[i].PredictedAnswer)
                     }

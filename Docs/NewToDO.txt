@@ -4,15 +4,11 @@ add 3 columns to EventPlayers for number of fixtures/ko fixtures/bonus predictio
 
 remove 2 columns from EventPlayerPools for the number of predictions entered
 
-if you navugate straight to a pool table it errors (probably becuse there is no referring page). This should not error
-
 change get table sp to use data from eventplayer instead of eventplayerpool
 
 breadcrump for readonly KO fixtures
 
 add feature to allow pool admins to see players in a comp (and add remove)
-
-pools table has a createdatetime of 0001-01-01
 
 when adding a comp name/desc take to make to add fixtures automatically
 

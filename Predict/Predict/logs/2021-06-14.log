@@ -1,0 +1,455 @@
+2021-06-14 21:55:33.0350 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-06-14 21:55:33.0909 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-06-14 21:55:33.0909 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-06-14 21:55:33.1028 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-06-14 21:55:33.1028 INFO RAMJobStore initialized.
+2021-06-14 21:55:33.1547 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-06-14 21:55:33.1687 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-06-14 21:55:33.1687 INFO Quartz scheduler version: 3.2.2.0
+2021-06-14 21:55:33.1796 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-06-14 21:55:33.3103 INFO Startup Configuration - Start
+2021-06-14 21:55:33.3103 INFO SetEventCache - Start
+2021-06-14 21:55:33.3562 INFO SetCachedItem = setting cache for Events
+2021-06-14 21:55:33.3562 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 20:55:33
+2021-06-14 21:55:33.3562 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-06-14 21:55:33.3562 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-06-14 21:55:33.3971 INFO SetNextResultCheckDateTime - Set League 403 next check date to 13/06/2021 14:55:00
+2021-06-14 21:55:33.3971 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 21:55:33.3971 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 21:55:33.3971 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 20:55:33
+2021-06-14 21:56:00.1102 INFO GetRapidApiResults = Getting results from RapidApi 403. FixtureDateTime = 13/06/2021 00:00:00, Now = 14/06/2021 20:56:00
+2021-06-14 21:56:00.1122 INFO FixturesByLeague - League = 403, EarliestDate = 13/06/2021 00:00:00
+2021-06-14 21:56:03.3175 INFO SetEventCache - Start
+2021-06-14 21:56:03.3175 INFO SetCachedItem = setting cache for Events
+2021-06-14 21:56:03.3175 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 20:56:03
+2021-06-14 21:56:03.3175 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2021-06-14 21:56:03.3325 INFO SetNextResultCheckDateTime - Set League 403 next check date to 14/06/2021 21:00:00
+2021-06-14 21:56:03.3325 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 21:56:03.3325 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 21:56:03.3325 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 20:56:03
+2021-06-14 21:56:03.3535 INFO DailyRapidApiLeagueCheck --> lastDate = 13/06/2021 00:00:00, Now = 14/06/2021 00:00:00
+2021-06-14 21:56:03.3844 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 15/06/2021 00:00:00
+2021-06-14 21:56:03.3844 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2021-06-14 21:56:03.5779 INFO FixturesByLeague - League = 403, EarliestDate = 15/06/2021 00:00:00
+2021-06-14 21:56:04.1284 INFO FixturesByOdds - League = 403
+2021-06-14 21:56:06.7987 INFO OddsByLeagueAndBookmaker - League = 403, pageNbr = 2
+2021-06-14 21:56:09.0088 INFO OddsByLeagueAndBookmaker - League = 403, pageNbr = 3
+2021-06-14 21:56:10.7303 INFO OddsByLeagueAndBookmaker - League = 403, pageNbr = 4
+2021-06-14 21:56:11.8164 INFO OddsByLeagueAndBookmaker - League = 403, pageNbr = 0
+2021-06-14 21:56:11.8693 ERROR DailyRapidApiLeagueCheck ERRORED with message --> The cast to value type 'System.DateTime' failed because the materialized value is null. Either the result type's generic parameter or the query must use a nullable type.
+2021-06-14 22:06:45.6103 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-06-14 22:06:45.6691 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-06-14 22:06:45.6861 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-06-14 22:06:45.7180 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-06-14 22:06:45.7369 INFO RAMJobStore initialized.
+2021-06-14 22:06:45.7409 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-06-14 22:06:45.7409 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-06-14 22:06:45.7409 INFO Quartz scheduler version: 3.2.2.0
+2021-06-14 22:06:45.7529 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-06-14 22:06:45.8765 INFO Startup Configuration - Start
+2021-06-14 22:06:45.8765 INFO SetEventCache - Start
+2021-06-14 22:06:45.9224 INFO SetCachedItem = setting cache for Events
+2021-06-14 22:06:45.9224 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 21:06:45
+2021-06-14 22:06:45.9264 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-06-14 22:06:45.9264 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-06-14 22:06:45.9613 INFO SetNextResultCheckDateTime - Set League 403 next check date to 14/06/2021 20:55:00
+2021-06-14 22:06:45.9613 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 22:06:45.9613 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 22:06:45.9613 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 21:06:45
+2021-06-14 22:07:00.0662 INFO GetRapidApiResults = Getting results from RapidApi 403. FixtureDateTime = 14/06/2021 00:00:00, Now = 14/06/2021 21:07:00
+2021-06-14 22:07:00.0662 INFO FixturesByLeagueByDate - League = 403, Date = 2021-06-14
+2021-06-14 22:07:02.7081 INFO SetEventCache - Start
+2021-06-14 22:07:02.7251 INFO SetCachedItem = setting cache for Events
+2021-06-14 22:07:02.7251 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 21:07:02
+2021-06-14 22:07:02.7430 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2021-06-14 22:07:02.7529 INFO SetNextResultCheckDateTime - Set League 403 next check date to 15/06/2021 17:55:00
+2021-06-14 22:07:02.7529 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 22:07:02.7529 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 22:07:02.7529 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 21:07:02
+2021-06-14 22:07:02.7529 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 15/06/2021 00:00:00
+2021-06-14 22:11:21.2792 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-06-14 22:11:21.3390 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-06-14 22:11:21.3749 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-06-14 22:11:21.4058 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-06-14 22:11:21.4228 INFO RAMJobStore initialized.
+2021-06-14 22:11:21.4267 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-06-14 22:11:21.4267 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-06-14 22:11:21.4267 INFO Quartz scheduler version: 3.2.2.0
+2021-06-14 22:11:21.4267 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-06-14 22:11:21.5624 INFO Startup Configuration - Start
+2021-06-14 22:11:21.5624 INFO SetEventCache - Start
+2021-06-14 22:11:21.6093 INFO SetCachedItem = setting cache for Events
+2021-06-14 22:11:21.6093 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 21:11:21
+2021-06-14 22:11:21.6153 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-06-14 22:11:21.6153 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-06-14 22:11:21.6472 INFO SetNextResultCheckDateTime - Set League 403 next check date to 15/06/2021 17:55:00
+2021-06-14 22:11:21.6472 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 22:11:21.6472 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 22:11:21.6472 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 21:11:21
+2021-06-14 22:12:00.0485 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 15/06/2021 00:00:00
+2021-06-14 22:13:58.3424 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2021-06-14 22:35:55.3593 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-06-14 22:35:55.4142 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-06-14 22:35:55.4541 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-06-14 22:35:55.4840 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-06-14 22:35:55.4990 INFO RAMJobStore initialized.
+2021-06-14 22:35:55.5030 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-06-14 22:35:55.5030 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-06-14 22:35:55.5030 INFO Quartz scheduler version: 3.2.2.0
+2021-06-14 22:35:55.5030 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-06-14 22:35:55.6396 INFO Startup Configuration - Start
+2021-06-14 22:35:55.6396 INFO SetEventCache - Start
+2021-06-14 22:35:55.6845 INFO SetCachedItem = setting cache for Events
+2021-06-14 22:35:55.6845 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 21:35:55
+2021-06-14 22:35:55.6845 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-06-14 22:35:55.6845 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-06-14 22:35:55.7214 INFO SetNextResultCheckDateTime - Set League 403 next check date to 15/06/2021 17:55:00
+2021-06-14 22:35:55.7214 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 22:35:55.7224 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 22:35:55.7224 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 21:35:55
+2021-06-14 22:36:00.0624 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 15/06/2021 00:00:00
+2021-06-14 22:38:11.3734 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-06-14 22:38:11.4283 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-06-14 22:38:11.4622 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-06-14 22:38:11.4901 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-06-14 22:38:11.5081 INFO RAMJobStore initialized.
+2021-06-14 22:38:11.5081 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-06-14 22:38:11.5081 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-06-14 22:38:11.5081 INFO Quartz scheduler version: 3.2.2.0
+2021-06-14 22:38:11.5241 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-06-14 22:38:11.6457 INFO Startup Configuration - Start
+2021-06-14 22:38:11.6457 INFO SetEventCache - Start
+2021-06-14 22:38:11.6906 INFO SetCachedItem = setting cache for Events
+2021-06-14 22:38:11.6906 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 21:38:11
+2021-06-14 22:38:11.6906 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-06-14 22:38:11.6906 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-06-14 22:38:11.7295 INFO SetNextResultCheckDateTime - Set League 403 next check date to 15/06/2021 17:55:00
+2021-06-14 22:38:11.7295 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 22:38:11.7295 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 22:38:11.7295 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 21:38:11
+2021-06-14 22:39:24.7476 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-06-14 22:39:24.8025 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-06-14 22:39:24.8204 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-06-14 22:39:24.8543 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-06-14 22:39:24.8743 INFO RAMJobStore initialized.
+2021-06-14 22:39:24.8802 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-06-14 22:39:24.8802 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-06-14 22:39:24.8802 INFO Quartz scheduler version: 3.2.2.0
+2021-06-14 22:39:24.8802 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-06-14 22:39:25.0099 INFO Startup Configuration - Start
+2021-06-14 22:39:25.0099 INFO SetEventCache - Start
+2021-06-14 22:39:25.0548 INFO SetCachedItem = setting cache for Events
+2021-06-14 22:39:25.0548 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 21:39:25
+2021-06-14 22:39:25.0548 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-06-14 22:39:25.0548 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-06-14 22:39:25.0917 INFO SetNextResultCheckDateTime - Set League 403 next check date to 15/06/2021 17:55:00
+2021-06-14 22:39:25.0917 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 22:39:25.0917 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 22:39:25.0917 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 21:39:25
+2021-06-14 22:39:53.0345 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1
+2021-06-14 22:39:53.0345 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1, with Expiry Date of 14/07/2021 21:39:53
+2021-06-14 22:39:54.6360 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1
+2021-06-14 22:39:54.6520 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1
+2021-06-14 22:39:54.6629 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59
+2021-06-14 22:39:54.6749 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59, with Expiry Date of 14/07/2021 21:39:54
+2021-06-14 22:40:00.0869 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 15/06/2021 00:00:00
+2021-06-14 22:40:36.5473 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1
+2021-06-14 22:40:37.3130 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1, with Expiry Date of 14/07/2021 21:40:37
+2021-06-14 22:40:38.6307 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1
+2021-06-14 22:40:38.6307 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6536 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59
+2021-06-14 22:40:38.6636 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59, with Expiry Date of 14/07/2021 21:40:38
+2021-06-14 22:40:59.1578 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1
+2021-06-14 22:41:04.0626 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1, with Expiry Date of 14/07/2021 21:40:59
+2021-06-14 22:41:25.0576 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1
+2021-06-14 22:41:25.0978 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.0978 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1
+2021-06-14 22:41:25.1187 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59
+2021-06-14 22:41:25.1287 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59, with Expiry Date of 14/07/2021 21:41:25
+2021-06-14 22:45:26.1336 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1
+2021-06-14 22:45:26.1336 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1456 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1
+2021-06-14 22:45:26.1456 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1715 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59
+2021-06-14 22:45:26.1755 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59, with Expiry Date of 14/07/2021 21:45:26
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59
+2021-06-14 22:45:54.0696 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59, with Expiry Date of 14/07/2021 21:45:54
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1
+2021-06-14 22:51:04.3118 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59
+2021-06-14 22:51:04.3158 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59, with Expiry Date of 14/07/2021 21:51:04
+2021-06-14 23:15:05.6245 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-06-14 23:15:05.6783 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-06-14 23:15:05.6972 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-06-14 23:15:05.7272 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-06-14 23:15:05.7491 INFO RAMJobStore initialized.
+2021-06-14 23:15:05.7541 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-06-14 23:15:05.7541 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-06-14 23:15:05.7541 INFO Quartz scheduler version: 3.2.2.0
+2021-06-14 23:15:05.7541 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-06-14 23:15:05.8848 INFO Startup Configuration - Start
+2021-06-14 23:15:05.8848 INFO SetEventCache - Start
+2021-06-14 23:15:05.9306 INFO SetCachedItem = setting cache for Events
+2021-06-14 23:15:05.9306 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/07/2021 22:15:05
+2021-06-14 23:15:05.9306 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-06-14 23:15:05.9306 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-06-14 23:15:05.9676 INFO SetNextResultCheckDateTime - Set League 403 next check date to 15/06/2021 17:55:00
+2021-06-14 23:15:05.9676 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-06-14 23:15:05.9676 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-06-14 23:15:05.9676 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/07/2021 22:15:05
+2021-06-14 23:15:34.8257 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1
+2021-06-14 23:15:34.8358 INFO SetCachedItem = setting cache for ForceUpdate*11e159fc-1a31-408c-9e26-340429f0c49d*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8358 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*17fb2a5b-3723-44fe-963b-3613ca98ae58*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*35da4c34-af03-4628-8244-cdcae8ce8357*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*47cc4b51-7cb3-4d2b-b539-afb0900b5144*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*4af802b8-981a-4a7b-87ee-159f53ec8b22*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*5a3735b6-9362-4a28-9136-7ea8aea2a449*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*673f2c79-0ad6-47f8-be0e-f54823f7325b*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*713b6d2f-5cae-4916-aecb-3f41522f93ca*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*ae2a5316-2778-463a-ac41-3c85923c5f85*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*af2341d1-14c9-4007-8693-5e160e669b0b*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*b4692f55-dacd-464e-b1c9-a8425f3406e0*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*b8a9c5d9-7b64-4a92-8de1-19e1495661c4*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*c74ebdca-f70c-4ded-a099-adf012b5d0f8*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*cecbb07d-5e8b-432d-8058-2830f621ff71*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*fc9ceaa0-67fc-4bba-9990-851f0283cc72*1, with Expiry Date of 14/07/2021 22:15:34
+2021-06-14 23:15:34.8538 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59
+2021-06-14 23:15:34.8628 INFO SetCachedItem = setting cache for ForceUpdate*e51699d7-7cf2-4565-905c-4a89c4f80063*59, with Expiry Date of 14/07/2021 22:15:34

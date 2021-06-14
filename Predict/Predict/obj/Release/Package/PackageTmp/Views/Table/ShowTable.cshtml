@@ -21,7 +21,7 @@
     string supportFlagFileLocation = "";
     var flagFileLocation = ConfigurationManager.AppSettings["FlagFileLocation"];
     var fromBestPools = false;
-    if (Request.UrlReferrer.ToString().Contains("BestPools"))
+    if (Request.UrlReferrer != null && Request.UrlReferrer.ToString().Contains("BestPools"))
     {
         fromBestPools = true;
     }

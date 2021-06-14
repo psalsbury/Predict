@@ -143,6 +143,16 @@ namespace Predict.Controllers
                 _context.Pools.Add(poolFromDb);
             }
 
+            var itemList = _context.EventPoolPlayers
+                .Include(e => e.Event)
+                .Where(a => a.PoolId == poolModel.Id && a.Event.EndDateTime >= DateTime.UtcNow)
+                .Select(x => new {x.PlayerId, x.EventId}).Distinct().ToList();
+
+            foreach (var item in itemList)
+            {
+                Helper.Cache.SetCachedItem("ForceUpdate*" + item.PlayerId + "*" + item.EventId, DateTime.Now.AddDays(7));
+            }
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "PoolDashboard");

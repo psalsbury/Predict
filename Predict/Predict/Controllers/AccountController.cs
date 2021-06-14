@@ -676,10 +676,20 @@ namespace Predict.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            // Clear session variables
-            SessionHelper.ClearSessionVariables(Session);
-
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            try
+            {
+                // Clear session variables
+                SessionHelper.ClearSessionVariables(Session);
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, "ERROR LOGGING OUT " + e.InnerException);
+                throw;
+            }
+            finally
+            {
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            }
             return RedirectToAction("Index", "Home");
         }
 

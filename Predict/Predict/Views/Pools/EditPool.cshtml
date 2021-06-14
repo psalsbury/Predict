@@ -41,7 +41,7 @@ else
     @Html.HiddenFor(model => model.KoLast2Points)
     @Html.HiddenFor(model => model.KoLast1Points)
     @Html.HiddenFor(model => model.InitialInfo)
-    @Html.HiddenFor(model => model.FreezePredictions)
+    @Html.HiddenFor(model => model.CreatedDateTime)
 
     <div class="box box-solid">
 
@@ -94,6 +94,19 @@ else
                         @Html.ValidationMessageFor(model => model.EmailNotifications, "", new { @class = "text-danger" })
                         <p>
                             <i>Ticking will ensure you receive an email when a player joins your pool</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FreezePredictions, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.FreezePredictions)
+                        @Html.ValidationMessageFor(model => model.FreezePredictions, "", new { @class = "text-danger" })
+                        <p>
+                            <i>Ticking will freeze all your pool members predictions when the first fixture has started</i>
                         </p>
                     </div>
                 </div>

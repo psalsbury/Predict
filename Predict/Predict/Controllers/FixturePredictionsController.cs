@@ -55,14 +55,20 @@ namespace Predict.Controllers
             var fixturePredictionsViewModel = new FixturePredictionsViewModel();
             var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
+            var myEvent = Helper.Cache.GetCachedEvent(eventId);
+
             if (userId == null)
                 userId = loggedInUserId;
 
             fixturePredictionsViewModel.OtherUserViewing = (userId != loggedInUserId);
             fixturePredictionsViewModel.UserId = userId;
+            fixturePredictionsViewModel.EventStartDateTime = myEvent.StartDateTime;
+            fixturePredictionsViewModel.EventEndDateTime = myEvent.EndDateTime;
 
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
             fixturePredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
+
+            fixturePredictionsViewModel.FreezeAllPredictions = ((List<PoolInfoViewModel>)Session["PoolInfo*" + eventId]).Any(a => a.FreezePredictions==true);
 
             // Get the existing predictions
             var predictionsExist =

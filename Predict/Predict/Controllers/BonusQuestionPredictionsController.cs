@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Predict.Models;
 using Predict.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -39,15 +40,19 @@ namespace Predict.Controllers
 
             var bonusQuestionPredictionsViewModel = new BonusQuestionPredictionsViewModel();
             var player = (Player)System.Web.HttpContext.Current.Session["Player"];
+            var myEvent = Helper.Cache.GetCachedEvent(eventId);
 
             bonusQuestionPredictionsViewModel.PlayerId = playerId;
             bonusQuestionPredictionsViewModel.EventId = eventId;
+            bonusQuestionPredictionsViewModel.EventStartDateTime = myEvent.StartDateTime;
+            bonusQuestionPredictionsViewModel.EventEndDateTime = myEvent.EndDateTime;
 
             var isPremiumPlayer = !(loggedInUserId != playerId && !player.PremiumPlayer);
             bonusQuestionPredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
 
-            var bonusQuestions = _context.BonusQuestions.Where(e => e.EventId == eventId);
+            bonusQuestionPredictionsViewModel.FreezeAllPredictions = ((List<PoolInfoViewModel>)Session["PoolInfo*" + eventId]).Any(a => a.FreezePredictions == true);
 
+            var bonusQuestions = _context.BonusQuestions.Where(e => e.EventId == eventId);
 
             // Get the existing bonus question predictions
             var bonusQuestionPredictions = _context.BonusQuestionPredictions

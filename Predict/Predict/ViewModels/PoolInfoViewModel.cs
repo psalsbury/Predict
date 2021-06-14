@@ -23,5 +23,7 @@ namespace Predict.ViewModels
         public int PlayersToApprove { get; set; }
 
         public int TotalNumberOfPlayers { get; set; }
+
+        public bool FreezePredictions { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Predict.Models;
+﻿using System;
+using Predict.Models;
 using System.Collections.Generic;
 using System.Security.AccessControl;
 
@@ -20,10 +21,16 @@ namespace Predict.ViewModels
 
         public string EventName { get; set; }
 
+        public DateTime EventStartDateTime { get; set; }
+
+        public DateTime EventEndDateTime { get; set; }
+
         public bool IsPremiumPlayer { get; set; }
 
         public bool AnyFixturesInTheFuture { get; set; }
 
         public Pool Pool { get; set; }
+
+        public bool FreezeAllPredictions { get; set; }
     }
 }
