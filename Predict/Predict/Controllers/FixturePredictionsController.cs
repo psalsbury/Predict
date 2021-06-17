@@ -68,7 +68,17 @@ namespace Predict.Controllers
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
             fixturePredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
 
-            fixturePredictionsViewModel.FreezeAllPredictions = ((List<PoolInfoViewModel>)Session["PoolInfo*" + eventId]).Any(a => a.FreezePredictions==true);
+            if (!fixturePredictionsViewModel.OtherUserViewing)
+            {
+
+                fixturePredictionsViewModel.FreezeAllPredictions = _context.EventPoolPlayers.Include(a => a.Event)
+                .Include(p => p.Pool)
+                .Where(p => p.Event.StartDateTime <= DateTime.UtcNow)
+                .Where(b => b.Event.EndDateTime >= DateTime.UtcNow)
+                .Where((c => c.PlayerId == userId))
+                .Where(d => d.EventId == eventId)
+                .Any(a => a.Pool.FreezePredictions == true);
+            }
 
             // Get the existing predictions
             var predictionsExist =

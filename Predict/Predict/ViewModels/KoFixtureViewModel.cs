@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Predict.Models;
 
 namespace Predict.ViewModels
 {
     public class KoFixtureViewModel
     {
         public List<EventTeam> EventTeams { get; set; }
-        public IList<string> Leagues { get; set; }
+        public List<League> Leagues { get; set; }
         public IList<short> RoundOfs { get; set; }
 
         public int Id { get; set; }
@@ -29,7 +30,7 @@ namespace Predict.ViewModels
 
         [StringLength(50)]
         [Display(Name = "Team 1 From League")]
-        public string Team1FromLeague { get; set; }
+        public string Team1FromLeagueId { get; set; }
 
         [Display(Name = "Team 1 From League - Position")]
         public int? Team1FromLeaguePosition { get; set; }
@@ -39,12 +40,15 @@ namespace Predict.ViewModels
 
         [StringLength(50)]
         [Display(Name = "Team 2 From League")]
-        public string Team2FromLeague { get; set; }
+        public string Team2FromLeagueId { get; set; }
 
         [Display(Name = "Team 2 From League - Position")]
         public int? Team2FromLeaguePosition { get; set; }
 
         [Display(Name = "Team 2- Fixture Id")] public int? Team2FromKoFixtureId { get; set; }
+
+        [Display(Name = "Team 1")] public int? Team1Id { get; set; }
+        [Display(Name = "Team 2")] public int? Team2Id { get; set; }
 
         [Required] public DateTime CreatedDateTime { get; set; }
 

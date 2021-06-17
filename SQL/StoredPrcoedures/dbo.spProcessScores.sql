@@ -17,9 +17,9 @@ UPDATE FIXTURES SET RESULTPROCESSED = 0 WHERE ID = 1
 
 select * from eventpoolplayers WHERE eventid = 1 AND POOLID = 2 ORDER BY POOLPOSITION 
 
-EXEC dbo.spProcessScores '11 Jun 2021'
+EXEC dbo.spProcessScores '17 Jun 2021'
 
-select * from eventpoolplayers WHERE eventid = 1 AND POOLID = 2 ORDER BY POOLPOSITION 
+select * from eventpoolplayers WHERCE eventid = 1 AND POOLID = 2 ORDER BY POOLPOSITION 
 ROLLBACK
 */
 CREATE PROCEDURE dbo.spProcessScores 
@@ -71,6 +71,8 @@ BEGIN
 	(EventId)
 	SELECT DISTINCT EventID
 	FROM #tmpEventPools;
+
+	SELECT * FROM #tmpEvents
 
 	/* Clear down the fixture prediction row */
 	UPDATE FP
@@ -172,7 +174,7 @@ BEGIN
 	
 	IF EXISTS(SELECT 1 FROM [dbo].[EventsKo] WHERE EventId IN (SELECT EventID FROM #tmpEvents))
 	BEGIN
-	
+	SELECT 1
 		/* Calculate the KO scores */
 		CREATE TABLE #tmpKOPredictions
 		(
@@ -195,6 +197,7 @@ BEGIN
 		FROM dbo.KoFixturePredictions AS KOFP
 		INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
 		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOF.EventId
+		WHERE KOFP.Team1Id	 IS NOT NULL
 
 		UNION ALL
 
@@ -204,6 +207,7 @@ BEGIN
 		FROM dbo.KoFixturePredictions AS KOFP
 		INNER JOIN dbo.KoFixtures AS KOF ON KOF.Id = KOFP.KoFixtureId
 		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOF.EventId
+		WHERE KOFP.Team2Id	 IS NOT NULL
 
 		UNION ALL
 		
@@ -211,7 +215,8 @@ BEGIN
 			, 1 
 			, KOW.TeamId
 		FROM dbo.KoWinningTeamPredictions AS KOW
-		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOW.EventId;
+		INNER JOIN #tmpEvents AS TMP ON TMP.[EventId] = KOW.EventId
+		WHERE KOW.TeamId IS NOT NULL;
 
 		/* De- Dupe any teams that are in the same round more than once */
 		WITH CTE AS
@@ -301,6 +306,15 @@ BEGIN
 			, PO.KoLast2Points
 			, PO.KoLast1Points;
 
+
+
+					SELECT PlayerID
+				, PoolId
+				, SUM(TeamsCorrect*RoundOfScore) AS KoScore
+			FROM #tmpKO
+			GROUP BY PlayerID
+				, PoolId;
+
 		WITH CTE AS
 		(
 			SELECT PlayerID
@@ -312,6 +326,7 @@ BEGIN
 		)
 		UPDATE PP
 		SET KoScore = CTE.KoScore
+			, PP.ModifiedDateTime = GETUTCDATE()
 		FROM dbo.EventPoolPlayers AS PP
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
 		INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId

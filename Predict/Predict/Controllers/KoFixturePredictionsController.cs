@@ -249,6 +249,10 @@ namespace Predict.Controllers
             };
             koFixturePredictionViewModel.EventTeams = LeagueTableHelper.GetEventTeams(_context, eventId);
 
+            koFixturePredictionViewModel.ActualTeams = _context.Database.SqlQuery<ActualTeam>(
+                "spGetKoResultTeams @intEventId"
+                , new System.Data.SqlClient.SqlParameter("@intEventId", eventId)).ToList();
+
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
             koFixturePredictionViewModel.IsPremiumPlayer = isPremiumPlayer;
 

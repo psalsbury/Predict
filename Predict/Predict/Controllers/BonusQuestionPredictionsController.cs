@@ -50,7 +50,16 @@ namespace Predict.Controllers
             var isPremiumPlayer = !(loggedInUserId != playerId && !player.PremiumPlayer);
             bonusQuestionPredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
 
-            bonusQuestionPredictionsViewModel.FreezeAllPredictions = ((List<PoolInfoViewModel>)Session["PoolInfo*" + eventId]).Any(a => a.FreezePredictions == true);
+            if (playerId == loggedInUserId)
+            {
+                bonusQuestionPredictionsViewModel.FreezeAllPredictions = _context.EventPoolPlayers.Include(a => a.Event)
+                    .Include(p => p.Pool)
+                    .Where(p => p.Event.StartDateTime <= DateTime.UtcNow)
+                    .Where(b => b.Event.EndDateTime >= DateTime.UtcNow)
+                    .Where((c => c.PlayerId == playerId))
+                    .Where(d => d.EventId == eventId)
+                    .Any(a => a.Pool.FreezePredictions == true);
+            }
 
             var bonusQuestions = _context.BonusQuestions.Where(e => e.EventId == eventId);
 
@@ -61,7 +70,6 @@ namespace Predict.Controllers
                 .Where(p => p.BonusQuestion.EventId == eventId)
                 .OrderBy(b => b.BonusQuestion.ToBeAnsweredByDateTime)
                 .ToList();
-
 
             foreach (var bonusQuestion in bonusQuestions)
             {

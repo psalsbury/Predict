@@ -14,7 +14,7 @@ when adding a comp name/desc take to make to add fixtures automatically
 
 screen to enter ko prediction results
 
-feature to freeze predictions at the start of the comp if one of the pools has a freeze predictions option (freeze option a new feature in the pools table)
+feedback page when submitting message
 
 show all score odds in the odds popup, in a second tab
 

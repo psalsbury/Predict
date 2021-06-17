@@ -4,10 +4,21 @@ using System.Collections.Generic;
 
 namespace Predict.ViewModels
 {
+    public class ActualTeam
+    {
+        public int RoundOf { get; set; }
+        public int TeamId { get; set; }
+    }
     public class KoFixturePredictionViewModel
     {
+        public struct ActualTeam
+        {
+            public int RoundOf;
+            public int TeamId;
+        }
         public Dictionary<int, int> FirstStageAutoFill;
         public Dictionary<int, int> RankedTeamsForAutoFill;
+        public List<Predict.ViewModels.ActualTeam> ActualTeams;
 
         public KoFixturePredictionViewModel()
         {

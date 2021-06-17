@@ -20,13 +20,13 @@ namespace Predict.Controllers
         }
 
         // GET: KOFixtures
-        public ActionResult Index(int Id)
+        public ActionResult Index(int id)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var fixtures = _context.KoFixtures.Where(p => p.EventId == Id).ToList();
+            var fixtures = _context.KoFixtures.Where(p => p.EventId == id).ToList();
             return View(fixtures);
         }
 
@@ -50,7 +50,7 @@ namespace Predict.Controllers
             koFixture.ModifiedDateTime = DateTime.UtcNow;
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "KoFixtures");
+            return RedirectToAction("Index", "KoFixtures", new {Id = koFixture.EventId});
         }
 
         public ActionResult Create(short eventId)
@@ -235,15 +235,16 @@ namespace Predict.Controllers
             for (var power = 0; power <= 4; power++)
                 koFixtureViewModel.RoundOfs.Add((short)Math.Pow(2, power));
 
-            var leagueNames = new List<string>();
+            var leagueNames = new List<League>();
             foreach (EventTeam eventTeam in koFixtureViewModel.EventTeams)
             {
                 var leagueName = eventTeam.LeagueName;
-                if (!leagueNames.Exists(a => a == leagueName))
+                if (!leagueNames.Exists(a => a.LeagueName == leagueName))
                 {
-                    leagueNames.Add(leagueName);
+                    leagueNames.Add(new League(){Id = eventTeam.LeagueId,LeagueName = leagueName});
                 }
             }
+            leagueNames.Add(new League() { Id = 0, LeagueName = "Calculated" });
             koFixtureViewModel.Leagues = leagueNames;
             koFixtureViewModel.EventId = eventId;
 

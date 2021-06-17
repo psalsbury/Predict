@@ -31,7 +31,7 @@
     </thead>
     @foreach (var item in Model)
     {
-        if (item.Team1FromLeague != null)
+        if (item.Team1FromLeagueId != null)
         {
             <tr>
                 <td>
@@ -50,8 +50,8 @@
                     @Html.DisplayFor(modelItem => item.ModifiedDateTime)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditKoFixture", new {id = item.Id}) |
-                    @Html.ActionLink("Delete", "DeleteKoFixture", new {id = item.Id})
+                    @Html.ActionLink("Edit", "EditKoFixture", new {id = item.Id, eventId = item.EventId}) |
+                    @Html.ActionLink("Delete", "DeleteKoFixture", new { id = item.Id, eventId = item.EventId })
                 </td>
             </tr>
         }
@@ -88,7 +88,7 @@
 
     @foreach (var item in Model)
     {
-        if (item.Team1FromLeague == null)
+        if (item.Team1FromLeagueId == null)
         {
             <tr>
                 <td>
@@ -113,8 +113,8 @@
                     @Html.DisplayFor(modelItem => item.ModifiedDateTime)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditKoFixture", new {id = item.Id}) |
-                    @Html.ActionLink("Delete", "DeleteKoFixture", new {id = item.Id})
+                    @Html.ActionLink("Edit", "EditKoFixture", new { id = item.Id, eventId = item.EventId }) |
+                    @Html.ActionLink("Delete", "DeleteKoFixture", new { id = item.Id, eventId = item.EventId })
                 </td>
             </tr>
         }
