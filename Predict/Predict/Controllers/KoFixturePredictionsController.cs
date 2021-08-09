@@ -149,14 +149,13 @@ namespace Predict.Controllers
                 round = round / 2;
             }
 
-            var eventPoolPlayers = _context.EventPoolPlayers.Where(a => a.PlayerId == userId && a.EventId == eventId)
-                .ToList();
-
-            foreach (var eventPoolPlayer in eventPoolPlayers)
+            // Set the number of ko predictions entered 
+            var eventPlayer = _context.EventPlayers.FirstOrDefault(a => a.PlayerId == userId && a.EventId == eventId);
+            if(eventPlayer != null)
             {
-                eventPoolPlayer.KoPredictionsEntered = KoPredictionsEntered;
-                eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
-                _context.EventPoolPlayers.AddOrUpdate(eventPoolPlayer);
+                eventPlayer.KoPredictionsEntered = KoPredictionsEntered;
+                eventPlayer.ModifiedDateTime = DateTime.UtcNow;
+                _context.EventPlayers.AddOrUpdate(eventPlayer);
             }
 
             _context.SaveChanges();

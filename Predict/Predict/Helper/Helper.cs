@@ -137,10 +137,6 @@ namespace Predict.Helper
             return false;
         }
 
- 
-
-   
-
         public static void SetEventCache()
         {
 

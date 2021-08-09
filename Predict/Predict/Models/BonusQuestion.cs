@@ -25,6 +25,9 @@ namespace Predict.Models
         public DateTime ToBeAnsweredByDateTime { get; set; }
 
         [Required]
+        public bool BonusQuestionProcessed { get; set; }
+
+        [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateTime { get; set; }
 

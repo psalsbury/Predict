@@ -324,7 +324,6 @@ namespace Predict.Helper
             foreach (var leagueTable in leagueTables)
             {
                 leagueTable.LeagueTableTeams = leagueTable.LeagueTableTeams.OrderByDescending(c => c.Points)
-                    .ThenBy(e => e.GoalDifference)
                     .ThenByDescending(e => e.GoalDifference)
                     .ThenByDescending(e => e.GoalsFor).ToList();
 

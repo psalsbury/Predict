@@ -27,16 +27,10 @@
     }
 
     var eventId = System.Convert.ToInt16(ViewBag.EventId.ToString());
-    var nbrFixturePredictionsRequired = 2;
-    var nbrKOPredictionsRequired = 0;
-    var nbrBonusPredictionsRequired = 0;
 
-    if (eventId == 1)
-    {
-        nbrFixturePredictionsRequired = 36;
-        nbrKOPredictionsRequired = 31;
-        nbrBonusPredictionsRequired = 2;
-    }
+    var nbrFixturePredictionsRequired = ViewBag.nbrFixturePredictionsRequired;
+    var nbrKoPredictionsRequired = ViewBag.nbrKOPredictionsRequired;
+    var nbrBonusPredictionsRequired = ViewBag.nbrBonusPredictionsRequired;
 
 }
 
@@ -84,7 +78,7 @@
         <td STYLE="color: WHITE; text-align: center;">
             <b>CR</b>
         </td>
-        @if (ViewBag.KOFixtures)
+        @if (ViewBag.nbrKoPredictionsRequired>0)
         {
             <td STYLE="color: WHITE; text-align: center;">
                 <b>KO</b>
@@ -100,7 +94,7 @@
     {
 
         var nbrPredictionsEntered = (tableViewModel.FixturePredictionsEntered ??0) + (tableViewModel.KoPredictionsEntered??0) + (tableViewModel.BonusPredictionsEntered??0);
-        var playerHasOutstandingPredictions = (nbrPredictionsEntered < (nbrFixturePredictionsRequired + nbrKOPredictionsRequired  + nbrBonusPredictionsRequired));
+        var playerHasOutstandingPredictions = (nbrPredictionsEntered < (nbrFixturePredictionsRequired + nbrKoPredictionsRequired  + nbrBonusPredictionsRequired));
 
         supportFlagFileLocation = "";
         if (tableViewModel.SupportTeamId != null && tableViewModel.SupportTeamId != 0)
@@ -113,13 +107,12 @@
             <td style="text-align: center">
                 @tableViewModel.PoolPosition.ToString()
             </td>
+            
             <td>
-                <a tabindex="0" data-toggle="popover" data-trigger="focus" data-content="@popupBody">
-                    @tableViewModel.DisplayName
-                </a>
+                @Html.ActionLink(tableViewModel.DisplayName, "ViewPredictions", "PredictionsConsolidated", new {playerId = tableViewModel.PlayerId, poolId = tableViewModel.PoolId, eventId = tableViewModel.EventId }, null)
                 @if (playerHasOutstandingPredictions)
                 {
-            <font color="red">*</font>
+                    <font color="red">*</font>
                 }
 
                 @if (supportFlagFileLocation != "")
@@ -127,14 +120,15 @@
                     <text>&nbsp;</text>
                     <img src="@Url.Content(supportFlagFileLocation)" height="20" />
                 }
-            </td>
+                </td>
+
             <td STYLE="text-align: center">
                 @tableViewModel.CorrectScore.ToString()
             </td>
             <td STYLE="text-align: center">
                 @((tableViewModel.CorrectResult + @tableViewModel.WinMargin).ToString())
             </td>
-            @if (ViewBag.KOFixtures)
+            @if (ViewBag.nbrKoPredictionsRequired>0)
             {
                 <td STYLE="text-align: center">
                     @tableViewModel.KoScore.ToString()

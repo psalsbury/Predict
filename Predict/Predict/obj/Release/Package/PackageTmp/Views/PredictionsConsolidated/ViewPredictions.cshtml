@@ -4,7 +4,8 @@
 @{
     ViewBag.Title = Model.Player.DisplayName + "'s Predictions";
     var showKOpPreds = DateTime.UtcNow > System.Convert.ToDateTime("23 Jun 2021 19:00" )? true : false;
-    var showKBonusPreds = DateTime.UtcNow > System.Convert.ToDateTime("11 Jul 2021 19:00" )? true : false;
+    var showKBonusPreds1 = DateTime.UtcNow > System.Convert.ToDateTime("07 Jul 2021 19:00" )? true : false;
+    var showKBonusPreds2 = DateTime.UtcNow > System.Convert.ToDateTime("11 Jul 2021 19:00" )? true : false;
 }
 
 <nav aria-label="breadcrumb">
@@ -79,7 +80,7 @@ else
         {
             <div class="tab-pane" id="tab_3">
                 
-                @if (showKBonusPreds | Model.PlayerId == User.Identity.GetUserId())
+                @if (showKBonusPreds1 | showKBonusPreds2| Model.PlayerId == User.Identity.GetUserId())
                 {
                     @Html.Partial("BonusQuestionPredictions", Model.BonusQuestionPredictionsViewModel)
                 }

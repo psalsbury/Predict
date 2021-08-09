@@ -148,6 +148,16 @@ namespace Predict.Controllers
                 }
             }
 
+            var predictionsEntered = bonusQuestionPredictionsViewModel.BonusQuestionPredictions.Count(a => a.PredictedAnswer != null);
+            
+            var eventPlayer = _context.EventPlayers.FirstOrDefault(a => a.PlayerId == loggedInUserId && a.EventId == eventId);
+            if (eventPlayer != null)
+            {
+                eventPlayer.BonusPredictionsEntered = predictionsEntered;
+                eventPlayer.ModifiedDateTime = DateTime.UtcNow;
+                _context.EventPlayers.AddOrUpdate(eventPlayer);
+            }
+
             _context.SaveChanges();
             Helper.SessionHelper.RefreshBonusQuestionPredictions(Session, loggedInUserId, bonusQuestionPredictionsViewModel.EventId);
             return RedirectToAction("Index", "Home", new { EventId = bonusQuestionPredictionsViewModel.EventId });

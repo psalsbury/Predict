@@ -22,7 +22,7 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    var player = (Player) SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());
+                    var player = (Player)SessionHelper.GetPlayerSessionData(Session, "player", User.Identity.GetUserId());
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="pull-right">
 
-                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-left"}))
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-left" }))
                                     {
                                         @Html.AntiForgeryToken()
 
@@ -61,10 +61,43 @@
                 }
                 else
                 {
-                    <li class="user-footer">@Html.ActionLink("Register", "Register", "Account", null, new {id = "registerLink"})</li>
-                    <li class="user-footer">@Html.ActionLink("Log in", "Login", "Account", null, new {id = "loginLink"})</li>
+                    <li class="user-footer">@Html.ActionLink("Register", "Register", "Account", null, new { id = "registerLink" })</li>
+                    <li class="user-footer">@Html.ActionLink("Log in", "Login", "Account", null, new { id = "loginLink" })</li>
                 }
 
+            </ul>
+        </div>
+
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+                <!-- Notifications: style can be found in dropdown.less -->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                      @*  <span class="label label-warning">2</span>*@
+                    </a>
+                    <!--<ul class="dropdown-menu">
+                        <li class="header">You have 2 notifications</li>
+                        <li>-->
+                            <!-- inner menu: contains the actual data -->
+                            <!--<ul class="menu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-soccer-ball-o"></i> Premier League 21/22 Comps available
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-soccer-ball-o"></i> Scottish Prem 21/22 Comps available
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>-->
+                </li>
+                <!-- Tasks: style can be found in dropdown.less -->
             </ul>
         </div>
     </nav>

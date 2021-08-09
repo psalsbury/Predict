@@ -32,9 +32,9 @@ namespace Predict.Models
         [Column(TypeName = "datetime2")]
         public DateTime EndDateTime { get; set; }
 
-        //public int FixturePredictions{ get; set; }
-        //public int KoPredictions { get; set; }
-        //public int BonusPredictions { get; set; }
+        public int Fixtures { get; set; }
+        public int KoFixtures { get; set; }
+        public int BonusQuestions { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]

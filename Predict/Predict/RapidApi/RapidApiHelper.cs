@@ -88,7 +88,7 @@ namespace Predict.RapidApi
                             var listOfIds = (from m in leagues where m.RapidApiLeagueId == league.RapidApiLeagueId select m.Id);
 
                             if (context.Fixtures.Any(a => a.ResultProcessed == false && listOfIds.Contains((short)a.LeagueId)))
-                                earliestDate= context.Fixtures.Where(a => a.ResultProcessed == false && listOfIds.Contains((short)a.Id)).Min(f => f.FixtureDateTime);
+                                earliestDate = context.Fixtures.Where(a => a.ResultProcessed == false && listOfIds.Contains((short)a.LeagueId)).Min(f => f.FixtureDateTime);
 
                             // Update the whole league for this league
                             FixturesByLeague(league.RapidApiLeagueId ?? 0, earliestDate.Date);

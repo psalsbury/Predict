@@ -43,9 +43,14 @@ namespace Predict.Controllers
 
             var tableViewModels = GetTableViewModel(eventId, poolId);
 
+            var myEvent = Helper.Cache.GetCachedEvent(eventId);
+
             ViewBag.PoolId = poolId;
             ViewBag.EventId = eventId;
-            ViewBag.KOFixtures = (int) Session["nbrKoFixtures*" + eventId] > 0;
+
+            ViewBag.nbrFixturePredictionsRequired = myEvent.Fixtures;
+            ViewBag.nbrKOPredictionsRequired = myEvent.KoFixtures;
+            ViewBag.nbrBonusPredictionsRequired = myEvent.BonusQuestions;
 
             return View(tableViewModels.ToPagedList(pageNumber, pageSize));
         }

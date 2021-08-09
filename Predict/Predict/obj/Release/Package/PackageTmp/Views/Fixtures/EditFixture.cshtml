@@ -14,6 +14,7 @@
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.LeagueId)
+        @Html.HiddenFor(model => model.CreatedDateTime)
 
         <div id="picker"> </div>
         <input type="hidden" id="result" value="">

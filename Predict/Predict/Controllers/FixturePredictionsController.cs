@@ -225,8 +225,13 @@ namespace Predict.Controllers
             }
 
             var predictionsEntered = fixturePredictionsViewModel.FixturePredictions.Count(a => a.AwayPrediction!=null && a.HomePrediction !=null);
-            var eventPoolPlayers = _context.EventPoolPlayers.Where(a => a.PlayerId == userId && a.EventId == eventId)
-                .ToList();
+            var eventPlayer = _context.EventPlayers.FirstOrDefault(a => a.PlayerId == userId && a.EventId == eventId);
+            if (eventPlayer != null)
+            {
+                eventPlayer.FixturePredictionsEntered = predictionsEntered;
+                eventPlayer.ModifiedDateTime = DateTime.UtcNow;
+                _context.EventPlayers.AddOrUpdate(eventPlayer);
+            }
 
             _context.SaveChanges();
             SessionHelper.RefreshFixturePredictions(Session, userId, eventId);

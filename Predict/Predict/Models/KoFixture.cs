@@ -16,8 +16,6 @@ namespace Predict.Models
 
         public short RoundOf { get; set; } // How many teams are in this round //
         public short Position { get; set; }
-
-
         public short? Team1FromLeagueId { get; set; } // if 0 in the db then custom rules apply
         public int? Team1FromLeaguePosition { get; set; }
         public int? Team1FromKoFixtureId { get; set; }
@@ -36,7 +34,10 @@ namespace Predict.Models
         public Team Team2 { get; set; }
 
         [Required]
-        public bool ResultProcessed { get; set; } // if the result has been processed and predictions updated with the score
+        public bool Team1ResultProcessed { get; set; } // if the result has been processed and predictions updated with the score
+
+        [Required]
+        public bool Team2ResultProcessed { get; set; } // if the result has been processed and predictions updated with the score
 
         [Required]
         [Column(TypeName = "datetime2")]
