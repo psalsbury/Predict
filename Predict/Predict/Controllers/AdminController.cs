@@ -44,7 +44,7 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var rapidApiLeagueId = 2790;
+            var rapidApiLeagueId = 3456;
             RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId, DateTime.MinValue);
 
             return RedirectToAction("AdminHome", "Admin");
@@ -56,7 +56,7 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var rapidApiLeagueId = 2794;
+            var rapidApiLeagueId = 3501;
             RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId, DateTime.MinValue);
 
             return RedirectToAction("AdminHome", "Admin");

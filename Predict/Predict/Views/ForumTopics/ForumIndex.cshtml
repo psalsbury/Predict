@@ -1,0 +1,49 @@
+﻿@model PagedList.IPagedList<Predict.Models.ForumTopic>
+@using System.Web.UI.HtmlControls
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Message Board";
+}
+
+
+
+@foreach (var forumTopic in Model)
+{
+    <table class="table-responsive" >
+        <tr border="1">
+        <td>
+                @Html.ActionLink(@forumTopic.Topic, "ForumTopicIndex", new { forumTopicId = forumTopic.Id },new{@style= "font-size:large"})
+            </td>
+            <tr>
+                <td>
+
+
+                    <text>Topic Created By :</text>
+                    @forumTopic.Player.DisplayName
+                </td>
+            </tr>
+        <tr>
+            <td>
+                <text>Last MessageDate: </text>
+                @forumTopic.ModifiedDateTime.ToLongDateString()
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+}
+
+
+<br />
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("ForumIndex",
+        new { page }))
+
+<input type="button"
+       value="Add New Topic"
+       class="btn btn-success"
+       onclick="location.href = '@Url.Action("NewForumTopic", "ForumTopics") '" />

@@ -99,6 +99,7 @@
         @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
         {
             var rowColour = "";
+            var rowColour = "";
             var hideColouredOdds = false;
             var haveFixtureResultOdds = Model.RapidApiFixtureIdsWithResultOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
             var haveFixtureScoreOdds = Model.RapidApiFixtureIdsWithScoreOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);

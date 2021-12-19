@@ -1,0 +1,62 @@
+2021-08-31 00:00:00.0242 INFO DailyRapidApiLeagueCheck --> lastDate = 8/31/2021 12:00:00 AM, Now = 8/31/2021 12:00:00 AM
+2021-08-31 00:00:00.0242 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 9/1/2021 12:00:00 AM
+2021-08-31 00:00:00.0242 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2021-08-31 02:22:57.7852 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-31T09:22:50Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-08-31 02:22:58.3008 INFO Account - Login (HttpPost) - Jocooper1272@gmail.com logged in
+2021-08-31 04:20:54.9197 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-31T11:20:40Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-31 04:20:55.0759 INFO Account - Login (HttpPost) - jan.selih3@gmail.com logged in
+2021-08-31 07:19:13.5989 INFO {
+  "success": false,
+  "error-codes": [
+    "invalid-input-response"
+  ]
+}
+2021-08-31 07:19:25.6147 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-31T14:19:14Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-31 07:19:37.6144 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-31T14:19:26Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-31 07:19:37.6612 INFO Account - Login (HttpPost) - Davidstariha1601@gmail.com logged in
+2021-08-31 10:01:28.0816 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-08-31 10:01:28.1753 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-08-31 10:01:28.1753 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-08-31 10:01:28.1753 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-08-31 10:01:28.1753 INFO RAMJobStore initialized.
+2021-08-31 10:01:28.1909 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-08-31 10:01:28.1909 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-08-31 10:01:28.1909 INFO Quartz scheduler version: 3.2.2.0
+2021-08-31 10:01:28.2066 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-08-31 10:01:29.3315 INFO Startup Configuration - Start
+2021-08-31 10:01:29.3315 INFO SetEventCache - Start
+2021-08-31 10:01:29.3940 INFO SetCachedItem = setting cache for Events
+2021-08-31 10:01:29.3940 INFO SetCachedItem = setting cache for Events, with Expiry Date of 9/30/2021 5:01:29 PM
+2021-08-31 10:01:29.4097 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-08-31 10:01:29.4097 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-08-31 10:01:29.5034 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 10/6/2021 8:40:00 PM
+2021-08-31 10:01:29.5034 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 9/11/2021 1:25:00 PM
+2021-08-31 10:01:29.5034 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 9/11/2021 1:25:00 PM
+2021-08-31 10:01:29.5034 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-08-31 10:01:29.5034 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 9/30/2021 5:01:29 PM
+2021-08-31 10:02:00.0660 INFO DailyRapidApiLeagueCheck --> lastDate = 8/31/2021 12:00:00 AM, Now = 8/31/2021 12:00:00 AM
+2021-08-31 10:02:00.0660 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 9/1/2021 12:00:00 AM
+2021-08-31 10:02:00.0660 INFO DailyRapidApiLeagueCheck --> performUpdate = False

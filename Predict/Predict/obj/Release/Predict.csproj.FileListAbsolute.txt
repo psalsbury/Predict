@@ -584,3 +584,4 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.odds.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.SupportTeamId.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.PredsEntered.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.dbupdates.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.Forum.resources

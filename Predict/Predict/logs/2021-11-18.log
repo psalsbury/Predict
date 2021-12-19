@@ -1,0 +1,26 @@
+2021-11-18 15:56:22.7859 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-11-18 15:56:22.8327 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-11-18 15:56:22.8327 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-11-18 15:56:22.8327 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-11-18 15:56:22.8327 INFO RAMJobStore initialized.
+2021-11-18 15:56:22.8327 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-11-18 15:56:22.8647 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-11-18 15:56:22.8647 INFO Quartz scheduler version: 3.2.2.0
+2021-11-18 15:56:22.8647 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-11-18 15:56:22.9893 INFO Startup Configuration - Start
+2021-11-18 15:56:22.9893 INFO SetEventCache - Start
+2021-11-18 15:56:23.0292 INFO SetCachedItem = setting cache for Events
+2021-11-18 15:56:23.0292 INFO SetCachedItem = setting cache for Events, with Expiry Date of 18/12/2021 15:56:23
+2021-11-18 15:56:23.0292 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-11-18 15:56:23.0292 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-11-18 15:56:23.0651 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 20/11/2021 16:55:00
+2021-11-18 15:56:23.0651 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 20/11/2021 14:25:00
+2021-11-18 15:56:23.0651 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-11-18 15:56:23.0661 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 18/12/2021 15:56:23

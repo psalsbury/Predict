@@ -36,7 +36,7 @@ namespace Predict.Controllers
             var playerId = User.Identity.GetUserId();
 
             // Return Events that have not yet started
-            var events = _context.Events.Where(a => (a.EndDateTime >= DateTime.UtcNow
+            var events = _context.Events.Where(a => (a.EndDateTime >= DateTime.MinValue
                                                      || a.StartDateTime == DateTime.MinValue)
                                                     && (isAdmin || a.CreatedByPlayerId== playerId))
                 .OrderBy(a => a.StartDateTime)                                    

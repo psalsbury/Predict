@@ -65,7 +65,8 @@ BEGIN
 		, EP.PoolId
 	FROM [dbo].[KoFixtures] AS KO
 	INNER JOIN [dbo].[EventPools] AS EP ON EP.EventId = KO.EventId
-	WHERE KO.ResultProcessed = 0
+	WHERE (KO.Team1ResultProcessed = 0
+	OR KO.Team1ResultProcessed = 0)
 	AND KO.EventId <> 1 /* NEED TO REMOVE THIS AND FIND A BETTER WAY !! */
 	AND (KO.Team1Id IS NOT NULL
 	OR KO.Team2Id IS NOT NULL)
@@ -450,13 +451,13 @@ BEGIN
 	AND FX.HomeResult IS NOT NULL
 	AND FX.AwayResult IS NOT NULL;
 
-	UPDATE KO
-	SET	KO.ResultProcessed = 1
-		, KO.ModifiedDateTime = GETUTCDATE()
-	FROM [dbo].[KoFixtures] AS KO
-	WHERE KO.ResultProcessed = 0
-	AND KO.Team1Id IS NOT NULL
-	AND KO.Team2Id IS NOT NULL
+	--UPDATE KO
+	--SET	KO.ResultProcessed = 1
+	--	, KO.ModifiedDateTime = GETUTCDATE()
+	--FROM [dbo].[KoFixtures] AS KO
+	--WHERE KO.ResultProcessed = 0
+	--AND KO.Team1Id IS NOT NULL
+	--AND KO.Team2Id IS NOT NULL
 
 	/* Update LastModifiedDateTime for this event */
 	UPDATE EV

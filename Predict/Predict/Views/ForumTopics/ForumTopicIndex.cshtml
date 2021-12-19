@@ -1,0 +1,61 @@
+﻿@model List<Predict.Models.ForumMessage>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/ForumTopics/ForumIndex">Forum</a>
+        </li>
+    </ol>
+</nav>
+
+@using (Html.BeginForm("SaveNewTopic", "ForumTopics"))
+
+
+{
+    @Html.AntiForgeryToken()
+    var firstMessage = @Model[0];
+    var lastMessage = @Model[@Model.Count - 1];
+
+    <div class="form-group">
+        <div style="font-size:x-large">
+            @firstMessage.ForumTopic.Topic
+        </div>
+    </div>
+
+    <br />
+
+    foreach (var forumMessage in Model)
+    {
+
+
+        <table width="100%">
+            <tr>
+                <td style="padding: 5px">
+                    <span class="nowrap"><img src="~/Images/person.png" /> </span>
+                    <span class="nowrap" style="font-size: 20px">
+                        &nbsp;  @forumMessage.Player.DisplayName
+                    </span>
+                    <span class="nowrap" style="font-size: 20px; color:gray">
+                        &nbsp;  @forumMessage.CreatedDateTime.ToLongDateString() at @forumMessage.CreatedDateTime.ToUniversalTime().ToLongTimeString()
+                    </span>
+
+                </td>
+            </tr>
+        </table>
+        <table width="100%" style="border: linen">
+            <tr>
+                <td colspan="2" style="background-color: darkgrey; padding: 10px">
+                    @forumMessage.Message
+                </td>
+            </tr>
+        </table>
+
+        <br />
+
+    }
+
+
+
+    @Html.ActionLink("Reply", "NewForumReply", new { forumTopicId = firstMessage.ForumTopicId, forumMessageId = lastMessage.Id }, new { @class = "btn btn-success" })
+
+}

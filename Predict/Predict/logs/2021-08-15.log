@@ -1,0 +1,196 @@
+2021-08-15 00:00:00.0721 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 8/16/2021 12:00:00 AM
+2021-08-15 00:49:33.3930 INFO {
+  "success": false,
+  "error-codes": [
+    "invalid-input-response"
+  ]
+}
+2021-08-15 00:49:43.4554 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T07:49:33Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-15 00:49:43.5648 INFO Account - Login (HttpPost) - jan.selih3@gmail.com logged in
+2021-08-15 00:55:42.5468 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T07:55:40Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-15 00:55:42.6093 INFO Account - Login (HttpPost) - zigi.veniger@gmail.com logged in
+2021-08-15 01:05:26.8915 INFO {
+  "success": false,
+  "error-codes": [
+    "invalid-input-response"
+  ]
+}
+2021-08-15 01:05:32.2196 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T08:05:27Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-15 01:05:32.2665 INFO Account - Login (HttpPost) - avbelj.rok@gmail.com logged in
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*2c6faf92-96e3-4aca-8b8e-b3a86e97c985*63
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*2c6faf92-96e3-4aca-8b8e-b3a86e97c985*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*2fe979b7-4d01-4ce0-963b-ced3ac5e50e8*63
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*2fe979b7-4d01-4ce0-963b-ced3ac5e50e8*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*612a0a48-1161-48dd-80c4-47ff688f6678*63
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*612a0a48-1161-48dd-80c4-47ff688f6678*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*747edf9b-8878-4f5f-96f1-46149cfe5f22*63
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*747edf9b-8878-4f5f-96f1-46149cfe5f22*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*a170818f-e244-4df8-868a-289bca7d4a8c*63
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*a170818f-e244-4df8-868a-289bca7d4a8c*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*b088597b-ef78-4d8d-b345-fb3c31ee4fc6*63
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*b088597b-ef78-4d8d-b345-fb3c31ee4fc6*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*b7ed43d4-c0e4-4c8d-ad6c-13f94d135843*63
+2021-08-15 01:08:30.5786 INFO SetCachedItem = setting cache for ForceUpdate*b7ed43d4-c0e4-4c8d-ad6c-13f94d135843*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5943 INFO SetCachedItem = setting cache for ForceUpdate*ebc235db-072b-4076-9985-68c59f6e2cc8*63
+2021-08-15 01:08:30.5943 INFO SetCachedItem = setting cache for ForceUpdate*ebc235db-072b-4076-9985-68c59f6e2cc8*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:08:30.5943 INFO SetCachedItem = setting cache for ForceUpdate*f992575f-7769-40f9-a948-fc1eb3ff326d*63
+2021-08-15 01:08:30.5943 INFO SetCachedItem = setting cache for ForceUpdate*f992575f-7769-40f9-a948-fc1eb3ff326d*63, with Expiry Date of 9/14/2021 8:08:30 AM
+2021-08-15 01:21:53.7346 INFO confirming email starting
+2021-08-15 01:21:53.7346 INFO userid --> f992575f-7769-40f9-a948-fc1eb3ff326d
+2021-08-15 01:21:53.7346 INFO code --> avJlrBslCuXN29UyaEryJ79M114mDWlL8VPmCOyPuKf6nQI/ZWY66gjv+DyDR76WCYEGo9F6R+ThM6PbmXDeh33umo2QxAWbvW3HWVf1WpDkx5tc7hOye90p4xvMJMLo4ZAvGNBdhs8zoOcIisKMZLPVHarDMcUI68aFFXEC5Scc5owI7zE2199ztldO/B61
+2021-08-15 01:21:53.7346 INFO both vars are not null
+2021-08-15 01:21:53.8440 INFO email not confirmed
+2021-08-15 01:21:53.8440 INFO Invalid token.
+2021-08-15 01:22:10.8906 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T08:21:57Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-15 01:22:10.9687 INFO Account - Login (HttpPost) - tadej.raner@hotmail.com logged in
+2021-08-15 01:30:26.9503 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T08:29:50Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-15 01:30:27.0128 INFO Account - Login (HttpPost) - Janikebric@gmail.com logged in
+2021-08-15 03:17:44.7574 INFO {
+  "success": false,
+  "error-codes": [
+    "invalid-input-response"
+  ]
+}
+2021-08-15 03:17:57.8823 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T10:17:45Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-15 03:17:58.0073 INFO Account - Login (HttpPost) - Davidstariha1601@gmail.com logged in
+2021-08-15 07:45:58.9103 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T14:45:54Z",
+  "hostname": "www.predictioncomp.com"
+}
+2021-08-15 07:45:58.9728 INFO Account - Login (HttpPost) - Jocooper1272@gmail.com logged in
+2021-08-15 07:55:00.0072 INFO GetRapidApiResults = Getting results from RapidApi 3456. FixtureDateTime = 8/15/2021 12:00:00 AM, Now = 8/15/2021 2:55:00 PM
+2021-08-15 07:55:00.0072 INFO FixturesByLeagueByDate - League = 3456, Date = 2021-08-15
+2021-08-15 07:55:01.7415 INFO SetEventCache - Start
+2021-08-15 07:55:01.7572 INFO SetCachedItem = setting cache for Events
+2021-08-15 07:55:01.7572 INFO SetCachedItem = setting cache for Events, with Expiry Date of 9/14/2021 2:55:01 PM
+2021-08-15 07:55:01.7572 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2021-08-15 07:55:01.7884 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 10/6/2021 8:40:00 PM
+2021-08-15 07:55:01.7884 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 8/21/2021 3:55:00 PM
+2021-08-15 07:55:01.7884 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 8/15/2021 5:25:00 PM
+2021-08-15 07:55:01.7884 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-08-15 07:55:01.7884 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 9/14/2021 2:55:01 PM
+2021-08-15 10:12:00.5296 INFO {
+  "success": true,
+  "challenge_ts": "2021-08-15T17:11:40Z",
+  "hostname": "predictioncomp.com"
+}
+2021-08-15 10:12:00.5921 INFO Account - Login (HttpPost) - rok.veniger12345@gmail.com logged in
+2021-08-15 10:25:00.0116 INFO GetRapidApiResults = Getting results from RapidApi 3456. FixtureDateTime = 8/15/2021 12:00:00 AM, Now = 8/15/2021 5:25:00 PM
+2021-08-15 10:25:00.0116 INFO FixturesByLeagueByDate - League = 3456, Date = 2021-08-15
+2021-08-15 10:25:02.1835 INFO SetEventCache - Start
+2021-08-15 10:25:02.2148 INFO SetCachedItem = setting cache for Events
+2021-08-15 10:25:02.2148 INFO SetCachedItem = setting cache for Events, with Expiry Date of 9/14/2021 5:25:02 PM
+2021-08-15 10:25:02.2148 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2021-08-15 10:25:02.2773 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 10/6/2021 8:40:00 PM
+2021-08-15 10:25:02.2773 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 8/21/2021 3:55:00 PM
+2021-08-15 10:25:02.2773 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 8/21/2021 1:25:00 PM
+2021-08-15 10:25:02.2773 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-08-15 10:25:02.2773 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 9/14/2021 5:25:02 PM
+2021-08-15 20:28:25.5486 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-08-15 20:28:25.6344 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-08-15 20:28:25.6344 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-08-15 20:28:25.6443 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-08-15 20:28:25.6443 INFO RAMJobStore initialized.
+2021-08-15 20:28:25.6723 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-08-15 20:28:25.6723 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-08-15 20:28:25.6852 INFO Quartz scheduler version: 3.2.2.0
+2021-08-15 20:28:25.7281 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-08-15 20:28:26.6307 INFO Startup Configuration - Start
+2021-08-15 20:28:26.6307 INFO SetEventCache - Start
+2021-08-15 20:28:26.6856 INFO SetCachedItem = setting cache for Events
+2021-08-15 20:28:26.6856 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/09/2021 19:28:26
+2021-08-15 20:28:26.6856 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-08-15 20:28:26.6856 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-08-15 20:28:26.7304 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-08-15 20:28:26.7304 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 21/08/2021 15:55:00
+2021-08-15 20:28:26.7304 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 14/08/2021 13:25:00
+2021-08-15 20:28:26.7304 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-08-15 20:28:26.7304 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/09/2021 19:28:26
+2021-08-15 20:29:00.0439 INFO GetRapidApiResults = Getting results from RapidApi 3456. FixtureDateTime = 14/08/2021 00:00:00, Now = 15/08/2021 19:29:00
+2021-08-15 20:29:00.0439 INFO FixturesByLeague - League = 3456, EarliestDate = 14/08/2021 00:00:00
+2021-08-15 20:29:04.3574 INFO SetEventCache - Start
+2021-08-15 20:29:04.3664 INFO SetCachedItem = setting cache for Events
+2021-08-15 20:29:04.3664 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/09/2021 19:29:04
+2021-08-15 20:29:04.3664 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2021-08-15 20:29:04.3843 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-08-15 20:29:04.3843 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 21/08/2021 15:55:00
+2021-08-15 20:29:04.3843 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 21/08/2021 13:25:00
+2021-08-15 20:29:04.3843 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-08-15 20:29:04.3843 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/09/2021 19:29:04
+2021-08-15 20:29:29.6132 INFO DailyRapidApiLeagueCheck --> lastDate = 13/08/2021 00:00:00, Now = 15/08/2021 00:00:00
+2021-08-15 20:29:42.9634 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 16/08/2021 00:00:00
+2021-08-15 20:50:59.7261 INFO Default Quartz.NET properties loaded from embedded resource file
+2021-08-15 20:50:59.7809 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2021-08-15 20:50:59.8048 INFO Quartz Scheduler v.3.2.2.0 created.
+2021-08-15 20:50:59.8427 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2021-08-15 20:50:59.8587 INFO RAMJobStore initialized.
+2021-08-15 20:50:59.8627 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-08-15 20:50:59.8627 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2021-08-15 20:50:59.8627 INFO Quartz scheduler version: 3.2.2.0
+2021-08-15 20:50:59.8627 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2021-08-15 20:50:59.9883 INFO Startup Configuration - Start
+2021-08-15 20:50:59.9883 INFO SetEventCache - Start
+2021-08-15 20:51:00.0721 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-08-15 20:51:00.0721 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-08-15 20:51:00.0891 INFO SetCachedItem = setting cache for Events
+2021-08-15 20:51:00.0891 INFO SetCachedItem = setting cache for Events, with Expiry Date of 14/09/2021 19:51:00
+2021-08-15 20:51:00.0891 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2021-08-15 20:51:00.0891 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2021-08-15 20:51:00.1789 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-08-15 20:51:00.1789 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 21/08/2021 15:55:00
+2021-08-15 20:51:00.1789 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 21/08/2021 13:25:00
+2021-08-15 20:51:00.1789 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-08-15 20:51:00.1789 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/09/2021 19:51:00
+2021-08-15 20:51:00.2776 INFO SetNextResultCheckDateTime - Set League 1422 next check date to 06/10/2021 20:40:00
+2021-08-15 20:51:00.2865 INFO SetNextResultCheckDateTime - Set League 3448 next check date to 21/08/2021 15:55:00
+2021-08-15 20:51:00.2865 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 21/08/2021 13:25:00
+2021-08-15 20:51:00.3045 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2021-08-15 20:51:00.3045 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 14/09/2021 19:51:00
+2021-08-15 20:51:18.3736 INFO DailyRapidApiLeagueCheck --> lastDate = 14/08/2021 00:00:00, Now = 15/08/2021 00:00:00
+2021-08-15 20:51:22.2886 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 16/08/2021 00:00:00
+2021-08-15 20:51:22.9319 INFO DailyRapidApiLeagueCheck --> performUpdate = True
+2021-08-15 20:51:25.3701 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2021-08-15 20:51:25.5829 INFO FixturesByLeague - League = 3448, EarliestDate = 21/08/2021 00:00:00
+2021-08-15 20:51:48.2883 INFO FixturesByOdds - League = 3448
+2021-08-15 20:52:12.8870 INFO OddsByLeagueAndBookmaker - League = 3448, pageNbr = 2
+2021-08-15 20:52:25.7193 INFO OddsByLeagueAndBookmaker - League = 3448, pageNbr = 0
+2021-08-15 20:52:25.8741 INFO FixturesByLeague - League = 3456, EarliestDate = 21/08/2021 00:00:00

@@ -50,6 +50,8 @@ namespace Predict.Models
         public DbSet<KoFixturePrediction> KoFixturePredictions { get; set; }
         public DbSet<KoWinningTeamPrediction> KoWinningTeamPredictions { get; set; }
         public DbSet<SiteSetting> SiteSettings { get; set; }
+        public DbSet<ForumTopic> ForumTopics { get; set; }
+        public DbSet<ForumMessage> ForumMessages { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

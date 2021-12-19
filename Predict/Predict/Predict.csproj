@@ -355,6 +355,8 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FixturePredictionsController.cs" />
     <Compile Include="Controllers\FixturesController.cs" />
+    <Compile Include="Controllers\ForumMessagesController.cs" />
+    <Compile Include="Controllers\ForumTopicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KoFixturePredictionsController.cs" />
     <Compile Include="Controllers\KoFixturesController.cs" />
@@ -417,6 +419,10 @@
     <Compile Include="Migrations\202108091928481_dbupdates.Designer.cs">
       <DependentUpon>202108091928481_dbupdates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109231956450_Forum.cs" />
+    <Compile Include="Migrations\202109231956450_Forum.Designer.cs">
+      <DependentUpon>202109231956450_Forum.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -431,6 +437,8 @@
     <Compile Include="Models\FixtureOddsByResult.cs" />
     <Compile Include="Models\FixturePrediction.cs" />
     <Compile Include="Models\FixtureOddsByScore.cs" />
+    <Compile Include="Models\ForumMessage.cs" />
+    <Compile Include="Models\ForumTopic.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
@@ -460,6 +468,8 @@
     <Compile Include="ViewModels\EventPoolsViewModel.cs" />
     <Compile Include="ViewModels\FixturePredictionsViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
+    <Compile Include="ViewModels\ForumMessagesViewModel.cs" />
+    <Compile Include="ViewModels\NewForumTopicViewModel.cs" />
     <Compile Include="ViewModels\GroupGameResultsViewModel.cs" />
     <Compile Include="ViewModels\KoFixturePredictionViewModel.cs" />
     <Compile Include="ViewModels\KoFixtureViewModel.cs" />
@@ -578,6 +588,10 @@
     <Content Include="Views\Account\ResendEmailToken.cshtml" />
     <Content Include="Views\Home\LoggedOnNoEvents.cshtml" />
     <Content Include="Views\Home\FeatureRequest.cshtml" />
+    <Content Include="Views\ForumTopics\ForumIndex.cshtml" />
+    <Content Include="Views\ForumTopics\NewForumTopic.cshtml" />
+    <Content Include="Views\ForumTopics\ForumTopicIndex.cshtml" />
+    <Content Include="Views\ForumTopics\NewForumReply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -586,6 +600,7 @@
     <Folder Include="Scripts\" />
     <Folder Include="Views\Error\" />
     <Folder Include="Views\FixturePredictions\" />
+    <Folder Include="Views\ForumMessage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -617,6 +632,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108091928481_dbupdates.resx">
       <DependentUpon>202108091928481_dbupdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109231956450_Forum.resx">
+      <DependentUpon>202109231956450_Forum.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

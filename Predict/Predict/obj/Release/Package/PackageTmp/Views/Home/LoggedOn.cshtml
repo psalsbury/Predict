@@ -217,25 +217,7 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
-                        <li class="item">
-                            <span class="info-box-icon bg-yellow">
-                                <i class="ion ion-ios-people-outline"></i>
-                            </span>
-                            
- 
-                            <div class="info-box-content">
 
-                                <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
-                                    <span class="info-box-text">Nbr of Members</span>
-
-                                    <span class="label label-info pull-right">Pool Game Info</span>
-
-                                    <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
-
-                                </a>
-                            </div>
-
-                        </li>
 
                         <!-- /.item -->
                         <li class="item">
@@ -262,6 +244,27 @@
                             </div>
 
                         </li>
+                        
+                        <li class="item">
+                            <span class="info-box-icon bg-yellow">
+                                <i class="ion ion-ios-people-outline"></i>
+                            </span>
+                            
+ 
+                            <div class="info-box-content">
+
+                                <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                    <span class="info-box-text">Nbr of Members</span>
+
+                                    <span class="label label-info pull-right">Pool Game Info</span>
+
+                                    <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+
+                                </a>
+                            </div>
+
+                        </li>
+
                         <li class="item">
                             <span class="info-box-icon bg-red">
                                 <i class="ion ion-ios-circle-outline"></i>

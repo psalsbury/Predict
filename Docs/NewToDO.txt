@@ -2,9 +2,6 @@
 use javascript to disable submit button for bonus questions
 
 
-
-change get table sp to use data from eventplayer instead of eventplayerpool
-
 breadcrump for readonly KO fixtures/change title
 
 add feature to allow pool admins to see players in a comp (and add remove)

@@ -44,7 +44,7 @@ namespace Predict.RapidApi
                             CreatedDateTime = DateTime.UtcNow,
                             ModifiedDateTime = DateTime.UtcNow,
                             SettingName = cacheId,
-                            SettingValue = DateTime.UtcNow.Date.ToLongDateString()
+                            SettingValue = DateTime.Now.Date.ToLongDateString()
                         };
                         context.SiteSettings.Add(siteSetting);
                         context.SaveChanges();
@@ -54,12 +54,13 @@ namespace Predict.RapidApi
                     {
                         // setting found in the db, ue this one
                         var lastDate = System.Convert.ToDateTime(siteSetting.SettingValue);
-                        if (lastDate < DateTime.UtcNow.Date)
+
+                        Logger.Info("DailyRapidApiLeagueCheck --> lastDate = {0}, Now = {1}", lastDate, DateTime.Now.Date);
+
+                        if (lastDate < DateTime.Now.Date)
                         {
 
-                            Logger.Info("DailyRapidApiLeagueCheck --> lastDate = {0}, Now = {1}", lastDate, DateTime.UtcNow.Date);
-
-                            siteSetting.SettingValue = DateTime.UtcNow.Date.ToLongDateString();
+                            siteSetting.SettingValue = DateTime.Now.Date.ToLongDateString();
                             siteSetting.ModifiedDateTime = DateTime.UtcNow;
                             context.SiteSettings.AddOrUpdate(siteSetting);
                             context.SaveChanges();
@@ -68,6 +69,9 @@ namespace Predict.RapidApi
                     }
 
                     Helper.Cache.SetCachedItem(cacheId, "ReRunWhenExpired", DateTime.Now.Date.AddDays(1));
+
+                    Logger.Info("DailyRapidApiLeagueCheck --> performUpdate = {0}", performUpdate);
+
                     if (performUpdate)
                     {
                         Logger.Info("DailyRapidApiLeagueCheck --> Performing daily league update");

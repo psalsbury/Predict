@@ -1,0 +1,49 @@
+﻿@model Predict.Models.ForumMessage
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/ForumTopics/ForumIndex">Forum</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/ForumTopics/ForumTopicIndex?forumTopicId=@Model.ForumTopicId ">Topic</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Reply</li>
+    </ol>
+</nav>
+
+<div class="form-group">
+    <div style="font-size:x-large">
+        @Model.ForumTopic.Topic
+    </div>
+</div>
+
+@{
+    ViewBag.Title = "Reply";
+}
+
+@using (Html.BeginForm("SaveReply", "ForumTopics"))
+
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(a => a.ReplyToForumMessageId);
+    @Html.HiddenFor(a => a.ForumTopicId)
+
+
+    <div class="form-group">
+        Reply Message
+        <div>
+            @Html.TextAreaFor(model => model.Message, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="form-group">
+        <div>
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+}

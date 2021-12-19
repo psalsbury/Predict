@@ -12,15 +12,27 @@ check that if after the deadline the points etc on the edit pool screen are not 
 
 error when updating account details without password
 
-restrict pools to 3
-
 add leagues that are entered as menu options if autorised to be in league
 
-ensure that auto fil works for for last 16
-
-send email to admin when someone joins a pool
+ensure that auto fil works for for last 16 (error on germanys group in the euros)
 
 have another modal screen thats shown for each pool that shows the position history, prize fund, position movement etc
+
+Add a messageboard feature
+
+Tables
+
+ForumTopic
+ForumTopicId
+TopicHeader
+CreatedDateTime
+
+ForumMessage
+ForumMessageId
+ForumTopicId
+PlayerId
+Message
+ReplyToForumMessageId
 
 
 ideas for homepage
@@ -48,7 +60,7 @@ Kcalb267ft
 
 ftp for predictioncomp
 188.121.43.19
-ph12915445439
+ph12915445439/peteftp
 Kcalb267ft
 
 web.config
@@ -66,3 +78,7 @@ New to do
 
 results page
 dont show future predictions for others
+
+
+LeagueID 39 = Prem
+LeagueId 40 = champ
