@@ -188,5 +188,14 @@ namespace Predict.Controllers.Api
             _context.Dispose();
             return Ok();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

@@ -279,5 +279,14 @@ namespace Predict.Controllers.Api
             // return html needed to show
             return row;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

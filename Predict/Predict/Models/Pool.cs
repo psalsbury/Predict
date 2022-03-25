@@ -11,6 +11,7 @@ namespace Predict.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Display(Name = "League Name")]
         [Required] [StringLength(50)] public string PoolName { get; set; }
 
         public string AdminPlayerId { get; set; }

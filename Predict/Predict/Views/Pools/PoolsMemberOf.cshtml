@@ -9,10 +9,10 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="~/PoolDashboard">Pool Admin</a>
+            <a href="~/PoolDashboard">League Admin</a>
         </li>
 
-        <li class="breadcrumb-item active" aria-current="page">Your Pools</li>
+        <li class="breadcrumb-item active" aria-current="page">Your League</li>
     </ol>
 </nav>
 
@@ -22,7 +22,7 @@
     <thead>
         <tr>
             <th>
-                Pool Name
+                League Name
             </th>
         </tr>
     </thead>
@@ -37,7 +37,7 @@
                 <td>
                     @if(!joinedPool.Pool.DefaultPoolForEvent)
                     {
-                        <button class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">Leave Pool</button>
+                    <button class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">Leave League</button>
                     }
                     
                   

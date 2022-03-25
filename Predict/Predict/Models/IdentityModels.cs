@@ -52,6 +52,11 @@ namespace Predict.Models
         public DbSet<SiteSetting> SiteSettings { get; set; }
         public DbSet<ForumTopic> ForumTopics { get; set; }
         public DbSet<ForumMessage> ForumMessages { get; set; }
+        public DbSet<Joke> Jokes { get; set; }
+        public DbSet<JokeRating> JokeRatings { get; set; }
+        public DbSet<QuizQuestion> QuizQuestions { get; set; }
+        public DbSet<QuizQuestionAnswer> QuizQuestionAnswers { get; set; }
+        public DbSet<QuizQuestionPlayerAnswer> QuizQuestionPlayerAnswers { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

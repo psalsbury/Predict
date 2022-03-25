@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+
+}
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '518572516565016',
+                cookie: true,
+                xfbml: true,
+                version: '{api-version}'
+            });
+
+            FB.AppEvents.logPageView();
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+    </script>
+
+
+
+
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button"
+                                   value="Sign in with your Prediction Comp login"
+                                   class="btn btn-info"
+                                   onclick="location.href='@Url.Action("Login", "Account") '" />
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button"
+                                   value="Create New Account"
+                                   class="btn btn-info"
+                                   onclick="location.href='@Url.Action("Register", "Account") '" />
+
+                        </td>
+                    </tr>
+                </table>
+
+                <div id="fb-root"></div>
+
+
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v13.0&appId=518572516565016&autoLogAppEvents=1" nonce="775aXZ2v"></script>
+
+
+
+
+

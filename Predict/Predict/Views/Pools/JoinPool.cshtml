@@ -9,10 +9,10 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="~/PoolDashboard">Pool Admin</a>
+            <a href="~/PoolDashboard">League Admin</a>
         </li>
 
-        <li class="breadcrumb-item active" aria-current="page">Join a Pool</li>
+        <li class="breadcrumb-item active" aria-current="page">Join a League</li>
     </ol>
 </nav>
 
@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>
-                            Pool Name
+                            LEague Name
                         </th>
                         <th>
                             Join Code Required
@@ -45,7 +45,7 @@
                             </td>
 
                             <td>
-                                <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded" dataPoolId="@item.Id" poolName="@item.PoolName">Join Pool</button>
+                                <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded" dataPoolId="@item.Id" poolName="@item.PoolName">Join League</button>
                             </td>
 
                         </tr>

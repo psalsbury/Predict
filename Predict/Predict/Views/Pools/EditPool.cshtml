@@ -8,12 +8,12 @@
         </li>
         @if (Model.Id == 0)
         {
-            <li class="breadcrumb-item active" aria-current="page">New Pool</li>
+    <li class="breadcrumb-item active" aria-current="page">New League</li>
         }
         else
         {
             <li class="breadcrumb-item">
-                <a href="/Pools/">Manage Pools</a>
+                <a href="/Pools/">Manage Leagues</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Edit</li>
         }
@@ -23,7 +23,7 @@
 
 @if (Model.Id == 0)
 {
-    ViewBag.Title = "Create a new Pool";
+    ViewBag.Title = "Create a new League";
 }
 else
 {
@@ -46,7 +46,7 @@ else
     <div class="box box-solid">
 
         <div class="box-header with-border">
-            <h3 class="box-title">Pool Details</h3>
+            <h3 class="box-title">League Details</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
@@ -70,7 +70,7 @@ else
                     @Html.EditorFor(model => model.JoinCode, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.JoinCode, "", new { @class = "text-danger" })
                     <p>
-                        <i>Players will need to enter this code to join your pool. Leave blank for no code needed</i>
+                        <i>Players will need to enter this code to join your League. Leave blank for no code needed</i>
                     </p>
                 </div>
             </div>
@@ -81,7 +81,7 @@ else
                     @Html.TextAreaFor(model => model.MemberInfo, new { @class = "form-control", rows = 5 })
                     @Html.ValidationMessageFor(model => model.MemberInfo, "", new { @class = "text-danger" })
                     <p>
-                        <i>This will be displayed to each player in your pool on their home page</i>
+                        <i>This will be displayed to each player in your league on their home page</i>
                     </p>
                 </div>
             </div>
@@ -93,7 +93,7 @@ else
                         @Html.EditorFor(model => model.EmailNotifications)
                         @Html.ValidationMessageFor(model => model.EmailNotifications, "", new { @class = "text-danger" })
                         <p>
-                            <i>Ticking will ensure you receive an email when a player joins your pool</i>
+                            <i>Ticking will ensure you receive an email when a player joins your league</i>
                         </p>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ else
                         @Html.EditorFor(model => model.FreezePredictions)
                         @Html.ValidationMessageFor(model => model.FreezePredictions, "", new { @class = "text-danger" })
                         <p>
-                            <i>Ticking will freeze all your pool members predictions when the first fixture has started</i>
+                            <i>Ticking will freeze all your league members predictions when the first fixture has started</i>
                         </p>
                     </div>
                 </div>

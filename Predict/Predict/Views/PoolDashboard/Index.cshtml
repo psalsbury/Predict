@@ -1,14 +1,14 @@
 ﻿@model  Predict.ViewModels.PoolDashboardViewModel
 
 @{
-    ViewBag.Title = "Pool Dashboard";
+    ViewBag.Title = "League Dashboard";
     var globalPoolId = ViewBag.GlobalPoolId;
 }
 <link rel="stylesheet" href="~/content/css/ionicons.min.css">
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Pool Admin</a>
+            <a href="#">League Admin</a>
         </li>
     </ol>
 </nav>
@@ -23,7 +23,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">&nbsp</span>
-                @Html.ActionLink("Join a Pool", "JoinPool", "Pools", null, new { @class = "btn btn-success" })
+                @Html.ActionLink("Join a League", "JoinPool", "Pools", null, new { @class = "btn btn-success" })
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -36,8 +36,8 @@
             <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text"><b>@Model.NumberOfPoolsMemberOf Pool@(Model.NumberOfPoolsMemberOf==1?"":"s")</b></span>
-                @Html.ActionLink("Your Pools", "PoolsMemberOf", "Pools", null, new { @class = "btn btn-success" })
+                <span class="info-box-text"><b>@Model.NumberOfPoolsMemberOf League@(Model.NumberOfPoolsMemberOf==1?"":"s")</b></span>
+                @Html.ActionLink("Your Leagues", "PoolsMemberOf", "Pools", null, new { @class = "btn btn-success" })
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -50,7 +50,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">&nbsp</span>
-                @Html.ActionLink("Create Pool", "New", "Pools", null, new { @class = "btn btn-success" })
+                @Html.ActionLink("Create League", "New", "Pools", null, new { @class = "btn btn-success" })
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -65,19 +65,18 @@
                 <span class="info-box-icon bg-yellow"><i class="ion ion-ios-gear-outline"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text"><b>@Model.NumberOfPoolsAdminOf Pool@(Model.NumberOfPoolsAdminOf == 1 ? "" : "s")</b></span>
-                    @Html.ActionLink("Manage Pools", "Index", "Pools", null, new {@class = "btn btn-success"})
+                    <span class="info-box-text"><b>@Model.NumberOfPoolsAdminOf League@(Model.NumberOfPoolsAdminOf == 1 ? "" : "s")</b></span>
+                    @Html.ActionLink("Manage Leagues", "Index", "Pools", null, new {@class = "btn btn-success"})
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
         </div>
-
         if (Model.HasPoolWithoutComp)
         {
    
                 <p style="color: red;font-size: medium">
-                    To link your pool to a prediction comp, such as Euro 2021, please select 'Manage Pools', then 'Comps'
+                    To link your league to a prediction comp, such as Euro 2021, please select 'Manage Leagues', then 'Comps'
                 </p>
 
         }
@@ -85,11 +84,11 @@
         {
      
                 <p style="color: red;font-size: medium">
-                    Don't forget to join your own pool! Click on 'Join a pool' and select your own pools to join it
+                    Don't forget to join your own league! Click on 'Join a league' and select your own leagues to join it
                 </p>
           
         }
-        
+
     }
 
 </div>
