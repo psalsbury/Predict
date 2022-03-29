@@ -524,7 +524,6 @@
     </None>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
-    <Content Include="Views\Jokes\StarRating.css" />
     <Content Include="Views\Table\BestTeams.cshtml" />
     <Content Include="Views\Table\ShowTable.cshtml" />
     <Content Include="Web.config">
@@ -617,6 +616,7 @@
     <Content Include="Views\Jokes\ShowJoke.cshtml" />
     <Content Include="Views\Jokes\NoJokes.cshtml" />
     <Content Include="Views\Account\SignInGeneric.cshtml" />
+    <Content Include="Views\Home\ComingSoon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

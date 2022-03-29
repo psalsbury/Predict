@@ -5,91 +5,97 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
-    <div class="col-md-12" style=" background-image: url('../images/footyimage.jpg');
+<div class="col-md-12" style=" background-image: url('../images/footyimage.jpg');
                                       background-repeat: no-repeat;
                                       background-color: rgba(255,255,255,0.6);
                                       background-blend-mode: lighten;
                                       background-size: cover; ">
-        <div class="col-md-8">
-            <section id="loginForm">
-                @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "LoginForm" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <h4>Log in to your account</h4>
-                    <br />
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "LoginForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <h1>Sign in</h1>
+                <br />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
 
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
+                            @Html.LabelFor(m => m.RememberMe)
                         </div>
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+
+                        <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
                         </div>
+                        <br />
+                        <input type="submit" id="btnSubmit" value="Log in" class="btn btn-success" />
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
-                                @Html.LabelFor(m => m.RememberMe)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-
-                            <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
-                            </div>
-                            <br />
-                            <input type="submit" id="btnSubmit" value="Log in" class="btn btn-success" />
-                        </div>
-                    </div>
+                </div>
 
 
-                    <h2>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </h2>
+                <h2>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </h2>
 
-                    <h2>
-                        @Html.ActionLink("Resend Activation Link?", "ResendEmailToken")
-                    </h2>
-                }
-            </section>
-        </div>
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                @Html.Partial("_ExternalLoginsListPartial", new Predict.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-            </section>
-        </div>
+                <h2>
+                    @Html.ActionLink("Resend Activation Link?", "ResendEmailToken")
+                </h2>
+            }
+        </section>
     </div>
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new Predict.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>
+
+<div>
+
+    <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+</div>
 
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    function onSubmit(token) {
+
+        document.getElementById("LoginForm").submit();
     }
-    <script>
-        function onSubmit(token) {
+</script>
 
-            document.getElementById("LoginForm").submit();
-        }
-    </script>
+<script>
+    $(document).ready(function () {
 
-    <script>
-        $(document).ready(function () {
+        $("#LoginForm").submit(function (e) {
 
-            $("#LoginForm").submit(function (e) {
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
 
-                //disable the submit button
-                $("#btnSubmit").attr("disabled", true);
+            return true;
 
-                return true;
-
-            });
         });
-    </script>
+    });
+</script>

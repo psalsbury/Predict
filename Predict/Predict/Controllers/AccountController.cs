@@ -76,16 +76,6 @@ namespace Predict.Controllers
             return View();
         }
 
-
-        //
-        // GET: /Account/Login
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
-
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult SignInGeneric(string returnUrl)
@@ -99,7 +89,7 @@ namespace Predict.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> SignInGeneric(LoginViewModel model, string returnUrl)
         {
             try
             {

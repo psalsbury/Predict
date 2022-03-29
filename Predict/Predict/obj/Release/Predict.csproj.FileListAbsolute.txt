@@ -585,3 +585,10 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.SupportTeamId.re
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.PredsEntered.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.dbupdates.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.Forum.resources
+C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Facebook.dll
+C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Google.dll
+C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Facebook.xml
+C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Google.xml
+C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.JokesAndQuiz.resources

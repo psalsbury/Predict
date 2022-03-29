@@ -7,9 +7,11 @@
         @* Mini logo for sidebar 50x50 pixels *@
         <span class="logo-mini"><b>PC</b></span>
         @* Logo for regular state and mobile devices *@
-        <span class="logo-lg">
-            <b>Prediction Comp</b>
-        </span>
+    <span class="logo-lg">
+
+        <b>Prediction</b>Comp
+
+    </span>
     </a>
 
     <nav class="navbar navbar-static-top" role="navigation">
@@ -33,13 +35,14 @@
                             {
                                 <li class="user-header">
                                     <p>
+                                        Name:
                                         @if (player != null)
                                         {
-                                            @player.DisplayName
+                                        <B>@player.DisplayName</B>
                                         }
 
                                     </p>
-                                    <small>Member since @player.CreatedDateTime </small>
+                                    <p>Member since: <B>@player.CreatedDateTime.ToShortDateString()</B> </p>
                                 </li>
                             }
                             <li class="user-footer">
@@ -61,8 +64,8 @@
                 }
                 else
                 {
-                    <li class="user-footer">@Html.ActionLink("Register", "Register", "Account", null, new { id = "registerLink" })</li>
-                    <li class="user-footer">@Html.ActionLink("Log in", "Login", "Account", null, new { id = "loginLink" })</li>
+     
+                    <li class="user-footer">@Html.ActionLink("Sign in", "SignInGeneric", "Account", null, new { id = "loginLink" })</li>
                 }
 
             </ul>

@@ -56,7 +56,7 @@
         </div>
         <!-- /.info-box -->
     </div>
-    
+
     @if (Model.NumberOfPoolsAdminOf > 0)
     {
         <!-- /.col -->
@@ -66,29 +66,41 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text"><b>@Model.NumberOfPoolsAdminOf League@(Model.NumberOfPoolsAdminOf == 1 ? "" : "s")</b></span>
-                    @Html.ActionLink("Manage Leagues", "Index", "Pools", null, new {@class = "btn btn-success"})
+                    @Html.ActionLink("Manage Leagues", "Index", "Pools", null, new { @class = "btn btn-success" })
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
         </div>
-        if (Model.HasPoolWithoutComp)
-        {
-   
-                <p style="color: red;font-size: medium">
-                    To link your league to a prediction comp, such as Euro 2021, please select 'Manage Leagues', then 'Comps'
-                </p>
-
-        }
-        if (Model.HasOwnedPoolsButNotAMember)
-        {
-     
-                <p style="color: red;font-size: medium">
-                    Don't forget to join your own league! Click on 'Join a league' and select your own leagues to join it
-                </p>
-          
-        }
-
     }
-
 </div>
+
+
+
+<div class="col-md-4">
+    <div class="box-body">
+        @if (Model.HasPoolWithoutComp)
+        {
+
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                To link your league to a prediction comp, such as Euro 2021, please select 'Manage Leagues', then select 'Comps'
+            </div>
+
+        }
+
+        @if (Model.HasOwnedPoolsButNotAMember)
+        {
+
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                Don't forget to join your own league! Click on 'Join a league' and select your own leagues to join it
+            </div>
+
+        }
+    </div>
+</div>
+
+ 

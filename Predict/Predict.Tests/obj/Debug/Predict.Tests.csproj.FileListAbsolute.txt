@@ -74,3 +74,5 @@ C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CoreCompil
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.dll
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.pdb
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.dll
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.xml

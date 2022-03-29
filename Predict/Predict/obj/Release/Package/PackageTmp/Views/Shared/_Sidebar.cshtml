@@ -29,22 +29,22 @@
                     }
                 }
 
+                <li>
+                    <a href="@Url.Action("Index", "PoolDashboard")">
+                        <i class="fa fa-users"></i> <span>Your Leagues</span>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a href="@Url.Action("Index", "EventPlayers")">
                         <i class="fa fa-soccer-ball-o"></i>
-
-                        Your Comps&nbsp;
-                        @*<span class="right badge badge-danger">New</span>*@
+                        <span>Your Comps</span>
 
 
                     </a>
                 </li>
 
-                <li>
-                    <a href="@Url.Action("Index", "PoolDashboard")">
-                        <i class="fa fa-users"></i> <span>Your Pools</span>
-                    </a>
-                </li>
+
 
                 if (User.IsInRole("Admin"))
                 {
@@ -58,13 +58,67 @@
 
                 }
                 <li>
-                    <a href="https://predictioncomp.freeforums.net" target="_blank">
-                        <i class="fa fa-forumbee"></i> <span>Message Forum</span>
-                    </a>
                     <a href="@Url.Action("ForumIndex", "ForumTopics")">
-                        <i class="fa fa-gear"></i> <span>New Forum</span>
+                        <i class="fa fa-comments-o"></i> <span>Message Board</span>
                     </a>
                 </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-question-circle"></i> <span>Jokes</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="@Url.Action("ShowJoke", "Jokes")">
+                                <i class="fa fa-smile-o"></i> <span>Show Joke</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("ComingSoon", "Home")">
+                                <i class="fa fa-list"></i> <span>Joke League</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("ComingSoon", "Home")">
+                                <i class="fa fa-list"></i> <span>Add New Joke</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-question-circle"></i> <span>Footy Quiz</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+
+                        <li>
+                            <a href="@Url.Action("ComingSoon", "Home")">
+                                <i class="fa fa-question"></i> <span>Do Footy Quiz</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("ComingSoon", "Home")">
+                                <i class="fa fa-list"></i> <span>Quiz League</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("ComingSoon", "Home")">
+                                <i class="fa fa-list"></i> <span>Add New Quiz Question</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
             }
             else
             {

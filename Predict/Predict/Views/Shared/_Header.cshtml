@@ -8,8 +8,9 @@
         <span class="logo-mini"><b>PC</b></span>
         @* Logo for regular state and mobile devices *@
     <span class="logo-lg">
-        
-        <b style=" font-family:Bahnschrift;" >PredictionComp.com</b>
+
+        <b>Prediction</b>Comp
+
     </span>
     </a>
 
@@ -34,13 +35,14 @@
                             {
                                 <li class="user-header">
                                     <p>
+                                        Name:
                                         @if (player != null)
                                         {
-                                            @player.DisplayName
+                                        <B>@player.DisplayName</B>
                                         }
 
                                     </p>
-                                    <small>Member since @player.CreatedDateTime </small>
+                                    <p>Member since: <B>@player.CreatedDateTime.ToShortDateString()</B> </p>
                                 </li>
                             }
                             <li class="user-footer">
@@ -62,9 +64,8 @@
                 }
                 else
                 {
-      
-                    <li class="user-footer">@Html.ActionLink("Register", "Register", "Account", null, new { id = "registerLink" })</li>
-                    <li class="user-footer">@Html.ActionLink("Log in", "Login", "Account", null, new { id = "loginLink" })</li>
+     
+                    <li class="user-footer">@Html.ActionLink("Sign in", "SignInGeneric", "Account", null, new { id = "loginLink" })</li>
                 }
 
             </ul>

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = ViewBag.PoolName.ToString() + " Games Stats";
+    var OutstandingPredictionCount = 0;
 }
 
 <nav aria-label="breadcrumb">
@@ -12,6 +13,46 @@
         <li class="breadcrumb-item active" aria-current="page">@ViewBag.PoolName Game Stats</li>
     </ol>
 </nav>
+
+
+
+<link rel="stylesheet" id="wpfront-scroll-top-css" href="~/wpfront-scroll-top/css/wpfront-scroll-top.min.css?ver=2.0.7.08086" media="all">
+
+<div id="wpfront-scroll-top-container" style="opacity: 0.8; right: 120px; bottom: 20px; display: block;">
+    <img src="~/wpfront-scroll-top/images/icons/39.png" alt="" style="width: auto; height: auto;">
+</div>
+
+<div id="wpfront-scroll-nextfixture-container" style="opacity: 0.8; right: 20px; bottom: 20px; display: block;">
+    <a href="#nextPredictionLocation"><img src="~/wpfront-scroll-top/images/icons/down.png" alt="" style="width: auto; height: auto;"></a>
+
+</div>
+
+<script type="text/javascript">
+    function wpfront_scroll_top_init() {
+        if (typeof wpfront_scroll_top === "function" && typeof jQuery !== "undefined") {
+            wpfront_scroll_top({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 120, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+        } else {
+            setTimeout(wpfront_scroll_top_init, 100);
+        }
+    }
+    wpfront_scroll_top_init();
+</script>
+
+
+<script type="text/javascript">
+    function wpfront_scroll_nextfixture_init() {
+        if (typeof wpfront_scroll_nextfixture === "function" && typeof jQuery !== "undefined") {
+            wpfront_scroll_nextfixture({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 20, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+        } else {
+            setTimeout(wpfront_scroll_nextfixture_init, 100);
+        }
+    }
+    wpfront_scroll_nextfixture_init();
+</script>
+
+<script src="~/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.0.7.08086" id="wpfront-scroll-top-js"></script>
+
+
 
 @if (ViewBag.ShowKoStats == true)
 {
@@ -35,20 +76,35 @@
 
     @foreach (var item in Model)
     {
+
+
+        if (!item.Fixture.FixtureDatePassed)
+        {
+            OutstandingPredictionCount += 1;
+        }
+
         var rowColour = "";
         if (item.Fixture.HomeResult != null)
         {
             rowColour = "#e3e5e6"; // Green
         }
-        <tr  bgcolor="@rowColour">
+        <tr bgcolor="@rowColour">
 
             <td style="text-align: left; vertical-align: middle;">
+
+                @if (OutstandingPredictionCount == 1)
+                {
+
+                    <section id="nextPredictionLocation"></section>
+                }
+
+
                 <div class="container-fluid">
                     <div class="row vertical-middle text-center">
                         <div class="col-sm-6 text-center; row no-gutters">
                             <table width="100%">
                                 <tr>
-                                    <td width="20" >
+                                    <td width="20">
                                         <img src="@Url.Content(item.Fixture.HomeTeam.FlagFileLocation)" height="20" />
                                     </td>
                                     <td align="left">
@@ -81,7 +137,7 @@
 
                 @Html.Hidden("FixtureDateTime", item.Fixture.FixtureDateTime.ToLongDateString() + " " + item.Fixture.FixtureDateTime.ToShortTimeString())
             </td>
-            <td  class="row no-gutters">
+            <td class="row no-gutters">
                 <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId&poolid=@ViewBag.PoolId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
             </td>
 
@@ -90,10 +146,16 @@
 
 </table>
 
+    @if (OutstandingPredictionCount == 0)
+    {
+
+        <section id="nextPredictionLocation"></section>
+    }
+
 <script>
 
     //get all td with actionclass in table
-    $("tbody tr td.myDate").each(function() {
+    $("tbody tr td.myDate").each(function () {
 
         $hiddenValue = $(this).find("input[type=hidden]").val();
 
@@ -113,7 +175,7 @@
         mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
 
-        return da + ' ' + mo + ' ' + pad(newDate.getHours(),2) + ':' + pad(newDate.getMinutes(), 2);
+        return da + ' ' + mo + ' ' + pad(newDate.getHours(), 2) + ':' + pad(newDate.getMinutes(), 2);
 
     }
 
@@ -127,7 +189,7 @@
 </script>
 <script>
 
-    $(function() {
+    $(function () {
         $("#fixtures").DataTable({
             "bLengthChange": false
         });;

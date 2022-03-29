@@ -3,7 +3,8 @@
 @model IEnumerable<Predict.Models.PoolPlayer>
 
 @{
-    ViewBag.Title = "Pool Membership";
+    ViewBag.Title = "League Membership";
+    var rowNbr = 1;
 }
 
 <nav aria-label="breadcrumb">
@@ -16,60 +17,77 @@
     </ol>
 </nav>
 
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
 
+<div class="col-md-4">
+    <table class="table table-bordered" id="poolMembershipJoined">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Nbr
+                </th>
+                <th>
+                    League Name
+                </th>
+            </tr>
+        </thead>
 
-<table class="table table-bordered table-hover" id="poolMembershipJoined">
-    <thead>
-        <tr>
-            <th>
-                League Name
-            </th>
-        </tr>
-    </thead>
-
-    @foreach (var joinedPool in @Model)
-    {
+        @foreach (var joinedPool in @Model)
         {
+
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => joinedPool.Pool.PoolName)
+                    <h4>
+                        @rowNbr
+                    </h4>
+
                 </td>
                 <td>
-                    @if(!joinedPool.Pool.DefaultPoolForEvent)
-                    {
-                    <button class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">Leave League</button>
-                    }
-                    
-                  
+                    <h4>
+                        @Html.DisplayFor(modelItem => joinedPool.Pool.PoolName)
+                    </h4>
                 </td>
-                    
+                <td>
+                    @if (!joinedPool.Pool.DefaultPoolForEvent)
+                    {
+                        <button class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
+                            <i class="fa fa-trash"></i>
+                            <b>Leave League</b>
+                        </button>
+                    }
+
+
+                </td>
+
             </tr>
+            rowNbr += 1;
         }
-    }
-</table>
+    </table>
+    </div>
 
+    <script src="~/Scripts/bootbox.js"></script>
 
-<script src="~/Scripts/bootbox.js"></script>
+    <script>
 
-<script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#poolMembershipJoined tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
 
-    $(function () {
-        $("#poolMembershipJoined, #poolMembershipNotJoined").DataTable({
-            "bLengthChange": false
-        });;
-    });
+    </script>
 
-
-</script>
-
-<script>
+    <script>
 
 
     $("#poolMembershipJoined").on("click",
         ".js-delete",
         function() {
             var button = $(this);
-            bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " pool?",
+            bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " league?",
                 function(result) {
                     if (result) {
                         $.ajax(
@@ -87,4 +105,4 @@
 
 
 
-</script>
+    </script>

@@ -65,6 +65,11 @@ namespace Predict.Controllers
             return View(eventPlayer);
         }
 
+        public ActionResult ComingSoon()
+        {
+            return View();
+        }
+
         public ActionResult ContactUs()
         {
             return View();

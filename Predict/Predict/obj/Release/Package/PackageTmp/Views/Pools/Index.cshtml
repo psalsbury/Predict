@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<Predict.Models.Pool>
 
 @{
-    ViewBag.Title = "Manage Your Pools";
+    ViewBag.Title = "Manage Your Leagues";
     var globalPoolId = ViewBag.GlobalPoolId;
 }
 <link rel="stylesheet" href="~/content/css/ionicons.min.css">
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="~/PoolDashboard">Pool Admin</a>
+            <a href="~/PoolDashboard">League Admin</a>
         </li>
 
-        <li class="breadcrumb-item active" aria-current="page">Manage Pools</li>
+        <li class="breadcrumb-item active" aria-current="page">Manage Leagues</li>
     </ol>
 </nav>
 
@@ -56,7 +56,7 @@
         function () {
 
             var button = $(this);
-            bootbox.confirm("Are you sure you want to delete this pool?",
+            bootbox.confirm("Are you sure you want to delete this league?",
                 function (result) {
                     if (result) {
                         $.ajax(

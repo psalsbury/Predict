@@ -16,9 +16,10 @@
     </nav>
 }
 
+
 <table width="100%">
     <tr>
-        <td  align="left"  width="33%">
+        <td align="left" width="33%">
 
             @if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
             {
@@ -35,20 +36,57 @@
                 <text>&nbsp;</text>
             }
         </td>
-        <td align="center"  width="33%">
+        <td align="center" width="33%">
             <input class="btn btn-primary" type="button" value="Bet Returns" id="oddsReturns" name="oddsReturns" data-toggle="modal" data-target="#modal-returns">
         </td>
 
-        <td  align="right"  width="33%">
+        <td align="right" width="33%">
             <input type="button" class="btn btn-primary alignright" data-toggle="modal" data-target="#myModal" value="Colour Key">
         </td>
     </tr>
 </table>
 <br />
 
+<link rel="stylesheet" id="wpfront-scroll-top-css" href="~/wpfront-scroll-top/css/wpfront-scroll-top.min.css?ver=2.0.7.08086" media="all">
+
+<div id="wpfront-scroll-top-container" style="opacity: 0.8; right: 120px; bottom: 20px; display: block;">
+    <img src="~/wpfront-scroll-top/images/icons/39.png" alt="" style="width: auto; height: auto;">
+</div>
+
+<div id="wpfront-scroll-nextfixture-container" style="opacity: 0.8; right: 20px; bottom: 20px; display: block;">
+    <a href="#nextPredictionLocation"><img src="~/wpfront-scroll-top/images/icons/down.png" alt="" style="width: auto; height: auto;"></a>
+
+</div>
+
+<script type="text/javascript">
+    function wpfront_scroll_top_init() {
+        if (typeof wpfront_scroll_top === "function" && typeof jQuery !== "undefined") {
+            wpfront_scroll_top({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 120, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+        } else {
+            setTimeout(wpfront_scroll_top_init, 100);
+        }
+    }
+    wpfront_scroll_top_init();
+</script>
+
+
+
+<script type="text/javascript">
+    function wpfront_scroll_nextfixture_init() {
+        if (typeof wpfront_scroll_nextfixture === "function" && typeof jQuery !== "undefined") {
+            wpfront_scroll_nextfixture({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 20, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+        } else {
+            setTimeout(wpfront_scroll_nextfixture_init, 100);
+        }
+    }
+    wpfront_scroll_nextfixture_init();
+</script>
+
+<script src="~/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.0.7.08086" id="wpfront-scroll-top-js"></script>
+
+
 @using (Html.BeginForm("Save", "FixturePredictions"))
 {
-
 
     <!-- / MODAL FORM FOR ODDS-->
     <div class="modal fade" id="modal-odds" role="dialog">
@@ -94,11 +132,12 @@
     </div>
 
     @Html.HiddenFor(m => m.EventId)
+    var OutstandingPredictionCount = 0;
+
     <table id="predictions" name="predictions" class="table table-bordered">
 
         @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
         {
-            var rowColour = "";
             var rowColour = "";
             var hideColouredOdds = false;
             var haveFixtureResultOdds = Model.RapidApiFixtureIdsWithResultOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
@@ -121,6 +160,10 @@
                 rowColour = "#FFDBDB"; // red
             }
 
+            if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+            {
+                OutstandingPredictionCount += 1;
+            }
 
             <tr bgcolor="@rowColour">
                 <td class="hidden-xs hidden-sm" style="text-align: center; vertical-align: middle;" witdth="25%">
@@ -129,6 +172,13 @@
                 </td>
 
                 <td style="text-align: left; vertical-align: middle;" witdth="50%">
+
+                    @if (OutstandingPredictionCount == 1)
+                    {
+
+                        <section id="nextPredictionLocation"></section>
+                    }
+
                     <div class="container-fluid">
                         <div class="row vertical-middle text-center">
                             <div class="row no-gutters">
@@ -146,6 +196,7 @@
                                             @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
                                             {
                                                 @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2", style = "text-align:center;", @class = "homePrediction" })
+
                                             }
                                             else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
                                             {
@@ -243,11 +294,17 @@
                             </tr>
                         }
                     </table>
+
                 </td>
 
             </tr>
         }
     </table>
+    if (OutstandingPredictionCount == 0)
+    {
+
+        <section id="nextPredictionLocation"></section>
+    }
 
     @Html.AntiForgeryToken()
 
@@ -255,13 +312,14 @@
     {
         <div class="form-group">
             <div>
-                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="submit" value="Save" class="btn btn-success" id="submit" />
                 <input class="btn btn-danger" title="Click to clear all predictions" type="button" value="Clear" onclick="javascript:ClearPredictions();" id="Clear" name="Clear">
             </div>
         </div>
     }
 }
 <br />
+
 
 @if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
 {
@@ -565,5 +623,32 @@
             }
         });
 
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Add smooth scrolling to all links
+        $("a").on('click', function (event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 800, function () {
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
+            } // End if
+        });
     });
 </script>

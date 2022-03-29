@@ -1,9 +1,9 @@
 ﻿@using Microsoft.Ajax.Utilities
 @using Microsoft.AspNet.Identity
-@model IEnumerable<Predict.Models.Pool> 
+@model IEnumerable<Predict.Models.Pool>
 
 @{
-    ViewBag.Title = "Pool Membership";
+    ViewBag.Title = "League Membership";
 }
 
 <nav aria-label="breadcrumb">
@@ -16,56 +16,69 @@
     </ol>
 </nav>
 
-            <table class="table table-bordered table-hover" id="poolMembershipNotJoined">
-                <thead>
-                    <tr>
-                        <th>
-                            LEague Name
-                        </th>
-                        <th>
-                            Join Code Required
-                        </th>
-                        <th>
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
 
-                        </th>
-                    </tr>
-                </thead>
-                @foreach (var item in @Model)
-                {
-  
-                    var joinCodeNeeded = item.JoinCode.IsNullOrWhiteSpace() ? "" : "joinCodeNeeded";
-                    var joinCodeNeededDisplay = item.JoinCode.IsNullOrWhiteSpace() ? "No" : "Yes";
+<table class="table table-bordered table-hover" id="poolMembershipNotJoined">
+    <thead>
+        <tr>
+            <th>
+                League Name
+            </th>
+            <th>
+                Join Code Required
+            </th>
+            <th>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PoolName)
-                            </td>
-                            <td>
-                                @joinCodeNeededDisplay
-                            </td>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in @Model)
+    {
 
-                            <td>
-                                <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded" dataPoolId="@item.Id" poolName="@item.PoolName">Join League</button>
-                            </td>
+        var joinCodeNeeded = item.JoinCode.IsNullOrWhiteSpace() ? "" : "joinCodeNeeded";
+        var joinCodeNeededDisplay = item.JoinCode.IsNullOrWhiteSpace() ? "No" : "Yes";
 
-                        </tr>
-                }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PoolName)
+            </td>
+            <td>
+                @joinCodeNeededDisplay
+            </td>
+
+            <td>
+                <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded" dataPoolId="@item.Id" poolName="@item.PoolName">
+
+                    <i class="fa fa-thumbs-up" ></i>
+                    Join League
+                </button>
+            </td>
+
+        </tr>
+    }
 
 
-            </table>
+</table>
 
 
 <script src="~/Scripts/bootbox.js"></script>
 
+
+
+
+
+
+
 <script>
 
-    $(function() {
-        $("#poolMembershipJoined, #poolMembershipNotJoined").DataTable({
-            "bLengthChange": false,
-            "bPaginate": false
-        });;
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#poolMembershipNotJoined tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
     });
-
 
 </script>
 
@@ -76,7 +89,7 @@
         ".js-approve",
         function() {
             var button = $(this);
-            bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " pool?",
+            bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " league?",
                 function(result) {
                     if (result) {
                         $.ajax(
@@ -100,14 +113,14 @@
 
             var ok = false;
             if (button.attr("joinCode") === "" || typeof button.attr("joinCode") === 'undefined') {
-                bootbox.confirm("Are you sure you want to join the " + button.attr("poolName") + " pool?",
+                bootbox.confirm("Are you sure you want to join the " + button.attr("poolName") + " league?",
                     function(result) {
                         if (result) {
                             JoinPool(button, "_");
                         }
                     });
             } else {
-                bootbox.prompt("To join the " + button.attr("poolName") + " pool, please enter the join code",
+                bootbox.prompt("To join the " + button.attr("poolName") + " league, please enter the join code",
                     function(result) {
                         JoinPool(button, result);
                     });
