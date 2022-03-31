@@ -4,103 +4,66 @@
 
 
 
+<div class="register-box">
+    <div class="login-logo">
+        <b>Prediction</b>Comp
+    </div>
+    <div class="register-box-body">
+        <div>
 
-
-<div class="col-md-12" style="background-image: url('../images/footyimage.jpg'); background-repeat: no-repeat; background-color: rgba(255, 255, 255, 0.6); background-blend-mode: lighten; background-size: cover;">
-    <div>
-
-        @using (Html.BeginForm(Model.Id == null ? "Register" : "UpdateRegister", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "RegisterForm" }))
-        {
-            @Html.AntiForgeryToken()
-            <h4>Your Account</h4>
-
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                <div class="col-md-8">
-                    @if (Model.Id == null)
-                    {
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                    }
-                    else
-                    {
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
-                    }
-
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.DisplayName, new { @class = "col-md-2 control-label" })
-                <div class="col-md-8">
-                    @if (Model.Id == null)
-                    {
-                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" })
-                    }
-                    else
-                    {
-                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control" })//, @readonly = "readonly"})
-                    }
-                </div>
-            </div>
-
-
-            if (Model.Id == null)
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "RegisterForm" }))
             {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.EventId, new { @class = "col-md-2 control-label" })
-
-                    <div class="col-md-8">
-
-                        <select name="@Html.NameFor(m => m.EventId)" id="@Html.IdFor(m => m.EventId)" class="form-control">
-
-                            @if (Model.Events != null)
-                            {
-                                foreach (var item in Model.Events)
-                                {
-                                    <option value="@item.Id"> @item.EventName </option>
-                                }
-                            }
-                        </select>
-                    </div>
-
-                </div>
-            }
-
-            if (Model.Id == null)
-            {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-8">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    </div>
+                @Html.AntiForgeryToken()
+                <h4>Register a New Account</h4>
+                <div class="form-group has-feedback">
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-8">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                    </div>
-                </div>
-            }
-            else
-            {
-                @Html.HiddenFor(m => m.Id)
-            }
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Display name" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+
+                <div class="form-group has-feedback">
+
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Retype password" })
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    Select a <b>Prediction</b>Comp to join:
+                    <select name="@Html.NameFor(m => m.EventId)" id="@Html.IdFor(m => m.EventId)" class="form-control">
+                        @foreach (var item in Model.Events)
+                        {
+                            <option value="@item.Id"> @item.EventName </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group has-feedback">
+
                     <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
                     </div>
                     <br />
-                    <input type="submit" id="btnSubmit" class="btn btn-success" value="@(Model.Id == null ? "Register" : "Update")" />
+                    <input type="submit" id="btnSubmit" class="btn btn-primary btn-block btn-flat" value="Register" />
+
                 </div>
+            }
+        </div>
             </div>
-
-        }
-        <br />
-    </div>
 </div>
-
 
 <script>
     function onSubmit(token) {

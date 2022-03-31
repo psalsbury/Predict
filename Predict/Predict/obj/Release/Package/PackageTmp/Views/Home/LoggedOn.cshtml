@@ -74,7 +74,7 @@
                     <div class="small-box bg-@fixturePredictionBox">
                         <div class="inner">
                             <h3>
-                                @nbrFixturePredictionsEntered <sup style="font-size: 20px"> out of @nbrFixturePredictionsToEnter</sup>
+                                @nbrFixturePredictionsEntered <sup style="font-size: 20px">  of @nbrFixturePredictionsToEnter</sup>
                             </h3>
                             <p>@(nbrKoPredictionsToEnter>0?"Group games":"Games") predicted</p>
                         </div>
@@ -95,7 +95,7 @@
                     <div class="small-box bg-@koPredictionBox">
                         <div class="inner">
                             <h3>
-                                @nbrKoPredictionsEntered <sup style="font-size: 20px"> out of @nbrKoPredictionsToEnter</sup>
+                                @nbrKoPredictionsEntered <sup style="font-size: 20px">  of @nbrKoPredictionsToEnter</sup>
                             </h3>
                             <p>KO Predictions entered</p>
                         </div>
@@ -118,7 +118,7 @@
                     <div class="small-box bg-@bonusPredictionBox">
                         <div class="inner">
                             <h3>
-                                @nbrBonusQuestionPredictionsEntered <sup style="font-size: 20px"> out of @nbrBonusQuestionsToEnter</sup>
+                                @nbrBonusQuestionPredictionsEntered <sup style="font-size: 20px">  of @nbrBonusQuestionsToEnter</sup>
                             </h3>
                             <p>Bonus Predictions entered</p>
                         </div>
@@ -229,7 +229,7 @@
                                 <a href="~/Table/ShowTable?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
                                     <span class="info-box-text">Position</span>
 
-                                    <span class="label label-info pull-right">View Table</span>
+                                    <span class="btn btn-primary pull-right">View Table&nbsp;<i class="fa fa-table"></i></span>
 
                                     @if (poolInfoViewModel.PoolPosition == 0)
                                     {
@@ -237,7 +237,7 @@
                                     }
                                     else
                                     {
-                                        <span class="info-box-number">@poolInfoViewModel.PoolPosition</span>
+                                        <span class="info-box-number"><b>@poolInfoViewModel.PoolPosition</b></span>
                                     }
 
                                 </a>
@@ -256,7 +256,7 @@
                                 <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
                                     <span class="info-box-text">Nbr of Members</span>
 
-                                    <span class="label label-info pull-right">Pool Game Info</span>
+                                    <span class="btn btn-primary pull-right">Game Info &nbsp;<i class="fa fa-bullseye"></i></span>
 
                                     <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
 
@@ -274,7 +274,7 @@
                                 <a href="~/PositionHistory/ShowHistory?eventid=@eventId&poolid=@poolInfoViewModel.PoolId&playerid=@User.Identity.GetUserId()" class="product-title">
                                     <span class="info-box-text">Total Score</span>
 
-                                    <span class="label label-info pull-right">Posn History</span>
+                                    <span class="btn btn-primary pull-right">Posn History&nbsp;<i class="fa fa-line-chart"></i></span> 
 
                                     @if (poolInfoViewModel.PoolPosition == 0)
                                     {

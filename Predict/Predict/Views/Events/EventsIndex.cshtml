@@ -16,6 +16,8 @@
     </ol>
 </nav>
 
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+
 @{
     var playerId = User.Identity.GetUserId();
 }
@@ -24,7 +26,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <table class="table" id="Events">
+    <table class="table" id="events">
         <thead>
             <tr>
                 <th>
@@ -64,7 +66,7 @@
                             }
                             <li><a href="@Url.Action("EditEvent", "Events", new {id = item.Id})">Edit</a></li>
                             <li class="divider"></li>
-                            <li class="js-delete" dataEventId ="@item.Id" dataEventName="@item.EventName"><a href="#">Delete Comp</a></li>
+                            <li class="js-delete" dataEventId="@item.Id" dataEventName="@item.EventName"><a href="#">Delete Comp</a></li>
                         </ul>
                     </div>
 
@@ -82,22 +84,37 @@
 
 <script src="~/Scripts/bootbox.js"></script>
 
+
+<script>
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#events tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+</script>
+
 <script>
 
 
     $("#Events").on("click",
         ".js-delete",
-        function() {
+        function () {
             var button = $(this);
             bootbox.confirm("Are you sure you want to delete the " + button.attr("dataEventName") + " comp?",
                 function (result) {
                     if (result) {
-                            $.ajax(
+                        $.ajax(
                             {
                                 url: "../api/events/delete/" + button.attr("dataEventID"),
                                 method: "POST",
-                                success: function() {
-                                    $(button.closest("tr")).fadeOut(1000); }
+                                success: function () {
+                                    $(button.closest("tr")).fadeOut(1000);
+                                }
                             });
                     }
 

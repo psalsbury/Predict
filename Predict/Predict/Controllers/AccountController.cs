@@ -244,15 +244,12 @@ namespace Predict.Controllers
                 }
 
                 var confirmEmailAddress = System.Convert.ToBoolean(ConfigurationManager.AppSettings["ConfirmEmailOnRegister"]);
-                
-                if(model.Email.Contains("thinkmoney.co.uk"))
-                    confirmEmailAddress = false;
 
                 if (ModelState.IsValid)
                 {
                     if (model.Password != model.ConfirmPassword)
                     {
-                        ModelState.AddModelError("Password", "The password and confirmation password do not match.");
+                        ModelState.AddModelError("Password", "Passwords do not match");
                         model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
                         return View("Register", model);
                     }
@@ -260,12 +257,12 @@ namespace Predict.Controllers
                     var nbrWithSameDisplayName = context.Players.Count(a => a.DisplayName == model.DisplayName);
                     if (nbrWithSameDisplayName != 0)
                     {
-                        ModelState.AddModelError("Password", "This display name is already taken");
+                        ModelState.AddModelError("Password", "Display name is already taken");
                         model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
                         return View("Register", model);
                     }
 
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = !confirmEmailAddress };
+                    var user = new ApplicationUser { UserName = model.DisplayName, Email = model.Email, EmailConfirmed = !confirmEmailAddress };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {

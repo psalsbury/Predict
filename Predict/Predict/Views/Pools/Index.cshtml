@@ -15,76 +15,95 @@
     </ol>
 </nav>
 
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
 
-<table id="poolsTable" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PoolName)
-            </th>
-            <th>
-                &nbsp;
-            </th>
+<div class="col-md-4">
 
-        </tr>
-    </thead>
+    <table id="poolsTable" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PoolName)
+                </th>
+                <th>
+                    &nbsp;
+                </th>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PoolName)
-            </td>
-            <td>
-                <a href="~/Pools/Edit/@item.Id" class="btn btn btn-block btn-info">Edit</a>
-                <a href="~/PoolPlayers/PoolAdmin/@item.Id" class="btn btn-block btn-primary">Players</a>
-                <a href="~/EventPools/EventsLinkedToPool/@item.Id" class="btn btn-block btn-success">Comps</a>
-                @if (item.Id != globalPoolId)
-                {
-                    <button class="btn btn-block btn-danger" value="Remove" poolId="@item.Id">Delete</button>
-                }
+            </tr>
+        </thead>
 
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr  style="border-bottom: 1px solid black;">
+                <td style="text-align: left; vertical-align: middle;">
+                    <h4>@Html.DisplayFor(modelItem => item.PoolName)</h4>
+                    
+                </td>
+                <td>
+                    <a href="~/Pools/Edit/@item.Id" class="btn btn btn-block btn-info"><i class="fa fa-pencil-square-o"></i> &nbsp; Edit </a>
+                    <a href="~/PoolPlayers/PoolAdmin/@item.Id" class="btn btn-block btn-primary"><i class="fa fa-users"></i> &nbsp;Players </a>
+                    <a href="~/EventPools/EventsLinkedToPool/@item.Id" class="btn btn-block btn-success"><i class="fa fa-trophy"></i>&nbsp;Comps </a>
+                    @if (item.Id != globalPoolId)
+                    {
+                <button class="btn btn-block btn-danger" value="Remove" poolId="@item.Id"><i class="fa fa-trash"></i>&nbsp;Delete </button>
 
-</table>
-<script src="~/Scripts/bootbox.js"></script>
-<script>
-    $("#poolsTable").on("click",
-        ".btn-danger",
-        function () {
-
-            var button = $(this);
-            bootbox.confirm("Are you sure you want to delete this league?",
-                function (result) {
-                    if (result) {
-                        $.ajax(
-                            {
-                                url: "/api/pools/" + button.attr("poolId"),
-                                method: "DELETE",
-                                success: function () {
-                                    $(button.closest("tr")).fadeOut(1000);
-                                }
-                            });
                     }
+                </td>
+            </tr>
+        }
+
+        </table>
+    </div>
+    <script src="~/Scripts/bootbox.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#poolsTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+            });
         });
-</script>
+
+    </script>
+
+    <script>
+        $("#poolsTable").on("click",
+            ".btn-danger",
+            function () {
+
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this league. All history will be lost?",
+                    function (result) {
+                        if (result) {
+                            $.ajax(
+                                {
+                                    url: "../api/pools/delete/" + button.attr("poolId"),
+                                    method: "POST",
+                                    success: function () {
+                                        $(button.closest("tr")).fadeOut(1000);
+                                    }
+                                });
+                        }
+                    });
+            });
+    </script>
 
 
-<script>
+    <script>
 
-    $(function () {
-        $("#poolsTable").DataTable({
-            'columnDefs': [
-                {
-                    'targets': [2, 3, 4], /* column index */
-                    'orderable': false, /* true or false */
+        $(function () {
+            $("#poolsTable").DataTable({
+                'columnDefs': [
+                    {
+                        'targets': [2, 3, 4], /* column index */
+                        'orderable': false, /* true or false */
 
-                }
-            ]
+                    }
+                ]
+            });
         });
-    });
 
-</script>
+    </script>

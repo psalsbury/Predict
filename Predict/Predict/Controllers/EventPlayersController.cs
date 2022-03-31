@@ -46,13 +46,17 @@ namespace Predict.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            var globalPoolId = Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
             var playerId = User.Identity.GetUserId();
             var myEventPlayers = _context.EventPlayers
                 .Include(a => a.Event)
                 .Where(a => a.PlayerId == playerId).ToList();
+
             var myEvents = (List<Event>)Predict.Helper.Cache.GetCachedItem("Events");
+
             var poolPlayers = _context.PoolPlayers.Where(a => a.PlayerId == playerId)
                 .Where(a => a.Enabled == true).ToList();
+            var compNewlyEntered = false;
 
             foreach (Event myEvent in myEvents)
             {
@@ -106,6 +110,7 @@ namespace Predict.Controllers
                         myEventPlayer.ModifiedDateTime = DateTime.UtcNow;
                         _context.EventPlayers.AddOrUpdate(myEventPlayer);
                         changeMade = true;
+                        compNewlyEntered = true;
                     }
                     else if (!playingIn.IsNullOrWhiteSpace() && myEventPlayer == null)
                     {
@@ -120,8 +125,75 @@ namespace Predict.Controllers
                         };
                         _context.EventPlayers.Add(myEventPlayer);
                         changeMade = true;
+                        compNewlyEntered = true;
                     }
 
+                    if (compNewlyEntered)
+                    {
+                        // If this member is the owner of a pool, then join the event to the pool
+                        var pools = _context.Pools.Where(a => a.AdminPlayerId == playerId && a.Id != globalPoolId).ToList();
+                        foreach (var pool in pools)
+                        {
+                            var eventPool = _context.EventPools.Where(a => a.PoolId == pool.Id && a.EventId == myEvent.Id).FirstOrDefault();
+                            if (eventPool != null && eventPool.Enabled == false)
+                            {
+                                eventPool.Enabled = true;
+                                eventPool.ModifiedDateTime = DateTime.UtcNow;
+                            }
+                            else if (eventPool == null)
+                            {
+                                eventPool = new EventPool
+                                {
+                                    EventId = myEvent.Id,
+                                    PoolId = pool.Id,
+                                    Enabled = true,
+                                    ModifiedDateTime = DateTime.UtcNow,
+                                    CreatedDateTime = DateTime.UtcNow
+                                };
+                            }
+                            _context.EventPools.AddOrUpdate(eventPool);
+
+                            var thisPoolPoolPlayers = _context.PoolPlayers.Where(a => a.PoolId == pool.Id);
+                            foreach (var thisPoolPlayer in thisPoolPoolPlayers)
+                            {
+                                // If this player is participating in this comp then ensure that the player/pool/event is linked
+
+                                var playerPlayingThisEvent = _context.EventPlayers.Where(a => a.EventId == myEvent.Id && a.PlayerId == thisPoolPlayer.PlayerId).Any();
+
+                                if (!playerPlayingThisEvent)
+                                    continue;
+
+                                var eventPoolPlayer = _context.EventPoolPlayers.Where(a => a.PoolId == pool.Id && a.EventId == myEvent.Id && a.PlayerId == thisPoolPlayer.PlayerId).FirstOrDefault();
+                                if (eventPoolPlayer != null && eventPoolPlayer.Enabled == false)
+                                {
+                                    eventPoolPlayer.Enabled = true;
+                                    eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                                }
+                                else if (eventPoolPlayer == null)
+                                {
+                                    // Add the player to the event/pool
+                                    eventPoolPlayer = new EventPoolPlayer
+                                    {
+                                        PlayerId = thisPoolPlayer.PlayerId,
+                                        EventId = myEvent.Id,
+                                        PoolId = pool.Id,
+                                        Enabled = true,
+                                        CreatedDateTime = DateTime.UtcNow,
+                                        ModifiedDateTime = DateTime.UtcNow,
+                                        AdminApprovedDateTime = DateTime.UtcNow,
+                                        PoolPosition = 0,
+                                        CorrectScore = 0,
+                                        CorrectResult = 0,
+                                        WinMargin = 0,
+                                        KoScore = 0,
+                                        BonusScore = 0,
+                                        TotalScore = 0
+                                    };
+                                    _context.EventPoolPlayers.Add(eventPoolPlayer);
+                                }
+                            }
+                        }
+                    }
                     if (changeMade == true)
                         _context.SaveChanges();
 

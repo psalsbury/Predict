@@ -357,6 +357,7 @@
     <Compile Include="Controllers\Api\EventsController.cs" />
     <Compile Include="Controllers\Api\FixtureOddsController.cs" />
     <Compile Include="Controllers\Api\JokeRatingsController.cs" />
+    <Compile Include="Controllers\Api\PoolsController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />

@@ -34,7 +34,7 @@ BEGIN
 	UPDATE EPP
 	SET EPP.FixturePredictionsEntered = CTE.NbrPredsEntered
 		, EPP.ModifiedDateTime = GETUTCDATE()
-	FROM dbo.EventPoolPlayers AS EPP
+	FROM dbo.EventPlayers AS EPP
 	INNER JOIN CTE ON CTE.EventId = EPP.EventId AND CTE.PlayerId = EPP.PlayerId;
 
 	WITH CTE AS
@@ -66,7 +66,7 @@ BEGIN
 	UPDATE EPP
 	SET EPP.KoPredictionsEntered = CTE.NbrKoPredsEntered
 		, EPP.ModifiedDateTime = GETUTCDATE()
-	FROM EventPoolPlayers AS EPP
+	FROM EventPlayers AS EPP
 	INNER JOIN CTE ON CTE.EventId = EPP.EventId AND CTE.PlayerId = EPP.PlayerId
 
 END

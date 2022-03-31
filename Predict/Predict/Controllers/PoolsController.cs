@@ -26,20 +26,11 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            List<Pool> pools;
-            if (User.IsInRole("Admin"))
-            {
-                // Admin of the site can see all pools
-                pools = _context.Pools.Include(b => b.AdminPlayer).ToList();
-            }
-            else
-            {
-                // Normal user can see only their pools
-                var userid = User.Identity.GetUserId();
+            // Normal user can see only their pools
+            var userid = User.Identity.GetUserId();
 
-                pools = _context.Pools.Include(b => b.AdminPlayer)
-                    .Where(p => p.AdminPlayerId == userid).ToList();
-            }
+            var pools = _context.Pools.Include(b => b.AdminPlayer)
+                .Where(p => p.AdminPlayerId == userid).ToList();
 
             ViewBag.GlobalPoolId = Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
             return View(pools);
@@ -131,29 +122,96 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
+            var newPool = false;
             var poolFromDb = new Pool();
             if (poolModel.Id != 0) poolFromDb = _context.Pools.Single(m => m.Id == poolModel.Id);
 
+            // Create or update pool
             Mapper.Map(poolModel, poolFromDb);
             poolFromDb.ModifiedDateTime = DateTime.UtcNow;
 
             if (poolModel.Id == 0)
             {
+                newPool = true;
                 poolFromDb.CreatedDateTime = DateTime.UtcNow;
                 _context.Pools.Add(poolFromDb);
             }
 
-            var itemList = _context.EventPoolPlayers
-                .Include(e => e.Event)
-                .Where(a => a.PoolId == poolModel.Id && a.Event.EndDateTime >= DateTime.UtcNow)
-                .Select(x => new {x.PlayerId, x.EventId}).Distinct().ToList();
-
-            foreach (var item in itemList)
-            {
-                Helper.Cache.SetCachedItem("ForceUpdate*" + item.PlayerId + "*" + item.EventId, DateTime.Now.AddDays(7));
-            }
-
             _context.SaveChanges();
+
+            if (newPool)
+            {
+
+                var poolPlayer = new PoolPlayer
+                {
+                    PoolId = poolFromDb.Id,
+                    PlayerId = poolFromDb.AdminPlayerId,
+                    Enabled = true,
+                    CreatedDateTime = DateTime.UtcNow,
+                    ModifiedDateTime = DateTime.UtcNow,
+                    EmailSentToAdminDateTime = DateTime.UtcNow
+                };
+                _context.PoolPlayers.Add(poolPlayer);
+
+                // Add this pool to all unfinished events entered by the person who has created the pool
+                var eventPlayersItemList = _context.EventPlayers
+                                        .Include(e => e.Event)
+                                        .Where(a => a.Event.StartDateTime >= DateTime.UtcNow && a.PlayerId == poolFromDb.AdminPlayerId)
+                                        .Select(x => new { x.PlayerId, x.EventId }).Distinct().ToList();
+
+                foreach (var item in eventPlayersItemList)
+                {
+                    // Add the new pool to the event
+                    var eventPool = new EventPool
+                    {
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow,
+                        EventId = item.EventId,
+                        Enabled = true,
+                        PoolId = poolFromDb.Id
+                    };
+                    _context.EventPools.Add(eventPool);
+
+                    // Add the player to the event/pool
+                    var eventPoolPlayer = new EventPoolPlayer
+                    {
+                        PlayerId = poolFromDb.AdminPlayerId,
+                        EventId = item.EventId,
+                        PoolId = poolFromDb.Id,
+                        Enabled = true,
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow,
+                        AdminApprovedDateTime = DateTime.UtcNow,
+                        PoolPosition = 0,
+                        CorrectScore = 0,
+                        CorrectResult = 0,
+                        WinMargin = 0,
+                        KoScore = 0,
+                        BonusScore = 0,
+                        TotalScore = 0
+                    };
+
+                    _context.EventPoolPlayers.Add(eventPoolPlayer);
+
+                    // Set this so when user goes on the home page it updates the screen
+                    Helper.Cache.SetCachedItem("ForceUpdate*" + poolFromDb.AdminPlayerId + "*" + item.EventId, DateTime.Now.AddHours(1));
+
+                }
+                _context.SaveChanges();
+            }
+            else
+            {
+
+                var itemList = _context.EventPoolPlayers
+                    .Include(e => e.Event)
+                    .Where(a => a.PoolId == poolModel.Id && a.Event.EndDateTime >= DateTime.UtcNow)
+                    .Select(x => new {x.PlayerId, x.EventId}).Distinct().ToList();
+
+                foreach (var item in itemList)
+                {
+                    Helper.Cache.SetCachedItem("ForceUpdate*" + item.PlayerId + "*" + item.EventId, DateTime.Now.AddDays(7));
+                }
+            }
 
             return RedirectToAction("Index", "PoolDashboard");
         }
@@ -168,12 +226,9 @@ namespace Predict.Controllers
             if (pool == null) return RedirectToAction("Index", "Home");
 
             var loggedInUserId = User.Identity.GetUserId();
-            var isInLockDown = false;
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
 
             if (!isPoolAdmin) throw new Exception("Only pool admin is allowed to edit the pool");
-
-            if (isInLockDown) throw new Exception("Pool cannot be removed after the comp has started");
 
             // Remove all the players from the pool
             var poolPlayers = _context.EventPoolPlayers.Where(b => b.PoolId == id);

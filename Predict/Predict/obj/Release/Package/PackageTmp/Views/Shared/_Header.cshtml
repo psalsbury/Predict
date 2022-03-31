@@ -34,15 +34,17 @@
                             @if (player != null)
                             {
                                 <li class="user-header">
-                                    <p>
+                                    <p class="pull-left">
                                         Name:
                                         @if (player != null)
                                         {
-                                        <B>@player.DisplayName</B>
+                                            <B>@player.DisplayName</B>
                                         }
 
+                                        <br />
+                                        <br />
+                                        Member since: <B>@player.CreatedDateTime.ToLongDateString()</B>
                                     </p>
-                                    <p>Member since: <B>@player.CreatedDateTime.ToShortDateString()</B> </p>
                                 </li>
                             }
                             <li class="user-footer">
@@ -64,7 +66,7 @@
                 }
                 else
                 {
-     
+                    <li class="user-footer">@Html.ActionLink("Register", "Register", "Account", null, new { id = "loginLink" })</li>
                     <li class="user-footer">@Html.ActionLink("Sign in", "SignInGeneric", "Account", null, new { id = "loginLink" })</li>
                 }
 
@@ -76,30 +78,31 @@
             <ul class="nav navbar-nav">
 
                 <!-- Notifications: style can be found in dropdown.less -->
-                <li class="dropdown notifications-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                      @*  <span class="label label-warning">2</span>*@
+                <!--
+    <li class="dropdown notifications-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bell-o"></i>
+          @*  <span class="label label-warning">2</span>*@
+        </a>
+        <!--<ul class="dropdown-menu">
+            <li class="header">You have 2 notifications</li>
+            <li>-->
+                <!-- inner menu: contains the actual data -->
+                <!--<ul class="menu">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-soccer-ball-o"></i> Premier League 21/22 Comps available
                     </a>
-                    <!--<ul class="dropdown-menu">
-                        <li class="header">You have 2 notifications</li>
-                        <li>-->
-                            <!-- inner menu: contains the actual data -->
-                            <!--<ul class="menu">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-soccer-ball-o"></i> Premier League 21/22 Comps available
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-soccer-ball-o"></i> Scottish Prem 21/22 Comps available
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>-->
                 </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-soccer-ball-o"></i> Scottish Prem 21/22 Comps available
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+                </li>-->
                 <!-- Tasks: style can be found in dropdown.less -->
             </ul>
         </div>

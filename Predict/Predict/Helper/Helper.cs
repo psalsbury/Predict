@@ -141,11 +141,9 @@ namespace Predict.Helper
         {
 
             Logger.Info("SetEventCache - Start");
-
+            var daysAgo = DateTime.UtcNow.AddDays(-30);
             var context = new ApplicationDbContext();
-            var earliestDate = DateTime.Today.AddYears(-4);
-
-            var events = context.Events.ToList();
+            var events = context.Events.Where(a => a.EndDateTime >= daysAgo).ToList();
             SetCachedItem("Events", events);
 
             context.Dispose();

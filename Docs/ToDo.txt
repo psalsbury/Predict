@@ -1,7 +1,5 @@
 prevent message being submitted and topic that is blank. casuses an issue.
 
-if enter wrong password for 2nd password when registering, the events dropdown has no entries
-
 use correct timezone on the bonus questions page
 
 if found player is clicked, highlight that player in the table (Viewbag.FindPlayer id set)
@@ -21,62 +19,21 @@ ensure that auto fil works for for last 16 (error on germanys group in the euros
 have another modal screen thats shown for each pool that shows the position history, prize fund, position movement etc
 
 
---> New feature for a football quiz
-
---> keep header of predictions when scrolling down.
---> add in additional button on the right to scroll down to next predictions
-https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_sticky_element
-
-
-QuizQuestion --> Menu Icon (question-circle-o)
-
-QuestionId
-PlayerId
-QuestionText
-AnswerTypeId
-
-QuizQuestionAnswer
-
-AnswerId
-QuestionId
-AnswerText
-CorrectAnswer
-
-QuizQuestionPlayerAnswer
-
-QuizQuestionPlayerAnswerId
-QuestionId
-PlayerId
-AnswerGiven (text)
-Correct (bit)
-
-
-Joke --> Menu icon (smile-o)
-
-JokeId
-PlayerId
-JokeText
-JokePunchLine
-
-JokeRating
-
-JokeId
-PlayerId
-Rating (1-10)
+When adding a pool
+	--> automatically add the pool to all (unfinished) comps entered by the person who has created the league
+	--> automatcially add the person who created the league to the league
 
 
 
 
 
+When someone joins a comp who has created a league
+	--> join the comp to the league
+	--> for every other person who is a member of the pool and a participating in the comp, add them to the league/comp
 
-ideas for homepage
-	--> donut chart showing correct where points have come from (cs, cr, KO, WM)
-	--> position in the global league
-	--> position in pool
-	--> number of people in your league
+when 
 
-	--> for admins, number of people that need authorising
-	--> 
+
 
 
 goDaddy database

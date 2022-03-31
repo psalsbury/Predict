@@ -50,8 +50,7 @@
 
 <!-- The JS SDK Login Button -->
 
-<div id="status">
-</div>
+
 
 <!-- Load the JS SDK asynchronously -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
@@ -67,86 +66,86 @@
         @using (Html.BeginForm("SignInGeneric", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "LoginForm" }))
         {
             @Html.AntiForgeryToken()
-
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-
             <div class="form-group has-feedback">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @placeholder = "Email" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+           </div>
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
 
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
 
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
 
-            <br />
-            <div class="form-group">
-                <div class="col-md-12">
+                <br />
+                <div class="form-group">
+                    <div class="col-md-12">
 
-                    <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
+                        <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
+                        </div>
+                        <br />
                     </div>
-                    <br />
+
                 </div>
 
-            </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class=" checkbox icheck">
+                            <label>
+                                @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
+                                @Html.LabelFor(m => m.RememberMe)
 
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class=" checkbox icheck">
-                        <label>
-                            @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
-                            @Html.LabelFor(m => m.RememberMe)
-
-                        </label>
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    </div>
+
                 </div>
+                }
+
+                @if (Environment.MachineName == "PETESXPS")
+                {
+
+                    <div class="social-auth-links text-center">
+                        <p>- OR -</p>
+
+                        <a onclick="javascipt:FB.login();" class="btn btn-block btn-social btn-facebook btn-flat" onlogin="checkLoginState();">
+                            <i class="fa fa-facebook"></i> Sign in using
+                            Facebook
+                        </a>
+
+                        <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                            <i class="fa fa-google-plus"></i> Sign in using
+                            Google+
+                        </a>
+
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" class="btn btn-block btn-social btn-facebook btn-flat">
+                            <i class="fa fa-facebook"></i> Sign in using
+                            Facebook
+                        </fb:login-button>
+                    </div>
+                }
+                <br />
+
+                @Html.ActionLink("I forgot my password", "ForgotPassword")
+                <br /><br />
+                @Html.ActionLink("I haven't received my activation link", "ResendEmailToken")
+                <br /><br />
+                @Html.ActionLink("Register a new account", "register")
 
             </div>
-        }
 
-        @if (Environment.MachineName == "PETESXPS")
-        {
-
-    <div class="social-auth-links text-center">
-        <p>- OR -</p>
-
-        <a onclick="javascipt:FB.login();" class="btn btn-block btn-social btn-facebook btn-flat" onlogin="checkLoginState();">
-            <i class="fa fa-facebook"></i> Sign in using
-            Facebook
-        </a>
-
-        <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-            <i class="fa fa-google-plus"></i> Sign in using
-            Google+
-        </a>
-
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" class="btn btn-block btn-social btn-facebook btn-flat">
-            <i class="fa fa-facebook"></i> Sign in using
-            Facebook
-        </fb:login-button>
-    </div>
-        }
-        <br />
-
-        @Html.ActionLink("I forgot my password", "ForgotPassword")
-        <br /><br />
-        @Html.ActionLink("I haven't received my activation link", "ResendEmailToken")
-        <br /><br />
-        @Html.ActionLink("Register a new account", "register")
-
-    </div>
-
-</div>
+        </div>
 
 <script>
     $(function () {

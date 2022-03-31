@@ -23,34 +23,34 @@
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-@Scripts.Render("~/Bundles/jquery")
-<div class="wrapper">
-    @Html.Partial("_Header")
-    @Html.Partial("_Sidebar")
+        @Scripts.Render("~/Bundles/jquery")
+        <div class="wrapper">
+            @Html.Partial("_Header")
+            @Html.Partial("_Sidebar")
 
-    <div class="content-wrapper">
-        @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
-        {
-            <section class="content-header">
-                <h1>
-                    @ViewBag.Title
-                    @if (ViewBag.Description != "")
-                    {
-                        <small>@ViewBag.Description</small>
-                    }
-                </h1>
-            </section>
-        }
+            <div class="content-wrapper">
+                @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
+                {
+                    <section class="content-header">
+                        <h1>
+                            @ViewBag.Title
+                            @if (ViewBag.Description != "")
+                            {
+                                <small>@ViewBag.Description</small>
+                            }
+                        </h1>
+                    </section>
+                }
 
-        <section class="content">
-            @RenderBody()
-        </section>
-    </div>
-</div>
+                <section class="content">
+                    @RenderBody()
+                </section>
+            </div>
+        </div>
 
-<script src="@RouteJsHandler.HandlerUrl"></script>
-<script src="@EnumHandler.HandlerUrl"></script>
-@Scripts.Render("~/Bundles/js")
-@RenderSection("scripts", false)
+        <script src="@RouteJsHandler.HandlerUrl"></script>
+        <script src="@EnumHandler.HandlerUrl"></script>
+        @Scripts.Render("~/Bundles/js")
+        @RenderSection("scripts", false)
 </body>
 </html>

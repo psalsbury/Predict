@@ -136,10 +136,12 @@ namespace Predict.Helper
             if (session[sessionName] != null && !forceRefresh)
                 return;
 
+            var twoWeeksAgo = DateTime.UtcNow.AddDays(-14);
+
             // Get all the events that the logged on user is participating in
             var eventPlayers = context.EventPlayers
                 .Include(t => t.Event)
-                .Where(e => e.PlayerId == userId && e.Enabled == true)
+                .Where(e => e.PlayerId == userId && e.Enabled == true && e.Event.EndDateTime >= twoWeeksAgo)
                 .OrderBy(a => a.Event.StartDateTime)
                 .ToList();
 

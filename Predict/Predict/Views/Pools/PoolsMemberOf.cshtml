@@ -50,10 +50,11 @@
                 <td>
                     @if (!joinedPool.Pool.DefaultPoolForEvent)
                     {
-                        <button class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
-                            <i class="fa fa-trash"></i>
-                            <b>Leave League</b>
-                        </button>
+                    <button class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
+
+                        <b>Leave League</b>&nbsp;
+                        <i class="fa fa-trash"></i>
+                    </button>
                     }
 
 
@@ -93,8 +94,8 @@
                         $.ajax(
                             {
                                 url: "../api/poolPlayers/delete/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
-                            method: "POST",
-                            success: function() {
+                                method: "POST",
+                                success: function() {
                                 $(button.closest("tr")).fadeOut(1000);
                             }
                         });
