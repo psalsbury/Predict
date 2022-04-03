@@ -505,7 +505,7 @@ namespace Predict.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id)) return View("EmailNotFound");
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -546,9 +546,12 @@ namespace Predict.Controllers
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
+
+            // Don't reveal that the user does not exist
             if (user == null) return RedirectToAction("ResetPasswordConfirmation", "Account");
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+
             if (result.Succeeded) return RedirectToAction("ResetPasswordConfirmation", "Account");
             AddErrors(result);
             return View();

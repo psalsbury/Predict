@@ -1,4 +1,7 @@
-﻿<nav aria-label="breadcrumb">
+﻿@model List<Predict.Models.JokeTable>
+
+
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="/Jokes/JokesTable">Jokes</a>
@@ -6,4 +9,9 @@
     </ol>
 </nav>
 
-<h1>No Jokes to show, please try later</h1>
+@foreach (var tableViewModel in Model)
+{
+
+
+
+}

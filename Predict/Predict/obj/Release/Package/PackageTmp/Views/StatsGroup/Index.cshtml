@@ -28,6 +28,7 @@
 </div>
 
 <script type="text/javascript">
+
     function wpfront_scroll_top_init() {
         if (typeof wpfront_scroll_top === "function" && typeof jQuery !== "undefined") {
             wpfront_scroll_top({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 120, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
@@ -35,11 +36,7 @@
             setTimeout(wpfront_scroll_top_init, 100);
         }
     }
-    wpfront_scroll_top_init();
-</script>
 
-
-<script type="text/javascript">
     function wpfront_scroll_nextfixture_init() {
         if (typeof wpfront_scroll_nextfixture === "function" && typeof jQuery !== "undefined") {
             wpfront_scroll_nextfixture({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 20, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
@@ -47,12 +44,12 @@
             setTimeout(wpfront_scroll_nextfixture_init, 100);
         }
     }
+
+    wpfront_scroll_top_init();
     wpfront_scroll_nextfixture_init();
 </script>
 
 <script src="~/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.0.7.08086" id="wpfront-scroll-top-js"></script>
-
-
 
 @if (ViewBag.ShowKoStats == true)
 {
@@ -146,11 +143,11 @@
 
 </table>
 
-    @if (OutstandingPredictionCount == 0)
-    {
+@if (OutstandingPredictionCount == 0)
+{
 
-        <section id="nextPredictionLocation"></section>
-    }
+    <section id="nextPredictionLocation"></section>
+}
 
 <script>
 
@@ -184,9 +181,8 @@
         n = n + '';
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
-
-
 </script>
+
 <script>
 
     $(function () {

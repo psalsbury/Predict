@@ -357,6 +357,7 @@
     <Compile Include="Controllers\Api\EventsController.cs" />
     <Compile Include="Controllers\Api\FixtureOddsController.cs" />
     <Compile Include="Controllers\Api\JokeRatingsController.cs" />
+    <Compile Include="Controllers\Api\JokesController.cs" />
     <Compile Include="Controllers\Api\PoolsController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
@@ -459,6 +460,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Joke.cs" />
     <Compile Include="Models\JokeRating.cs" />
+    <Compile Include="Models\JokeTable.cs" />
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
     <Compile Include="Models\KoWinningTeamPrediction.cs" />
@@ -618,6 +620,9 @@
     <Content Include="Views\Jokes\NoJokes.cshtml" />
     <Content Include="Views\Account\SignInGeneric.cshtml" />
     <Content Include="Views\Home\ComingSoon.cshtml" />
+    <Content Include="Views\Jokes\JokesTable.cshtml" />
+    <Content Include="Views\Jokes\DisplayJokeList.cshtml" />
+    <Content Include="Views\Jokes\AddJoke.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

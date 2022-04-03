@@ -1,8 +1,7 @@
 ﻿
 @model HandleErrorInfo
 
-@{
-    ViewBag.Title = "Email Not Found";
-}
-
 <h2 class="text-danger">Email address not found</h2>
+<br />
+<h4>The email address provided is not registered. Please click @Html.ActionLink("here", "ForgotPassword", "Account") here to try again </h4>
+                                                        

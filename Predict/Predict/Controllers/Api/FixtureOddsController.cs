@@ -40,7 +40,7 @@ namespace Predict.Controllers.Api
                 .Where(a => a.EventId == eventId)
                 .Where(f => f.Fixture.ResultProcessed == true);
 
-            var fixturePredictions = (from m in _context.FixturePredictions where m.PlayerId==playerId && eventFixtures.Any(a => a.FixtureId==m.FixtureId) select m).ToList();
+            var fixturePredictions = (from m in _context.FixturePredictions where m.PlayerId==playerId && m.EventId==eventId && eventFixtures.Any(a => a.FixtureId==m.FixtureId) select m).ToList();
 
             var nbrFixturesPredicted = fixturePredictions.Count;
 

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Description;
 using Predict.Models;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using System.Diagnostics.Eventing.Reader;
 using Microsoft.AspNet.Identity;
 
 namespace Predict.Controllers.Api
