@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using Predict.ViewModels;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Data.Entity.Migrations;
 
 
 namespace Predict.Controllers
@@ -32,6 +32,7 @@ namespace Predict.Controllers
         public ActionResult AddJoke()
         {
             var joke = new Joke();
+            joke.PlayerId = User.Identity.GetUserId();
             return View(joke);
         }
 
@@ -44,10 +45,19 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var playerId = User.Identity.GetUserId();
+
+            if (joke.PlayerId!= playerId)
+                ModelState.AddModelError("Password", "Passwords do not match");
+
+            if (!ModelState.IsValid)
+            {
+                return View("AddJoke", joke);
+            }
+
             var player = _context.Players.FirstOrDefault(a => a.Id == playerId);
             var email = new IdentityMessage
             {
-                Body = player.PlayerName + " has submitted a Joke <br><br> "
+                Body = player.PlayerName + " has submitted a " + (joke.Id == 0 ? "change to " : "") + "Joke <br><br> "
                     + "Joke Text = " + joke.JokeText
                     + "<br><br>"
                     + "Joke Punchline = " + joke.JokePunchline,
@@ -55,15 +65,23 @@ namespace Predict.Controllers
                 Destination = "pete@salsbury.co.uk"
             };
             Helper.Cache.SendEmail(email);
-
-            joke.PlayerId = playerId;
-            joke.CreatedDateTime = DateTime.Now.ToUniversalTime();
             joke.ModifiedDateTime = DateTime.Now.ToUniversalTime();
+            if (joke.Id==0)
+            {
+                joke.PlayerId = playerId;
+                joke.CreatedDateTime = DateTime.Now.ToUniversalTime();
+                _context.Jokes.Add(joke);
+            }
 
-            _context.Jokes.Add(joke);
+            _context.Jokes.AddOrUpdate(joke);
             _context.SaveChanges();
 
-            return View("DisplayJokeList");
+            if (joke.Id == 0)
+            {
+                Predict.Helper.SessionHelper.UpdatePlayerJokeCount(_context, Session, playerId, true);
+            }
+
+            return RedirectToAction("DisplayJokeList");
         }
 
         [HttpGet]
@@ -80,18 +98,6 @@ namespace Predict.Controllers
 
             return View("AddJoke",joke);
 
-        }
-
-        [HttpPost]
-        public ActionResult EditJoke(Joke joke)
-        {
-            return View("DisplayJokeList");
-        }
-
-        [HttpPost]
-        public ActionResult DeleteJoke()
-        {
-            return View("DisplayJokeList");
         }
 
         [HttpGet]
@@ -148,13 +154,12 @@ namespace Predict.Controllers
             {
                 // If there are no jokes that havent been rated by this player..
                 var rand = new Random();
-                int toSkip = rand.Next(0, _context.Jokes.Count());
 
                 var jokesToChoseFrom = _context.Jokes.Any((j => j.PlayerId != playerId));
                 if (jokesToChoseFrom)
                 {
-                    joke = _context.Jokes.Where(j => j.PlayerId != playerId).OrderBy(r => Guid.NewGuid()).Skip(toSkip)
-                        .Take(1).First();
+                    joke = _context.Jokes.Where(j => j.PlayerId != playerId).OrderBy(r => Guid.NewGuid())
+                        .Take(1).FirstOrDefault();
 
                     var existingRating = _context.JokeRatings
                         .First(r => r.PlayerId == playerId && r.JokeId == joke.Id).PlayerJokeRating;

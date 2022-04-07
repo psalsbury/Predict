@@ -31,6 +31,7 @@ C:\repos\Predict\Predict\Predict.Tests\bin\Debug\RestSharp.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\EntityFramework.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Web.Http.WebHost.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\WebGrease.dll
@@ -63,6 +64,7 @@ C:\repos\Predict\Predict\Predict.Tests\bin\Debug\RestSharp.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\EntityFramework.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\System.Web.Http.WebHost.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 C:\repos\Predict\Predict\Predict.Tests\bin\Debug\PagedList.xml
@@ -74,5 +76,3 @@ C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CoreCompil
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.dll
 C:\repos\Predict\Predict\Predict.Tests\obj\Debug\Predict.Tests.pdb
-C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.dll
-C:\repos\Predict\Predict\Predict.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.xml

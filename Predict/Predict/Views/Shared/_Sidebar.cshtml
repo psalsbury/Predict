@@ -11,6 +11,7 @@
             @if (Request.IsAuthenticated)
             {
                 var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
+                var hasJokes = System.Convert.ToBoolean(Session["PlayerJokes"]);
 
                 if (eventPlayers != null)
                 {
@@ -47,7 +48,7 @@
 
 
                 if (User.IsInRole("Admin"))
-                {
+            {
 
 
                     <li>
@@ -65,7 +66,7 @@
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-question-circle"></i> <span>Jokes</span>
+                        <i class="fa fa-smile-o"></i> <span>Jokes</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -83,10 +84,19 @@
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("ComingSoon", "Home")">
+                            <a href="@Url.Action("AddJoke", "Jokes")">
                                 <i class="fa fa-list"></i> <span>Add New Joke</span>
                             </a>
                         </li>
+                        @if (hasJokes)
+                        {
+                            <li>
+                                <a href="@Url.Action("DisplayJokeList", "Jokes")">
+                                    <i class="fa fa-list"></i> <span>Edit Your Jokes</span>
+                                </a>
+                            </li>
+                        }
+
 
                     </ul>
                 </li>
@@ -101,7 +111,7 @@
                     <ul class="treeview-menu">
 
                         <li>
-                            <a href="@Url.Action("ComingSoon", "Home")">
+                            <a href="@Url.Action("DoQuiz", "QuizQuestions")">
                                 <i class="fa fa-question"></i> <span>Do Footy Quiz</span>
                             </a>
                         </li>
@@ -111,7 +121,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("ComingSoon", "Home")">
+                            <a href="@Url.Action("AddQuizQuestion", "QuizQuestions")">
                                 <i class="fa fa-list"></i> <span>Add New Quiz Question</span>
                             </a>
                         </li>

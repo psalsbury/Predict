@@ -9,9 +9,64 @@
     </ol>
 </nav>
 
-@foreach (var tableViewModel in Model)
-{
+<table class="table table-striped" id="jokesTable">
+    <thead>
+        <tr>
+            <td style="text-align: center">Nbr</td>
+            <td>Joke</td>
+            <td style="text-align: center">Avg Rating</td>
+            <td style="text-align: center">Nbr Ratings</td>
+            <td></td>
+        </tr>
+    </thead>
 
 
+        @foreach (var tableViewModel in Model)
+        {
+            <tr style="font-size: larger">
+                <td style="text-align: center">
+                    @tableViewModel.Position.ToString()
+                </td>
+                <td>
+                    <a href="~/Jokes/ShowSelectedJoke?id=@tableViewModel.Id" class="product-title">
+                        @(tableViewModel.JokeText.Substring(0, tableViewModel.JokeText.Length>=20 ? 20 : tableViewModel.JokeText.Length) + "...")
+                    </a>
+                    <br />
+                </td>
+                <td STYLE="text-align: center">
+                    @Math.Round(tableViewModel.AvgRating, 2).ToString()
+                </td>
+                <td STYLE="text-align: center">
+                    @tableViewModel.NbrRatings.ToString()
+                </td>
+                <td>
+                    <a href="~/Jokes/EditJoke/@tableViewModel.Id" class="btn btn btn-block btn-info"><i class="fa fa-pencil-square-o"></i> &nbsp; Edit </a>
+                    <button class="btn btn-block btn-danger" value="Remove" jokeId="@tableViewModel.Id"><i class="fa fa-trash"></i>&nbsp;Delete </button>
+                </td>
+            </tr>
+        }
+</table>
+<script src="~/Scripts/bootbox.js"></script>
 
-}
+
+<script>
+        $("#jokesTable").on("click",
+            ".btn-danger",
+            function () {
+
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this joke?",
+                    function (result) {
+                        if (result) {
+                            $.ajax(
+                                {
+                                    url: "../api/jokes/delete/" + button.attr("jokeId"),
+                                    method: "POST",
+                                    success: function () {
+                                        $(button.closest("tr")).fadeOut(1000);
+                                    }
+                                });
+                        }
+                    });
+            });
+</script>

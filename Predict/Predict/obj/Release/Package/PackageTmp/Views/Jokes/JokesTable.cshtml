@@ -49,7 +49,7 @@
             </td>
             <td>
                 <a href="~/Jokes/ShowSelectedJoke?id=@tableViewModel.Id" class="product-title">
-                    @(tableViewModel.JokeText.Substring(0,20) + "...")
+                    @(tableViewModel.JokeText.Substring(0, tableViewModel.JokeText.Length>=20 ? 20 : tableViewModel.JokeText.Length) + "...")
                 </a>
                 <br />
             </td>

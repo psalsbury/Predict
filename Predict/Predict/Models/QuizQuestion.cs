@@ -22,10 +22,11 @@ namespace Predict.Models
 
         [Required]
         [StringLength(250)]
+        [Display(Name = "Quiz Question")]
         public string QuestionText { get; set; }
 
         [Required]
-        public Int16 AnswerTypeId { get; set; }
+        public Predict.Enums.QuestionType AnswerTypeId { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]

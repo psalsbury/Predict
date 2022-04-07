@@ -360,6 +360,7 @@
     <Compile Include="Controllers\Api\JokesController.cs" />
     <Compile Include="Controllers\Api\PoolsController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
+    <Compile Include="Controllers\Api\QuizQuestionsController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventFixturesController.cs" />
@@ -383,6 +384,7 @@
     <Compile Include="Controllers\PoolsController.cs" />
     <Compile Include="Controllers\PositionHistoryController.cs" />
     <Compile Include="Controllers\PredictionsConsolidatedController.cs" />
+    <Compile Include="Controllers\QuizQuestionsController.cs" />
     <Compile Include="Controllers\ResultsController.cs" />
     <Compile Include="Controllers\StatsGroupController.cs" />
     <Compile Include="Controllers\StatsKOController.cs" />
@@ -390,6 +392,7 @@
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Dtos\PlayerDto.cs" />
     <Compile Include="Dtos\TeamDto.cs" />
+    <Compile Include="Enums\QuestionType.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -441,6 +444,10 @@
     <Compile Include="Migrations\202201011141148_JokesAndQuiz.Designer.cs">
       <DependentUpon>202201011141148_JokesAndQuiz.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204051934569_QuestionTypeEnum.cs" />
+    <Compile Include="Migrations\202204051934569_QuestionTypeEnum.Designer.cs">
+      <DependentUpon>202204051934569_QuestionTypeEnum.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -460,7 +467,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Joke.cs" />
     <Compile Include="Models\JokeRating.cs" />
-    <Compile Include="Models\JokeTable.cs" />
+    <Compile Include="ViewModels\JokeTable.cs" />
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
     <Compile Include="Models\KoWinningTeamPrediction.cs" />
@@ -475,6 +482,9 @@
     <Compile Include="Models\QuizQuestion.cs" />
     <Compile Include="Models\QuizQuestionAnswer.cs" />
     <Compile Include="Models\QuizQuestionPlayerAnswer.cs" />
+    <Compile Include="ViewModels\QuizQuestionsForQuiz.cs" />
+    <Compile Include="ViewModels\QuizQuestionsForQuizViewModel.cs" />
+    <Compile Include="ViewModels\QuizTable.cs" />
     <Compile Include="Models\SiteSetting.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -504,6 +514,7 @@
     <Compile Include="ViewModels\PoolInfoViewModel.cs" />
     <Compile Include="ViewModels\PoolPlayerViewModel.cs" />
     <Compile Include="ViewModels\PredictionsConsolidatedViewModel.cs" />
+    <Compile Include="ViewModels\QuizQuestionViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\StatsFixtureViewModel.cs" />
     <Compile Include="ViewModels\StatsKOViewModel.cs" />
@@ -623,6 +634,10 @@
     <Content Include="Views\Jokes\JokesTable.cshtml" />
     <Content Include="Views\Jokes\DisplayJokeList.cshtml" />
     <Content Include="Views\Jokes\AddJoke.cshtml" />
+    <Content Include="Views\QuizQuestions\AddQuizQuestion.cshtml" />
+    <Content Include="Views\QuizQuestions\QuizTable.cshtml" />
+    <Content Include="Views\QuizQuestions\DisplayQuizQuestionList.cshtml" />
+    <Content Include="Views\QuizQuestions\DoQuiz.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -669,6 +684,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201011141148_JokesAndQuiz.resx">
       <DependentUpon>202201011141148_JokesAndQuiz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204051934569_QuestionTypeEnum.resx">
+      <DependentUpon>202204051934569_QuestionTypeEnum.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

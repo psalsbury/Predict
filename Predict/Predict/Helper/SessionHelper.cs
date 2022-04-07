@@ -117,6 +117,7 @@ namespace Predict.Helper
 
             UpdatePlayerSessionVariable(context, session, userId, forceRefresh);
             UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
+            UpdatePlayerJokeCount(context, session, userId, forceRefresh);
 
             session.Timeout = 252000; // 180 day
 
@@ -128,6 +129,34 @@ namespace Predict.Helper
             session.Clear();
         }
 
+        public static void UpdatePlayerQuizQuestionCount(ApplicationDbContext context, HttpSessionStateBase session, string userId, bool forceRefresh)
+        {
+            const string sessionName = "PlayerQuizQuestions";
+            if (session[sessionName] != null && !forceRefresh)
+                return;
+
+            // Get all the events that the logged on user is participating in
+            var quizQuestionsCounts = context.QuizQuestions
+                .Any(e => e.PlayerId == userId);
+
+            session[sessionName] = quizQuestionsCounts;
+        }
+
+
+        public static void UpdatePlayerJokeCount(ApplicationDbContext context,
+            HttpSessionStateBase session,
+            string userId, bool forceRefresh)
+        {
+            const string sessionName = "PlayerJokes";
+            if (session[sessionName] != null && !forceRefresh)
+                return;
+
+            // Get all the events that the logged on user is participating in
+            var jokesCounts = context.Jokes
+                .Any(e => e.PlayerId == userId);
+
+            session[sessionName] = jokesCounts;
+        }
         public static void UpdateEventPlayersSessionVariable(ApplicationDbContext context,
             HttpSessionStateBase session,
             string userId, bool forceRefresh)

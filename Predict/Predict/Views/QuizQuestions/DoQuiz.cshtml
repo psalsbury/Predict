@@ -1,0 +1,182 @@
+﻿@model Predict.ViewModels.QuizQuestionsForQuizViewModel
+
+@{
+    var counter = 1;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+    </ol>
+</nav>
+
+<h2>Prediction Comp Quiz @(Model.IsResults==true ? "- RESULTS" : "")</h2>
+
+@if(Model.IsResults==true)
+{
+    <h3>You have scored @Model.Score out of @Model.QuestionsAnswered</h3>
+}
+
+@if (Model.QuizQuestionsForQuizList.Count == 0)
+{
+    <h3>There are no questions in the database, please try later</h3>
+}
+else
+{
+
+    using (Html.BeginForm("DoQuiz", "QuizQuestions", FormMethod.Post, new { @class = "form-horizontal", @role = "form", @id = "DoQuiz", @onsubmit = "return ValidateForm()" }))
+    {
+
+        <div class="box-body">
+            @Html.AntiForgeryToken()
+
+            @for (int i = 0; i < Model.QuizQuestionsForQuizList.Count(); i++)
+            {
+
+                @Html.HiddenFor(model => Model.QuizQuestionsForQuizList[i].Id)
+                @Html.HiddenFor(model => Model.QuizQuestionsForQuizList[i].AnswerTypeId)
+                @Html.HiddenFor(model => Model.QuizQuestionsForQuizList[i].QuestionText)
+            }
+
+            @for (int i = 0; i < Model.QuizQuestionAnswerList.Count(); i++)
+            {
+
+                @Html.HiddenFor(model => Model.QuizQuestionAnswerList[i].Id)
+                @Html.HiddenFor(model => Model.QuizQuestionAnswerList[i].QuizQuestionId)
+                @Html.HiddenFor(model => Model.QuizQuestionAnswerList[i].IsCorrectAnswer)
+                @Html.HiddenFor(model => Model.QuizQuestionAnswerList[i].AnswerText)
+
+            }
+
+
+            @foreach (var quizQuestion in Model.QuizQuestionsForQuizList)
+            {
+
+                <hr color="black" style="height: 1px;">
+                <table class="table">
+                    @{
+                        var quizAnswers = Model.QuizQuestionAnswerList.Where(a => a.QuizQuestionId == quizQuestion.Id).ToList();
+                    }
+                    <tr>
+                        <td>
+                            @counter) @quizQuestion.QuestionText
+                        </td>
+                    </tr>
+                    @if (quizQuestion.AnswerTypeId == Predict.Enums.QuestionType.MultipleChoice)
+                    {
+
+                        foreach (var quizAnswer in quizAnswers)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="radio" name="question-@quizQuestion.Id" id="question-@quizQuestion.Id" value="@quizAnswer.Id" @(Model.IsResults == true ? "disabled" : "") @(Model.IsResults == true && quizQuestion.PlayerAnswerId == quizAnswer.Id ? "CHECKED" : "") />
+                                    <label>@quizAnswer.AnswerText</label>
+                                    @if (Model.IsResults == true && quizQuestion.PlayerAnswerId == quizAnswer.Id)
+                                    {
+                                        if (quizQuestion.PlayerAnsweredCorrectly)
+                                        {
+                                            <img src="~/Images/tick.gif" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/cross.gif" />
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                    else if (quizQuestion.AnswerTypeId == Predict.Enums.QuestionType.TrueOrFalse)
+                    {
+                        <tr>
+
+                            <td>
+                                <input type="radio" name="question-@quizQuestion.Id" id="question-@quizQuestion.Id" value="True" @(Model.IsResults == true ? "disabled" : "") @(Model.IsResults == true && quizQuestion.PlayerAnswerText == "True" ? "CHECKED" : "") />
+                                <label>True</label>
+                                @if (Model.IsResults == true && quizQuestion.PlayerAnswerText == "True")
+                                {
+                                    if (quizQuestion.PlayerAnsweredCorrectly)
+                                    {
+                                        <img src="~/Images/tick.gif" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Images/cross.gif" />
+                                    }
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <input type="radio" name="question-@quizQuestion.Id" id="question-@quizQuestion.Id" value="False" @(Model.IsResults == true ? "disabled" : "") @(Model.IsResults == true ? "disabled" : "") @(Model.IsResults == true && quizQuestion.PlayerAnswerText == "False" ? "CHECKED" : "") />
+                                <label>False</label>
+                                @if (Model.IsResults == true && quizQuestion.PlayerAnswerText == "False")
+                                {
+                                    if (quizQuestion.PlayerAnsweredCorrectly)
+                                    {
+                                        <img src="~/Images/tick.gif" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Images/cross.gif" />
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else if (quizQuestion.AnswerTypeId == Predict.Enums.QuestionType.StraightAnswer)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" name="question-@quizQuestion.Id" id="question-@quizQuestion.Id" value="@(Model.IsResults==true?quizQuestion.PlayerAnswerText:"")" @(Model.IsResults == true ? "disabled" : "") />
+                                @if (Model.IsResults == true)
+                                {
+                                    if (quizQuestion.PlayerAnsweredCorrectly)
+                                    {
+                                        <img src="~/Images/tick.gif" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Images/cross.gif" />
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                    @{
+                        counter += 1;
+                    }
+                </table>
+            }
+
+
+            <br /><br />
+
+            @if (Model.IsResults == false)
+            {
+
+                <div class="form-group has-feedback">
+
+                    <input type="submit" id="btnSubmit" class="btn btn-primary btn-flat" value="Submit Your Answers" />
+
+                </div>
+            }
+
+        </div>
+    }
+}
+
+<script>
+
+
+    function ValidateForm() {
+
+        alert('need to validate that all questions have been answered');
+
+    }
+</script>

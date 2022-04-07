@@ -155,7 +155,7 @@ namespace Predict.Controllers
             var eventId = fixturePredictionsViewModel.EventId;
             var predictionChanged = true;
 
-            // Get existing predictions and update or delete. Only get those where the dat has not yet passed
+            // Get existing predictions and update or delete
             var fixturePredictionsInDb = _context.FixturePredictions
                 .Include(b => b.EventFixture)
                 .Include(b => b.EventFixture.Fixture)
@@ -163,7 +163,7 @@ namespace Predict.Controllers
                 .Include(b => b.EventFixture.Fixture.AwayTeam)
                 .Where(p => p.PlayerId == userId)
                 .Where(p => p.EventId == eventId)
-                .ToList();
+                .ToList();            
 
             var eventFixtures = _context.EventFixtures
                 .Include(b => b.Fixture)
@@ -179,7 +179,10 @@ namespace Predict.Controllers
                 if (fixturePredictionSubmitted != null && !fixturePredictionInDb.EventFixture.Fixture.FixtureDatePassed)
                     if (fixturePredictionSubmitted.HomePrediction == null ||
                         fixturePredictionSubmitted.AwayPrediction == null)
+                    {
                         _context.FixturePredictions.Remove(fixturePredictionInDb);
+                    }
+
             }
 
             // Now loop through all those submitted, find the one from the db and update, or create a new one
@@ -224,10 +227,13 @@ namespace Predict.Controllers
                     }
             }
 
-            var predictionsEntered = fixturePredictionsViewModel.FixturePredictions.Count(a => a.AwayPrediction!=null && a.HomePrediction !=null);
+            _context.SaveChanges();
+
+            var predictionsEntered = _context.FixturePredictions.Count(a => a.PlayerId== userId && a.EventId==eventId && a.AwayPrediction!=null && a.HomePrediction !=null);
             var eventPlayer = _context.EventPlayers.FirstOrDefault(a => a.PlayerId == userId && a.EventId == eventId);
             if (eventPlayer != null)
             {
+               // Should always exist
                 eventPlayer.FixturePredictionsEntered = predictionsEntered;
                 eventPlayer.ModifiedDateTime = DateTime.UtcNow;
                 _context.EventPlayers.AddOrUpdate(eventPlayer);

@@ -34,9 +34,7 @@ namespace Predict.Controllers.Api
             if (joke.PlayerId != playerId)
                 return BadRequest("Invalid user");
 
-            var jokeRatings = _context.JokeRatings.Where(a => a.JokeId == joke.Id).ToList();
-
-            _context.JokeRatings.RemoveRange(jokeRatings);
+            _context.JokeRatings.RemoveRange(_context.JokeRatings.Where(a => a.JokeId == joke.Id));
             _context.Jokes.Remove(joke);
             _context.SaveChanges();
 

@@ -1,0 +1,281 @@
+﻿@model Predict.ViewModels.QuizQuestionViewModel
+
+@{var answerNbr = 0;}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/QuizQuestions/DisplayQuizQuestionList">Your Quiz Questions</a>
+        </li>
+    </ol>
+</nav>
+
+<div class="box-body">
+
+    @using (Html.BeginForm("AddQuizQuestion", "QuizQuestions", FormMethod.Post, new { @class = "form-horizontal", @role = "form", @id = "AddQuizQuestionForm", @onsubmit = "return ValidateForm()" }))
+    {
+        @Html.AntiForgeryToken()
+
+        if (Model.QuizQuestion.Id > 0)
+        {
+            @Html.HiddenFor(a => a.QuizQuestion.Id);
+            @Html.HiddenFor(a => a.QuizQuestion.CreatedDateTime);
+            @Html.HiddenFor(a => a.QuizQuestion.PlayerId);
+
+            <h4>Update Quiz Question</h4>
+        }
+        else
+        {
+            <h4>Submit a new Quiz Question</h4>
+        }
+
+        <div class="form-group has-feedback">
+            @Html.TextAreaFor(m => m.QuizQuestion.QuestionText, new { @class = "form-control", @placeholder = "Quiz Question" })
+            <span class="glyphicon glyphicon-comment form-control-feedback"></span>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group has-feedback">
+
+            @Html.DropDownListFor(m => m.QuizQuestion.AnswerTypeId, EnumHelper.GetSelectList(typeof(Predict.Enums.QuestionType)), "Select Question Type"
+             , new { @class = "form-control", @onchange = "UpdateForm();" })
+            <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
+        </div>
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-xs-12">
+
+                    @{
+                        var firstAnswer = Model.QuizQuestionAnswers.FirstOrDefault();
+                    }
+
+                    <table id="MC" class="table" STYLE="display: @(Model.QuizQuestion.Id>0 && Model.QuizQuestion.AnswerTypeId==Predict.Enums.QuestionType.MultipleChoice?"":"none") ">
+                        <tr>
+                            <td>Answer Nbr</td>
+                            <td>Answer</td>
+                            <td>Correct?</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>1</b>
+                            </td>
+                            <td>
+                                <input type="text" maxlength=200 id="ans1" name="ans1" value="@(firstAnswer!=null?firstAnswer.AnswerText:"")">
+                            </td>
+                            <td>
+                                <input name="ansMC" id="ansMC" type=radio value="1" @(firstAnswer != null && firstAnswer.IsCorrectAnswer ? "CHECKED" : "")> 
+                            </td>
+                        </tr>
+                        @if (Model.QuizQuestion.Id > 0 && Model.QuizQuestion.AnswerTypeId == Predict.Enums.QuestionType.MultipleChoice)
+                        {
+
+                            foreach (var answer in Model.QuizQuestionAnswers)
+                            {
+                                answerNbr += 1;
+                                if (answerNbr == 1)
+                                {
+                                    // Already shown this answer
+                                    continue;
+                                }
+                                <tr>
+                                    <td><b>@answerNbr</b></td>
+                                    <td><input type="text" maxlength="200" id="ans@(answerNbr)" value="@answer.AnswerText"></td>
+                                    <td><input name="ansMC" id="ansMC" type="radio" value="@answerNbr" @(answer.IsCorrectAnswer ? "CHECKED" : "")></td>
+                                </tr>
+
+
+                            }
+                        }
+                        <tr>
+                            <td colspan="3">
+                                <button type="button" class="btn btn-success btn-sm" onclick="addquestion();" id="button1" name="button1" @(answerNbr == 4 ? "DISABLED" : "")>
+                                    Another Answer
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                    <table width="100%" id="SA" STYLE="display:@(Model.QuizQuestion.Id>0 && Model.QuizQuestion.AnswerTypeId==Predict.Enums.QuestionType.StraightAnswer?"":"none")">
+                        <tr>
+                            <td><input name="ansSA" id="ansSA" type=text value="@(Model.QuizQuestion.Id>0 ? firstAnswer.AnswerText : "")"></td>
+                        </tr>
+                        <tr>
+                            <td><font size=2 color=red>* Please bear in mind that players will have to match EXACTLY what you type here. If its a name, try to use surnames only (and ask for surname only). One word answers are usually the best and give the players the best chance of getting it right</font></td>
+                        </tr>
+                    </table>
+
+
+                    <table id="TF" STYLE="display:@(Model.QuizQuestion.Id>0 && Model.QuizQuestion.AnswerTypeId==Predict.Enums.QuestionType.TrueOrFalse?"":"none")">
+                        <tr>
+                            <td>True</td>
+                            <td><input name="ansTF" id="ansTF" type=radio value="true" @(Model.QuizQuestion.Id > 0 && firstAnswer.IsCorrectAnswer == true ? "CHECKED" : "")> </td>
+
+                        </tr>
+                        <tr>
+                            <td>False</td>
+                            <td><input name="ansTF" id="ansTF" type=radio value="false" @(Model.QuizQuestion.Id > 0 && firstAnswer.IsCorrectAnswer == false ? "CHECKED" : "")></td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group has-feedback">
+
+            <input type="submit" id="btnSubmit" class="btn btn-primary btn-flat" value="@(Model.QuizQuestion.Id==0 ?"Add Question" : "Update Question")" />
+
+        </div>
+    }
+
+</div>
+
+
+
+<script language=javascript>
+
+    var qcnt = @(answerNbr);
+    function UpdateForm() {
+
+        var answerType = document.getElementById("QuizQuestion_AnswerTypeId");
+        var selectedAnswerType = answerType.options[answerType.selectedIndex].value;
+
+        if (selectedAnswerType==1) {
+                ShowIt(MC)
+                HideIt(SA)
+                HideIt(TF)
+            }
+        else if (selectedAnswerType==2) {
+                HideIt(MC)
+                ShowIt(SA)
+                HideIt(TF)
+            }
+        else if (selectedAnswerType ==3) {
+                HideIt(MC)
+                HideIt(SA)
+                ShowIt(TF)
+            }
+        }
+        function ShowIt(whichEl) {
+            whichEl.style.display = "";
+        }
+
+        function HideIt(whichEl) {
+            whichEl.style.display = "none";
+        }
+
+        function addquestion() {
+
+
+            var table = document.getElementById('MC');
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount-1);
+            var c1 = row.insertCell(0);
+            var c2 = row.insertCell(1);
+            var c3 = row.insertCell(2);
+            var questionNbr = rowCount - 1;
+
+            c1.innerHTML = '<b>' + questionNbr + '</b>';
+            c2.innerHTML = '<input type=text maxlength=200 name="ans' + questionNbr + '" id = "ans' + questionNbr + '" >';
+            c3.innerHTML = '<input name="ansMC" id="ansMC" type=radio value="' + questionNbr + '">'
+
+
+            if (questionNbr == 4)
+            {
+                var addAnswerButton = document.getElementById("button1");
+                addAnswerButton.disabled = true;
+            }
+        }
+    function ValidateForm() {
+
+        var questionText = document.getElementById('QuizQuestion_QuestionText')
+
+        if (questionText.value == "") {
+            alert("Please enter your question");
+            return false
+        }
+
+        var answerType = document.getElementById("QuizQuestion_AnswerTypeId");
+        var selectedAnswerType = answerType.options[answerType.selectedIndex].value;
+
+        if (selectedAnswerType == 0) {
+            alert("Please select an answer type");
+            return false
+        }
+
+        var table = document.getElementById('MC');
+        if (table.style.display == "") {
+
+            // 1 --> Check that there has been at least one answer selected to be the correct answer
+            var selected = $('input[name="ansMC"]:checked').val();
+
+            if (selected == null) {
+                alert("Please select your answer");
+                return false
+            }
+
+            // 2 --> Check that each answer has a value
+            var table = document.getElementById('MC');
+            var rowCount = table.rows.length;
+
+            for (count = 1; count <= rowCount-2; count++) {
+                var answer = $('#ans' + count).val()
+                if (answer == "") {
+                    alert("Please select your answer for answer number " + count);
+                    return false
+                }
+            }      
+
+            // 3 --> Check that there are between 2 and 4 answers 
+            if (rowCount - 2 < 2) {
+                alert('Please give between 2 and 4 answers');
+                return false
+            }
+
+            //4 --> check that all answers are unique
+            for (count = 1; count <= rowCount - 2; count++) {
+                var answer = $('#ans' + count).val();
+
+                for (subcount = 1; subcount <= rowCount - 2; subcount++) {
+                    if (count == subcount)
+                        continue;
+
+                    var subanswer = $('#ans' + subcount).val();
+                    if (answer == subanswer) {
+                        alert('Please make sure all answers are unique. Answer ' + count + ' and ' + subcount + ' are the same.');
+                        return false
+                    }
+                }   
+ 
+            }   
+        }
+        else if (TF.style.display == "") {
+
+            var selected = $('input[name="ansTF"]:checked').val();
+
+            if (selected == null) {
+                alert("Please select your answer");
+                return false
+            }
+        }
+        else if (SA.style.display == "") {
+            var answer = document.getElementById("ansSA");
+            if (answer.value == '') {
+                alert("Please enter your answer")
+                return false
+            }
+        }
+        var agree = confirm("Are you sure you want to submit this question?");
+        if (agree)
+            return true;
+        else
+            return false;
+    }
+</script>
