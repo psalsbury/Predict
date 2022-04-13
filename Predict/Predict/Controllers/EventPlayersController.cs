@@ -60,7 +60,7 @@ namespace Predict.Controllers
 
             foreach (Event myEvent in myEvents)
             {
-                if (!myEvent.EventStarted)
+                if (!myEvent.EventFinished)
                 {
                     var myEventPlayer = myEventPlayers.FirstOrDefault(m => m.EventId == myEvent.Id);
                     var changeMade = false;

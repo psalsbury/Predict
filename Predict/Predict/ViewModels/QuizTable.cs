@@ -5,24 +5,23 @@ namespace Predict.ViewModels
 {
     public class QuizTable
     {
-        public long Position { get; set; }
 
         [Required]
         public string PlayerName { get; set; }
 
-        public int? SupportTeamId { get; set; }
-
-        [Required]
-        public Int32 QuestionsAvailable { get; set; }
+        public string TeamFlag { get; set; }
 
         [Required]
         public Int32 QuestionsAnswered { get; set; }
 
         [Required]
-        public Int32 AnsweredCorrectly { get; set; }
+        public Int32 QuestionsCorrect { get; set; }
 
         [Required]
-        public Int32 Percent { get; set; }
+        public Int32 QuestionsAvailable { get; set; }
+
+        [Required]
+        public Decimal Score { get; set; }
 
 
 

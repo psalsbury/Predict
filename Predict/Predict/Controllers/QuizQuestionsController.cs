@@ -24,7 +24,7 @@ namespace Predict.Controllers
         public ActionResult QuizTable()
         {
 
-            var tableViewModels = _context.Database.SqlQuery<QuizTable>("..tbc..").ToList();
+            var tableViewModels = _context.Database.SqlQuery<QuizTable>("dbo.spGetQuizLeague").ToList();
             return View(tableViewModels);
 
         }
@@ -198,17 +198,23 @@ namespace Predict.Controllers
             quizQuestionsForQuizViewModel.QuestionsAnswered = 0;
             quizQuestionsForQuizViewModel.Score = 0;
 
+            var playerId = User.Identity.GetUserId();
+            var newPlayerAnswers = false;
+            var quiQuestionsIds = quizQuestionsForQuizViewModel.QuizQuestionsForQuizList.Select(a => a.Id).ToArray();
 
-            // Need to save away players answers if they havent answered before
-
+            // Get the existing answers for the questions presented.
+            var quizQuestionPlayerAnswers = _context.QuizQuestionPlayerAnswers.Where(a => quiQuestionsIds.Contains(a.QuizQuestionId) && a.PlayerId == playerId).ToList();
 
             foreach (var quizQuestion in quizQuestionsForQuizViewModel.QuizQuestionsForQuizList)
             {
                 quizQuestionsForQuizViewModel.QuestionsAnswered +=1;
+
+                var playerAnswer = HttpContext.Request.Params.Get("question-" + quizQuestion.Id);
+
                 if (quizQuestion.AnswerTypeId == Enums.QuestionType.MultipleChoice)
                 {
                     // Get the answer that has been submitted by the player
-                    quizQuestion.PlayerAnswerId = System.Convert.ToInt32(HttpContext.Request.Params.Get("question-" + quizQuestion.Id));
+                    quizQuestion.PlayerAnswerId = System.Convert.ToInt32(playerAnswer);
                     var quizQuestionAnswer = quizQuestionsForQuizViewModel.QuizQuestionAnswerList.FirstOrDefault(a => a.Id == quizQuestion.PlayerAnswerId);
                     quizQuestion.PlayerAnsweredCorrectly = quizQuestionAnswer.IsCorrectAnswer == true;
       
@@ -216,7 +222,7 @@ namespace Predict.Controllers
                 else
                 {
                     // Get the text response submitted by the player
-                    quizQuestion.PlayerAnswerText = HttpContext.Request.Params.Get("question-" + quizQuestion.Id);
+                    quizQuestion.PlayerAnswerText = playerAnswer;
                     var quizQuestionAnswer = quizQuestionsForQuizViewModel.QuizQuestionAnswerList.FirstOrDefault(a => a.QuizQuestionId == quizQuestion.Id);
                     
                     if(quizQuestion.AnswerTypeId == Enums.QuestionType.StraightAnswer)
@@ -225,11 +231,32 @@ namespace Predict.Controllers
                     }
                     else
                     {
-                        quizQuestion.PlayerAnsweredCorrectly = (quizQuestionAnswer.IsCorrectAnswer ==true && System.Convert.ToBoolean(quizQuestion.PlayerAnswerText) == true);
+                        quizQuestion.PlayerAnsweredCorrectly = (quizQuestionAnswer.IsCorrectAnswer == true ? "True" : "False") == quizQuestion.PlayerAnswerText;
                     }
                 }
                 quizQuestionsForQuizViewModel.Score += quizQuestion.PlayerAnsweredCorrectly ?1 : 0;
+
+                var answerGivenPreviously = quizQuestionPlayerAnswers.Any(a => a.QuizQuestionId == quizQuestion.Id);
+                if(!answerGivenPreviously)
+                {
+                    var answerGiven = new QuizQuestionPlayerAnswer
+                    {
+                        QuizQuestionId = quizQuestion.Id,
+                        PlayerId = playerId,
+                        ModifiedDateTime = DateTime.UtcNow,
+                        CreatedDateTime = DateTime.UtcNow,
+                        IsCorrect = quizQuestion.PlayerAnsweredCorrectly,
+                        AnswerGiven = playerAnswer
+                    };
+                    _context.QuizQuestionPlayerAnswers.Add(answerGiven);
+                    newPlayerAnswers = true;
+                }
+
+
             }
+
+            if (newPlayerAnswers)
+                _context.SaveChanges();
 
             quizQuestionsForQuizViewModel.IsResults = true;
             return View("DoQuiz", quizQuestionsForQuizViewModel);

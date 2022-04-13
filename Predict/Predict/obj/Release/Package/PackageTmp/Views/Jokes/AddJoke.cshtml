@@ -19,9 +19,15 @@
             @Html.HiddenFor(a => a.Id);
             @Html.HiddenFor(a => a.CreatedDateTime);
             @Html.HiddenFor(a => a.PlayerId);
+
+            <h4>Update Joke</h4>
+        }
+        else
+        {
+            <h4>Submit a new Joke</h4>
         }
 
-        <h4>Submit a new Joke</h4>
+
         <div class="form-group has-feedback">
             @Html.ValidationSummary("", new { @class = "text-danger" })
         </div>

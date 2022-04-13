@@ -20,10 +20,10 @@
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active" onclick="myFunction(true)">
-                <a href="#tab_1" data-toggle="tab">Upcoming</a>
+                <a href="#tab_1" data-toggle="tab">Upcoming/Active</a>
             </li>
             <li onclick="myFunction(false)">
-                <a href="#tab_2" data-toggle="tab">Active/Completed</a>
+                <a href="#tab_2" data-toggle="tab">Completed</a>
             </li>
         </ul>
     </div>
@@ -41,7 +41,7 @@
                     <th>&nbsp;</th>
                 </tr>
 
-                @foreach (var item in Model.Where(e => e.StartDateTime >= DateTime.UtcNow).OrderBy(a => a.StartDateTime))
+                @foreach (var item in Model.Where(e => e.EndDateTime >= DateTime.UtcNow).OrderBy(a => a.StartDateTime))
                 {
                     <tr height="60">
                         <td>
@@ -77,7 +77,7 @@
                     <th>&nbsp;</th>
                 </tr>
 
-                @foreach (var item in Model.Where(e => e.StartDateTime < DateTime.UtcNow).OrderByDescending(a => a.EndDateTime))
+                @foreach (var item in Model.Where(e => e.EndDateTime < DateTime.UtcNow).OrderByDescending(a => a.EndDateTime))
                 {
                     var exists = eventPlayers.Exists( a => a.EventId == item.Id);
                     if (exists)

@@ -1,0 +1,68 @@
+﻿@model List<Predict.Models.QuizQuestion>
+
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/QuizQuestions/DisplayQuizQuestionList">Your Quiz Question</a>
+        </li>
+    </ol>
+</nav>
+
+<table class="table table-striped" id="quizQuestionList">
+    <thead>
+        <tr>
+            <td style="text-align: center">Nbr</td>
+            <td>Quiz Question</td>
+            <td style="text-align: center">Answer Type</td>
+            <td></td>
+        </tr>
+    </thead>
+
+    @{
+        var counter = 0;
+    }
+        @foreach (var quizQuestion in Model)
+        {
+            counter += 1;
+            <tr style="font-size: larger">
+                <td style="text-align: center">
+                    @counter
+                </td>
+                <td>
+                        @(quizQuestion.QuestionText.Substring(0, quizQuestion.QuestionText.Length>=30 ? 30 : quizQuestion.QuestionText.Length) + "...")
+                </td>
+                <td STYLE="text-align: center">
+                    @quizQuestion.AnswerTypeId.ToString()
+                </td>
+                <td>
+                    <a href="~/QuizQuestions/EditQuizQuestion/@quizQuestion.Id" class="btn btn btn-block btn-info"><i class="fa fa-pencil-square-o"></i> &nbsp; Edit </a>
+                    <button class="btn btn-block btn-danger" value="Remove" quizQuestionId="@quizQuestion.Id"><i class="fa fa-trash"></i>&nbsp;Delete </button>
+                </td>
+            </tr>
+        }
+</table>
+<script src="~/Scripts/bootbox.js"></script>
+
+
+<script>
+    $("#quizQuestionList").on("click",
+            ".btn-danger",
+            function () {
+
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this quiz question?",
+                    function (result) {
+                        if (result) {
+                            $.ajax(
+                                {
+                                    url: "../api/quizQuestions/delete/" + button.attr("quizQuestionId"),
+                                    method: "POST",
+                                    success: function () {
+                                        $(button.closest("tr")).fadeOut(1000);
+                                    }
+                                });
+                        }
+                    });
+            });
+</script>

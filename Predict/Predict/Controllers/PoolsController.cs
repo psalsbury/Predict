@@ -122,6 +122,11 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
+            if (!ModelState.IsValid)
+            {
+                return View("EditPool", poolModel);
+            }
+
             var newPool = false;
             var poolFromDb = new Pool();
             if (poolModel.Id != 0) poolFromDb = _context.Pools.Single(m => m.Id == poolModel.Id);
@@ -136,6 +141,7 @@ namespace Predict.Controllers
                 poolFromDb.CreatedDateTime = DateTime.UtcNow;
                 _context.Pools.Add(poolFromDb);
             }
+
 
             _context.SaveChanges();
 
