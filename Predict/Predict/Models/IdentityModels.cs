@@ -22,7 +22,7 @@ namespace Predict.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base(Environment.MachineName == "PETESXPS" ? "DefaultConnection" : "GoDaddyConnection", false)
+            : base(Environment.MachineName == "PETESXPS2" ? "DefaultConnection" : "GoDaddyConnection", false)
         {
         }
 
@@ -41,6 +41,8 @@ namespace Predict.Models
         public DbSet<BonusQuestion> BonusQuestions { get; set; }
         public DbSet<BonusQuestionPrediction> BonusQuestionPredictions { get; set; }
         public DbSet<League> Leagues { get; set; }
+        public DbSet<LeagueSubLeague> LeagueSubLeagues { get; set; }
+        public DbSet<LeagueSubLeagueTeam> LeagueSubLeagueTeams { get; set; }
         public DbSet<LeagueEventGeneration> LeagueEventGenerations { get; set; }
         public DbSet<Pool> Pools { get; set; }
         public DbSet<PoolPlayer> PoolPlayers { get; set; }
@@ -57,6 +59,9 @@ namespace Predict.Models
         public DbSet<QuizQuestion> QuizQuestions { get; set; }
         public DbSet<QuizQuestionAnswer> QuizQuestionAnswers { get; set; }
         public DbSet<QuizQuestionPlayerAnswer> QuizQuestionPlayerAnswers { get; set; }
+        public DbSet<RapidApiV3League> RapidApiV3Leagues { get; set; }
+        public DbSet<RapidApiV3LeagueSeason> RapidApiV3LeagueSeasons { get; set; }
+        public DbSet<RapidApiV3Country> RapidApiV3Countries { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

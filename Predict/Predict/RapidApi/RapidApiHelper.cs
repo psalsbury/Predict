@@ -16,15 +16,112 @@ namespace Predict.RapidApi
     {
         private static readonly string RapidApiFixtureUrl = "https://api-football-v1.p.rapidapi.com/v2/fixtures/league/";
         private static readonly string RapidApiOddsUrl = "https://api-football-v1.p.rapidapi.com/v2/odds/league/";
+        private static readonly string RapidApiV3LeaguesUrl = "https://api-football-v1.p.rapidapi.com/v3/leagues";
+        private static readonly string RapidApiV3FixturesUrl = "https://api-football-v1.p.rapidapi.com/v3/fixtures";
+
         private static readonly string Timezone = "timezone=Europe%2FLondon";
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static void DailyRapidApiLeagueCheck()
+        public static void V3Leagues(string countryToFetch, int seasonToFetch)
         {
+            var client = new RestClient(RapidApiV3LeaguesUrl + "?country=" + countryToFetch + "&season=" + seasonToFetch.ToString());
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
+            request.AddHeader("X-RapidAPI-Key", "dd93656aa1msh15481f122393c01p11fd67jsnf7e74925fed3");
+            IRestResponse response = client.Execute(request);
 
-            try
+            var context = new ApplicationDbContext();
+            var jsonSerializer = new JsonSerializer();
+            var responseLeagues = jsonSerializer.Deserialize<RapidApiV3LeagueClassHelper.Root>(response);
+
+            foreach (var responseLeague in responseLeagues.response)
             {
 
+                var country = responseLeague.country;
+                var league = responseLeague.league;
+                var seasons = responseLeague.seasons;
+
+                var rapidApiV3Country = context.RapidApiV3Countries.Where(a => a.CountryName == country.name).FirstOrDefault();
+                if (rapidApiV3Country == null)
+                {
+                    rapidApiV3Country = new RapidApiV3Country
+                    {
+                        CountryCode = country.code,
+                        Flag = country.flag,
+                        CountryName = country.name,
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow
+                    };
+                    context.RapidApiV3Countries.Add(rapidApiV3Country);
+                }
+
+                var rapidApiV3League = context.RapidApiV3Leagues.Where(a => a.Id == league.id).FirstOrDefault();
+                if (rapidApiV3League == null)
+                {
+                    rapidApiV3League = new RapidApiV3League
+                    {
+                        Id = league.id,
+                        Name = league.name,
+                        Logo = league.logo,
+                        Type = league.type,
+                        CountryName = country.name,
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow
+                    };
+                    context.RapidApiV3Leagues.Add(rapidApiV3League);
+                }
+
+                foreach (var season in seasons)
+                {
+                    var rapidApiV3LeagueSeason = context.RapidApiV3LeagueSeasons.Where(a => a.Year == season.year && a.RapidApiV3LeagueId == rapidApiV3League.Id).FirstOrDefault();
+                    if (rapidApiV3LeagueSeason == null)
+                    {
+                        rapidApiV3LeagueSeason = new RapidApiV3LeagueSeason
+                        {
+                            RapidApiV3LeagueId = rapidApiV3League.Id,
+                            Year = season.year,
+                            StartDate = Convert.ToDateTime(season.start),
+                            EndDate = Convert.ToDateTime(season.end),
+                            Current = season.current,
+                            CreatedDateTime = DateTime.UtcNow,
+                            ModifiedDateTime = DateTime.UtcNow
+                        };
+                        context.RapidApiV3LeagueSeasons.Add(rapidApiV3LeagueSeason);
+                    }
+                    else
+                    {
+                        if (rapidApiV3LeagueSeason.Current != season.current)
+                        {
+                            rapidApiV3LeagueSeason.Current = season.current;
+                            rapidApiV3LeagueSeason.ModifiedDateTime = DateTime.UtcNow;
+                            context.RapidApiV3LeagueSeasons.AddOrUpdate(rapidApiV3LeagueSeason);
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
+
+        }
+
+        public static void ForceDailyRapidApiLeagueCheck()
+        {
+            try
+            {
+                var context = new ApplicationDbContext();
+                PerformDailyUpdate(context, false);
+                context.Dispose();
+            }
+            catch (Exception e)
+            {
+                Logger.Error("DailyRapidApiLeagueCheck ERRORED with message --> " + e.Message);
+                throw;
+            }
+        }
+
+        public static void DailyRapidApiLeagueCheck()
+        {
+            try
+            {
                 // Check all leagues that are linked to rapid api. Update all leagues on a daily basis
                 var cacheId = "DailyRapidApiLeagueCheck";
                 var performUpdate = false;
@@ -74,53 +171,10 @@ namespace Predict.RapidApi
 
                     if (performUpdate)
                     {
-                        Logger.Info("DailyRapidApiLeagueCheck --> Performing daily league update");
-                        var rapidApiLeaguesChecked = new Dictionary<int, bool> ();
-
-                        // Ordered by Descending date for euro/world cup where a catch all league will be created last for the KO fixtures when created
-                        var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null && a.DailyRapidApiCheck==true).OrderByDescending(a => a.Id).ToList();
-                        foreach (var league in leagues)
-                        {
-                            // If this league has already been checked then skip (leagues broken down for euros and world cup)
-                            if(rapidApiLeaguesChecked.ContainsKey(league.RapidApiLeagueId??0))
-                                continue;
-
-                            // Find the earliest date that has a results that has not been processed
-                            DateTime earliestDate = DateTime.UtcNow.Date;
-
-                            // Get a list of league Ids that are associated with this rapid api league
-                            var listOfIds = (from m in leagues where m.RapidApiLeagueId == league.RapidApiLeagueId select m.Id);
-
-                            if (context.Fixtures.Any(a => a.ResultProcessed == false && listOfIds.Contains((short)a.LeagueId)))
-                                earliestDate = context.Fixtures.Where(a => a.ResultProcessed == false && listOfIds.Contains((short)a.LeagueId)).Min(f => f.FixtureDateTime);
-
-                            // Update the whole league for this league
-                            FixturesByLeague(league.RapidApiLeagueId ?? 0, earliestDate.Date);
-                            
-                            // Get the odds for this league
-                            OddsByLeagueAndBookmaker(league.RapidApiLeagueId ?? 0, earliestDate);
-
-                            // Check to see if all results are processed for this league, and if so 
-                            // set the flag to stop checking each day
-
-                            var count = context.Fixtures.Count(a => listOfIds.Contains((short)a.LeagueId) && a.ResultProcessed == false);
-                            if (count == 0)
-                            {
-                                // If there are no further fixtures left, then set the league to stop checking every day
-                                league.DailyRapidApiCheck = false;
-                                league.ModifiedDateTime = DateTime.UtcNow;
-                                context.Leagues.AddOrUpdate(league);
-                                context.SaveChanges();
-                            }
-
-                            rapidApiLeaguesChecked.Add(league.RapidApiLeagueId??0,true);
-                        }
-
-                        // Check if events need to be created.
-                        DailyRapidApiGenerateEvents(context);
+                        PerformDailyUpdate(context, true);
                     }
                     context.Dispose();
-                }                                                                   
+                }
             }
             catch (Exception e)
             {
@@ -129,6 +183,72 @@ namespace Predict.RapidApi
             }
         }
 
+        private static void PerformDailyUpdate(ApplicationDbContext context, bool UpdateOdds)
+        {
+            Logger.Info("DailyRapidApiLeagueCheck --> Performing daily league update");
+            var rapidApiLeaguesChecked = new Dictionary<int, bool>();
+
+            var v3Leagues = context.Leagues.Where(a => a.RapidApiV3LeagueSeasonId != null && a.DailyRapidApiCheck == true).OrderByDescending(a => a.Id).ToList();
+            foreach (var v3League in v3Leagues)
+            {
+
+                // Find the earliest date that has a results that has not been processed
+                DateTime earliestDate = DateTime.UtcNow.Date;
+
+                if (context.Fixtures.Any(a => a.ResultProcessed == false && a.LeagueId == v3League.Id))
+                    earliestDate = context.Fixtures.Where(a => a.ResultProcessed == false && a.LeagueId == v3League.Id).Min(f => f.FixtureDateTime);
+
+                var rapidApiV3LeagueSeason = context.RapidApiV3LeagueSeasons.Where(a => a.Id == v3League.RapidApiV3LeagueSeasonId).FirstOrDefault(); ;
+
+                // Update the whole league for this league
+                V3FixturesByLeague(rapidApiV3LeagueSeason, earliestDate.Date, v3League.Id);
+
+            }
+
+            // Ordered by Descending date for euro/world cup where a catch all league will be created last for the KO fixtures when created
+            var leagues = context.Leagues.Where(a => a.RapidApiLeagueId != null && a.DailyRapidApiCheck == true).OrderByDescending(a => a.Id).ToList();
+            foreach (var league in leagues)
+            {
+                // If this league has already been checked then skip (leagues broken down for euros and world cup)
+                if (rapidApiLeaguesChecked.ContainsKey(league.RapidApiLeagueId ?? 0))
+                    continue;
+
+                // Find the earliest date that has a results that has not been processed
+                DateTime earliestDate = DateTime.UtcNow.Date;
+
+                // Get a list of league Ids that are associated with this rapid api league
+                var listOfIds = (from m in leagues where m.RapidApiLeagueId == league.RapidApiLeagueId select m.Id);
+
+                if (context.Fixtures.Any(a => a.ResultProcessed == false && listOfIds.Contains((short)a.LeagueId)))
+                    earliestDate = context.Fixtures.Where(a => a.ResultProcessed == false && listOfIds.Contains((short)a.LeagueId)).Min(f => f.FixtureDateTime);
+
+                // Update the whole league for this league
+                FixturesByLeague(league.RapidApiLeagueId ?? 0, earliestDate.Date);
+
+                // Get the odds for this league
+                if(UpdateOdds)
+                    OddsByLeagueAndBookmaker(league.RapidApiLeagueId ?? 0, earliestDate);
+
+                // Check to see if all results are processed for this league, and if so 
+                // set the flag to stop checking each day
+
+                var count = context.Fixtures.Count(a => listOfIds.Contains((short)a.LeagueId) && a.ResultProcessed == false);
+                if (count == 0)
+                {
+                    // If there are no further fixtures left, then set the league to stop checking every day
+                    league.DailyRapidApiCheck = false;
+                    league.ModifiedDateTime = DateTime.UtcNow;
+                    context.Leagues.AddOrUpdate(league);
+                    context.SaveChanges();
+                }
+
+                rapidApiLeaguesChecked.Add(league.RapidApiLeagueId ?? 0, true);
+            }
+
+            // Check if events need to be created.
+            DailyRapidApiGenerateEvents(context);
+
+        }
         public static void GetRapidApiResults()
         {
             string cacheKey = "NextFixtureCheckDateTime";
@@ -143,11 +263,11 @@ namespace Predict.RapidApi
             foreach (var rapidApiResultCheck in rapidApiResultChecks)
             {
 
-                if (rapidApiResultCheck.FixtureDateTime != DateTime.MinValue && rapidApiResultCheck.FixtureDateTime <= DateTime.UtcNow)
+                if (rapidApiResultCheck.FixtureDateTime != DateTime.MinValue && rapidApiResultCheck.ResultCheckDateTime <= DateTime.UtcNow)
                 {
                     var rapidApiLeagueId = rapidApiResultCheck.RapidApiLeagueId;
 
-                    Logger.Info("GetRapidApiResults = Getting results from RapidApi {0}. FixtureDateTime = {1}, Now = {2}", rapidApiLeagueId, rapidApiResultCheck.FixtureDateTime.Date, DateTime.UtcNow);
+                    Logger.Info("GetRapidApiResults = Getting results from RapidApi {0}. FixtureDateTime = {1}, ResultCheckDateTime = {2}, Now = {3}", rapidApiLeagueId, rapidApiResultCheck.FixtureDateTime.Date, rapidApiResultCheck.ResultCheckDateTime, DateTime.UtcNow);
 
                     if (rapidApiResultCheck.FixtureDateTime.Date < DateTime.UtcNow.Date)
                     {
@@ -186,8 +306,8 @@ namespace Predict.RapidApi
             {
                 foreach (var rapidApiResultCheck in rapidApiResultChecks)
                 {
-                    // FixtureDateTime includes an addition of 2 hours to ensure we are checking after the game has finished
-                    if (rapidApiResultCheck.FixtureDateTime < DateTime.UtcNow)
+                    // FixtureDateTime includes an addition of 1 hour 55 mins to ensure we are checking after the game has finished
+                    if (rapidApiResultCheck.ResultCheckDateTime < DateTime.UtcNow)
                     {
                         updateNeeded = true;
                     }
@@ -203,17 +323,13 @@ namespace Predict.RapidApi
 
                 foreach (var rapidApiResultCheck in rapidApiResultChecks)
                 {
-                    var fixtureDateTime = rapidApiResultCheck.FixtureDateTime.AddMinutes(115); // Add 1 hour 55 to the end time 
-
-                    if (roundUp && fixtureDateTime < DateTime.UtcNow)
-                        fixtureDateTime = DateTime.UtcNow;
+                    if (roundUp && rapidApiResultCheck.ResultCheckDateTime < DateTime.UtcNow)
+                        rapidApiResultCheck.ResultCheckDateTime = DateTime.UtcNow;
 
                     if (roundUp)
-                        fixtureDateTime = RoundUp(fixtureDateTime, TimeSpan.FromMinutes(5));
+                        rapidApiResultCheck.ResultCheckDateTime = RoundUp(rapidApiResultCheck.ResultCheckDateTime, TimeSpan.FromMinutes(5));
 
-                    rapidApiResultCheck.FixtureDateTime = fixtureDateTime;
-
-                    Logger.Info("SetNextResultCheckDateTime - Set League {0} next check date to {1}", rapidApiResultCheck.RapidApiLeagueId, rapidApiResultCheck.FixtureDateTime);
+                    Logger.Info("SetNextResultCheckDateTime - Set League {0}, fixture date {1}, next check date to {2}", rapidApiResultCheck.RapidApiLeagueId, rapidApiResultCheck.FixtureDateTime, rapidApiResultCheck.ResultCheckDateTime);
                 }
                 Helper.Cache.SetCachedItem(cacheKey, rapidApiResultChecks);
                 context.Dispose();
@@ -242,6 +358,24 @@ namespace Predict.RapidApi
             }
         }
 
+        public static void V3FixturesByLeague(RapidApiV3LeagueSeason rapidApiV3LeagueSeason, DateTime earliestTime, short leagueId)
+        {
+
+            try
+            {
+
+                Logger.Info("V3FixturesByLeague - rapidApiV3LeagueSeasonId = {0}, EarliestDate = {1}", rapidApiV3LeagueSeason.Id, earliestTime);
+                var baseUrl = RapidApiV3FixturesUrl + "?league=" + rapidApiV3LeagueSeason.RapidApiV3LeagueId + "&season=" + rapidApiV3LeagueSeason.Year.ToString() +  "&" + Timezone;
+                var response = MakeRapidApiCall(baseUrl);
+                if (response != null)
+                    V3UpdateFixtures(response, earliestTime, leagueId);
+            }
+            catch (Exception e)
+            {
+                Logger.Info("ERROR --> V3FixturesByLeague - Error = {0}",e.Message);
+            }
+
+        }
         public static void FixturesByLeague(int rapidApiLeagueId, DateTime earliestTime)
         {
 
@@ -296,6 +430,7 @@ namespace Predict.RapidApi
 
         private static IRestResponse MakeRapidApiCall(string baseUrl)
         {
+
             var context = new ApplicationDbContext();
             var nbrTimesApiCalled = SettingCheck(context);
 
@@ -483,6 +618,109 @@ namespace Predict.RapidApi
 
         }
 
+        private static void V3UpdateFixtures(IRestResponse response, DateTime earliestDate, short leagueId)
+        {
+            var context = new ApplicationDbContext();
+            var jsonSerializer = new JsonSerializer();
+            var rapidApiV3Fixtures = jsonSerializer.Deserialize<RapidApiV3FixtureClassHelper.Root>(response);
+            var fixtures = context.Fixtures.Where(a => a.LeagueId==leagueId && a.FixtureDateTime >= earliestDate).ToList();
+            var newResultFound = false;
+            var eventsWithChangedFixtureDateTime = new List<short>();
+
+            // loop through all fixtures in the future
+            foreach (var rapidApiV3Fixture in rapidApiV3Fixtures.response.Where(f =>
+                f.fixture.date >= earliestDate))
+            {
+
+                var homeTeam = AddOrUpdateTeam(context, rapidApiV3Fixture.teams.home.id,
+                    rapidApiV3Fixture.teams.home.name, rapidApiV3Fixture.teams.home.logo);
+                var awayTeam = AddOrUpdateTeam(context, rapidApiV3Fixture.teams.away.id,
+                    rapidApiV3Fixture.teams.away.name, rapidApiV3Fixture.teams.away.logo);
+                var rapidApiFixtureId = rapidApiV3Fixture.fixture.id;
+
+
+                // Check if the fixture needs updating
+                var updateDb = false;
+
+                // Change time to UTC
+                rapidApiV3Fixture.fixture.date = rapidApiV3Fixture.fixture.date.ToUniversalTime();
+
+                var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
+                if (rapidApiV3Fixture.fixture.status.@long == "Match Postponed" || (rapidApiV3Fixture.fixture.status.@long == "Not Started" &&
+                                                                    rapidApiV3Fixture.fixture.date.AddHours(3) <
+                                                                    DateTime.UtcNow)
+                ) // match was postponed but kept at not started status
+                {
+                    if (fixture != null)
+                    {
+                        if (fixture.HomeResult != null)
+                            newResultFound = true;
+
+                        context.Fixtures.Remove(fixture);
+                        updateDb = true;
+                    }
+                }
+                else
+                {
+                    if (fixture == null)
+                    {
+                        fixture = new Models.Fixture
+                        {
+                            RapidApiFixtureId = rapidApiFixtureId,
+                            HomeTeamId = homeTeam.Id,
+                            AwayTeamId = awayTeam.Id,
+                            LeagueId = leagueId,
+                            FixtureDateTime = rapidApiV3Fixture.fixture.date,
+                            CreatedDateTime = DateTime.UtcNow,
+                            ModifiedDateTime = DateTime.UtcNow
+                        };
+                        updateDb = true;
+                    }
+                    else
+                    {
+                        // Existing fixture
+                        if (fixture.FixtureDateTime != rapidApiV3Fixture.fixture.date)
+                        {
+                            // Date has changed
+                            fixture.FixtureDateTime = rapidApiV3Fixture.fixture.date;
+                            fixture.ModifiedDateTime = DateTime.UtcNow;
+                            updateDb = true;
+
+                            // Get all the events that have this fixture
+                            var eventFixtures = context.EventFixtures.Where(a => a.FixtureId == fixture.Id).ToList();
+                            foreach (var eventFixture in eventFixtures)
+                            {
+                                var eventId = eventFixture.EventId;
+                                if (!eventsWithChangedFixtureDateTime.Contains(eventId))
+                                    eventsWithChangedFixtureDateTime.Add(eventId);
+                            }
+                        }
+                    }
+
+                    if (fixture.HomeResult == null && rapidApiV3Fixture.fixture.status.@long == "Match Finished")
+                    {
+                        newResultFound = true;
+                        updateDb = true;
+                        fixture.HomeResult = (short)rapidApiV3Fixture.score.fulltime.home;
+                        fixture.AwayResult = (short)rapidApiV3Fixture.score.fulltime.away;
+                        fixture.ResultProcessed = false;
+                    }
+
+                    if (updateDb)
+                        context.Fixtures.AddOrUpdate(fixture);
+                }
+            }
+            context.SaveChanges();
+
+            if (newResultFound)
+                Helper.Cache.UpdateScoring(context);
+
+            foreach (var eventId in eventsWithChangedFixtureDateTime)
+            {
+                Helper.Cache.UpdateEventStartEnd(context, eventId);
+            }
+        }
+
         private static void UpdateFixtures(IRestResponse response, DateTime earliestDate)
         {
             var context = new ApplicationDbContext();
@@ -502,9 +740,9 @@ namespace Predict.RapidApi
 
                     var rapidApiLeague = rapidApiFixture.league;
                     var league = AddOrUpdateLeague(context, rapidApiLeague, rapidApiFixture.league_id);
-                    var homeTeam = AddOrUpdateTeam(context, teams, rapidApiFixture.homeTeam.team_id,
+                    var homeTeam = AddOrUpdateTeam(context, rapidApiFixture.homeTeam.team_id,
                         rapidApiFixture.homeTeam.team_name, rapidApiFixture.homeTeam.logo);
-                    var awayTeam = AddOrUpdateTeam(context, teams, rapidApiFixture.awayTeam.team_id,
+                    var awayTeam = AddOrUpdateTeam(context, rapidApiFixture.awayTeam.team_id,
                         rapidApiFixture.awayTeam.team_name, rapidApiFixture.awayTeam.logo);
                     var rapidApiFixtureId = rapidApiFixture.fixture_id;
 
@@ -514,7 +752,7 @@ namespace Predict.RapidApi
                     // Change time to UTC
                     rapidApiFixture.event_date = rapidApiFixture.event_date.ToUniversalTime();
 
-                        var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
+                    var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
                     if (rapidApiFixture.status == "Match Postponed" || (rapidApiFixture.status == "Not Started" &&
                                                                         rapidApiFixture.event_date.AddHours(3) <
                                                                         DateTime.UtcNow)
@@ -622,7 +860,7 @@ namespace Predict.RapidApi
 
             return league;
         }
-        private static Models.Team AddOrUpdateTeam(ApplicationDbContext context, List<Models.Team> teams, int rapidApiTeamId, string teamName, string logo)
+        private static Models.Team AddOrUpdateTeam(ApplicationDbContext context, int rapidApiTeamId, string teamName, string logo)
         {
             var team = context.Teams.FirstOrDefault(t => t.RapidApiTeamId == rapidApiTeamId);
             teamName = teamName.Replace(" United", " Utd");
@@ -901,12 +1139,9 @@ namespace Predict.RapidApi
             {
                 var eventFixture = new EventFixture
                 {
-                    EventId = myEvent.Id
-                    ,
-                    FixtureId = fixture.Id
-                    ,
-                    CreatedDateTime = DateTime.UtcNow
-                    ,
+                    EventId = myEvent.Id,
+                    FixtureId = fixture.Id,
+                    CreatedDateTime = DateTime.UtcNow,
                     ModifiedDateTime = DateTime.UtcNow
 
                 };
@@ -917,6 +1152,7 @@ namespace Predict.RapidApi
         }
         private static DateTime RoundUp(DateTime dt, TimeSpan d)
         {
+            // sets to the next 5 minute (rounded) time i.e. 9:57 will round to 10:00, 9:58 will round to 10:00
             return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
         }
     }

@@ -1,13 +1,11 @@
 ﻿@model List<Predict.ViewModels.JokeTable>
 
+<input type="button"
+       value="Add New Joke"
+       class="btn btn-success"
+       onclick="location.href='@Url.Action("AddJoke", "Jokes") '" />
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="/Jokes/JokesTable">Jokes</a>
-        </li>
-    </ol>
-</nav>
+<br />
 
 <table class="table table-striped" id="jokesTable">
     <thead>

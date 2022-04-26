@@ -64,8 +64,9 @@ namespace Predict.Controllers
                     .SingleOrDefault(f => f.Id == id),
 
                 StatFixturePredictions = _context.Database.SqlQuery<StatFixturePrediction>(
-                    "spGetStatsFixture @intFixtureId, @intPoolId"
+                    "spGetStatsFixture @intFixtureId, @intEventId, @intPoolId"
                     , new SqlParameter("@intFixtureId", id)
+                    , new SqlParameter("@intEventId", poolId)
                     , new SqlParameter("@intPoolId", poolId)
                 ).ToList()
             };

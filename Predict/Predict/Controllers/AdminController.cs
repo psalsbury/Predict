@@ -38,28 +38,31 @@ namespace Predict.Controllers
         }
 
         [HttpPost]
-        public ActionResult PremierLeagueUpdate()
+        public ActionResult ForceDailyUpdate()
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var rapidApiLeagueId = 3456;
-            RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId, DateTime.MinValue);
+            RapidApi.RapidApiHelper.ForceDailyRapidApiLeagueCheck();
 
             return RedirectToAction("AdminHome", "Admin");
         }
+
         [HttpPost]
-        public ActionResult ChampLeagueUpdate()
+        public ActionResult V3Leagues()
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var rapidApiLeagueId = 3501;
-            RapidApi.RapidApiHelper.FixturesByLeague(rapidApiLeagueId, DateTime.MinValue);
+            var country = HttpContext.Request.Params.Get("Country");
+            var year = System.Convert.ToInt32(HttpContext.Request.Params.Get("year"));
+
+            RapidApi.RapidApiHelper.V3Leagues (country, year);
 
             return RedirectToAction("AdminHome", "Admin");
         }
     }
+
 }

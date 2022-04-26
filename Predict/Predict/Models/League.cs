@@ -21,6 +21,8 @@ namespace Predict.Models
 
         public bool DailyRapidApiCheck { get; set; }
 
+        public int? RapidApiV3LeagueSeasonId { get; set; }
+
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CreatedDateTime { get; set; }

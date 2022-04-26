@@ -6,5 +6,6 @@ namespace Predict.RapidApi
     {
         public int RapidApiLeagueId { get; set; }
         public DateTime FixtureDateTime { get; set; }
+        public DateTime ResultCheckDateTime { get; set; }
     }
 }

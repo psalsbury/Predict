@@ -19,49 +19,51 @@ namespace Predict.Controllers
         public ActionResult Index()
         {
             EventPlayer eventPlayer = null;
-            if (User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)
+                return View(eventPlayer);
+
+            SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
+
+            var eventId = System.Convert.ToInt16(Request["EventId"]);
+
+            if(User.Identity.IsAuthenticated && eventId != 0 && Helper.Cache.GetCachedEvent(eventId) == null)
+                return RedirectToAction("Index", "Home");
+
+            if (eventId == 0)
             {
-                SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
-
-                var eventId = System.Convert.ToInt16(Request["EventId"]);
-                if (eventId == 0)
-                {
-                    eventPlayer = SessionHelper.GetOrderedEventsForPlayers(Session).FirstOrDefault();
-                    if (eventPlayer != null)
-                    {
-                        eventId = eventPlayer.EventId;
-                    }
-                }
-                else
-                {
-                    eventPlayer =
-                        ((List<EventPlayer>)Session["EventPlayers"]).First(e => e.EventId == eventId);
-                }
-
+                eventPlayer = SessionHelper.GetOrderedEventsForPlayers(Session).FirstOrDefault();
                 if (eventPlayer != null)
                 {
-                    // If the user has just added themselves to a pool, ensure the home page is refreshed
-                    var cacheItem = "ForceUpdate*" + User.Identity.GetUserId() + "*" + eventPlayer.EventId;
-                    var forcePoolRefresh = Helper.Cache.GetCachedItem(cacheItem) != null;
-                    if (forcePoolRefresh)
-                    {
-                        Helper.Cache.RemoveCachedItem(cacheItem);
-                    }
-                    // Also want to set forcePoolRefresh to true if the cached event has been modified
-                    if (eventPlayer.Event.ModifiedDateTime < Helper.Cache.GetCachedEvent(eventPlayer.EventId).ModifiedDateTime)
-                    {
-                        forcePoolRefresh = true;
-                    }
-                    var nbrPoolsInEvent = _context.EventPools.Count(a => a.EventId == eventId && a.Enabled == true);
-                    ViewBag.nbrPoolsInEvent = nbrPoolsInEvent;
-
-                    // Used forcePoolRefresh as forceRefresh as fixtures could be added to a comp and that needs refreshing on users home page
-                    SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, forcePoolRefresh, forcePoolRefresh);
+                    eventId = eventPlayer.EventId;
                 }
- 
-
-
             }
+            else
+            {
+                eventPlayer =
+                    ((List<EventPlayer>)Session["EventPlayers"]).First(e => e.EventId == eventId);
+            }
+
+            if (eventPlayer != null)
+            {
+                // If the user has just added themselves to a pool, ensure the home page is refreshed
+                var cacheItem = "ForceUpdate*" + User.Identity.GetUserId() + "*" + eventPlayer.EventId;
+                var forcePoolRefresh = Helper.Cache.GetCachedItem(cacheItem) != null;
+                if (forcePoolRefresh)
+                {
+                    Helper.Cache.RemoveCachedItem(cacheItem);
+                }
+                // Also want to set forcePoolRefresh to true if the cached event has been modified
+                if (eventPlayer.Event.ModifiedDateTime < Helper.Cache.GetCachedEvent(eventPlayer.EventId).ModifiedDateTime)
+                {
+                    forcePoolRefresh = true;
+                }
+                var nbrPoolsInEvent = _context.EventPools.Count(a => a.EventId == eventId && a.Enabled == true);
+                ViewBag.nbrPoolsInEvent = nbrPoolsInEvent;
+
+                // Used forcePoolRefresh as forceRefresh as fixtures could be added to a comp and that needs refreshing on users home page
+                SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, forcePoolRefresh, forcePoolRefresh);
+            }
+
             return View(eventPlayer);
         }
 

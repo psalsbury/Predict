@@ -26,7 +26,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <table class="table" id="events">
+    <table class="table" id="Events">
         <thead>
             <tr>
                 <th>
@@ -52,8 +52,8 @@
                 <td>
 
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default">Action</button>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <button type="button" class="btn btn-success">Action</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
@@ -100,7 +100,6 @@
 
 <script>
 
-
     $("#Events").on("click",
         ".js-delete",
         function () {
@@ -110,7 +109,7 @@
                     if (result) {
                         $.ajax(
                             {
-                                url: "../api/events/delete/" + button.attr("dataEventID"),
+                                url: "../api/events/delete/" + button.attr("dataEventId"),
                                 method: "POST",
                                 success: function () {
                                     $(button.closest("tr")).fadeOut(1000);

@@ -78,6 +78,14 @@ namespace Predict.Controllers
 
         // GET: /Account/Login
         [AllowAnonymous]
+        public ActionResult Login(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View("SignInGeneric");
+        }
+
+        // GET: /Account/Login
+        [AllowAnonymous]
         public ActionResult SignInGeneric(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;

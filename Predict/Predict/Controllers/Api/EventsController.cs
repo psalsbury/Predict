@@ -54,6 +54,27 @@ namespace Predict.Controllers.Api
             _context.EventPlayers.RemoveRange(
                 _context.EventPlayers.Where(a => a.EventId == eventId));
 
+            _context.EventPoolPlayerPositionHistory.RemoveRange(
+                _context.EventPoolPlayerPositionHistory.Where(a => a.EventId == eventId));
+
+            _context.KoFixtures.RemoveRange(
+                _context.KoFixtures.Where(a => a.EventId == eventId));
+
+            _context.KoFixturePredictions.RemoveRange(
+                _context.KoFixturePredictions.Where(a => a.KoFixture.EventId == eventId));
+
+            _context.KoWinningTeamPredictions.RemoveRange(
+                _context.KoWinningTeamPredictions.Where(a => a.EventId == eventId));
+
+            _context.EventKos.RemoveRange(
+                _context.EventKos.Where(a => a.EventId == eventId));
+
+            _context.BonusQuestionPredictions.RemoveRange(
+                 _context.BonusQuestionPredictions.Where(a => a.BonusQuestion.EventId == eventId));
+
+            _context.BonusQuestions.RemoveRange(
+                _context.BonusQuestions.Where(a => a.EventId == eventId));
+
             _context.Events.Remove(myEvent);
 
             _context.SaveChanges();

@@ -1,0 +1,914 @@
+2022-04-23 00:00:00.0164 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:00:00
+2022-04-23 00:00:00.0164 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:00:00.0223 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.0223 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:00:00.0223 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:00:00.0223 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:05:00
+2022-04-23 00:00:00.0223 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:00:00.0223 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:00:00
+2022-04-23 00:00:00.0424 INFO DailyRapidApiLeagueCheck --> lastDate = 22/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 00:00:00.0813 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 00:00:00.0813 INFO DailyRapidApiLeagueCheck --> performUpdate = True
+2022-04-23 00:00:00.0813 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2022-04-23 00:00:00.0963 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 4, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 00:00:00.0993 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.0993 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 55, EarliestDate = 23/04/2022 00:00:00
+2022-04-23 00:00:00.0993 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.1182 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 00:00:00.1182 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.1182 INFO FixturesByOdds - League = 3501
+2022-04-23 00:00:00.1182 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.1182 INFO OddsByLeagueAndBookmaker (null response) - League = 3501, pageNbr = 0
+2022-04-23 00:00:00.1332 INFO FixturesByLeague - League = 3448, EarliestDate = 23/04/2022 00:00:00
+2022-04-23 00:00:00.1332 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.1332 INFO FixturesByOdds - League = 3448
+2022-04-23 00:00:00.1332 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.1332 INFO OddsByLeagueAndBookmaker (null response) - League = 3448, pageNbr = 0
+2022-04-23 00:00:00.1482 INFO FixturesByLeague - League = 3456, EarliestDate = 23/04/2022 00:00:00
+2022-04-23 00:00:00.1482 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.1482 INFO FixturesByOdds - League = 3456
+2022-04-23 00:00:00.1482 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:00:00.1482 INFO OddsByLeagueAndBookmaker (null response) - League = 3456, pageNbr = 0
+2022-04-23 00:05:00.0088 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:05:00
+2022-04-23 00:05:00.0088 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:05:00.0088 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:05:00.0088 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:05:00.0238 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:05:00.0238 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:10:00
+2022-04-23 00:05:00.0238 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:05:00.0238 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:05:00
+2022-04-23 00:10:00.0051 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:10:00
+2022-04-23 00:10:00.0071 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:10:00.0071 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:10:00.0071 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:10:00.0221 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:10:00.0221 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:15:00
+2022-04-23 00:10:00.0221 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:10:00.0221 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:10:00
+2022-04-23 00:15:00.0159 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:15:00
+2022-04-23 00:15:00.0159 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:15:00.0269 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:15:00.0269 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:15:00.0269 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:15:00.0269 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:20:00
+2022-04-23 00:15:00.0269 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:15:00.0269 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:15:00
+2022-04-23 00:20:00.0138 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:20:00
+2022-04-23 00:20:00.0138 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:20:00.0138 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:20:00.0138 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:20:00.0277 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:20:00.0277 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:25:00
+2022-04-23 00:20:00.0277 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:20:00.0277 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:20:00
+2022-04-23 00:25:00.0056 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:25:00
+2022-04-23 00:25:00.0056 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:25:00.0056 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:25:00.0056 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:25:00.0056 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:25:00.0056 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:30:00
+2022-04-23 00:25:00.0056 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:25:00.0056 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:25:00
+2022-04-23 00:30:00.0069 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:30:00
+2022-04-23 00:30:00.0069 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:30:00.0069 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:30:00.0069 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:30:00.0258 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:30:00.0258 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:35:00
+2022-04-23 00:30:00.0258 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:30:00.0258 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:30:00
+2022-04-23 00:35:00.0004 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:35:00
+2022-04-23 00:35:00.0004 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:35:00.0123 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:35:00.0123 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:35:00.0123 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:35:00.0123 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:40:00
+2022-04-23 00:35:00.0123 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:35:00.0123 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:35:00
+2022-04-23 00:40:00.0108 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:40:00
+2022-04-23 00:40:00.0108 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:40:00.0217 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:40:00.0217 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:40:00.0217 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:40:00.0217 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:45:00
+2022-04-23 00:40:00.0217 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:40:00.0217 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:40:00
+2022-04-23 00:45:00.0141 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:45:00
+2022-04-23 00:45:00.0141 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:45:00.0141 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:45:00.0141 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:45:00.0279 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:45:00.0279 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:50:00
+2022-04-23 00:45:00.0279 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:45:00.0279 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:45:00
+2022-04-23 00:50:00.0038 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:50:00
+2022-04-23 00:50:00.0038 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:50:00.0128 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:50:00.0128 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:50:00.0128 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:50:00.0128 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 23:55:00
+2022-04-23 00:50:00.0218 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:50:00.0218 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:50:00
+2022-04-23 00:55:00.0096 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 22/04/2022 23:55:00
+2022-04-23 00:55:00.0096 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-22
+2022-04-23 00:55:00.0096 INFO MakeRapidApiCall CALLS OVER 100
+2022-04-23 00:55:00.0096 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 00:55:00.0275 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 00:55:00.0275 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:00:00
+2022-04-23 00:55:00.0275 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 00:55:00.0275 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 22/05/2022 23:55:00
+2022-04-23 01:00:00.0132 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 01:00:00.0132 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:00:02.9758 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:00:02.9758 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:00:02.9758 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:05:00
+2022-04-23 01:00:02.9758 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:00:02.9758 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:00:02
+2022-04-23 01:05:00.0012 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:05:00
+2022-04-23 01:05:00.0012 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:05:00.6424 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:05:00.6484 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:05:00.6484 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:10:00
+2022-04-23 01:05:00.6484 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:05:00.6484 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:05:00
+2022-04-23 01:10:00.0011 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:10:00
+2022-04-23 01:10:00.0011 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:10:00.4415 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:10:00.4468 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:10:00.4468 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:15:00
+2022-04-23 01:10:00.4468 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:10:00.4468 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:10:00
+2022-04-23 01:15:00.0149 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:15:00
+2022-04-23 01:15:00.0149 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:15:00.4642 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:15:00.4642 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:15:00.4642 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:20:00
+2022-04-23 01:15:00.4642 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:15:00.4642 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:15:00
+2022-04-23 01:20:00.0043 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:20:00
+2022-04-23 01:20:00.0053 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:20:00.5081 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:20:00.5081 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:20:00.5081 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:25:00
+2022-04-23 01:20:00.5081 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:20:00.5081 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:20:00
+2022-04-23 01:25:00.0160 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:25:00
+2022-04-23 01:25:00.0160 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:25:00.5865 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:25:00.5865 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:25:00.5865 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:30:00
+2022-04-23 01:25:00.5865 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:25:00.5865 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:25:00
+2022-04-23 01:30:00.0118 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:30:00
+2022-04-23 01:30:00.0118 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:30:00.4560 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:30:00.4620 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:30:00.4620 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:35:00
+2022-04-23 01:30:00.4620 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:30:00.4620 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:30:00
+2022-04-23 01:35:00.0002 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:35:00
+2022-04-23 01:35:00.0002 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:35:00.4943 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:35:00.4943 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:35:00.4943 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:40:00
+2022-04-23 01:35:00.4943 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:35:00.4943 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:35:00
+2022-04-23 01:40:00.0047 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:40:00
+2022-04-23 01:40:00.0058 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:40:00.5371 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:40:00.5371 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:40:00.5371 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:45:00
+2022-04-23 01:40:00.5371 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:40:00.5371 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:40:00
+2022-04-23 01:45:00.0072 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:45:00
+2022-04-23 01:45:00.0072 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:45:00.6408 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:45:00.6468 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:45:00.6468 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:50:00
+2022-04-23 01:45:00.6468 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:45:00.6468 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:45:00
+2022-04-23 01:50:00.0111 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:50:00
+2022-04-23 01:50:00.0111 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:50:00.5359 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:50:00.5417 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:50:00.5417 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 00:55:00
+2022-04-23 01:50:00.5417 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:50:00.5417 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:50:00
+2022-04-23 01:55:00.0030 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 00:55:00
+2022-04-23 01:55:00.0060 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 01:55:00.6527 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 01:55:00.6527 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 01:55:00.6527 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:00:00
+2022-04-23 01:55:00.6527 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 01:55:00.6527 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 00:55:00
+2022-04-23 02:00:00.0168 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:00:00
+2022-04-23 02:00:00.0168 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:00:00.5509 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:00:00.5579 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:00:00.5579 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:05:00
+2022-04-23 02:00:00.5579 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:00:00.5579 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:00:00
+2022-04-23 02:05:00.0106 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:05:00
+2022-04-23 02:05:00.0106 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:05:00.5384 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:05:00.5384 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:05:00.5384 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:10:00
+2022-04-23 02:05:00.5384 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:05:00.5384 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:05:00
+2022-04-23 02:10:00.0114 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:10:00
+2022-04-23 02:10:00.0114 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:10:00.4978 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:10:00.4978 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:10:00.4978 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:15:00
+2022-04-23 02:10:00.4978 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:10:00.4978 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:10:00
+2022-04-23 02:15:00.0070 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:15:00
+2022-04-23 02:15:00.0070 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:15:00.6161 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:15:00.6161 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:15:00.6161 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:20:00
+2022-04-23 02:15:00.6161 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:15:00.6161 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:15:00
+2022-04-23 02:20:00.0036 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:20:00
+2022-04-23 02:20:00.0066 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:20:00.5420 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:20:00.5420 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:20:00.5420 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:25:00
+2022-04-23 02:20:00.5420 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:20:00.5420 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:20:00
+2022-04-23 02:25:00.0041 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:25:00
+2022-04-23 02:25:00.0041 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:25:00.5798 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:25:00.5858 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:25:00.5858 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:30:00
+2022-04-23 02:25:00.5858 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:25:00.5858 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:25:00
+2022-04-23 02:30:00.0138 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:30:00
+2022-04-23 02:30:00.0138 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:30:00.6309 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:30:00.6309 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:30:00.6309 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:35:00
+2022-04-23 02:30:00.6309 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:30:00.6309 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:30:00
+2022-04-23 02:35:00.0049 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:35:00
+2022-04-23 02:35:00.0069 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:35:00.6972 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:35:00.6972 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:35:00.6972 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:40:00
+2022-04-23 02:35:00.6972 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:35:00.6972 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:35:00
+2022-04-23 02:40:00.0154 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:40:00
+2022-04-23 02:40:00.0154 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:40:00.4927 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:40:00.4927 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:40:00.4927 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:45:00
+2022-04-23 02:40:00.4927 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:40:00.4927 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:40:00
+2022-04-23 02:45:00.0085 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:45:00
+2022-04-23 02:45:00.0085 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:45:00.5290 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:45:00.5290 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:45:00.5290 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:50:00
+2022-04-23 02:45:00.5290 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:45:00.5290 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:45:00
+2022-04-23 02:50:00.0051 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:50:00
+2022-04-23 02:50:00.0071 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:50:00.4614 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:50:00.4614 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:50:00.4614 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 01:55:00
+2022-04-23 02:50:00.4614 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:50:00.4614 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:50:00
+2022-04-23 02:55:00.0053 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 01:55:00
+2022-04-23 02:55:00.0053 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 02:55:00.4687 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 02:55:00.4747 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 02:55:00.4747 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:00:00
+2022-04-23 02:55:00.4747 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 02:55:00.4747 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 01:55:00
+2022-04-23 03:00:00.0125 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:00:00
+2022-04-23 03:00:00.0125 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:00:00.7355 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:00:00.7415 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:00:00.7415 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:05:00
+2022-04-23 03:00:00.7415 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:00:00.7415 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:00:00
+2022-04-23 03:05:00.0033 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:05:00
+2022-04-23 03:05:00.0033 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:05:00.4568 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:05:00.4628 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:05:00.4628 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:10:00
+2022-04-23 03:05:00.4628 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:05:00.4628 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:05:00
+2022-04-23 03:10:00.0124 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:10:00
+2022-04-23 03:10:00.0124 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:10:00.7686 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:10:00.7746 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:10:00.7746 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:15:00
+2022-04-23 03:10:00.7746 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:10:00.7746 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:10:00
+2022-04-23 03:15:00.0100 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:15:00
+2022-04-23 03:15:00.0100 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:15:00.4608 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:15:00.4608 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:15:00.4608 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:20:00
+2022-04-23 03:15:00.4608 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:15:00.4608 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:15:00
+2022-04-23 03:20:00.0032 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:20:00
+2022-04-23 03:20:00.0032 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:20:00.5035 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:20:00.5095 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:20:00.5095 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:25:00
+2022-04-23 03:20:00.5095 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:20:00.5095 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:20:00
+2022-04-23 03:25:00.0021 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:25:00
+2022-04-23 03:25:00.0021 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:25:00.4350 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:25:00.4350 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:25:00.4350 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:30:00
+2022-04-23 03:25:00.4350 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:25:00.4350 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:25:00
+2022-04-23 03:30:00.0106 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:30:00
+2022-04-23 03:30:00.0106 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:30:00.5665 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:30:00.5715 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:30:00.5715 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:35:00
+2022-04-23 03:30:00.5715 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:30:00.5715 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:30:00
+2022-04-23 03:35:00.0063 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:35:00
+2022-04-23 03:35:00.0063 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:35:00.5271 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:35:00.5271 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:35:00.5271 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:40:00
+2022-04-23 03:35:00.5271 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:35:00.5271 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:35:00
+2022-04-23 03:40:00.0044 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:40:00
+2022-04-23 03:40:00.0054 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:40:00.4984 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:40:00.4984 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:40:00.4984 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:45:00
+2022-04-23 03:40:00.4984 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:40:00.4984 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:40:00
+2022-04-23 03:45:00.0020 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:45:00
+2022-04-23 03:45:00.0020 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:45:00.5066 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:45:00.5066 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:45:00.5066 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:50:00
+2022-04-23 03:45:00.5066 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:45:00.5066 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:45:00
+2022-04-23 03:50:00.0040 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:50:00
+2022-04-23 03:50:00.0040 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:50:00.6039 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:50:00.6039 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:50:00.6039 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 02:55:00
+2022-04-23 03:50:00.6039 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:50:00.6039 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:50:00
+2022-04-23 03:55:00.0010 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 02:55:00
+2022-04-23 03:55:00.0010 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 03:55:00.4487 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 03:55:00.4487 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 03:55:00.4487 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:00:00
+2022-04-23 03:55:00.4487 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 03:55:00.4487 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 02:55:00
+2022-04-23 04:00:00.0087 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:00:00
+2022-04-23 04:00:00.0087 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:00:00.6733 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:00:00.6792 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:00:00.6792 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:05:00
+2022-04-23 04:00:00.6792 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:00:00.6792 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:00:00
+2022-04-23 04:05:00.0038 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:05:00
+2022-04-23 04:05:00.0058 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:05:00.5948 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:05:00.6008 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:05:00.6008 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:10:00
+2022-04-23 04:05:00.6008 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:05:00.6008 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:05:00
+2022-04-23 04:10:00.0009 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:10:00
+2022-04-23 04:10:00.0009 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:10:00.5348 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:10:00.5398 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:10:00.5398 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:15:00
+2022-04-23 04:10:00.5398 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:10:00.5398 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:10:00
+2022-04-23 04:15:00.0105 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:15:00
+2022-04-23 04:15:00.0105 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:15:00.4833 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:15:00.4833 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:15:00.4833 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:20:00
+2022-04-23 04:15:00.4833 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:15:00.4833 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:15:00
+2022-04-23 04:20:00.0039 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:20:00
+2022-04-23 04:20:00.0059 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:20:00.5215 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:20:00.5215 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:20:00.5215 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:25:00
+2022-04-23 04:20:00.5215 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:20:00.5215 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:20:00
+2022-04-23 04:25:00.0101 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:25:00
+2022-04-23 04:25:00.0101 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:25:00.4885 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:25:00.4944 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:25:00.4944 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:30:00
+2022-04-23 04:25:00.4944 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:25:00.4944 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:25:00
+2022-04-23 04:30:00.0056 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:30:00
+2022-04-23 04:30:00.0056 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:30:00.4556 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:30:00.4616 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:30:00.4616 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:35:00
+2022-04-23 04:30:00.4616 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:30:00.4616 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:30:00
+2022-04-23 04:35:00.0015 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:35:00
+2022-04-23 04:35:00.0015 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:35:00.6373 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:35:00.6373 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:35:00.6373 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:40:00
+2022-04-23 04:35:00.6373 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:35:00.6373 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:35:00
+2022-04-23 04:40:00.0051 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:40:00
+2022-04-23 04:40:00.0051 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:40:00.4854 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:40:00.4914 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:40:00.4914 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:45:00
+2022-04-23 04:40:00.4914 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:40:00.4914 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:40:00
+2022-04-23 04:45:00.0011 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:45:00
+2022-04-23 04:45:00.0011 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:45:00.4706 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:45:00.4766 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:45:00.4766 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:50:00
+2022-04-23 04:45:00.4766 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:45:00.4766 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:45:00
+2022-04-23 04:50:00.0034 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:50:00
+2022-04-23 04:50:00.0034 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:50:00.4376 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:50:00.4435 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:50:00.4435 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 03:55:00
+2022-04-23 04:50:00.4435 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:50:00.4435 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:50:00
+2022-04-23 04:55:00.0114 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 03:55:00
+2022-04-23 04:55:00.0114 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 04:55:00.5232 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 04:55:00.5232 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 04:55:00.5232 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:00:00
+2022-04-23 04:55:00.5232 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 04:55:00.5232 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 03:55:00
+2022-04-23 05:00:00.0024 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:00:00
+2022-04-23 05:00:00.0024 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:00:00.6561 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:00:00.6561 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:00:00.6621 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:05:00
+2022-04-23 05:00:00.6621 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:00:00.6621 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:00:00
+2022-04-23 05:05:00.0179 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:05:00
+2022-04-23 05:05:00.0179 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:05:00.5287 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:05:00.5287 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:05:00.5287 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:10:00
+2022-04-23 05:05:00.5287 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:05:00.5287 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:05:00
+2022-04-23 05:10:00.0049 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:10:00
+2022-04-23 05:10:00.0059 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:10:00.4927 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:10:00.4927 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:10:00.4927 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:15:00
+2022-04-23 05:10:00.4927 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:10:00.4927 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:10:00
+2022-04-23 05:15:00.0013 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:15:00
+2022-04-23 05:15:00.0013 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:15:00.4524 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:15:00.4524 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:15:00.4584 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:20:00
+2022-04-23 05:15:00.4584 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:15:00.4584 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:15:00
+2022-04-23 05:20:00.0024 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:20:00
+2022-04-23 05:20:00.0024 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:20:00.5120 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:20:00.5120 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:20:00.5120 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:25:00
+2022-04-23 05:20:00.5120 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:20:00.5120 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:20:00
+2022-04-23 05:25:00.0008 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:25:00
+2022-04-23 05:25:00.0008 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:25:00.4816 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:25:00.4816 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:25:00.4816 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:30:00
+2022-04-23 05:25:00.4816 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:25:00.4816 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:25:00
+2022-04-23 05:30:00.0033 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:30:00
+2022-04-23 05:30:00.0033 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:30:00.4068 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:30:00.4118 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:30:00.4118 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:35:00
+2022-04-23 05:30:00.4118 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:30:00.4118 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:30:00
+2022-04-23 05:35:00.0098 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:35:00
+2022-04-23 05:35:00.0098 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:35:00.4717 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:35:00.4777 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:35:00.4777 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:40:00
+2022-04-23 05:35:00.4777 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:35:00.4777 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:35:00
+2022-04-23 05:40:00.0008 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:40:00
+2022-04-23 05:40:00.0008 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:40:00.5123 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:40:00.5123 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:40:00.5123 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:45:00
+2022-04-23 05:40:00.5123 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:40:00.5123 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:40:00
+2022-04-23 05:45:00.0094 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:45:00
+2022-04-23 05:45:00.0094 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:45:00.4695 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:45:00.4755 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:45:00.4755 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:50:00
+2022-04-23 05:45:00.4755 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:45:00.4755 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:45:00
+2022-04-23 05:50:00.0125 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:50:00
+2022-04-23 05:50:00.0125 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:50:00.5291 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:50:00.5291 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:50:00.5291 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 04:55:00
+2022-04-23 05:50:00.5291 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:50:00.5291 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:50:00
+2022-04-23 05:55:00.0014 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 04:55:00
+2022-04-23 05:55:00.0014 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 05:55:00.4934 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 05:55:00.4934 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 05:55:00.4934 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:00:00
+2022-04-23 05:55:00.4934 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 05:55:00.4934 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 04:55:00
+2022-04-23 06:00:00.0123 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:00:00
+2022-04-23 06:00:00.0123 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:00:00.5538 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:00:00.5538 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:00:00.5538 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:05:00
+2022-04-23 06:00:00.5538 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:00:00.5538 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:00:00
+2022-04-23 06:05:00.0161 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:05:00
+2022-04-23 06:05:00.0161 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:05:00.5495 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:05:00.5555 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:05:00.5555 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:10:00
+2022-04-23 06:05:00.5555 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:05:00.5555 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:05:00
+2022-04-23 06:10:00.0084 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:10:00
+2022-04-23 06:10:00.0084 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:10:00.7329 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:10:00.7329 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:10:00.7329 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:15:00
+2022-04-23 06:10:00.7329 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:10:00.7329 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:10:00
+2022-04-23 06:15:00.0006 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:15:00
+2022-04-23 06:15:00.0006 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:15:00.4476 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:15:00.4476 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:15:00.4476 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:20:00
+2022-04-23 06:15:00.4476 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:15:00.4476 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:15:00
+2022-04-23 06:20:00.0052 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:20:00
+2022-04-23 06:20:00.0062 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:20:00.5192 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:20:00.5242 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:20:00.5242 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:25:00
+2022-04-23 06:20:00.5242 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:20:00.5242 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:20:00
+2022-04-23 06:25:00.0085 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:25:00
+2022-04-23 06:25:00.0085 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:25:00.6478 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:25:00.6478 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:25:00.6478 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:30:00
+2022-04-23 06:25:00.6478 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:25:00.6478 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:25:00
+2022-04-23 06:30:00.0092 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:30:00
+2022-04-23 06:30:00.0092 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:30:00.6249 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:30:00.6309 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:30:00.6309 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:35:00
+2022-04-23 06:30:00.6309 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:30:00.6309 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:30:00
+2022-04-23 06:35:00.0137 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:35:00
+2022-04-23 06:35:00.0137 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:35:00.5528 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:35:00.5528 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:35:00.5528 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:40:00
+2022-04-23 06:35:00.5528 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:35:00.5528 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:35:00
+2022-04-23 06:40:00.0019 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:40:00
+2022-04-23 06:40:00.0019 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:40:00.5770 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:40:00.5770 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:40:00.5770 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:45:00
+2022-04-23 06:40:00.5770 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:40:00.5770 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:40:00
+2022-04-23 06:45:00.0038 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:45:00
+2022-04-23 06:45:00.0038 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:45:00.4772 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:45:00.4772 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:45:00.4772 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:50:00
+2022-04-23 06:45:00.4772 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:45:00.4772 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:45:00
+2022-04-23 06:50:00.0138 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:50:00
+2022-04-23 06:50:00.0138 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:50:00.4364 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:50:00.4364 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:50:00.4364 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 05:55:00
+2022-04-23 06:50:00.4364 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:50:00.4434 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:50:00
+2022-04-23 06:55:00.0116 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 05:55:00
+2022-04-23 06:55:00.0116 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 06:55:00.4529 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 06:55:00.4589 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 06:55:00.4589 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:00:00
+2022-04-23 06:55:00.4589 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 06:55:00.4589 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 05:55:00
+2022-04-23 07:00:00.0063 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:00:00
+2022-04-23 07:00:00.0063 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:00:00.5329 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:00:00.5388 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:00:00.5388 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:05:00
+2022-04-23 07:00:00.5388 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:00:00.5388 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:00:00
+2022-04-23 07:05:00.0133 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:05:00
+2022-04-23 07:05:00.0133 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:05:00.5073 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:05:00.5073 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:05:00.5073 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:10:00
+2022-04-23 07:05:00.5073 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:05:00.5073 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:05:00
+2022-04-23 07:10:00.0083 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:10:00
+2022-04-23 07:10:00.0083 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:10:00.4687 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:10:00.4687 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:10:00.4747 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:15:00
+2022-04-23 07:10:00.4747 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:10:00.4747 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:10:00
+2022-04-23 07:15:00.0054 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:15:00
+2022-04-23 07:15:00.0054 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:15:00.7505 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:15:00.7567 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:15:00.7567 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:20:00
+2022-04-23 07:15:00.7567 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:15:00.7567 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:15:00
+2022-04-23 07:20:00.0057 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:20:00
+2022-04-23 07:20:00.0057 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:20:00.6368 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:20:00.6368 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:20:00.6368 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:25:00
+2022-04-23 07:20:00.6368 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:20:00.6368 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:20:00
+2022-04-23 07:25:00.0093 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:25:00
+2022-04-23 07:25:00.0093 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:25:00.5004 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:25:00.5064 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:25:00.5064 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:30:00
+2022-04-23 07:25:00.5064 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:25:00.5064 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:25:00
+2022-04-23 07:30:00.0017 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:30:00
+2022-04-23 07:30:00.0017 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:30:00.5096 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:30:00.5096 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:30:00.5096 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:35:00
+2022-04-23 07:30:00.5096 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:30:00.5096 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:30:00
+2022-04-23 07:35:00.0138 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:35:00
+2022-04-23 07:35:00.0138 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:35:00.4708 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:35:00.4768 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:35:00.4768 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:40:00
+2022-04-23 07:35:00.4768 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:35:00.4768 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:35:00
+2022-04-23 07:40:00.0141 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:40:00
+2022-04-23 07:40:00.0141 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:40:00.4729 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:40:00.4788 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:40:00.4788 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:45:00
+2022-04-23 07:40:00.4788 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:40:00.4788 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:40:00
+2022-04-23 07:45:00.0084 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:45:00
+2022-04-23 07:45:00.0084 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:45:00.4551 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:45:00.4611 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:45:00.4611 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:50:00
+2022-04-23 07:45:00.4611 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:45:00.4611 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:45:00
+2022-04-23 07:50:00.0081 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:50:00
+2022-04-23 07:50:00.0081 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:50:00.4710 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:50:00.4770 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:50:00.4770 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 06:55:00
+2022-04-23 07:50:00.4770 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:50:00.4770 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:50:00
+2022-04-23 07:55:00.0154 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 06:55:00
+2022-04-23 07:55:00.0154 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 07:55:00.5092 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 07:55:00.5092 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 07:55:00.5092 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:00:00
+2022-04-23 07:55:00.5092 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 07:55:00.5092 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 06:55:00
+2022-04-23 08:00:00.0018 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 07:00:00
+2022-04-23 08:00:00.0018 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 08:00:00.6600 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 08:00:00.6660 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 08:00:00.6660 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:05:00
+2022-04-23 08:00:00.6660 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 08:00:00.6660 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 07:00:00
+2022-04-23 08:05:00.0062 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 07:05:00
+2022-04-23 08:05:00.0062 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 08:05:00.5643 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 08:05:00.5703 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 08:05:00.5703 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:10:00
+2022-04-23 08:05:00.5703 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 08:05:00.5703 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 07:05:00
+2022-04-23 08:10:00.0043 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 07:10:00
+2022-04-23 08:10:00.0063 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 08:10:00.5860 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 08:10:00.5860 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 08:10:00.5860 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:15:00
+2022-04-23 08:10:00.5860 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 08:10:00.5860 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 07:10:00
+2022-04-23 08:15:00.0101 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 07:15:00
+2022-04-23 08:15:00.0101 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 08:15:00.5385 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 08:15:00.5385 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 08:15:00.5385 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:20:00
+2022-04-23 08:15:00.5385 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 08:15:00.5385 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 07:15:00
+2022-04-23 08:20:00.0132 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 07:20:00
+2022-04-23 08:20:00.0132 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 08:20:00.6268 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 08:20:00.6328 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 08:20:00.6328 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:25:00
+2022-04-23 08:20:00.6328 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 08:20:00.6328 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 07:20:00
+2022-04-23 08:25:00.0069 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 07:25:00
+2022-04-23 08:25:00.0069 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 08:25:00.5658 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 08:25:00.5718 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 08:25:00.5718 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:30:00
+2022-04-23 08:25:00.5718 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 08:25:00.5718 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 07:25:00
+2022-04-23 08:30:00.0137 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 07:30:00
+2022-04-23 08:30:00.0137 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 08:30:00.5764 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 08:30:00.5764 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 08:30:00.5764 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 07:35:00
+2022-04-23 08:30:00.5764 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 08:30:00.5764 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 07:30:00
+2022-04-23 10:16:27.1249 INFO Default Quartz.NET properties loaded from embedded resource file
+2022-04-23 10:16:27.1708 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2022-04-23 10:16:27.1708 INFO Quartz Scheduler v.3.2.2.0 created.
+2022-04-23 10:16:27.1818 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2022-04-23 10:16:27.1818 INFO RAMJobStore initialized.
+2022-04-23 10:16:27.1818 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-04-23 10:16:27.1818 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2022-04-23 10:16:27.1818 INFO Quartz scheduler version: 3.2.2.0
+2022-04-23 10:16:27.2127 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2022-04-23 10:16:27.3453 INFO Startup Configuration - Start
+2022-04-23 10:16:27.3453 INFO SetEventCache - Start
+2022-04-23 10:16:27.3912 INFO SetCachedItem = setting cache for Events
+2022-04-23 10:16:27.3912 INFO SetCachedItem = setting cache for Events, with Expiry Date of 23/05/2022 09:16:27
+2022-04-23 10:16:27.3972 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2022-04-23 10:16:27.3972 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2022-04-23 10:16:27.4281 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 10:16:27.4281 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 22/04/2022 20:40:00
+2022-04-23 10:16:27.4281 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 10:16:27.4281 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 09:16:27
+2022-04-23 10:17:30.1470 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 23/04/2022 09:17:30
+2022-04-23 10:17:50.3137 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 10:20:12.0969 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:20:36.5084 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 23/04/2022 09:20:36
+2022-04-23 10:20:47.5936 INFO SetNextResultCheckDateTime - Set League 3456 next check date to 23/04/2022 13:25:00
+2022-04-23 10:20:48.3789 INFO SetNextResultCheckDateTime - Set League 3501 next check date to 23/04/2022 09:25:00
+2022-04-23 10:20:48.3810 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 10:20:49.5089 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 10:20:50.4505 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 09:20:50
+2022-04-23 10:20:50.4505 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 23/04/2022 09:20:50
+2022-04-23 10:21:57.2633 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, Now = 23/04/2022 09:21:57
+2022-04-23 10:22:06.6669 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:22:06.6669 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 10:22:11.2930 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:22:15.1229 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 10:22:15.1229 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:22:15.1499 INFO DailyRapidApiLeagueCheck --> lastDate = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 10:22:15.1928 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 10:22:15.1928 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2022-04-23 10:22:15.1499 INFO DailyRapidApiLeagueCheck --> lastDate = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 10:22:15.1928 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 10:22:15.1928 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2022-04-23 10:22:15.1499 INFO DailyRapidApiLeagueCheck --> lastDate = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 10:22:15.1928 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 10:22:15.1928 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2022-04-23 10:22:15.1858 INFO DailyRapidApiLeagueCheck --> lastDate = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 10:22:16.4758 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 10:22:16.4758 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2022-04-23 10:22:15.1499 INFO DailyRapidApiLeagueCheck --> lastDate = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 10:22:16.4758 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 10:22:16.4758 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2022-04-23 10:22:15.1858 INFO DailyRapidApiLeagueCheck --> lastDate = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 10:22:16.4758 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 10:22:16.4758 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2022-04-23 10:25:47.8976 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 23/04/2022 00:00:00, Now = 23/04/2022 09:25:47
+2022-04-23 10:25:49.3739 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-04-23
+2022-04-23 10:25:56.1016 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:46:08.3332 INFO Default Quartz.NET properties loaded from embedded resource file
+2022-04-23 10:46:08.3781 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2022-04-23 10:46:08.3811 INFO Quartz Scheduler v.3.2.2.0 created.
+2022-04-23 10:46:08.4110 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2022-04-23 10:46:08.4259 INFO RAMJobStore initialized.
+2022-04-23 10:46:08.4299 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-04-23 10:46:08.4299 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2022-04-23 10:46:08.4299 INFO Quartz scheduler version: 3.2.2.0
+2022-04-23 10:46:08.4299 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2022-04-23 10:46:08.5356 INFO Startup Configuration - Start
+2022-04-23 10:46:08.5376 INFO SetEventCache - Start
+2022-04-23 10:46:08.5885 INFO SetCachedItem = setting cache for Events
+2022-04-23 10:46:08.5885 INFO SetCachedItem = setting cache for Events, with Expiry Date of 23/05/2022 09:46:08
+2022-04-23 10:46:08.5885 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2022-04-23 10:46:08.5885 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2022-04-23 10:46:08.6174 INFO SetNextResultCheckDateTime - Set League 3456, fixture date 23/04/2022 11:30:00, next check date to 23/04/2022 13:25:00
+2022-04-23 10:46:08.6174 INFO SetNextResultCheckDateTime - Set League 3501, fixture date 22/04/2022 18:45:00, next check date to 22/04/2022 20:40:00
+2022-04-23 10:46:08.6174 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 10:46:08.6174 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 09:46:08
+2022-04-23 10:47:20.8464 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, ResultCheckDateTime = 22/04/2022 20:40:00, Now = 23/04/2022 09:47:20
+2022-04-23 10:47:34.4482 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 10:47:34.4482 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:47:34.4592 INFO SetNextResultCheckDateTime - Set League 3456, fixture date 23/04/2022 11:30:00, next check date to 23/04/2022 13:25:00
+2022-04-23 10:47:34.4592 INFO SetNextResultCheckDateTime - Set League 3501, fixture date 22/04/2022 18:45:00, next check date to 22/04/2022 20:40:00
+2022-04-23 10:47:34.4592 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 10:47:34.4592 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 09:47:34
+2022-04-23 10:47:34.4941 INFO DailyRapidApiLeagueCheck --> lastDate = 23/04/2022 00:00:00, Now = 23/04/2022 00:00:00
+2022-04-23 10:47:34.4941 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 24/04/2022 00:00:00
+2022-04-23 10:47:34.4941 INFO DailyRapidApiLeagueCheck --> performUpdate = False
+2022-04-23 10:48:27.9327 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, ResultCheckDateTime = 22/04/2022 20:40:00, Now = 23/04/2022 09:48:27
+2022-04-23 10:48:35.0796 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 10:48:48.4941 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:56:07.4977 INFO Default Quartz.NET properties loaded from embedded resource file
+2022-04-23 10:56:07.5486 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2022-04-23 10:56:07.5525 INFO Quartz Scheduler v.3.2.2.0 created.
+2022-04-23 10:56:07.5894 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2022-04-23 10:56:07.5894 INFO RAMJobStore initialized.
+2022-04-23 10:56:07.5894 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-04-23 10:56:07.5894 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2022-04-23 10:56:07.5894 INFO Quartz scheduler version: 3.2.2.0
+2022-04-23 10:56:07.6044 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2022-04-23 10:56:07.7101 INFO Startup Configuration - Start
+2022-04-23 10:56:07.7101 INFO SetEventCache - Start
+2022-04-23 10:56:07.7520 INFO SetCachedItem = setting cache for Events
+2022-04-23 10:56:07.7520 INFO SetCachedItem = setting cache for Events, with Expiry Date of 23/05/2022 09:56:07
+2022-04-23 10:56:07.7520 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2022-04-23 10:56:07.7560 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2022-04-23 10:56:07.7800 INFO SetNextResultCheckDateTime - Set League 3456, fixture date 23/04/2022 11:30:00, next check date to 23/04/2022 13:25:00
+2022-04-23 10:56:07.7800 INFO SetNextResultCheckDateTime - Set League 3501, fixture date 22/04/2022 18:45:00, next check date to 22/04/2022 20:40:00
+2022-04-23 10:56:07.7800 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 10:56:07.7800 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 09:56:07
+2022-04-23 10:57:13.9629 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 22/04/2022 00:00:00, ResultCheckDateTime = 22/04/2022 20:40:00, Now = 23/04/2022 09:57:13
+2022-04-23 10:57:20.9590 INFO FixturesByLeague - League = 3501, EarliestDate = 22/04/2022 00:00:00
+2022-04-23 10:57:25.2949 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-04-23 10:57:48.7194 INFO SetNextResultCheckDateTime - Set League 3456, fixture date 23/04/2022 11:30:00, next check date to 23/04/2022 13:25:00
+2022-04-23 11:06:26.6915 INFO Default Quartz.NET properties loaded from embedded resource file
+2022-04-23 11:06:26.7364 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2022-04-23 11:06:26.7364 INFO Quartz Scheduler v.3.2.2.0 created.
+2022-04-23 11:06:26.7673 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2022-04-23 11:06:26.7733 INFO RAMJobStore initialized.
+2022-04-23 11:06:26.7733 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-04-23 11:06:26.7733 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2022-04-23 11:06:26.7733 INFO Quartz scheduler version: 3.2.2.0
+2022-04-23 11:06:26.7733 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2022-04-23 11:06:26.8929 INFO Startup Configuration - Start
+2022-04-23 11:06:26.8929 INFO SetEventCache - Start
+2022-04-23 11:06:26.9358 INFO SetCachedItem = setting cache for Events
+2022-04-23 11:06:26.9358 INFO SetCachedItem = setting cache for Events, with Expiry Date of 23/05/2022 10:06:26
+2022-04-23 11:06:26.9358 INFO SetNextResultCheckDateTime - Start - roundUp = False
+2022-04-23 11:06:26.9358 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2022-04-23 11:06:26.9657 INFO SetNextResultCheckDateTime - Set League 3456, fixture date 23/04/2022 11:30:00, next check date to 23/04/2022 13:25:00
+2022-04-23 11:06:26.9657 INFO SetNextResultCheckDateTime - Set League 3501, fixture date 22/04/2022 18:45:00, next check date to 22/04/2022 20:40:00
+2022-04-23 11:06:26.9657 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-04-23 11:06:26.9657 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 23/05/2022 10:06:26

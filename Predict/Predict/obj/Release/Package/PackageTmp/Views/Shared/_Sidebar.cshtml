@@ -10,16 +10,18 @@
 
             @if (Request.IsAuthenticated)
             {
-                var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
-                var hasJokes = System.Convert.ToBoolean(Session["PlayerJokes"]);
-
+            var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
+            var hasJokes = System.Convert.ToBoolean(Session["PlayerJokes"]);
+            var hasQuizQuestions = System.Convert.ToBoolean(Session["PlayerQuizQuestions"]);
+                            
+            
                 if (eventPlayers != null)
-                {
+                            {
 
-                    foreach (var eventPlayer in eventPlayers)
-                    {
-                        if (eventPlayer != null)
-                        {
+                                foreach (var eventPlayer in eventPlayers)
+                                {
+                                    if (eventPlayer != null)
+                                    {
                             <li>
                                 <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
                                     <i class="fa fa-trophy"></i> <span>@eventPlayer.Event.EventName</span>
@@ -27,7 +29,7 @@
                             </li>
                         }
 
-                    }
+            }
                 }
 
                 <li>
@@ -83,16 +85,20 @@
                                 <i class="fa fa-list"></i> <span>Joke League</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="@Url.Action("AddJoke", "Jokes")">
-                                <i class="fa fa-list"></i> <span>Add New Joke</span>
-                            </a>
-                        </li>
+
                         @if (hasJokes)
                         {
                             <li>
                                 <a href="@Url.Action("DisplayJokeList", "Jokes")">
                                     <i class="fa fa-list"></i> <span>Edit Your Jokes</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("AddJoke", "Jokes")">
+                                    <i class="fa fa-list"></i> <span>Add New Joke</span>
                                 </a>
                             </li>
                         }
@@ -120,12 +126,23 @@
                                 <i class="fa fa-list"></i> <span>Quiz League</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="@Url.Action("AddQuizQuestion", "QuizQuestions")">
-                                <i class="fa fa-list"></i> <span>Add New Quiz Question</span>
-                            </a>
-                        </li>
-
+                        @if (hasQuizQuestions)
+                        {
+                            <li>
+                                
+                                <a href="@Url.Action("DisplayQuizQuestionList", "QuizQuestions")">
+                                    <i class="fa fa-list"></i> <span>Edit Your Questions</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("AddQuizQuestion", "QuizQuestions")">
+                                    <i class="fa fa-list"></i> <span>Add New Quiz Question</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </li>
 

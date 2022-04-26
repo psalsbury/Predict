@@ -593,3 +593,4 @@ C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Google.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.JokesAndQuiz.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.QuestionTypeEnum.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.rapidapiv3AndSubLeagues.resources

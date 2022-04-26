@@ -10,10 +10,11 @@ GO
 -- Create date: 22 Nov 2019
 -- Description:	Get details for the groups game stats page
 -- =============================================
--- EXEC predictioncomp.dbo.spGetStatsFixture 6, 31
+-- EXEC predictioncomp.dbo.spGetStatsFixture 3473, 212, 1
 CREATE PROCEDURE dbo.spGetStatsFixture 
 (
 	@intFixtureId INT
+	, @intEventId INT
 	, @intPoolId INT = 0
 )
 AS
@@ -30,6 +31,7 @@ BEGIN
 			, CAST(COUNT(FP.PlayerID) AS int) AS NumberOfPredictions
 		FROM dbo.FixturePredictions AS FP
 		WHERE FP.FixtureId = @intFixtureId
+		AND FP.EventId = @intEventId
 		GROUP BY FixtureId
 			, FP.HomePrediction
 			, FP.AwayPrediction
@@ -47,9 +49,10 @@ BEGIN
 			, FP.AwayPrediction
 			, CAST(COUNT(FP.PlayerID) AS int) AS NumberOfPredictions
 		FROM dbo.FixturePredictions AS FP
-		INNER JOIN dbo.EventFixtures EF ON EF.FixtureId = FP.FixtureId
+		INNER JOIN dbo.EventFixtures EF ON EF.FixtureId = FP.FixtureId AND EF.EventId = FP.EventId
 		INNER JOIN dbo.EventPoolPlayers EPP ON EPP.PoolId = @intPoolId AND EPP.EventId = EF.EventId AND EPP.Enabled = 1 AND EPP.PlayerId = FP.PlayerId
 		WHERE FP.FixtureId = @intFixtureId
+		AND FP.EventId = @intEventId
 		GROUP BY FP.FixtureId
 			, FP.HomePrediction
 			, FP.AwayPrediction

@@ -143,7 +143,7 @@ namespace Predict.Helper
             Logger.Info("SetEventCache - Start");
             var daysAgo = DateTime.UtcNow.AddDays(-30);
             var context = new ApplicationDbContext();
-            var events = context.Events.Where(a => a.EndDateTime >= daysAgo).ToList();
+            var events = context.Events.Where(a => a.EndDateTime >= daysAgo || a.EndDateTime == DateTime.MinValue).ToList();
             SetCachedItem("Events", events);
 
             context.Dispose();
@@ -163,7 +163,15 @@ namespace Predict.Helper
             if (myNewEvent != null)
             {
                 var myOriginalEventIndex = myEvents.FindIndex(e => e.Id == eventId);
-                myEvents[myOriginalEventIndex] = myNewEvent;
+                if(myOriginalEventIndex==-1)
+                {
+                    myEvents.Add(myNewEvent);
+                }
+                else
+                {
+                    myEvents[myOriginalEventIndex] = myNewEvent;
+                }
+
             }
             SetCachedItem("Events", myEvents);
             context.Dispose();

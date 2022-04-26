@@ -250,6 +250,8 @@ namespace Predict.Helper
 
         public static List<LeagueTable> FetchLeagueTablesByUserId(int eventId, string userId)
         {
+            //TODO -- ADD IN THE USE OF THE NEW SUB TEAM TABLE
+            
             var context = new ApplicationDbContext();
             var eventTeams = GetEventTeams(context, eventId);
             var leagueTables = GetLeagueTables(context, eventTeams, eventId);

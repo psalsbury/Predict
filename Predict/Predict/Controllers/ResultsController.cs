@@ -31,7 +31,7 @@ namespace Predict.Controllers
         }
 
         // GET: Results
-        public ActionResult GroupGameResults(int id)
+        public ActionResult GroupGameResults(short id)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -48,6 +48,11 @@ namespace Predict.Controllers
                 .OrderBy(p => p.Fixture.FixtureDateTime).ToList();
 
             var myEvent = Helper.Cache.GetCachedEvent(id);
+            if (myEvent == null)
+            {
+                Helper.Cache.SetEventCache(id);
+                myEvent = Helper.Cache.GetCachedEvent(id);
+            }
 
             groupGameResultsViewModel.EventFixtures = eventFixtures;
             ViewBag.EventId = id;

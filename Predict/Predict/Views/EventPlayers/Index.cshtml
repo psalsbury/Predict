@@ -6,9 +6,9 @@
 @{
     var eventPlayers = (List<EventPlayer>)Session["EventPlayers"];
     var playerId = User.Identity.GetUserId();
-    ViewBag.Title = "Your Comps";
+    ViewBag.Title = "Your Comps/Join A New Prediction Comp";
+    var isAnAdmin = false;
 }
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Your Comps</li>
@@ -43,6 +43,10 @@
 
                 @foreach (var item in Model.Where(e => e.EndDateTime >= DateTime.UtcNow).OrderBy(a => a.StartDateTime))
                 {
+                    if(item.CreatedByPlayerId==playerId)
+                    {
+                        isAnAdmin = true;
+                    }
                     <tr height="60">
                         <td>
                             @Html.DisplayFor(modelItem => item.EventName)
@@ -79,6 +83,10 @@
 
                 @foreach (var item in Model.Where(e => e.EndDateTime < DateTime.UtcNow).OrderByDescending(a => a.EndDateTime))
                 {
+                    if (item.CreatedByPlayerId == playerId)
+                    {
+                        isAnAdmin = true;
+                    }
                     var exists = eventPlayers.Exists( a => a.EventId == item.Id);
                     if (exists)
                     {
@@ -107,11 +115,20 @@
         @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
         <input type="submit" id="save" value="Save" class="btn btn-success alignleft" />
 
+        @if (isAnAdmin)
+        {
+            <input type="button"
+                   id="add"
+                   value="Edit Your Comps"
+                   class="btn btn-primary pullright"
+                   onclick="location.href = '@Url.Action("EventsIndex", "Events") '" />
+        }
+
         <input type="button"
                id="add"
-               value="Add/Edit Comps"
-               class="btn btn-primary alignright"
-               onclick="location.href = '@Url.Action("EventsIndex", "Events") '" />
+               value="Create New Comp"
+               class="btn btn-success pullright"
+               onclick="location.href = '@Url.Action("AddEvent", "Events") '" />
 
     </div>
     <br/>

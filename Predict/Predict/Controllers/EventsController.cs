@@ -67,11 +67,18 @@ namespace Predict.Controllers
         {
             if (!CheckUserIsValid()) return RedirectToAction("Index", "Home");
 
+            if (!ModelState.IsValid)
+            {
+                return View("EditEvent", passedInEvent);
+            }
+
             var playerId = User.Identity.GetUserId();
+            var newEvent = false;
             var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
             var myEvent = _context.Events.FirstOrDefault(e => e.Id == passedInEvent.Id);
             if (myEvent == null)
             {
+                newEvent = true;
                 myEvent = new Event
                 {
                     CreatedDateTime = DateTime.UtcNow
@@ -82,7 +89,7 @@ namespace Predict.Controllers
 
             myEvent.ModifiedDateTime = DateTime.UtcNow;
             myEvent.EventName = passedInEvent.EventName;
-            myEvent.EventDescription = passedInEvent.EventDescription;
+            myEvent.EventDescription = passedInEvent.EventName; // Just using the same name for manually created events
             _context.Events.AddOrUpdate(myEvent);
             _context.SaveChanges();
 
@@ -107,7 +114,15 @@ namespace Predict.Controllers
             // update the application cache for events
             Helper.Cache.SetEventCache();
 
-            return RedirectToAction("EventsIndex", "Events");
+            if(newEvent)
+            {
+                return RedirectToAction("Index", "EventFixtures", new { id = myEvent.Id });
+            }
+            else
+            {
+                return RedirectToAction("EventsIndex", "Events");
+            }
+
         }
 
     }

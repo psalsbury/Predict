@@ -9,22 +9,28 @@
     </div>
 }
 
-@using (Html.BeginForm("PremierLeagueUpdate", "Admin"))
+@using (Html.BeginForm("ForceDailyUpdate", "Admin"))
 {
     <div class="form-group">
         <div>
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Premier League Update" class="btn btn-default" />
+            <input type="submit" value="Force Daily Update" class="btn btn-default" />
         </div>
     </div>
 }
 
-@using (Html.BeginForm("ChampLeagueUpdate", "Admin"))
+@using (Html.BeginForm("V3Leagues", "Admin"))
 {
     <div class="form-group">
         <div>
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Championship 20/21 Update" class="btn btn-default" />
+
+            @Html.Label("Country")
+            @Html.TextBox("Country")
+            @Html.Label("Year")
+            @Html.TextBox("Year")
+
+            <input type="submit" value="V3 Leagues" class="btn btn-default" />
         </div>
     </div>
 }
@@ -51,8 +57,10 @@
     foreach (var rapidApiResultCheck in rapidApiResultChecks)
     {
         @rapidApiResultCheck.RapidApiLeagueId;
-        <text>--></text>
+        <text>-->(Last outstanding Fixture) </text>
         @rapidApiResultCheck.FixtureDateTime;
+        <text>-->(Next time to check)</text>
+        @rapidApiResultCheck.ResultCheckDateTime;
         <text>
             <br />
         </text>

@@ -1,12 +1,10 @@
-
 use javascript to disable submit button for bonus questions
-
 
 breadcrump for readonly KO fixtures/change title
 
-add feature to allow pool admins to see players in a comp (and add remove)
+show all score odds in the odds popup, in a second tab
 
-when adding a comp name/desc take to add fixtures automatically
+
 
 screen to enter ko prediction results
 
@@ -14,27 +12,22 @@ sceen to enter bonus prediction results
 
 feedback page when submitting message
 
-show all score odds in the odds popup, in a second tab
+
 
 sort game stats by using a sortable table
 
-change KoFixtures table to have Team1ResultProcessed & Team2ResultProcessed and remove ResultProcessed. Change spProcessScores to use new columns
 
-add QuestionProcessed column to dbo.BonusQuestions and update spProcessScores to use it
+
 
 when ordering the group table. If a team is on the same points, ensure that if a team has won against the other team, it is higher
 
-when an admin adds a pool to a comp, call the sp to update all players 'predictions entered' stats
+
 
 logging off when session has expired takes me to 
 http://predictioncomp.com/Account/Login?ReturnUrl=%2FAccount%2FLogOff
 I then get an error if I try to log on
 
-remove adminapproveddate column from eventpoolplayers
 
-add bonuspredictionsenetered column in eventpoolplayers and update gettable sp and controller to save bonus predictions to update
-
-change table view not to have hard coded number of predictions to enter
 
 add notification when new comps are created. Do this for auto created comps where the user is playing one currently. (little icon at the top)
 
@@ -42,16 +35,9 @@ WHEN MESSAGE IS SENT GO TO A THANK YOU FOR SENDING MESSAGE SCREEN
 
 when time is running out to enter predictions, show a modal pop up to remind them
 
-  select *
-  from [dbo].[EventPoolPlayerPositionHistory]
-  where eventid=9
---> has poolposition of 4 when oly ever 3 people
 
+remove adminapproveddate column from eventpoolplayers
 
-Add columns SeasonStart & SeasonEnd to Leagues Table. Update from rapid API response. 
-
-
-Footy quiz section?
 
 You Prediction Stats
 	--> Number of comps entered
