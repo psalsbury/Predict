@@ -11,7 +11,6 @@
         public short GoalsFor { get; set; }
         public short GoalsAgainst { get; set; }
         public int GoalDifference => GoalsFor - GoalsAgainst;
-
         public string TeamFlag { get; set; }
         public short Points { get; set; }
         public short Position { get; set; }

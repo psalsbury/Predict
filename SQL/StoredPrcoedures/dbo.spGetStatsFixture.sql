@@ -10,7 +10,7 @@ GO
 -- Create date: 22 Nov 2019
 -- Description:	Get details for the groups game stats page
 -- =============================================
--- EXEC predictioncomp.dbo.spGetStatsFixture 3473, 212, 1
+-- EXEC predictioncomp.dbo.spGetStatsFixture 3488, 212, 0
 CREATE PROCEDURE dbo.spGetStatsFixture 
 (
 	@intFixtureId INT

@@ -27,21 +27,26 @@
 
     <div class="container-flex">
         <div class="row">
-            <div class="col-md-3">
-                <div class="panel panel-default flex-col">
-                    <div class="panel-heading">Last 16 - <b>1 Point</b></div>
-                    <div class="panel-body flex-grow">
-                        @for (var a = 1; a <= 16; a++)
-                        {
-                            @Html.Raw(ReturnDropDown(16, a))
-                        }
-                    </div>
-                    <div class="panel-footer">
-                        @{ autoFilButtonName = "AutoFil_16"; }
-                        <input class="btn btn-info" @disableAutoFill type="button" name="@autoFilButtonName" value="Auto Fill" id="@autoFilButtonName" onclick="AutoFill(this)">
+
+            @if(@Model.KoStageFirstRoundQty==16)
+            {
+                <div class="col-md-3">
+                    <div class="panel panel-default flex-col">
+                        <div class="panel-heading">Last 16 - <b>1 Point</b></div>
+                        <div class="panel-body flex-grow">
+                            @for (var a = 1; a <= @Model.KoStageFirstRoundQty; a++)
+                            {
+                                @Html.Raw(ReturnDropDown(@Model.KoStageFirstRoundQty, a))
+                            }
+                        </div>
+                        <div class="panel-footer">
+                            @{ autoFilButtonName = "AutoFil_16" ; }
+                            <input class="btn btn-info" @disableAutoFill type="button" name="@autoFilButtonName" value="Auto Fill" id="@autoFilButtonName" onclick="AutoFill(this)">
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+
             <div class="col-md-3">
                 <div class="panel panel-default flex-col">
                     <div class="panel-heading">Quarter Finalists - <b>2 Points</b></div>
@@ -158,7 +163,7 @@
         {
             return selectedTeam;
         }
-        return Html.DropDownList(listName, new SelectList(Model.EventTeams, "TeamId", "TeamName", selectedValue), defaultValue, new {id = listName, @class = "myclass"}).ToString();
+        return Html.DropDownList(listName, new SelectList(Model.LeagueSubLeagueTeams, "TeamId", "Team.TeamName", selectedValue), defaultValue, new {id = listName, @class = "myclass"}).ToString();
     }
 
 }
@@ -182,13 +187,13 @@
                 }
             }
         ];
-        if (obj.id === "AutoFil_16") {
+        if (obj.id === "AutoFil_@Model.KoStageFirstRoundQty") {
             @{
                 if (Model.RankedTeamsForAutoFill.Count > 0)
                 {
-                    for (var a = 1; a <= 16; a++)
+                    for (var a = 1; a <= @Model.KoStageFirstRoundQty; a++)
                     {
-                        @:document.getElementById("16_@a").value = @Model.FirstStageAutoFill[a];
+                        @:document.getElementById("@Model.KoStageFirstRoundQty.ToString()_@a").value = @Model.FirstStageAutoFill[a];
                     }
                 }
             }

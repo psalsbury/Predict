@@ -15,6 +15,8 @@ namespace Predict.Models
 
         public int? WinningTeamId { get; set; }
 
+        public short? LinkedLeagueId { get; set; }
+
         [ForeignKey("WinningTeamId")] public Team WinningTeam { get; set; }
 
         [Required]

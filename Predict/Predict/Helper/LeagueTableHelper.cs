@@ -22,128 +22,131 @@ namespace Predict.Helper
             foreach (LeagueTable leagueTable in leagueTables)
             {
                 var leagueTableTeam = new LeagueTableTeamThirdPlaceHelper(leagueTable.LeagueTableTeams.Find(t => t.Position == 3));
-                leagueTableTeam.LeagueId = leagueTable.LeagueId;
-                leagueTableTeam.LeagueName = leagueTable.LeagueName;
+                leagueTableTeam.LeagueId = leagueTable.LeagueSubLeague.Id;
+                leagueTableTeam.LeagueName = leagueTable.LeagueSubLeague.SubLeagueName;
                 thirdPlacedTeams.Add(leagueTableTeam);
             };
 
-            var thirdPlacedTeamsOrdered = thirdPlacedTeams.OrderByDescending(p => p.Points)
-                .ThenByDescending(p => p.GoalDifference)
-                .ThenByDescending(p => p.GoalsFor);
+            if (eventId == 1)
+            {
+                var thirdPlacedTeamsOrdered = thirdPlacedTeams.OrderByDescending(p => p.Points)
+                    .ThenByDescending(p => p.GoalDifference)
+                    .ThenByDescending(p => p.GoalsFor);
 
-            var strFirstFour = (thirdPlacedTeamsOrdered.ElementAt(0).LeagueName
-                                + thirdPlacedTeamsOrdered.ElementAt(1).LeagueName
-                                + thirdPlacedTeamsOrdered.ElementAt(2).LeagueName
-                                + thirdPlacedTeamsOrdered.ElementAt(3).LeagueName);
+                var strFirstFour = (thirdPlacedTeamsOrdered.ElementAt(0).LeagueName
+                                    + thirdPlacedTeamsOrdered.ElementAt(1).LeagueName
+                                    + thirdPlacedTeamsOrdered.ElementAt(2).LeagueName
+                                    + thirdPlacedTeamsOrdered.ElementAt(3).LeagueName);
 
-            strFirstFour = String.Concat(strFirstFour.OrderBy(c => c));
+                strFirstFour = String.Concat(strFirstFour.OrderBy(c => c));
 
-            // First string is the group where the first placed team where play the 3rd places team from the second string
-            if (strFirstFour == "ABCD")
-            {
-                thirdPlaceDictionary.Add("B", "A");
-                thirdPlaceDictionary.Add("C", "D");
-                thirdPlaceDictionary.Add("E", "B");
-                thirdPlaceDictionary.Add("F", "C");
-            }
-            else if (strFirstFour == "ABCE")
-            {
-                thirdPlaceDictionary.Add("B", "A");
-                thirdPlaceDictionary.Add("C", "E");
-                thirdPlaceDictionary.Add("E", "B");
-                thirdPlaceDictionary.Add("F", "C");
-            }
-            else if (strFirstFour == "ABCF")
-            {
-                thirdPlaceDictionary.Add("B", "A");
-                thirdPlaceDictionary.Add("C", "F");
-                thirdPlaceDictionary.Add("E", "B");
-                thirdPlaceDictionary.Add("F", "C");
-            }
-            else if (strFirstFour == "ABDE")
-            {
-                thirdPlaceDictionary.Add("B", "D");
-                thirdPlaceDictionary.Add("C", "E");
-                thirdPlaceDictionary.Add("E", "A");
-                thirdPlaceDictionary.Add("F", "B");
-            }
-            else if (strFirstFour == "ABDF")
-            {
-                thirdPlaceDictionary.Add("B", "D");
-                thirdPlaceDictionary.Add("C", "F");
-                thirdPlaceDictionary.Add("E", "A");
-                thirdPlaceDictionary.Add("F", "B");
-            }
-            else if (strFirstFour == "ABEF")
-            {
-                thirdPlaceDictionary.Add("B", "E");
-                thirdPlaceDictionary.Add("C", "F");
-                thirdPlaceDictionary.Add("E", "B");
-                thirdPlaceDictionary.Add("F", "A");
-            }
-            else if (strFirstFour == "ACDE")
-            {
-                thirdPlaceDictionary.Add("B", "E");
-                thirdPlaceDictionary.Add("C", "D");
-                thirdPlaceDictionary.Add("E", "C");
-                thirdPlaceDictionary.Add("F", "A");
-            }
-            else if (strFirstFour == "ACDF")
-            {
-                thirdPlaceDictionary.Add("B", "F");
-                thirdPlaceDictionary.Add("C", "D");
-                thirdPlaceDictionary.Add("E", "C");
-                thirdPlaceDictionary.Add("F", "A");
-            }
-            else if (strFirstFour == "ACEF")
-            {
-                thirdPlaceDictionary.Add("B", "E");
-                thirdPlaceDictionary.Add("C", "F");
-                thirdPlaceDictionary.Add("E", "C");
-                thirdPlaceDictionary.Add("F", "A");
-            }
-            else if (strFirstFour == "ADEF")
-            {
-                thirdPlaceDictionary.Add("B", "E");
-                thirdPlaceDictionary.Add("C", "F");
-                thirdPlaceDictionary.Add("E", "D");
-                thirdPlaceDictionary.Add("F", "A");
-            }
-            else if (strFirstFour == "BCDE")
-            {
-                thirdPlaceDictionary.Add("B", "E");
-                thirdPlaceDictionary.Add("C", "D");
-                thirdPlaceDictionary.Add("E", "B");
-                thirdPlaceDictionary.Add("F", "C");
-            }
-            else if (strFirstFour == "BCDF")
-            {
-                thirdPlaceDictionary.Add("B", "F");
-                thirdPlaceDictionary.Add("C", "D");
-                thirdPlaceDictionary.Add("E", "C");
-                thirdPlaceDictionary.Add("F", "B");
-            }
-            else if (strFirstFour == "BCEF")
-            {
-                thirdPlaceDictionary.Add("B", "F");
-                thirdPlaceDictionary.Add("C", "E");
-                thirdPlaceDictionary.Add("E", "C");
-                thirdPlaceDictionary.Add("F", "B");
-            }
-            else if (strFirstFour == "BDEF")
-            {
-                thirdPlaceDictionary.Add("B", "F");
-                thirdPlaceDictionary.Add("C", "E");
-                thirdPlaceDictionary.Add("E", "D");
-                thirdPlaceDictionary.Add("F", "B");
-            }
+                // First string is the group where the first placed team where play the 3rd places team from the second string
+                if (strFirstFour == "ABCD")
+                {
+                    thirdPlaceDictionary.Add("B", "A");
+                    thirdPlaceDictionary.Add("C", "D");
+                    thirdPlaceDictionary.Add("E", "B");
+                    thirdPlaceDictionary.Add("F", "C");
+                }
+                else if (strFirstFour == "ABCE")
+                {
+                    thirdPlaceDictionary.Add("B", "A");
+                    thirdPlaceDictionary.Add("C", "E");
+                    thirdPlaceDictionary.Add("E", "B");
+                    thirdPlaceDictionary.Add("F", "C");
+                }
+                else if (strFirstFour == "ABCF")
+                {
+                    thirdPlaceDictionary.Add("B", "A");
+                    thirdPlaceDictionary.Add("C", "F");
+                    thirdPlaceDictionary.Add("E", "B");
+                    thirdPlaceDictionary.Add("F", "C");
+                }
+                else if (strFirstFour == "ABDE")
+                {
+                    thirdPlaceDictionary.Add("B", "D");
+                    thirdPlaceDictionary.Add("C", "E");
+                    thirdPlaceDictionary.Add("E", "A");
+                    thirdPlaceDictionary.Add("F", "B");
+                }
+                else if (strFirstFour == "ABDF")
+                {
+                    thirdPlaceDictionary.Add("B", "D");
+                    thirdPlaceDictionary.Add("C", "F");
+                    thirdPlaceDictionary.Add("E", "A");
+                    thirdPlaceDictionary.Add("F", "B");
+                }
+                else if (strFirstFour == "ABEF")
+                {
+                    thirdPlaceDictionary.Add("B", "E");
+                    thirdPlaceDictionary.Add("C", "F");
+                    thirdPlaceDictionary.Add("E", "B");
+                    thirdPlaceDictionary.Add("F", "A");
+                }
+                else if (strFirstFour == "ACDE")
+                {
+                    thirdPlaceDictionary.Add("B", "E");
+                    thirdPlaceDictionary.Add("C", "D");
+                    thirdPlaceDictionary.Add("E", "C");
+                    thirdPlaceDictionary.Add("F", "A");
+                }
+                else if (strFirstFour == "ACDF")
+                {
+                    thirdPlaceDictionary.Add("B", "F");
+                    thirdPlaceDictionary.Add("C", "D");
+                    thirdPlaceDictionary.Add("E", "C");
+                    thirdPlaceDictionary.Add("F", "A");
+                }
+                else if (strFirstFour == "ACEF")
+                {
+                    thirdPlaceDictionary.Add("B", "E");
+                    thirdPlaceDictionary.Add("C", "F");
+                    thirdPlaceDictionary.Add("E", "C");
+                    thirdPlaceDictionary.Add("F", "A");
+                }
+                else if (strFirstFour == "ADEF")
+                {
+                    thirdPlaceDictionary.Add("B", "E");
+                    thirdPlaceDictionary.Add("C", "F");
+                    thirdPlaceDictionary.Add("E", "D");
+                    thirdPlaceDictionary.Add("F", "A");
+                }
+                else if (strFirstFour == "BCDE")
+                {
+                    thirdPlaceDictionary.Add("B", "E");
+                    thirdPlaceDictionary.Add("C", "D");
+                    thirdPlaceDictionary.Add("E", "B");
+                    thirdPlaceDictionary.Add("F", "C");
+                }
+                else if (strFirstFour == "BCDF")
+                {
+                    thirdPlaceDictionary.Add("B", "F");
+                    thirdPlaceDictionary.Add("C", "D");
+                    thirdPlaceDictionary.Add("E", "C");
+                    thirdPlaceDictionary.Add("F", "B");
+                }
+                else if (strFirstFour == "BCEF")
+                {
+                    thirdPlaceDictionary.Add("B", "F");
+                    thirdPlaceDictionary.Add("C", "E");
+                    thirdPlaceDictionary.Add("E", "C");
+                    thirdPlaceDictionary.Add("F", "B");
+                }
+                else if (strFirstFour == "BDEF")
+                {
+                    thirdPlaceDictionary.Add("B", "F");
+                    thirdPlaceDictionary.Add("C", "E");
+                    thirdPlaceDictionary.Add("E", "D");
+                    thirdPlaceDictionary.Add("F", "B");
+                }
 
-            else if (strFirstFour == "CDEF")
-            {
-                thirdPlaceDictionary.Add("B", "F");
-                thirdPlaceDictionary.Add("C", "E");
-                thirdPlaceDictionary.Add("E", "D");
-                thirdPlaceDictionary.Add("F", "C");
+                else if (strFirstFour == "CDEF")
+                {
+                    thirdPlaceDictionary.Add("B", "F");
+                    thirdPlaceDictionary.Add("C", "E");
+                    thirdPlaceDictionary.Add("E", "D");
+                    thirdPlaceDictionary.Add("F", "C");
+                }
             }
 
             var koFixtures = context.KoFixtures.Where(k => k.EventId == eventId);
@@ -172,18 +175,18 @@ namespace Predict.Helper
         public static LeagueTableTeam GetTeamFromPosition(List<LeagueTable> leagueTables, short leagueId,
             int position)
         {
-            var teamLeagueTable = leagueTables.Find(l => l.LeagueId == leagueId);
+            var teamLeagueTable = leagueTables.Find(l => l.LeagueSubLeague.Id == leagueId);
             return teamLeagueTable.LeagueTableTeams.Find(t => t.Position == position);
         }
 
         public static LeagueTableTeam GetBestPlacedThirdPosition(List<LeagueTable> leagueTables, Dictionary<string, string> thirdPlaceDictionary, int team1FromLeagueId)
         {
 
-            var firstPlaceTeamLeagueShortName = leagueTables.First(a => a.LeagueId == team1FromLeagueId).LeagueName;
+            var firstPlaceTeamLeagueShortName = leagueTables.First(a => a.LeagueSubLeague.Id == team1FromLeagueId).LeagueSubLeague.SubLeagueName;
             var leagueShortNameToGet3rdPlaceTeamFrom = thirdPlaceDictionary[firstPlaceTeamLeagueShortName];
-            var leagueIdToGet3rdPlaceTeamFrom = leagueTables.First(a => a.LeagueName == leagueShortNameToGet3rdPlaceTeamFrom).LeagueId;
+            var leagueIdToGet3rdPlaceTeamFrom = leagueTables.First(a => a.LeagueSubLeague.SubLeagueName == leagueShortNameToGet3rdPlaceTeamFrom).LeagueSubLeague.Id;
 
-            var teamLeagueTable = leagueTables.Find(l => l.LeagueId == leagueIdToGet3rdPlaceTeamFrom);
+            var teamLeagueTable = leagueTables.Find(l => l.LeagueSubLeague.Id == leagueIdToGet3rdPlaceTeamFrom);
             return teamLeagueTable.LeagueTableTeams.Find(t => t.Position == 3);
         }
 
@@ -214,8 +217,13 @@ namespace Predict.Helper
         public static List<LeagueTable> FetchLeagueTablesFromResults(int eventId)
         {
             var context = new ApplicationDbContext();
-            var eventTeams = GetEventTeams(context, eventId);
-            var leagueTables = GetLeagueTables(context, eventTeams, eventId);
+            var eventsKo = context.EventKos.Where(a => a.EventId == eventId).FirstOrDefault();
+            var leagueSubLeagueTeams = context.LeagueSubLeagueTeams
+                                        .Include(p => p.Team)
+                                        .Include(p => p.LeagueSubLeague)
+                                        .Where(a => a.LeagueSubLeague.LeagueId == eventsKo.LinkedLeagueId).ToList();
+
+            var leagueTables = GetLeagueTables(context, leagueSubLeagueTeams, eventId);
 
             var eventFixtures = context.EventFixtures
                 .Where(p => p.EventId == eventId && p.Fixture.AwayResult != null);
@@ -224,13 +232,13 @@ namespace Predict.Helper
             {
                 var homeTeamId = eventFixture.Fixture.HomeTeamId;
                 var awayTeamId = eventFixture.Fixture.AwayTeamId;
-                var eventTeamHome = eventTeams.First(t => t.TeamId == homeTeamId);
-                var eventTeamAway = eventTeams.First(t => t.TeamId == awayTeamId);
+                var eventTeamHome = leagueSubLeagueTeams.First(t => t.TeamId == homeTeamId);
+                var eventTeamAway = leagueSubLeagueTeams.First(t => t.TeamId == awayTeamId);
 
-                if (eventTeamHome.LeagueId == eventTeamAway.LeagueId) // This should always be true
+                if (eventTeamHome.LeagueSubLeagueId == eventTeamAway.LeagueSubLeagueId) // This should always be true
                 {
-                    var leagueId = eventTeamHome.LeagueId;
-                    var leagueTable = leagueTables.First(l => l.LeagueId == leagueId);
+                    var leagueId = eventTeamHome.LeagueSubLeagueId;
+                    var leagueTable = leagueTables.First(l => l.LeagueSubLeague.Id == leagueId);
 
                     var leagueTableTeamHome = leagueTable.LeagueTableTeams.First(t => t.TeamId == homeTeamId);
                     var leagueTableTeamAway = leagueTable.LeagueTableTeams.First(t => t.TeamId == awayTeamId);
@@ -250,11 +258,15 @@ namespace Predict.Helper
 
         public static List<LeagueTable> FetchLeagueTablesByUserId(int eventId, string userId)
         {
-            //TODO -- ADD IN THE USE OF THE NEW SUB TEAM TABLE
-            
+           
             var context = new ApplicationDbContext();
-            var eventTeams = GetEventTeams(context, eventId);
-            var leagueTables = GetLeagueTables(context, eventTeams, eventId);
+            var eventsKo = context.EventKos.Where(a => a.EventId == eventId).FirstOrDefault();
+            var leagueSubLeagueTeams = context.LeagueSubLeagueTeams
+                                            .Include(p => p.Team)
+                                            .Include(p => p.LeagueSubLeague)
+                                            .Where(a => a.LeagueSubLeague.LeagueId == eventsKo.LinkedLeagueId).ToList();
+
+            var leagueTables = GetLeagueTables(context, leagueSubLeagueTeams, eventId);
 
             var fixturePredictions = context.FixturePredictions
                 .Include(p => p.EventFixture)
@@ -266,13 +278,13 @@ namespace Predict.Helper
                 var homeTeamId = fixturePrediction.EventFixture.Fixture.HomeTeamId;
                 var awayTeamId = fixturePrediction.EventFixture.Fixture.AwayTeamId;
 
-                var eventTeamHome = eventTeams.First(t => t.TeamId == homeTeamId);
-                var eventTeamAway = eventTeams.First(t => t.TeamId == awayTeamId);
+                var eventTeamHome = leagueSubLeagueTeams.FirstOrDefault(t => t.TeamId == homeTeamId);
+                var eventTeamAway = leagueSubLeagueTeams.FirstOrDefault(t => t.TeamId == awayTeamId);
 
-                if (eventTeamHome.LeagueId == eventTeamAway.LeagueId) // This should always be true
+                if (eventTeamHome!=null && eventTeamAway!=null && eventTeamHome.LeagueSubLeagueId == eventTeamAway.LeagueSubLeagueId)
                 {
-                    var leagueId = eventTeamHome.LeagueId;
-                    var leagueTable = leagueTables.First(l => l.LeagueId == leagueId);
+                    var leagueSubLeagueId = eventTeamHome.LeagueSubLeagueId;
+                    var leagueTable = leagueTables.First(l => l.LeagueSubLeague.Id == leagueSubLeagueId);
 
                     var leagueTableTeamHome = leagueTable.LeagueTableTeams.First(t => t.TeamId == homeTeamId);
                     var leagueTableTeamAway = leagueTable.LeagueTableTeams.First(t => t.TeamId == awayTeamId);
@@ -321,7 +333,7 @@ namespace Predict.Helper
 
         private static List<LeagueTable> SortTables(List<LeagueTable> leagueTables)
         {
-            leagueTables = leagueTables.OrderBy(l => l.LeagueId).ToList();
+            leagueTables = leagueTables.OrderBy(l => l.LeagueSubLeague.Id).ToList();
 
             foreach (var leagueTable in leagueTables)
             {
@@ -341,42 +353,40 @@ namespace Predict.Helper
             return leagueTables;
         }
 
-        public static List<EventTeam> GetEventTeams(ApplicationDbContext context, int eventId)
-        {
-            var eventTeams = context.Database.SqlQuery<EventTeam>(
-                "spGetTeamsByEvent @intEventId"
-                , new SqlParameter("@intEventId", eventId)).ToList();
+        //public static List<EventTeam> GetEventTeams(ApplicationDbContext context, int eventId)
+        //{
+        //    var eventTeams = context.Database.SqlQuery<EventTeam>(
+        //        "spGetTeamsByEvent @intEventId"
+        //        , new SqlParameter("@intEventId", eventId)).ToList();
 
-            return eventTeams;
-        }
+        //    return eventTeams;
+        //}
 
-        private static List<LeagueTable> GetLeagueTables(ApplicationDbContext context, List<EventTeam> eventTeams, int eventId)
+        private static List<LeagueTable> GetLeagueTables(ApplicationDbContext context, List<LeagueSubLeagueTeam> leagueSubLeagueTeams, int eventId)
         {
             var leagueTables = new List<LeagueTable>();
 
-            foreach (var eventTeam in eventTeams)
+            foreach (var leagueSubLeagueTeam in leagueSubLeagueTeams)
             {
-                var leagueId = eventTeam.LeagueId;
-                var currentLeagueTable = leagueTables.FirstOrDefault(e => e.LeagueId == leagueId);
+                var leagueSubLeagueId = leagueSubLeagueTeam.LeagueSubLeagueId;
+                var currentLeagueTable = leagueTables.FirstOrDefault(e => e.LeagueSubLeague.Id == leagueSubLeagueId);
                 if (currentLeagueTable == null)
                 {
                     var leagueTable = new LeagueTable
                     {
-                        LeagueId = leagueId
-                        ,
-                        LeagueName = eventTeam.ShortLeagueName
-                        ,
+                        LeagueSubLeague = leagueSubLeagueTeam.LeagueSubLeague,
                         LeagueTableTeams = new List<LeagueTableTeam>()
                     };
-                    leagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.TeamName, eventTeam.TeamId,
-                        eventTeam.FlagFileLocation));
+
+                    leagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(leagueSubLeagueTeam.Team.TeamName, leagueSubLeagueTeam.Team.Id,
+                        leagueSubLeagueTeam.Team.FlagFileLocation));
 
                     leagueTables.Add(leagueTable);
                 }
                 else
                 {
-                    currentLeagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(eventTeam.TeamName,
-                        eventTeam.TeamId, eventTeam.FlagFileLocation));
+                    currentLeagueTable.LeagueTableTeams.Add(NewLeagueTableTeam(leagueSubLeagueTeam.Team.TeamName,
+                        leagueSubLeagueTeam.Team.Id, leagueSubLeagueTeam.Team.FlagFileLocation));
                 }
             }
 

@@ -452,6 +452,10 @@
     <Compile Include="Migrations\202204260847455_rapidapiv3AndSubLeagues.Designer.cs">
       <DependentUpon>202204260847455_rapidapiv3AndSubLeagues.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204261728551_leagueAssociation.cs" />
+    <Compile Include="Migrations\202204261728551_leagueAssociation.Designer.cs">
+      <DependentUpon>202204261728551_leagueAssociation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -701,6 +705,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204260847455_rapidapiv3AndSubLeagues.resx">
       <DependentUpon>202204260847455_rapidapiv3AndSubLeagues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204261728551_leagueAssociation.resx">
+      <DependentUpon>202204261728551_leagueAssociation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,7 +1,5 @@
 ﻿
 @using Microsoft.AspNet.Identity
-@using Predict.Models
-@using System.Linq;
 @model IEnumerable<Predict.Models.Event>
 
 @{
@@ -90,7 +88,7 @@
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#events tr").filter(function () {
+            $("#Events tr").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });

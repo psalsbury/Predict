@@ -423,7 +423,7 @@ namespace Predict.RapidApi
             }
             catch (Exception e)
             {
-                Logger.Info("ERROR --> FixturesByOdds - League = {0}, Error = {1}", rapidApiLeagueId, e.Message);
+                Logger.Error("ERROR --> FixturesByOdds - League = {0}, Error = {1}", rapidApiLeagueId, e.Message);
                 throw;
             }
         }
@@ -457,7 +457,7 @@ namespace Predict.RapidApi
             }
             catch (Exception e)
             {
-                Logger.Info("ERROR --> MakeRapidApiCall - baseUrl = {0}, Error = {1}", baseUrl, e.Message);
+                Logger.Error("ERROR --> MakeRapidApiCall - baseUrl = {0}, Error = {1}", baseUrl, e.Message);
                 return null;
             }
         }
@@ -620,6 +620,8 @@ namespace Predict.RapidApi
 
         private static void V3UpdateFixtures(IRestResponse response, DateTime earliestDate, short leagueId)
         {
+            Logger.Info("V3UpdateFixtures - earliestDate = {0}, leagueId = {1}", earliestDate, leagueId);
+
             var context = new ApplicationDbContext();
             var jsonSerializer = new JsonSerializer();
             var rapidApiV3Fixtures = jsonSerializer.Deserialize<RapidApiV3FixtureClassHelper.Root>(response);
@@ -723,6 +725,8 @@ namespace Predict.RapidApi
 
         private static void UpdateFixtures(IRestResponse response, DateTime earliestDate)
         {
+            Logger.Info("UpdateFixtures - earliestDate = {0}", earliestDate);
+
             var context = new ApplicationDbContext();
             var jsonSerializer = new JsonSerializer();
             var rapidApiFixtures = jsonSerializer.Deserialize<RapidAPIFixtures.Root> (response);
@@ -883,9 +887,10 @@ namespace Predict.RapidApi
             else
             {
                 // Not updating the logo as this could be changed manually by me
-                if (team.TeamName != teamName)
+                if (team.TeamName != teamName || team.FlagFileLocation != logo)
                 {
                     team.TeamName = teamName;
+                    team.TeamFlag = logo;
                     changeMade = true;
                 }
             }

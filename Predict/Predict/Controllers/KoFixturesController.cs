@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Predict.Helper;
 using Predict.Models;
 using Predict.ViewModels;
 using System;
@@ -7,6 +6,8 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
+
 
 namespace Predict.Controllers
 {
@@ -25,6 +26,8 @@ namespace Predict.Controllers
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
+
+            ViewBag.EventId = id;
 
             var fixtures = _context.KoFixtures.Where(p => p.EventId == id).ToList();
             return View(fixtures);
@@ -151,7 +154,9 @@ namespace Predict.Controllers
             var koFixtures = _context.KoFixtures.Where(f => f.EventId == eventId);
             var koEvent = _context.EventKos.FirstOrDefault(f => f.EventId == eventId);
 
-            var eventTeams = Helper.LeagueTableHelper.GetEventTeams(_context, eventId);
+            var leagueSubLeagueTeams = _context.LeagueSubLeagueTeams
+                            .Include(p => p.Team)
+                            .Where(a => a.LeagueSubLeague.LeagueId == koEvent.EventId).ToList();
 
             if (koEvent?.WinningTeamId != null)
             {
@@ -176,7 +181,7 @@ namespace Predict.Controllers
             koFixturePredictionViewModel.MaxCols = 0;
             koFixturePredictionViewModel.MaxRows = 0;
 
-            koFixturePredictionViewModel.EventTeams = eventTeams;
+            koFixturePredictionViewModel.LeagueSubLeagueTeams = leagueSubLeagueTeams;
 
             int maxRoundOf = koFixtures.Max(p => p.RoundOf);
             koFixturePredictionViewModel.MaxRows = maxRoundOf * 2 - 1;
@@ -225,27 +230,24 @@ namespace Predict.Controllers
 
         private KoFixtureViewModel PrepareViewModel(short eventId)
         {
+            var eventsKo = _context.EventKos.Where(a => a.EventId == eventId).FirstOrDefault();
 
             var koFixtureViewModel = new KoFixtureViewModel
             {
-                RoundOfs = new List<short>(),
-                EventTeams = Helper.LeagueTableHelper.GetEventTeams(_context, eventId)
-
+                RoundOfs = new List<short>()
             };
             for (var power = 0; power <= 4; power++)
                 koFixtureViewModel.RoundOfs.Add((short)Math.Pow(2, power));
 
-            var leagueNames = new List<League>();
-            foreach (EventTeam eventTeam in koFixtureViewModel.EventTeams)
-            {
-                var leagueName = eventTeam.LeagueName;
-                if (!leagueNames.Exists(a => a.LeagueName == leagueName))
-                {
-                    leagueNames.Add(new League(){Id = eventTeam.LeagueId,LeagueName = leagueName});
-                }
-            }
-            leagueNames.Add(new League() { Id = 0, LeagueName = "Calculated" });
-            koFixtureViewModel.Leagues = leagueNames;
+            var leagueSubLeagues = _context.LeagueSubLeagues.Where(a => a.LeagueId == eventsKo.LinkedLeagueId).ToList();
+            var leagueSubLeagueTeams = _context.LeagueSubLeagueTeams
+                                            .Include(p => p.Team)
+                                            .Where(a => a.LeagueSubLeague.LeagueId == eventsKo.LinkedLeagueId).ToList();
+
+            leagueSubLeagues.Add(new LeagueSubLeague() { Id = 0, SubLeagueName = "Calculated" });
+            koFixtureViewModel.LeagueSubLeagues = leagueSubLeagues;
+            koFixtureViewModel.LeagueSubLeaguesTeams = leagueSubLeagueTeams;
+            koFixtureViewModel.LinkedLeagueId = (short)eventsKo.LinkedLeagueId;
             koFixtureViewModel.EventId = eventId;
 
             return koFixtureViewModel;

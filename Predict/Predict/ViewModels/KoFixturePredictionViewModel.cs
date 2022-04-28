@@ -25,10 +25,11 @@ namespace Predict.ViewModels
             Predictions = true;
         }
 
+        public short KoStageFirstRoundQty { get; set; }
         public short EventId { get; set; }
         public List<KoFixturePrediction> KoFixturePredictions { get; set; }
         public KoWinningTeamPrediction KoWinningTeam { get; set; }
-        public List<EventTeam> EventTeams { get; set; }
+        public List<LeagueSubLeagueTeam> LeagueSubLeagueTeams { get; set; }
         public int MaxRows { get; set; }
         public int MaxCols { get; set; }
         public bool ReadOnly { get; set; }

@@ -8,13 +8,16 @@ namespace Predict.ViewModels
 {
     public class KoFixtureViewModel
     {
-        public List<EventTeam> EventTeams { get; set; }
-        public List<League> Leagues { get; set; }
+        public List<LeagueSubLeagueTeam> LeagueSubLeaguesTeams { get; set; }
+        public List<LeagueSubLeague> LeagueSubLeagues { get; set; }
+
         public IList<short> RoundOfs { get; set; }
 
         public int Id { get; set; }
 
         public short EventId { get; set; }
+
+        public short LinkedLeagueId { get; set; }
 
         [Display(Name = "KO Fixture Date & Time")]
         [Required]

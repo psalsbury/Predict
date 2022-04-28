@@ -64,7 +64,7 @@ namespace Predict.Controllers
                 DisplayName = player.DisplayName,
                 Email = user.Email,
                 SupportTeamId = player.SupportTeamId,
-                Teams = context.Teams.ToList()
+                Teams = context.Teams.OrderBy(a => a.TeamName).ToList()
             };
             return View("UpdateRegister", registerViewModel);
         }

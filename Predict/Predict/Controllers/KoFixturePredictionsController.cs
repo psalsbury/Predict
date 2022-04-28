@@ -226,8 +226,8 @@ namespace Predict.Controllers
         {
 
             var isInLockDown = Cache.HasEventStarted(eventId);
+            var koEvent = _context.EventKos.FirstOrDefault(f => f.EventId == eventId);
             var player = (Player)System.Web.HttpContext.Current.Session["Player"];
-
 
             if (userId == null)
                 userId = loggedInUserId;
@@ -246,7 +246,9 @@ namespace Predict.Controllers
                     .Include(b => b.Team)
                     .FirstOrDefault(e => e.EventId == eventId && e.PlayerId == userId)
             };
-            koFixturePredictionViewModel.EventTeams = LeagueTableHelper.GetEventTeams(_context, eventId);
+            koFixturePredictionViewModel.LeagueSubLeagueTeams = _context.LeagueSubLeagueTeams
+                                    .Include(p => p.Team)
+                                    .Where(a => a.LeagueSubLeague.LeagueId == koEvent.LinkedLeagueId).ToList();
 
             koFixturePredictionViewModel.ActualTeams = _context.Database.SqlQuery<ActualTeam>(
                 "spGetKoResultTeams @intEventId"
@@ -263,13 +265,14 @@ namespace Predict.Controllers
                     LeagueTableHelper.FetchAllTeamsInOrder(eventId, userId);
             }
 
-            int maxRoundOf = _context.KoFixtures.Max(p => p.RoundOf);
+            short maxRoundOf = (short)koEvent.KoStageFirstRoundQty;
+            koFixturePredictionViewModel.KoStageFirstRoundQty = maxRoundOf;
             koFixturePredictionViewModel.MaxRows = maxRoundOf * 2 - 1;
 
             var maxCols = 1;
             do
             {
-                maxRoundOf = maxRoundOf / 2;
+                maxRoundOf = (short)(maxRoundOf / 2);
                 maxCols++;
             } while (maxRoundOf > 1);
 

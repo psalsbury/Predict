@@ -42,7 +42,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Team1FromLeagueId, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Team1FromLeagueId, new SelectList(Model.Leagues, "Id", "LeagueName"), "Select League", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.Team1FromLeagueId, new SelectList(Model.LeagueSubLeagues, "Id", "SubLeagueName"), "Select League", new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Team1FromLeagueId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -66,7 +66,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Team2FromLeagueId, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Team2FromLeagueId, new SelectList(Model.Leagues, "Id", "LeagueName"), "Select League", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.Team2FromLeagueId, new SelectList(Model.LeagueSubLeagues, "Id", "SubLeagueName"), "Select League", new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Team2FromLeagueId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -91,14 +91,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Team1Id, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Team1Id, new SelectList(Model.EventTeams, "TeamId", "TeamName"), "Select Team", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.Team1Id, new SelectList(Model.LeagueSubLeaguesTeams, "TeamId", "Team.TeamName"), "Select Team", new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Team2Id, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Team2Id, new SelectList(Model.EventTeams, "TeamId", "TeamName"), "Select Team", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.Team2Id, new SelectList(Model.LeagueSubLeaguesTeams, "TeamId", "Team.TeamName"), "Select Team", new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
 

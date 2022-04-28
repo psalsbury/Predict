@@ -18,22 +18,22 @@ ensure that auto fil works for for last 16 (error on germanys group in the euros
 
 have another modal screen thats shown for each pool that shows the position history, prize fund, position movement etc
 
+on fixtures screen show sub group name (if in a major comp)
 
-When adding a pool
-	--> automatically add the pool to all (unfinished) comps entered by the person who has created the league
-	--> automatcially add the person who created the league to the league
+qfter dompleting quiz, give options to view table or do another 5 questions
 
+for people who have entered a quiz question provide a screen to give information about the different answers given
 
+Add generation of comps for league season & teams
 
+if fixture dates changes, ensure its within the scope for the dates for the generated comps
 
+changes ko fixture warning message to be data driven
 
-When someone joins a comp who has created a league
-	--> join the comp to the league
-	--> for every other person who is a member of the pool and a participating in the comp, add them to the league/comp
+on the https://predictioncomp.com/Pools/PoolsMemberOf screen, show some info about the leagues (modal sceen to show number of members, comps etc)
 
-when 
-
-
+Hall of fame screen
+	--> Player of the month (calendar).?
 
 
 goDaddy database

@@ -594,3 +594,4 @@ C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.MicrosoftAccount.xm
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.JokesAndQuiz.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.QuestionTypeEnum.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.rapidapiv3AndSubLeagues.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.leagueAssociation.resources

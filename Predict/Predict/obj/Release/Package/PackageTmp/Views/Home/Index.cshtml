@@ -2,6 +2,8 @@
 <div class="style:">
     @if (Context.User.Identity.IsAuthenticated && Model != null)
     {
+
+        ViewBag.Title = Model.Event.EventName;
         @Html.Partial("LoggedOn")
     }
     else if (Context.User.Identity.IsAuthenticated && Model == null)

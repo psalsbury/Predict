@@ -185,7 +185,7 @@
             }
             return returnString;
         }
-        return Html.DropDownList(listName, new SelectList(Model.EventTeams, "id", "TeamName", selectedValue), defaultValue, new {id = listName, @class = "myclass"}).ToString();
+        return Html.DropDownList(listName, new SelectList(Model.LeagueSubLeagueTeams, "id", "Team.TeamName", selectedValue), defaultValue, new {id = listName, @class = "myclass"}).ToString();
     }
 
 }

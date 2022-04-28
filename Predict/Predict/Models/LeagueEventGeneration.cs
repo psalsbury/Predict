@@ -18,7 +18,10 @@ namespace Predict.Models
         [ForeignKey("LeagueId")]
         public League League { get; set; }
 
+        // --> 1 = Weekly, 2 = twice per month, 3 = Monthly, 11 = All Fixtures from league, 21 = All Fixtures for a league/given TeamId
         public short GenerationFrequencyId { get; set; }
+
+        public int? TeamId { get; set; }
 
         [Column(TypeName = "bit")]
         public Boolean Enabled { get; set; }
