@@ -331,7 +331,7 @@ namespace Predict.Helper
             return leagueTableTeam;
         }
 
-        private static List<LeagueTable> SortTables(List<LeagueTable> leagueTables)
+        public static List<LeagueTable> SortTables(List<LeagueTable> leagueTables)
         {
             leagueTables = leagueTables.OrderBy(l => l.LeagueSubLeague.Id).ToList();
 
@@ -340,6 +340,8 @@ namespace Predict.Helper
                 leagueTable.LeagueTableTeams = leagueTable.LeagueTableTeams.OrderByDescending(c => c.Points)
                     .ThenByDescending(e => e.GoalDifference)
                     .ThenByDescending(e => e.GoalsFor).ToList();
+
+                DealWithTieBreakers(leagueTable.LeagueTableTeams);
 
                 short position = 1;
 
@@ -353,14 +355,41 @@ namespace Predict.Helper
             return leagueTables;
         }
 
-        //public static List<EventTeam> GetEventTeams(ApplicationDbContext context, int eventId)
-        //{
-        //    var eventTeams = context.Database.SqlQuery<EventTeam>(
-        //        "spGetTeamsByEvent @intEventId"
-        //        , new SqlParameter("@intEventId", eventId)).ToList();
+        private static void DealWithTieBreakers(List<LeagueTableTeam> LeagueTableTeams)
+        {
 
-        //    return eventTeams;
-        //}
+            // Check to see if any tie breakers need to be applied
+            var count = 0;
+            var tiedTeams = new List<LeagueTableTeam>();
+            foreach (var leagueTableTeam in LeagueTableTeams)
+            {
+
+                if(count>0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        if(leagueTableTeam.Points == LeagueTableTeams[i].Points 
+                                && leagueTableTeam.GoalDifference == LeagueTableTeams[i].GoalDifference
+                                && leagueTableTeam.GoalsFor == LeagueTableTeams[i].GoalsFor)
+                        {
+                            if(tiedTeams.Any(a => a.TeamId== leagueTableTeam.TeamId)==false)
+                            {
+                                tiedTeams.Add(leagueTableTeam);
+                            }
+                            if (tiedTeams.Any(a => a.TeamId == LeagueTableTeams[i].TeamId) == false)
+                            {
+                                tiedTeams.Add(LeagueTableTeams[i]);
+                            }
+                        }
+                    }
+                }
+                count += 1;
+            }
+            if(tiedTeams.Count>0)
+            {
+                // Do something!
+            }
+        }
 
         private static List<LeagueTable> GetLeagueTables(ApplicationDbContext context, List<LeagueSubLeagueTeam> leagueSubLeagueTeams, int eventId)
         {

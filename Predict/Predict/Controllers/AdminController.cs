@@ -1,5 +1,12 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Predict.Models;
+using Predict.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Predict.Controllers
@@ -22,7 +29,9 @@ namespace Predict.Controllers
 
             if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
-            return View();
+            var v3Countries = _context.RapidApiV3Countries.ToList();
+
+            return View(v3Countries);
         }
 
         [HttpPost]
@@ -63,6 +72,19 @@ namespace Predict.Controllers
 
             return RedirectToAction("AdminHome", "Admin");
         }
+
+        [HttpPost]
+        public ActionResult V3Countries()
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            RapidApi.RapidApiHelper.V3Countries();
+
+            return RedirectToAction("AdminHome", "Admin");
+        }
+
     }
 
 }

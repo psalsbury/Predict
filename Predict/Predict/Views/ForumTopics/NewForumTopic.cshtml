@@ -4,10 +4,21 @@
     ViewBag.Title = "Add a new Topic";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/ForumTopics/ForumIndex">Message Board</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Add New Topic</li>
+    </ol>
+</nav>
+
 @using (Html.BeginForm("SaveNewTopic", "ForumTopics"))
 
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(a => a.PlayerId)
+    @Html.HiddenFor(a => a.ForumTopic.PlayerId)
 
     <div class="form-group">
         @Html.LabelFor(model => model.ForumTopic.Topic, new { @class = "control-label col-md-2" })

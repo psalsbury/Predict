@@ -375,6 +375,7 @@
     <Compile Include="Controllers\JokesController.cs" />
     <Compile Include="Controllers\KoFixturePredictionsController.cs" />
     <Compile Include="Controllers\KoFixturesController.cs" />
+    <Compile Include="Controllers\LeagueEventGenerationsController.cs" />
     <Compile Include="Controllers\LeaguesController.cs" />
     <Compile Include="Controllers\LeagueTablesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -456,6 +457,10 @@
     <Compile Include="Migrations\202204261728551_leagueAssociation.Designer.cs">
       <DependentUpon>202204261728551_leagueAssociation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205040737113_ForumSQLUpdates.cs" />
+    <Compile Include="Migrations\202205040737113_ForumSQLUpdates.Designer.cs">
+      <DependentUpon>202205040737113_ForumSQLUpdates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -480,6 +485,7 @@
     <Compile Include="Models\RapidApiV3Country.cs" />
     <Compile Include="Models\RapidApiV3League.cs" />
     <Compile Include="Models\RapidApiV3LeagueSeason.cs" />
+    <Compile Include="RapidApi\RapidApiV3CountriesClassHelper.cs" />
     <Compile Include="RapidApi\RapidApiV3FixtureClassHelper.cs" />
     <Compile Include="RapidApi\RapidApiV3LeagueClassHelper.cs" />
     <Compile Include="ViewModels\JokeTable.cs" />
@@ -497,6 +503,8 @@
     <Compile Include="Models\QuizQuestion.cs" />
     <Compile Include="Models\QuizQuestionAnswer.cs" />
     <Compile Include="Models\QuizQuestionPlayerAnswer.cs" />
+    <Compile Include="ViewModels\LeagueEventGenerationsEditViewModel.cs" />
+    <Compile Include="ViewModels\LeagueEventGenerationsViewModel.cs" />
     <Compile Include="ViewModels\QuizQuestionsForQuiz.cs" />
     <Compile Include="ViewModels\QuizQuestionsForQuizViewModel.cs" />
     <Compile Include="ViewModels\QuizTable.cs" />
@@ -653,6 +661,8 @@
     <Content Include="Views\QuizQuestions\QuizTable.cshtml" />
     <Content Include="Views\QuizQuestions\DisplayQuizQuestionList.cshtml" />
     <Content Include="Views\QuizQuestions\DoQuiz.cshtml" />
+    <Content Include="Views\LeagueEventGenerations\LeagueEventGenerationsIndex.cshtml" />
+    <Content Include="Views\LeagueEventGenerations\EditLeagueEventGeneration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -708,6 +718,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204261728551_leagueAssociation.resx">
       <DependentUpon>202204261728551_leagueAssociation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205040737113_ForumSQLUpdates.resx">
+      <DependentUpon>202205040737113_ForumSQLUpdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,14 +7,15 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
+            <a href="/Admin/AdminHome">Admin Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/Admin/AdminHome?EventId=@ViewBag.EventId">Admin Home</a>
+            <a href="/Leagues/LeaguesIndex">League List</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Fixture List</li>
+        <li class="breadcrumb-item active" aria-current="page">Fixtures</li>
     </ol>
 </nav>
+
 <p>
     @Html.ActionLink("Create New", "Create", new { eventId = ViewBag.EventId })
 </p>

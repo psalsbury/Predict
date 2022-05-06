@@ -27,8 +27,13 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(a => a.ReplyToForumMessageId);
-    @Html.HiddenFor(a => a.ForumTopicId)
-
+    @Html.HiddenFor(a => a.ForumTopicId);
+    @Html.HiddenFor(a => a.ForumTopic.Topic);
+    @Html.HiddenFor(a => a.ForumTopic.Id);
+    @Html.HiddenFor(a => a.ForumTopic.PlayerId);
+    @Html.HiddenFor(a => a.ForumTopic.CreatedDateTime);
+    @Html.HiddenFor(a => a.ForumTopic.ModifiedDateTime);
+    @Html.HiddenFor(a => a.PlayerId);
 
     <div class="form-group">
         Reply Message
@@ -38,8 +43,8 @@
         </div>
     </div>
 
-    <br/>
-    <br/>
+    <br />
+    <br />
 
     <div class="form-group">
         <div>

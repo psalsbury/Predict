@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using PagedList;
 using Predict.Models;
-using Predict.ViewModels;
 
 namespace Predict.Controllers
 {
@@ -22,6 +19,7 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: ForumTopics
+        [HttpGet]
         public ActionResult ForumIndex(int? page)
         {
             var pageNumber = page ?? 1;
@@ -34,6 +32,7 @@ namespace Predict.Controllers
             return View(forumTopics.ToPagedList(pageNumber, pageSize));
         }
 
+        [HttpGet]
         public ActionResult ForumTopicIndex(long forumTopicId)
         {
             var forumMessages = _context.ForumMessages
@@ -45,18 +44,23 @@ namespace Predict.Controllers
             return View(forumMessages);
         }
 
+        [HttpGet]
         public ActionResult NewForumReply(long forumTopicId, long forumMessageId)
         {
             var forumMessage = new ForumMessage
             {
                 ForumTopicId = forumTopicId,
                 ForumTopic = _context.ForumTopics.FirstOrDefault(a => a.Id == forumTopicId),
-                ReplyToForumMessageId = forumMessageId
-            };
+                ReplyToForumMessageId = forumMessageId,
+                PlayerId = User.Identity.GetUserId()
+        };
 
             return View(forumMessage);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleError]
         public ActionResult SaveReply(ForumMessage forumMessage)
         {
             if (!CheckUserIsValid())
@@ -66,21 +70,35 @@ namespace Predict.Controllers
 
             forumMessage.CreatedDateTime = DateTime.UtcNow;
             forumMessage.ModifiedDateTime = DateTime.UtcNow;
-            forumMessage.PlayerId = User.Identity.GetUserId();
+            if (!ModelState.IsValid)
+            {
+                return View("NewForumReply", forumMessage);
+            }
+
+            forumMessage.ForumTopic = null;
             _context.ForumMessages.AddOrUpdate(forumMessage);
             _context.SaveChanges();
-            return RedirectToAction("ForumIndex", "ForumTopics");
+            return RedirectToAction("ForumTopicIndex", "ForumTopics", new  { @forumTopicId = forumMessage.ForumTopicId});
         }
 
+        [HttpGet]
         public ActionResult NewForumTopic()
         {
+            var playerId = User.Identity.GetUserId();
             var forumMessage = new ForumMessage
             {
-                ForumTopic = new ForumTopic()
+                ForumTopic = new ForumTopic 
+                { 
+                    PlayerId = playerId
+                }
+                , PlayerId = playerId
             };
             return View(forumMessage);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleError]
         public ActionResult SaveNewTopic(ForumMessage forumMessage)
         {
 
@@ -89,13 +107,16 @@ namespace Predict.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            forumMessage.ForumTopic.CreatedDateTime= DateTime.UtcNow;
-            forumMessage.ForumTopic.ModifiedDateTime = DateTime.UtcNow;
-            forumMessage.ForumTopic.PlayerId = User.Identity.GetUserId();
-
             forumMessage.CreatedDateTime = DateTime.UtcNow;
             forumMessage.ModifiedDateTime = DateTime.UtcNow;
-            forumMessage.PlayerId = User.Identity.GetUserId();
+            forumMessage.ForumTopic.CreatedDateTime = DateTime.UtcNow;
+            forumMessage.ForumTopic.ModifiedDateTime = DateTime.UtcNow;
+
+            if (!ModelState.IsValid)
+            {
+                return View("NewForumTopic", forumMessage);
+            }
+
             forumMessage.ReplyToForumMessageId = null;
 
             _context.ForumTopics.AddOrUpdate(forumMessage.ForumTopic);

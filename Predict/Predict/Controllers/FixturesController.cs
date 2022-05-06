@@ -17,8 +17,9 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
 
+        [HttpGet ]
         // GET: Fixtures
-        public ActionResult Index()
+        public ActionResult Index(short leagueId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -27,13 +28,16 @@ namespace Predict.Controllers
             var fixtures = _context.Fixtures
                 .Include(b => b.HomeTeam)
                 .Include(b => b.AwayTeam)
+                .Where(a => a.LeagueId == leagueId)
                 .OrderBy(a => a.FixtureDateTime)
                 .ToList();
 
+            ViewBag.LeagueId = leagueId;
             return View(fixtures);
         }
 
-        public ActionResult Create(short eventId)
+        [HttpGet]
+        public ActionResult Create(short leagueId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
@@ -47,10 +51,12 @@ namespace Predict.Controllers
                 Teams = (from a in _context.Teams
                          select a).ToList()
             };
+            fixtureViewModel.LeagueId = leagueId;
 
             return View("EditFixture", fixtureViewModel);
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             // If user is not logged in redirect to the home page
@@ -64,6 +70,11 @@ namespace Predict.Controllers
                 .Include(t => t.AwayTeam)
                 .SingleOrDefault(f => f.Id == id);
 
+            if(fixture==null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var fixtureViewModel = new FixtureViewModel
             {
                 Teams = (from a in _context.Teams
@@ -74,6 +85,7 @@ namespace Predict.Controllers
             return View("EditFixture", fixtureViewModel);
         }
 
+        [HttpPost]
         public ActionResult Save(FixtureViewModel fixtureViewModel)
         {
             // If user is not logged in redirect to the home page
@@ -94,8 +106,37 @@ namespace Predict.Controllers
             }
 
             _context.SaveChanges();
-
-            return RedirectToAction("Index", "Fixtures");
+            return RedirectToAction("Index", "Fixtures", new { @leagueId = fixture.LeagueId });
         }
+
+        [HttpPost]
+        public ActionResult Delete(FixtureViewModel fixtureViewModel)
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            var fixture = _context.Fixtures.FirstOrDefault(a => a.Id== fixtureViewModel.Id);
+            if(fixture==null)
+            {
+                throw new InvalidOperationException("fixture does not exist");
+            }
+
+            var events = _context.EventFixtures.Where(a => a.FixtureId == fixture.Id).Select(a => a.EventId).ToList();
+            _context.FixturePredictions.RemoveRange(_context.FixturePredictions.Where(a => a.FixtureId == fixture.Id));
+            _context.EventFixtures.RemoveRange(_context.EventFixtures.Where(a => a.FixtureId == fixture.Id));
+            _context.FixtureOddsByResults.RemoveRange(_context.FixtureOddsByResults.Where(a => a.RapidApiFixtureId == fixture.RapidApiFixtureId));
+            _context.FixtureOddsByScores.RemoveRange(_context.FixtureOddsByScores.Where(a => a.RapidApiFixtureId == fixture.RapidApiFixtureId));
+            _context.Fixtures.Remove(fixture);
+            _context.SaveChanges();
+
+            foreach (var eventId in events)
+            {
+                Helper.Cache.UpdateEventStartEnd(_context, eventId);
+            }
+
+            return RedirectToAction("Index", "Fixtures", new { @leagueId = fixtureViewModel.LeagueId });
+        }
+
     }
 }

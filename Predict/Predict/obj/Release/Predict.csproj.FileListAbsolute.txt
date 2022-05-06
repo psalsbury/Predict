@@ -595,3 +595,4 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.JokesAndQuiz.res
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.QuestionTypeEnum.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.rapidapiv3AndSubLeagues.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.leagueAssociation.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.ForumSQLUpdates.resources

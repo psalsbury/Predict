@@ -20,12 +20,15 @@ namespace Predict.Models
 
         [StringLength(128)]
         [ForeignKey("Player")]
+        [Required]
         public string PlayerId { get; set; }
 
         public Player Player { get; set; }
 
         public long ?ReplyToForumMessageId { get; set; }
 
+        [Required]
+        [StringLength(2000)]
         public string Message { get; set; }
 
         [Required]

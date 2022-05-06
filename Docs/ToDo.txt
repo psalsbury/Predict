@@ -1,20 +1,8 @@
-prevent message being submitted and topic that is blank. casuses an issue.
-
-use correct timezone on the bonus questions page
-
-if found player is clicked, highlight that player in the table (Viewbag.FindPlayer id set)
-
-check anti forgery token used for updates
-
-PREVIOUS HISTORY FOR RESULTS PAGE S(LOUISE SUGGESTED IT)
-
-check that if after the deadline the points etc on the edit pool screen are not editable
-
-error when updating account details without password
-
-add leagues that are entered as menu options if autorised to be in league
-
 ensure that auto fil works for for last 16 (error on germanys group in the euros)
+
+Add generation of comps for league season & teams
+
+in https://predictioncomp.com/Pools/PoolsMemberOf --> modal screen that shows, owner, comps entered, number of members, created date.
 
 have another modal screen thats shown for each pool that shows the position history, prize fund, position movement etc
 
@@ -24,9 +12,18 @@ qfter dompleting quiz, give options to view table or do another 5 questions
 
 for people who have entered a quiz question provide a screen to give information about the different answers given
 
-Add generation of comps for league season & teams
-
 if fixture dates changes, ensure its within the scope for the dates for the generated comps
+
+
+
+
+if found player is clicked, highlight that player in the table (Viewbag.FindPlayer id set)
+
+check anti forgery token used for updates
+
+PREVIOUS HISTORY FOR RESULTS PAGE S(LOUISE SUGGESTED IT)
+
+check that if after the deadline the points etc on the edit pool screen are not editable
 
 changes ko fixture warning message to be data driven
 

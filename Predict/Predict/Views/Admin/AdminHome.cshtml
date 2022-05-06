@@ -1,10 +1,13 @@
-﻿@using Predict.RapidApi
+﻿
+@model List<Predict.Models.RapidApiV3Country>
+
+@using Predict.RapidApi
 @using (Html.BeginForm("SaveUpdateScoring", "Admin"))
 {
     <div class="form-group">
         <div>
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Update Scoring" class="btn btn-default" />
+            <input type="submit" value="Update Scoring" class="btn btn-success" />
         </div>
     </div>
 }
@@ -14,7 +17,17 @@
     <div class="form-group">
         <div>
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Force Daily Update" class="btn btn-default" />
+            <input type="submit" value="Force Daily Update" class="btn btn-success" />
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("V3Countries", "Admin"))
+{
+    <div class="form-group">
+        <div>
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Get V3 Countries" class="btn btn-success" />
         </div>
     </div>
 }
@@ -26,23 +39,19 @@
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
 
             @Html.Label("Country")
-            @Html.TextBox("Country")
+            @Html.DropDownList("Country",new SelectList(Model, "CountryName", "CountryName"), "Select Country")
+
             @Html.Label("Year")
             @Html.TextBox("Year")
 
-            <input type="submit" value="V3 Leagues" class="btn btn-default" />
+            <input type="submit" value="V3 Leagues" class="btn btn-success" />
         </div>
     </div>
 }
 
 <input type="button"
-       value="All Fixtures"
-       class="btn btn-default"
-       onclick="location.href='@Url.Action("Index", "Fixtures") '" />
-
-<input type="button"
        value="Leagues"
-       class="btn btn-default"
+       class="btn btn-success"
        onclick="location.href = '@Url.Action("LeaguesIndex", "Leagues") '" />
 
 <br />
@@ -56,8 +65,10 @@
     var rapidApiResultChecks = (List<RapidApiResultCheck>)Predict.Helper.Cache.GetCachedItem("NextFixtureCheckDateTime");
     foreach (var rapidApiResultCheck in rapidApiResultChecks)
     {
-        @rapidApiResultCheck.RapidApiLeagueId;
-        <text>-->(Last outstanding Fixture) </text>
+        @rapidApiResultCheck.RapidApiLeagueId
+        <text> / </text>
+        @rapidApiResultCheck.RapidApiV3LeagueSeasonId
+        <text>-->(First unfinished Fixture) </text>
         @rapidApiResultCheck.FixtureDateTime;
         <text>-->(Next time to check)</text>
         @rapidApiResultCheck.ResultCheckDateTime;

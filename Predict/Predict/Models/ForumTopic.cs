@@ -15,11 +15,13 @@ namespace Predict.Models
 
         [StringLength(128)]
         [ForeignKey("Player")]
+        [Required]
         public string PlayerId { get; set; }
 
-        [ForeignKey("Player")]
         public Player Player { get; set; }
 
+        [StringLength(100)]
+        [Required]
         public string Topic { get; set; }
 
         [Required]

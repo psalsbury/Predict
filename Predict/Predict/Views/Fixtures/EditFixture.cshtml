@@ -4,6 +4,21 @@
     ViewBag.Title = "Edit Fixture";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Admin/AdminHome">Admin Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Leagues/LeaguesIndex">League List</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Fixtures?leagueId=@Model.LeagueId">Fixtures List</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Fixture</li>
+    </ol>
+</nav>
+
 @using (Html.BeginForm("Save", "Fixtures"))
 
 {
@@ -78,15 +93,13 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-                <input type="submit" value="Save" class="btn btn-default"/>
+                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="submit" value="Delete" formaction="@Url.Action("Delete")" formmethod="post" class="btn btn-danger" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section scripts
 {

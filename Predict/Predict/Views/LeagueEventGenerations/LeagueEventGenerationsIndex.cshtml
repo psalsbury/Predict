@@ -1,0 +1,70 @@
+﻿@model Predict.ViewModels.LeagueEventGenerationsViewModel
+
+@{
+    ViewBag.Title = "League Event Generations - " + Model.League.LeagueName;
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Admin/AdminHome">Admin Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Leagues/LeaguesIndex">League List</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">League Generation</li>
+    </ol>
+</nav>
+
+<p>
+    @Html.ActionLink("Create New Generation", "EditLeagueEventGeneration", new { Id = 0, LeagueId = Model.League.Id })
+</p>
+
+<table id="leagues" name="leagues" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+
+            <th style="text-align: left; vertical-align: middle;">League Name</th>
+            <th style="text-align: left; vertical-align: middle;">Team</th>
+            <th style="text-align: left; vertical-align: middle;">Freq/Type</th>
+            <th style="text-align: left; vertical-align: middle;">Enbld</th>
+            <th style="text-align: left; vertical-align: middle;">&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.LeagueEventGenerations)
+    {
+        // --> 1 = Weekly, 2 = twice per month, 3 = Monthly, 11 = All Fixtures from league, 21 = All Fixtures for a league/given TeamId
+        var generationType = "";
+        switch(item.GenerationFrequencyId)
+        {
+            case 1:
+                generationType = "Weekly";
+                break;
+            case 2:
+                generationType = "2 Per Month";
+                break;
+            case 3:
+                generationType = "Monthly";
+                break;
+            case 11:
+                generationType = "League Season";
+                break;
+            case 21:
+                generationType = "Team Season";
+                break;
+        }
+        var team = Model.Teams.Where(a => a.Id == item.TeamId).FirstOrDefault();
+
+        <tr>
+            <td style="text-align: left; vertical-align: middle;">@item.League.LeagueName</td>
+            <td style="text-align: left; vertical-align: middle;">@(team==null?"N/A":team.TeamName)</td>
+            <td style="text-align: left; vertical-align: middle;">@generationType</td>
+            <td style="text-align: left; vertical-align: middle;">@item.Enabled</td>
+            <td style="text-align: left; vertical-align: middle;">@Html.ActionLink("Edit", "EditLeagueEventGeneration", new { Id = item.Id, LeagueId = Model.League.Id })</td>
+        </tr>
+    }
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "LeaguesIndex", "Leagues")
+</div>

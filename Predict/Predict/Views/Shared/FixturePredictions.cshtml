@@ -45,284 +45,286 @@
     </tr>
 </table>
 <br />
-
-<link rel="stylesheet" id="wpfront-scroll-top-css" href="~/wpfront-scroll-top/css/wpfront-scroll-top.min.css?ver=2.0.7.08086" media="all">
-
-<div id="wpfront-scroll-top-container" style="opacity: 0.8; right: 120px; bottom: 20px; display: block;">
-    <img src="~/wpfront-scroll-top/images/icons/39.png" alt="" style="width: auto; height: auto;">
-</div>
-
-<div id="wpfront-scroll-nextfixture-container" style="opacity: 0.8; right: 20px; bottom: 20px; display: block;">
-    <a href="#nextPredictionLocation"><img src="~/wpfront-scroll-top/images/icons/down.png" alt="" style="width: auto; height: auto;"></a>
-
-</div>
-
-<script type="text/javascript">
-    function wpfront_scroll_top_init() {
-        if (typeof wpfront_scroll_top === "function" && typeof jQuery !== "undefined") {
-            wpfront_scroll_top({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 120, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
-        } else {
-            setTimeout(wpfront_scroll_top_init, 100);
-        }
-    }
-    wpfront_scroll_top_init();
-</script>
-
-
-<script type="text/javascript">
-    function wpfront_scroll_nextfixture_init() {
-        if (typeof wpfront_scroll_nextfixture === "function" && typeof jQuery !== "undefined") {
-            wpfront_scroll_nextfixture({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 20, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
-        } else {
-            setTimeout(wpfront_scroll_nextfixture_init, 100);
-        }
-    }
-    wpfront_scroll_nextfixture_init();
-</script>
-
-<script src="~/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.0.7.08086" id="wpfront-scroll-top-js"></script>
-
-
-@using (Html.BeginForm("Save", "FixturePredictions"))
+@if (Model.FixturePredictions.Count()>48)
 {
 
-    <!-- / MODAL FORM FOR ODDS-->
-    <div class="modal fade" id="modal-odds" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <link rel="stylesheet" id="wpfront-scroll-top-css" href="~/wpfront-scroll-top/css/wpfront-scroll-top.min.css?ver=2.0.7.08086" media="all">
+
+    <div id="wpfront-scroll-top-container" style="opacity: 0.8; right: 120px; bottom: 20px; display: block;">
+        <img src="~/wpfront-scroll-top/images/icons/39.png" alt="" style="width: auto; height: auto;">
+    </div>
+
+    <div id="wpfront-scroll-nextfixture-container" style="opacity: 0.8; right: 20px; bottom: 20px; display: block;">
+        <a href="#nextPredictionLocation"><img src="~/wpfront-scroll-top/images/icons/down.png" alt="" style="width: auto; height: auto;"></a>
+
+    </div>
+
+    <script type="text/javascript">
+        function wpfront_scroll_top_init() {
+            if (typeof wpfront_scroll_top === "function" && typeof jQuery !== "undefined") {
+                wpfront_scroll_top({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 120, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+            } else {
+                setTimeout(wpfront_scroll_top_init, 100);
+            }
+        }
+        wpfront_scroll_top_init();
+    </script>
+
+
+    <script type="text/javascript">
+        function wpfront_scroll_nextfixture_init() {
+            if (typeof wpfront_scroll_nextfixture === "function" && typeof jQuery !== "undefined") {
+                wpfront_scroll_nextfixture({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 20, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+            } else {
+                setTimeout(wpfront_scroll_nextfixture_init, 100);
+            }
+        }
+        wpfront_scroll_nextfixture_init();
+    </script>
+
+    <script src="~/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.0.7.08086" id="wpfront-scroll-top-js"></script>
+}
+
+    @using (Html.BeginForm("Save", "FixturePredictions"))
+    {
+
+        <!-- / MODAL FORM FOR ODDS-->
+        <div class="modal fade" id="modal-odds" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- / MODAL FORM FOR RETURNS -->
-    <div class="modal fade" id="modal-returns" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">Returns</h4>
-                </div>
-                <div class="modal-body">
-                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- / MODAL FORM FOR RETURNS -->
+        <div class="modal fade" id="modal-returns" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Returns</h4>
+                    </div>
+                    <div class="modal-body">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    @Html.HiddenFor(m => m.EventId)
-    var OutstandingPredictionCount = 0;
+        @Html.HiddenFor(m => m.EventId)
+        var OutstandingPredictionCount = 0;
 
-    <table id="predictions" name="predictions" class="table table-bordered">
+        <table id="predictions" name="predictions" class="table table-bordered">
 
-        @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
-        {
-            var rowColour = "";
-            var hideColouredOdds = false;
-            var haveFixtureResultOdds = Model.RapidApiFixtureIdsWithResultOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
-            var haveFixtureScoreOdds = Model.RapidApiFixtureIdsWithScoreOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
-
-            if (Model.FixturePredictions[i].CorrectScore ?? false)
+            @for (var i = 0; i < Model.FixturePredictions.Count(); i++)
             {
-                rowColour = "#E8FBE1"; // Green
-            }
-            else if (Model.FixturePredictions[i].CorrectWinMargin ?? false)
-            {
-                rowColour = "#DDF2FD"; // blue
-            }
-            else if (Model.FixturePredictions[i].CorrectResult ?? false)
-            {
-                rowColour = "#FAF8DF"; // amber
-            }
-            else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
-            {
-                rowColour = "#FFDBDB"; // red
-            }
+                var rowColour = "";
+                var hideColouredOdds = false;
+                var haveFixtureResultOdds = Model.RapidApiFixtureIdsWithResultOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
+                var haveFixtureScoreOdds = Model.RapidApiFixtureIdsWithScoreOdds.Contains(Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId ?? 0);
 
-            if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
-            {
-                OutstandingPredictionCount += 1;
-            }
+                if (Model.FixturePredictions[i].CorrectScore ?? false)
+                {
+                    rowColour = "#E8FBE1"; // Green
+                }
+                else if (Model.FixturePredictions[i].CorrectWinMargin ?? false)
+                {
+                    rowColour = "#DDF2FD"; // blue
+                }
+                else if (Model.FixturePredictions[i].CorrectResult ?? false)
+                {
+                    rowColour = "#FAF8DF"; // amber
+                }
+                else if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
+                {
+                    rowColour = "#FFDBDB"; // red
+                }
 
-            <tr bgcolor="@rowColour">
-                <td class="hidden-xs hidden-sm" style="text-align: center; vertical-align: middle;" witdth="25%">
-                    @Html.HiddenFor(m => m.FixturePredictions[i].FixtureId)
-                    <b> @Model.FixturePredictions[i].EventFixture.Fixture.League.ShortLeagueName </b>
-                </td>
+                if (!Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                {
+                    OutstandingPredictionCount += 1;
+                }
 
-                <td style="text-align: left; vertical-align: middle;" witdth="50%">
+                <tr bgcolor="@rowColour">
+                    <td class="hidden-xs hidden-sm" style="text-align: center; vertical-align: middle;" witdth="25%">
+                        @Html.HiddenFor(m => m.FixturePredictions[i].FixtureId)
+                        <b> @Model.FixturePredictions[i].EventFixture.Fixture.League.ShortLeagueName </b>
+                    </td>
 
-                    @if (OutstandingPredictionCount == 1)
-                    {
+                    <td style="text-align: left; vertical-align: middle;" witdth="50%">
 
-                        <section id="nextPredictionLocation"></section>
-                    }
+                        @if (OutstandingPredictionCount == 1)
+                        {
 
-                    <div class="container-fluid">
-                        <div class="row vertical-middle text-center">
-                            <div class="row no-gutters">
-                                <table width="100%" cellpadding="0">
-                                    <tr>
-                                        <td>
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20" />
-                                        </td>
-                                        <td style="text-align: left" width="60%">
-                                            &nbsp
-                                            @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName)
-                                        </td>
-                                        <td style="text-align: center" width="20%">
+                            <section id="nextPredictionLocation"></section>
+                        }
 
-                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
-                                            {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2", style = "text-align:center;", @class = "homePrediction" })
+                        <div class="container-fluid">
+                            <div class="row vertical-middle text-center">
+                                <div class="row no-gutters">
+                                    <table width="100%" cellpadding="0">
+                                        <tr>
+                                            <td>
+                                                <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20" />
+                                            </td>
+                                            <td style="text-align: left" width="60%">
+                                                &nbsp
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName)
+                                            </td>
+                                            <td style="text-align: center" width="20%">
 
-                                            }
-                                            else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
-                                            {
-                                                <text>?</text>
-                                                hideColouredOdds = true;
-                                            }
-                                            else if (Model.FixturePredictions[i].HomePrediction != null)
-                                            {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction, new { style = "text-align:center;" })
-                                            }
-                                            else if (Model.FixturePredictions[i].HomePrediction == null)
-                                            {
-                                                <text>-</text>
-                                            }
+                                                @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
+                                                {
+                                                    @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2", style = "text-align:center;", @class = "homePrediction" })
 
-                                            @if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
-                                            {
-                                                <small>
-                                                    (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeResult))
-                                                </small>
-                                            }
+                                                }
+                                                else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                                {
+                                                    <text>?</text>
+                                                    hideColouredOdds = true;
+                                                }
+                                                else if (Model.FixturePredictions[i].HomePrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].HomePrediction, new { style = "text-align:center;" })
+                                                }
+                                                else if (Model.FixturePredictions[i].HomePrediction == null)
+                                                {
+                                                    <text>-</text>
+                                                }
 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="row no-gutters">
-                                <table width="100%">
-                                    <tr>
-                                        <td>
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20" />
-                                        </td>
-                                        <td style="text-align: left" width="60%">
-                                            &nbsp
-                                            @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
-                                        </td>
-                                        <td style="text-align: center" width="20%">
-                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
-                                            {
-                                                @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2", style = "text-align:center;", @class = "awayPrediction" })
+                                                @if (Model.FixturePredictions[i].EventFixture.Fixture.HomeResult != null)
+                                                {
+                                                    <small>
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.HomeResult))
+                                                    </small>
+                                                }
 
-                                            }
-                                            else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
-                                            {
-                                                <text>?</text>
-                                            }
-                                            else if (Model.FixturePredictions[i].AwayPrediction != null)
-                                            {
-                                                @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction, new { style = "text-align:center;" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="row no-gutters">
+                                    <table width="100%">
+                                        <tr>
+                                            <td>
+                                                <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20" />
+                                            </td>
+                                            <td style="text-align: left" width="60%">
+                                                &nbsp
+                                                @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
+                                            </td>
+                                            <td style="text-align: center" width="20%">
+                                                @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
+                                                {
+                                                    @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2", style = "text-align:center;", @class = "awayPrediction" })
 
-                                            }
-                                            else if (Model.FixturePredictions[i].AwayPrediction == null)
-                                            {
-                                                <text>-</text>
-                                            }
+                                                }
+                                                else if (Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed)
+                                                {
+                                                    <text>?</text>
+                                                }
+                                                else if (Model.FixturePredictions[i].AwayPrediction != null)
+                                                {
+                                                    @Html.DisplayFor(m => m.FixturePredictions[i].AwayPrediction, new { style = "text-align:center;" })
 
-                                            @if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
-                                            {
-                                                <small>
-                                                    (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayResult))
-                                                </small>
-                                            }
-                                        </td>
-                                    </tr>
-                                </table>
+                                                }
+                                                else if (Model.FixturePredictions[i].AwayPrediction == null)
+                                                {
+                                                    <text>-</text>
+                                                }
+
+                                                @if (Model.FixturePredictions[i].EventFixture.Fixture.AwayResult != null)
+                                                {
+                                                    <small>
+                                                        (@Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayResult))
+                                                    </small>
+                                                }
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-                <td witdth="25%" style="text-align: center; vertical-align: middle">
+                    </td>
+                    <td witdth="25%" style="text-align: center; vertical-align: middle">
 
-                    <table width="100%" style="border-right:none;border-left:none;border-bottom:none;border-top:none">
-                        <tr>
-                            <td style="text-align: center; vertical-align: middle;" class="myDate">
-                                @Html.Hidden("FixtureDateTime", Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToLongDateString() + " " + Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToShortTimeString())
-                            </td>
-                        </tr>
-                        @if (haveFixtureResultOdds || haveFixtureScoreOdds)
-                        {
+                        <table width="100%" style="border-right:none;border-left:none;border-bottom:none;border-top:none">
                             <tr>
-                                <td style="text-align: center; vertical-align: middle; font-size: 11px;">
-                                    <button class="label label-info" type="button" data-toggle="modal" data-target="#modal-odds"
-                                            data-title="@Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId"
-                                            data-title2="@Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName"
-                                            data-title3="@Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName"
-                                            data-title4="@Model.FixturePredictions[i].EventFixture.Fixture.HomeResult"
-                                            data-title5="@Model.FixturePredictions[i].EventFixture.Fixture.AwayResult"
-                                            data-title6="@Model.FixturePredictions[i].HomePrediction"
-                                            data-title7="@Model.FixturePredictions[i].AwayPrediction"
-                                            data-title8="@i"
-                                            data-title9="@hideColouredOdds">
-                                        Odds
-                                    </button>
+                                <td style="text-align: center; vertical-align: middle;" class="myDate">
+                                    @Html.Hidden("FixtureDateTime", Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToLongDateString() + " " + Model.FixturePredictions[i].EventFixture.Fixture.FixtureDateTime.ToShortTimeString())
                                 </td>
                             </tr>
-                        }
-                    </table>
+                            @if (haveFixtureResultOdds || haveFixtureScoreOdds)
+                            {
+                                <tr>
+                                    <td style="text-align: center; vertical-align: middle; font-size: 11px;">
+                                        <button class="label label-info" type="button" data-toggle="modal" data-target="#modal-odds"
+                                                data-title="@Model.FixturePredictions[i].EventFixture.Fixture.RapidApiFixtureId"
+                                                data-title2="@Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.TeamName"
+                                                data-title3="@Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName"
+                                                data-title4="@Model.FixturePredictions[i].EventFixture.Fixture.HomeResult"
+                                                data-title5="@Model.FixturePredictions[i].EventFixture.Fixture.AwayResult"
+                                                data-title6="@Model.FixturePredictions[i].HomePrediction"
+                                                data-title7="@Model.FixturePredictions[i].AwayPrediction"
+                                                data-title8="@i"
+                                                data-title9="@hideColouredOdds">
+                                            Odds
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
 
-                </td>
+                    </td>
 
-            </tr>
+                </tr>
+            }
+        </table>
+        if (OutstandingPredictionCount == 0)
+        {
+
+            <section id="nextPredictionLocation"></section>
         }
-    </table>
-    if (OutstandingPredictionCount == 0)
-    {
 
-        <section id="nextPredictionLocation"></section>
-    }
+        @Html.AntiForgeryToken()
 
-    @Html.AntiForgeryToken()
-
-    if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
-    {
-        <div class="form-group">
-            <div>
-                <input type="submit" value="Save" class="btn btn-success" id="submit" />
-                <input class="btn btn-danger" title="Click to clear all predictions" type="button" value="Clear" onclick="javascript:ClearPredictions();" id="Clear" name="Clear">
+        if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
+        {
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Save" class="btn btn-success" id="submit" />
+                    <input class="btn btn-danger" title="Click to clear all predictions" type="button" value="Clear" onclick="javascript:ClearPredictions();" id="Clear" name="Clear">
+                </div>
             </div>
-        </div>
+        }
     }
-}
-<br />
+    <br />
 
 
-@if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
-{
-    <script src="../../Scripts/bootbox.js"></script>
-    <script>
+    @if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
+    {
+        <script src="../../Scripts/bootbox.js"></script>
+        <script>
 
         function IsNumeric(obj) {
             //  check for valid numeric strings
@@ -402,156 +404,156 @@
                     }
                 });
         }
-    </script>
-}
-
-
-<script>
-
-    //get all td with actionclass in table
-    $("tbody tr td.myDate").each(function () {
-
-        $hiddenValue = $(this).find("input[type=hidden]").val();
-
-        var d = new Date($hiddenValue);
-
-        this.innerHTML = convertUTCDateToLocalDate(d);
-
-    });
-
-    function convertUTCDateToLocalDate(date) {
-        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-
-        var offset = date.getTimezoneOffset() / 60;
-        var hours = date.getHours();
-
-        newDate.setHours(hours - offset);
-        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
-        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
-
-        return da + ' ' + mo + ' ' + pad(newDate.getHours(), 2) + ':' + pad(newDate.getMinutes(), 2);
-
+        </script>
     }
 
-    function pad(n, width, z) {
-        z = z || '0';
-        n = n + '';
-        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    }
 
-</script>
+    <script>
 
-<script>
-    $(function () {
-        // Determine timezone offset in milliseconds
-        // from: http://www.w3schools.com/jsref/jsref_getTimezoneOffset.asp
-        var d = new Date();
-        var offsetms = d.getTimezoneOffset() * 60 * 1000;
-        $('.UTCTime').each(function () {
-            try {
-                var text = $(this).html();
+        //get all td with actionclass in table
+        $("tbody tr td.myDate").each(function () {
 
-                var n = new Date(text);
-                n = new Date(n.valueOf() - offsetms);
+            $hiddenValue = $(this).find("input[type=hidden]").val();
 
-                $(this).html(n.toDateString() + " " + n.toLocaleTimeString());
+            var d = new Date($hiddenValue);
 
-                $(this).attr("Converted from UTC " + text);
-            } catch (ex) {
-                console.warn("Error converting time", ex);
-            }
+            this.innerHTML = convertUTCDateToLocalDate(d);
+
         });
-    });
-</script>
 
-<!-- Button trigger modal -->
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">What the colours mean</h4>
-            </div>
-            <div class="modal-body">
+        function convertUTCDateToLocalDate(date) {
+            var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
 
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <td style="background-color: #d9f2e6" width="20">
-                            &nbsp
-                        </td>
-                        <td>
-                            &nbsp&nbsp Correct Score
-                        </td>
-                        @if (Model.Pool != null)
-                        {
-                            <td>
-                                <b>@Model.Pool.CorrectScorePoints</b> Points
+            var offset = date.getTimezoneOffset() / 60;
+            var hours = date.getHours();
+
+            newDate.setHours(hours - offset);
+            mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
+            da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+
+            return da + ' ' + mo + ' ' + pad(newDate.getHours(), 2) + ':' + pad(newDate.getMinutes(), 2);
+
+        }
+
+        function pad(n, width, z) {
+            z = z || '0';
+            n = n + '';
+            return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        }
+
+    </script>
+
+    <script>
+        $(function () {
+            // Determine timezone offset in milliseconds
+            // from: http://www.w3schools.com/jsref/jsref_getTimezoneOffset.asp
+            var d = new Date();
+            var offsetms = d.getTimezoneOffset() * 60 * 1000;
+            $('.UTCTime').each(function () {
+                try {
+                    var text = $(this).html();
+
+                    var n = new Date(text);
+                    n = new Date(n.valueOf() - offsetms);
+
+                    $(this).html(n.toDateString() + " " + n.toLocaleTimeString());
+
+                    $(this).attr("Converted from UTC " + text);
+                } catch (ex) {
+                    console.warn("Error converting time", ex);
+                }
+            });
+        });
+    </script>
+
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">What the colours mean</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td style="background-color: #d9f2e6" width="20">
+                                &nbsp
                             </td>
-                        }
-                    </tr>
-                    <tr>
-                        <td style="background-color: #b3d9ff">
-                            &nbsp;
-                        </td>
-                        <td>
-                            &nbsp&nbsp Correct Win Margin
-                        </td>
-                        @if (Model.Pool != null)
-                        {
                             <td>
-                                <b>@(Model.Pool.WinMarginPoints + Model.Pool.CorrectResultPoints)</b> Points
+                                &nbsp&nbsp Correct Score
                             </td>
-                        }
-                    </tr>
-                    <tr>
-                        <td style="background-color: #ffebcc">
-                            &nbsp;
-                        </td>
-                        <td>
-                            &nbsp&nbsp Correct Result
-                        </td>
-                        @if (Model.Pool != null)
-                        {
+                            @if (Model.Pool != null)
+                            {
+                                <td>
+                                    <b>@Model.Pool.CorrectScorePoints</b> Points
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td style="background-color: #b3d9ff">
+                                &nbsp;
+                            </td>
                             <td>
-                                <b>@Model.Pool.CorrectResultPoints</b> Points
+                                &nbsp&nbsp Correct Win Margin
                             </td>
-                        }
-                    </tr>
-                    <tr>
-                        <td style="background-color: #ffcccc">
-                            &nbsp;
-                        </td>
-                        <td>
-                            &nbsp&nbsp Wrong Result
-                        </td>
-                        @if (Model.Pool != null)
-                        {
+                            @if (Model.Pool != null)
+                            {
+                                <td>
+                                    <b>@(Model.Pool.WinMarginPoints + Model.Pool.CorrectResultPoints)</b> Points
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td style="background-color: #ffebcc">
+                                &nbsp;
+                            </td>
                             <td>
-                                <b>0</b> Points
+                                &nbsp&nbsp Correct Result
                             </td>
-                        }
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            @if (Model.Pool != null)
+                            {
+                                <td>
+                                    <b>@Model.Pool.CorrectResultPoints</b> Points
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td style="background-color: #ffcccc">
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp&nbsp Wrong Result
+                            </td>
+                            @if (Model.Pool != null)
+                            {
+                                <td>
+                                    <b>0</b> Points
+                                </td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    .alignleft {
-        float: left;
-    }
+    <style>
+        .alignleft {
+            float: left;
+        }
 
-    .alignright {
-        float: right;
-    }
-</style>
+        .alignright {
+            float: right;
+        }
+    </style>
 
-<script>
+    <script>
     $('#modal-odds').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var modal = $(this);
@@ -622,31 +624,31 @@
         });
 
     });
-</script>
+    </script>
 
-<script>
-    $(document).ready(function () {
-        // Add smooth scrolling to all links
-        $("a").on('click', function (event) {
+    <script>
+        $(document).ready(function () {
+            // Add smooth scrolling to all links
+            $("a").on('click', function (event) {
 
-            // Make sure this.hash has a value before overriding default behavior
-            if (this.hash !== "") {
-                // Prevent default anchor click behavior
-                event.preventDefault();
+                // Make sure this.hash has a value before overriding default behavior
+                if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
 
-                // Store hash
-                var hash = this.hash;
+                    // Store hash
+                    var hash = this.hash;
 
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 800, function () {
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function () {
 
-                    // Add hash (#) to URL when done scrolling (default click behavior)
-                    window.location.hash = hash;
-                });
-            } // End if
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    });
+                } // End if
+            });
         });
-    });
-</script>
+    </script>

@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using Predict.Dtos;
-using Predict.Helper;
 using Predict.Models;
-using Quartz.Impl.Matchers;
 using System.Data.Entity;
 
 namespace Predict.Controllers.Api

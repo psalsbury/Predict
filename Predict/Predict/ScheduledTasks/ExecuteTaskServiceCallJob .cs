@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using Predict.Models;
 using Predict.RapidApi;
 using Quartz;
 
@@ -29,6 +25,7 @@ namespace Predict.ScheduledTasks
                         }
                         catch (Exception ex)
                         {
+                            
                             // Do nothing
                         }
                     }

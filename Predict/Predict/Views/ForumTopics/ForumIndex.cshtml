@@ -6,23 +6,21 @@
     ViewBag.Title = "Message Board";
 }
 
-
-
 @foreach (var forumTopic in Model)
 {
-    <table class="table-responsive" >
+    <table class="table-responsive">
         <tr border="1">
-        <td>
-                @Html.ActionLink(@forumTopic.Topic, "ForumTopicIndex", new { forumTopicId = forumTopic.Id },new{@style= "font-size:large"})
+            <td>
+                @Html.ActionLink(@forumTopic.Topic, "ForumTopicIndex", new { forumTopicId = forumTopic.Id }, new { @style = "font-size:large" })
             </td>
-            <tr>
-                <td>
+        <tr>
+            <td>
 
 
-                    <text>Topic Created By :</text>
-                    @forumTopic.Player.DisplayName
-                </td>
-            </tr>
+                <text>Topic Created By :</text>
+                @forumTopic.Player.DisplayName
+            </td>
+        </tr>
         <tr>
             <td>
                 <text>Last MessageDate: </text>
@@ -43,7 +41,7 @@
     @Html.PagedListPager(Model, page => Url.Action("ForumIndex",
         new { page }))
 
-<input type="button"
-       value="Add New Topic"
-       class="btn btn-success"
-       onclick="location.href = '@Url.Action("NewForumTopic", "ForumTopics") '" />
+    <input type="button"
+           value="Add New Topic"
+           class="btn btn-success"
+           onclick="location.href = '@Url.Action("NewForumTopic", "ForumTopics") '" />
