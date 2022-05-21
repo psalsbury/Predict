@@ -48,7 +48,9 @@ namespace Predict.Controllers
 
             var availablePools = (from pool in _context.Pools
                 where !_context.PoolPlayers.Any(f => f.PlayerId == playerId && f.PoolId==pool.Id && f.Enabled==true)
-                select pool).ToList();
+                select pool)
+                .OrderBy(a => a.PoolName)
+                .ToList();
 
             return View("JoinPool", availablePools);
         }

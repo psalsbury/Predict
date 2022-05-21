@@ -348,33 +348,64 @@
             return blnResult;
         }
 
-        function LuckyDip() {
-            bootbox.confirm("Lucky dip, are you sure?",
-                function(result) {
-                    if (result) {
-                        @{
-                            var position = 0;
-                            foreach (var fixturePrediction in Model.FixturePredictions)
-                            {
-                                var fixtureDateTime = fixturePrediction.EventFixture.Fixture.FixtureDateTime;
-                                var now = DateTime.UtcNow;
+            function LuckyDip() {
 
-                                var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
-                                if (diffInSeconds > 0)
-                                {
-                                    <text>
-                                        $('#FixturePredictions_@(position)__HomePrediction')
-                                            .val(Math.round(Math.random() * 3));
-                                        $('#FixturePredictions_@(position)__AwayPrediction')
-                                            .val(Math.round(Math.random() * 3));
-                                    </text>
-                                }
-                                position = position + 1;
-                            }
+                bootbox.prompt({
+                    title: "Lucky Dip? Let the computer decide for you...",
+                    message: '<p>Please select an option below:</p>',
+                    inputType: 'radio',
+                    inputOptions: [
+                        {
+                            text: 'Unpredicted games only',
+                            value: '1',
+                        },
+                        {
+                            text: 'All unplayed matches',
+                            value: '2',
                         }
+                    ],
+                    callback: function (result) {
+                        if (result!=null)
+                            PerformLuckyDip(result);
                     }
                 });
-        }
+            }
+
+            function PerformLuckyDip(choice)
+            {
+                @{
+                    var position = 0;
+                    foreach (var fixturePrediction in Model.FixturePredictions)
+                    {
+                        var fixtureDateTime = fixturePrediction.EventFixture.Fixture.FixtureDateTime;
+                        var now = DateTime.UtcNow;
+
+                        var diffInSeconds = (fixtureDateTime - now).TotalSeconds;
+                        if (diffInSeconds > 0)
+                        {
+
+                            <text>
+
+                                homePrediction = $('#FixturePredictions_@(position)__HomePrediction');
+                                awayPrediction = $('#FixturePredictions_@(position)__AwayPrediction');
+                                doHome = true;
+                                doAway = true;
+                                if (choice === "1")
+                                {
+                                    var homePredictionValue = $('#FixturePredictions_@(position)__HomePrediction').val()
+                                    var awayPredictionValue = $('#FixturePredictions_@(position)__AwayPrediction').val()
+                                    if (homePredictionValue != "") { doHome = false; }
+                                    if (awayPredictionValue != "") { doAway = false; }
+                                }
+                                if (doHome===true) { homePrediction.val(Math.round(Math.random() * 3));}
+                                if(doAway === true) { awayPrediction.val(Math.round(Math.random() * 3)); }
+
+                            </text>
+                        }
+                        position = position + 1;
+                    }
+                }
+            }
 
         function ClearPredictions() {
             bootbox.confirm("Clear all your outstanding predictions, are you sure?",

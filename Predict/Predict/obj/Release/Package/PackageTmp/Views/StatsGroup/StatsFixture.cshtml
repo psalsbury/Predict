@@ -140,11 +140,13 @@
     <div class="box-body">
         <table class="table table-bordered table-hover" id="fixtures" style="width: 100%" align="center">
             <tr>
-                <th>
-                    @Model.Fixture.HomeTeam.TeamName
+                <th style="text-align:center" >
+                    <div class="hidden-xs hidden-sm">@Model.Fixture.HomeTeam.TeamName</div>
+                    <img src="@Url.Content(@Model.Fixture.HomeTeam.FlagFileLocation)" height="20" />
                 </th>
-                <th>
-                    @Model.Fixture.AwayTeam.TeamName
+                <th style="text-align:center" >
+                    <div style="align-content: center" class="hidden-xs hidden-sm">@Model.Fixture.AwayTeam.TeamName</div>
+                    <img src="@Url.Content(@Model.Fixture.AwayTeam.FlagFileLocation)" height="20" />
                 </th>
                 <th>
                     Result
@@ -170,10 +172,10 @@
                 }
                 var percent = Math.Round(Convert.ToDouble(item.NumberOfPredictions) / Convert.ToDouble(nbrPredictions) * 100);
                 <tr>
-                    <td>
+                    <td style="text-align:center">
                         @item.HomePrediction
                     </td>
-                    <td>
+                    <td style="text-align:center">
                         @item.AwayPrediction
                     </td>
                     <td>

@@ -47,7 +47,9 @@ namespace Predict.Controllers
                 .Where(b => b.EventId == eventId && b.Fixture.FixtureDateTime >= DateTime.UtcNow)
                 .ToList();
 
-            var leagues = _context.Leagues.ToList();
+            var leagues = _context.Fixtures.Where(a => a.FixtureDateTime >= DateTime.UtcNow)
+                .Include(a => a.League)
+                .Select(a => a.League).Distinct().ToList();
 
             eventFixturesViewModel.LeagueId = leagueId;
             eventFixturesViewModel.Fixtures = fixtures;

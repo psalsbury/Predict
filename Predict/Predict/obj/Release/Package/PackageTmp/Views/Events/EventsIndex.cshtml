@@ -48,7 +48,7 @@
                     @item.EndDateTime.ToString("f")
                 </td>
                 <td>
-                    @if (item.EventFinished)
+                    @if (item.EventFinished && item.EndDateTime!=DateTime.MinValue)
                     {
                         @Html.ActionLink("Show Fixtures", "GroupGameResults", "Results", new { @id = item.Id }, new { @class = "btn btn-info" })
                     }
@@ -80,14 +80,7 @@
     </table>
 }
 
-<input type="button"
-       id="add"
-       value="Create New Comp"
-       class="btn btn-primary alignright"
-       onclick="location.href = '@Url.Action("AddEvent", "Events") '" />
-
 <script src="~/Scripts/bootbox.js"></script>
-
 
 <script>
 

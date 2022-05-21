@@ -67,6 +67,12 @@ namespace Predict.Controllers
 
                 // Used forcePoolRefresh as forceRefresh as fixtures could be added to a comp and that needs refreshing on users home page
                 SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, forcePoolRefresh, forcePoolRefresh);
+                ViewBag.Title = eventPlayer.Event.EventName;
+                if (eventPlayer.Event.EventFinished)
+                {
+                    ViewBag.TitleColour = "Tomato";
+                }
+
             }
 
             return View(eventPlayer);

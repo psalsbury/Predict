@@ -31,7 +31,7 @@
             <div class="content-wrapper">
                 @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
                 {
-                    <section class="content-header">
+                    <section class="content-header" style="text-align: left; @(string.IsNullOrWhiteSpace(ViewBag.TitleColour) ? "" : " background-color:" + ViewBag.TitleColour)">
                         <h1>
                             @ViewBag.Title
                             @if (ViewBag.Description != "")

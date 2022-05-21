@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <button type="submit" id="btnSubmit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                     </div>
 
                 </div>
@@ -151,6 +151,20 @@
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
             increaseArea: '50%' /* optional */
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#LoginForm").submit(function (e) {
+
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+
+            return true;
+
         });
     });
 </script>

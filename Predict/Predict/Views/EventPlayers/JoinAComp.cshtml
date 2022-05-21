@@ -50,7 +50,6 @@
         function () {
             var button = $(this);
             $(button.html("<i class='fa fa-refresh fa-spin'></i>"));
-            alert("../api/EventPlayers/join/" + button.attr("dataEventId"));
             $.ajax(
                 {
                     url: "../api/EventPlayers/join/" + button.attr("dataEventId"),
