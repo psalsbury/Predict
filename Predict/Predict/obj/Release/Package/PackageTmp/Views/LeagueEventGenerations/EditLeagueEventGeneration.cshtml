@@ -6,9 +6,12 @@
             <a href="/Admin/AdminHome">Admin Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/Leagues/LeaguesIndex">League List</a>
+            <a href="/Leagues/LeaguesIndex">Leagues</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">League Generation</li>
+        <li class="breadcrumb-item">
+            <a href="/LeagueEventGenerations/LeagueEventGenerationsIndex/@(Model.LeagueEventGeneration.LeagueId)">Gens</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
     </ol>
 </nav>
 
@@ -41,31 +44,46 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LeagueEventGeneration.TeamId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.LeagueEventGeneration.TeamId, new SelectList(Model.Teams, "Id", "TeamName"), "Select Team", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LeagueEventGeneration.TeamId, "", new { @class = "text-danger" })
+            <div id="TeamSelect">
+                @Html.LabelFor(model => model.LeagueEventGeneration.TeamId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.LeagueEventGeneration.TeamId, new SelectList(Model.Teams, "Id", "TeamName"), "Select Team", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LeagueEventGeneration.TeamId, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.LeagueEventGeneration.Enabled, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
                     @Html.EditorFor(model => model.LeagueEventGeneration.Enabled)
                     @Html.ValidationMessageFor(model => model.LeagueEventGeneration.Enabled, "", new { @class = "text-danger" })
-                </div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "LeagueEventGenerationIndex")
-</div>
+<script>
+    $("#LeagueEventGeneration_GenerationFrequencyId").change(function () {
+        HideShowTeamSelector(this);
+    });
+
+    HideShowTeamSelector($("#LeagueEventGeneration_GenerationFrequencyId"));
+
+    function HideShowTeamSelector(object)
+    { 
+        var selectedValue = $(object).children("option:selected").val();
+        if (selectedValue === "21") {
+            $('#TeamSelect').show();
+        }
+        else {
+            $('#TeamSelect').hide();
+        }
+    }
+</script>

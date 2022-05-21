@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNet.Identity
+@using Predict.Models
+@using System.Linq;
+@model List<Predict.ViewModels.EventPlayersViewModel>
+
+@{
+    ViewBag.Title = "Finished Comp";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/CompsDashboard/CompsDashboardIndex">Comps Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Finished Comps</li>
+    </ol>
+</nav>
+
+<table id="EventPlayers" class="table table-hover">
+    <tr>
+
+        <th>
+            Comp
+        </th>
+        <th>Players</th>
+        <th>thing</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+<tr height="60">
+
+    <td style="vertical-align: middle;">
+        @Html.DisplayFor(modelItem => item.EventName)
+    </td>
+    <td style="vertical-align: middle;">@item.NbrPlayers</td>
+    <td style="vertical-align: middle;">
+
+        <a class="btn btn-info" href='@Url.Action("Index", "Home", new { eventId = item.EventId})'>
+            <i class="fa fa-home"></i>&nbsp; Home
+        </a>
+    </td>
+</tr>
+    }
+</table>
+

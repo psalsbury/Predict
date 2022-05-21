@@ -16,6 +16,11 @@ namespace Predict.Controllers
         {
             _context = new ApplicationDbContext();
         }
+
+        public ActionResult _SideBar()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             EventPlayer eventPlayer = null;

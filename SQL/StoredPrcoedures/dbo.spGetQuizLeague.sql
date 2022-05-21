@@ -50,6 +50,6 @@ BEGIN
 			, PL.Displayname
 			, TE.TeamFlag
 			, TE.TeamName
-	ORDER BY Score
+	ORDER BY Score DESC
 END
 GO

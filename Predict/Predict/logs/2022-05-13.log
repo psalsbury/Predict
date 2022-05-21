@@ -1,0 +1,47 @@
+2022-05-13 00:01:52.5303 INFO DailyRapidApiLeagueCheck --> lastDate = 12/05/2022 00:00:00, Now = 13/05/2022 00:00:00
+2022-05-13 00:01:52.7195 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 14/05/2022 00:00:00
+2022-05-13 00:01:52.7195 INFO DailyRapidApiLeagueCheck --> performUpdate = True
+2022-05-13 00:01:52.7355 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2022-05-13 00:01:52.9854 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 59, EarliestDate = 21/05/2022 00:00:00
+2022-05-13 00:01:53.7671 INFO V3UpdateFixtures - earliestDate = 21/05/2022 00:00:00, leagueId = 20
+2022-05-13 00:01:54.2843 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 31, EarliestDate = 14/05/2022 00:00:00
+2022-05-13 00:01:54.7077 INFO V3UpdateFixtures - earliestDate = 14/05/2022 00:00:00, leagueId = 19
+2022-05-13 00:01:54.9901 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 4, EarliestDate = 21/11/2022 00:00:00
+2022-05-13 00:01:55.4007 INFO V3UpdateFixtures - earliestDate = 21/11/2022 00:00:00, leagueId = 18
+2022-05-13 00:01:58.3805 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 57, EarliestDate = 13/05/2022 00:00:00
+2022-05-13 00:01:58.9922 INFO V3UpdateFixtures - earliestDate = 13/05/2022 00:00:00, leagueId = 17
+2022-05-13 00:01:59.5891 INFO FixturesByLeague - League = 3501, EarliestDate = 13/05/2022 00:00:00
+2022-05-13 00:02:00.1852 INFO UpdateFixtures - earliestDate = 13/05/2022 00:00:00
+2022-05-13 00:02:00.7968 INFO FixturesByOdds - League = 3501
+2022-05-13 00:02:19.0897 INFO OddsByLeagueAndBookmaker - League = 3501, pageNbr = 2
+2022-05-13 00:02:29.0953 INFO OddsByLeagueAndBookmaker - League = 3501, pageNbr = 0
+2022-05-13 00:02:29.2121 INFO FixturesByLeague - League = 3456, EarliestDate = 15/05/2022 00:00:00
+2022-05-13 00:02:29.6133 INFO UpdateFixtures - earliestDate = 15/05/2022 00:00:00
+2022-05-13 00:02:32.9237 INFO FixturesByOdds - League = 3456
+2022-05-13 00:02:57.6246 INFO OddsByLeagueAndBookmaker - League = 3456, pageNbr = 2
+2022-05-13 00:03:23.3946 INFO OddsByLeagueAndBookmaker - League = 3456, pageNbr = 3
+2022-05-13 00:03:39.3561 INFO OddsByLeagueAndBookmaker - League = 3456, pageNbr = 0
+2022-05-13 21:40:00.0107 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 13/05/2022 00:00:00, ResultCheckDateTime = 13/05/2022 20:40:00, Now = 13/05/2022 20:40:00
+2022-05-13 21:40:00.0347 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-05-13
+2022-05-13 21:40:00.8815 INFO UpdateFixtures - earliestDate = 13/05/2022 00:00:00
+2022-05-13 21:40:01.0140 INFO GetRapidApiResults V3 = Getting results from rapidApiV3LeagueSeasonId = 57. FixtureDateTime = 13/05/2022 00:00:00, ResultCheckDateTime = 13/05/2022 20:40:00, Now = 13/05/2022 20:40:01
+2022-05-13 21:40:01.0140 INFO V3FixturesByLeagueByDate - rapidApiV3LeagueSeasonId = 57, Date = 2022-05-13, LeagueId = 17
+2022-05-13 21:40:02.5878 INFO V3UpdateFixtures - earliestDate = 13/05/2022 00:00:00, leagueId = 17
+2022-05-13 21:40:02.7025 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-05-13 21:40:02.7397 INFO SetNextResultCheckDateTime - Set League 3456, fixture date 15/05/2022 11:00:00, next check date to 15/05/2022 12:55:00
+2022-05-13 21:40:02.7397 INFO SetNextResultCheckDateTime - Set League 3501, fixture date 13/05/2022 18:45:00, next check date to 13/05/2022 20:45:00
+2022-05-13 21:40:02.7397 INFO SetNextResultCheckDateTime - Set League , fixture date 21/11/2022 10:00:00, next check date to 21/11/2022 11:55:00
+2022-05-13 21:40:02.7397 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-05-13 21:40:02.7397 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 12/06/2022 20:40:02
+2022-05-13 21:45:00.0044 INFO GetRapidApiResults = Getting results from RapidApi 3501. FixtureDateTime = 13/05/2022 00:00:00, ResultCheckDateTime = 13/05/2022 20:45:00, Now = 13/05/2022 20:45:00
+2022-05-13 21:45:00.0044 INFO FixturesByLeagueByDate - League = 3501, Date = 2022-05-13
+2022-05-13 21:45:00.5628 INFO UpdateFixtures - earliestDate = 13/05/2022 00:00:00
+2022-05-13 21:45:00.6954 INFO GetRapidApiResults V3 = Getting results from rapidApiV3LeagueSeasonId = 57. FixtureDateTime = 13/05/2022 00:00:00, ResultCheckDateTime = 13/05/2022 20:45:00, Now = 13/05/2022 20:45:00
+2022-05-13 21:45:00.6954 INFO V3FixturesByLeagueByDate - rapidApiV3LeagueSeasonId = 57, Date = 2022-05-13, LeagueId = 17
+2022-05-13 21:45:01.0215 INFO V3UpdateFixtures - earliestDate = 13/05/2022 00:00:00, leagueId = 17
+2022-05-13 21:45:01.1286 INFO SetNextResultCheckDateTime - Start - roundUp = True
+2022-05-13 21:45:01.1662 INFO SetNextResultCheckDateTime - Set League 3456, fixture date 15/05/2022 11:00:00, next check date to 15/05/2022 12:55:00
+2022-05-13 21:45:01.1692 INFO SetNextResultCheckDateTime - Set League 3501, fixture date 14/05/2022 14:00:00, next check date to 14/05/2022 15:55:00
+2022-05-13 21:45:01.1692 INFO SetNextResultCheckDateTime - Set League , fixture date 21/11/2022 10:00:00, next check date to 21/11/2022 11:55:00
+2022-05-13 21:45:01.1692 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-05-13 21:45:01.1692 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 12/06/2022 20:45:01

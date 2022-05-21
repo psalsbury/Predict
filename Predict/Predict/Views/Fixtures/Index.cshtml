@@ -18,29 +18,23 @@
 </nav>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { leagueId = leagueId })
+    <input type="button"
+           value="Create New Fixture"
+           class="btn btn-success"
+           onclick="location.href = '@Url.Action("Create", "Fixtures", new { leagueId = leagueId })'" />
+
 </p>
 
+<table id="groupresults" name="groupresults" class="table table-bordered table-hover no-gutters">
 
-<table id="groupresults" name="groupresults" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-
-            <th style="text-align: center; vertical-align: middle;">Game</th>
-            <th style="text-align: center; vertical-align: middle;">
-                Fixture Date/Time
-            </th>
-            <th>
-        </tr>
-    </thead>
     @foreach (var item in Model)
     {
         <tr>
 
-            <td style="text-align: center; vertical-align: middle;" witdth="50%">
+            <td style="text-align: center; vertical-align: middle;" witdth="60%">
                 <div class="container-fluid">
                     <div class="row vertical-middle text-center">
-                        <div class="col-sm-6 text-center">
+                        <div class="row no-gutters">
                             <table width="100%" cellpadding="2">
                                 <tr>
                                     <td width="20%">
@@ -57,7 +51,7 @@
                             </table>
                         </div>
 
-                        <div class="col-sm-6 text-center">
+                        <div class="row no-gutters">
                             <table width="100%" cellpadding="2">
                                 <tr>
                                     <td width="20%">
@@ -77,15 +71,18 @@
                 </div>
             </td>
 
-            <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
-                @Html.Hidden("FixtureDateTime", item.FixtureDateTime.ToLongDateString() + " " + item.FixtureDateTime.ToShortTimeString())
-
+            <td style="text-align: center; vertical-align: middle;" witdth="20%" class="myDate">
+                <div class="row no-gutters">
+                    @Html.Hidden("FixtureDateTime", item.FixtureDateTime.ToLongDateString() + " " + item.FixtureDateTime.ToShortTimeString())
+                </div>
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            <td style="text-align: center; vertical-align: middle;" witdth="20%">
+                <div class="row no-gutters">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                </div>
             </td>
 
-        </tr>
+</tr>
     }
 </table>
 

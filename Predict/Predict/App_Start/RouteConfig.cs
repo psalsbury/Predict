@@ -8,6 +8,7 @@ namespace Predict
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{*x}", new { x = @".*\.asmx(/.*)?" });
 
             routes.MapRoute(
                 "EnterFixturePredictions", // Route name

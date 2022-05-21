@@ -9,14 +9,19 @@
             <a href="/Admin/AdminHome">Admin Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/Leagues/LeaguesIndex">League List</a>
+            <a href="/Leagues/LeaguesIndex">Leagues</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">League Generation</li>
+        <li class="breadcrumb-item active" aria-current="page">Gen List</li>
     </ol>
 </nav>
 
 <p>
-    @Html.ActionLink("Create New Generation", "EditLeagueEventGeneration", new { Id = 0, LeagueId = Model.League.Id })
+    <input type="button"
+           value="Create New Generation"
+           class="btn btn-success"
+           onclick="location.href = '@Url.Action("EditLeagueEventGeneration", "LeagueEventGenerations", new { Id = 0, LeagueId = Model.League.Id })'" />
+
+    
 </p>
 
 <table id="leagues" name="leagues" class="table table-bordered table-hover">
@@ -28,7 +33,6 @@
             <th style="text-align: left; vertical-align: middle;">Freq/Type</th>
             <th style="text-align: left; vertical-align: middle;">Enbld</th>
             <th style="text-align: left; vertical-align: middle;">&nbsp;</th>
-            <th>&nbsp;</th>
         </tr>
     </thead>
     @foreach (var item in Model.LeagueEventGenerations)
@@ -64,7 +68,3 @@
         </tr>
     }
 </table>
-
-<div>
-    @Html.ActionLink("Back to List", "LeaguesIndex", "Leagues")
-</div>

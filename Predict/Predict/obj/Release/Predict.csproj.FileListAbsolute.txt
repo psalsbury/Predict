@@ -596,3 +596,4 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.QuestionTypeEnum
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.rapidapiv3AndSubLeagues.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.leagueAssociation.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.ForumSQLUpdates.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.BaseDatesDateTime2.resources

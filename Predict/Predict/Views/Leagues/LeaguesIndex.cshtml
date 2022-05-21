@@ -8,22 +8,25 @@
         <li class="breadcrumb-item">
             <a href="/Admin/AdminHome">Admin Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">League List</li>
+        <li class="breadcrumb-item active" aria-current="page">Leagues</li>
     </ol>
 </nav>
 
 <input class="form-control" id="myInput" type="text" placeholder="Search..">
-
+<br />
 <p>
-    @Html.ActionLink("Create New League", "EditLeague", new { leagueId = 0 })
+    <input type="button"
+           value="Create New League"
+           class="btn btn-success"
+           onclick="location.href = '@Url.Action("EditLeague", "Leagues", new { leagueId = 0 })'" />
 </p>
+
 
 <table id="leagues" name="leagues" class="table table-bordered table-hover">
     <thead>
         <tr>
 
             <th style="text-align: left; vertical-align: middle;">League Name</th>
-            <th style="text-align: left; vertical-align: middle;">RapidApiId</th>
             <th>&nbsp;</th>
         </tr>
     </thead>
@@ -31,7 +34,6 @@
     {
         <tr>
             <td style="text-align: left; vertical-align: middle;">@item.LeagueName</td>
-            <td style="text-align: left; vertical-align: middle;">@(item.RapidApiLeagueId==null?item.RapidApiV3LeagueSeasonId:item.RapidApiLeagueId)</td>
             <td style="text-align: left; vertical-align: middle;">@Html.ActionLink("Edit", "EditLeague", new { leagueId = item.Id })</td>
             <td style="text-align: left; vertical-align: middle;">
                 @Html.ActionLink(

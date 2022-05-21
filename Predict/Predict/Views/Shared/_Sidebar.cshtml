@@ -1,74 +1,156 @@
 ﻿@using Predict.Helper
 @using Predict.Models
 @using WebHelpers.Mvc5
-<aside class="main-sidebar">
-    <section class="sidebar">
+<div id="sidebardiv">
+    <aside class="main-sidebar">
+        <section class="sidebar">
 
-        @* BEGIN Menu *@
-        <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">Prediction Menu</li>
+            @* BEGIN Menu *@
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">Prediction Menu</li>
 
-            @if (Request.IsAuthenticated)
-            {
-            var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
-            var hasJokes = System.Convert.ToBoolean(Session["PlayerJokes"]);
-            var hasQuizQuestions = System.Convert.ToBoolean(Session["PlayerQuizQuestions"]);
-                            
-            
-                if (eventPlayers != null)
+                @if (Request.IsAuthenticated)
+                {
+                    var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
+                    var hasJokes = System.Convert.ToBoolean(Session["PlayerJokes"]);
+                    var hasQuizQuestions = System.Convert.ToBoolean(Session["PlayerQuizQuestions"]);
+
+                    if (eventPlayers != null)
+                    {
+
+                        foreach (var eventPlayer in eventPlayers)
+                        {
+                            if (eventPlayer != null)
                             {
+                                <li>
+                                    <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
+                                        <i class="fa fa-trophy"></i> <span>@eventPlayer.Event.EventName</span>
+                                    </a>
+                                </li>
+                            }
 
-                                foreach (var eventPlayer in eventPlayers)
-                                {
-                                    if (eventPlayer != null)
-                                    {
-                            <li>
-                                <a href="@Url.Action("Index", "Home", new {eventId = eventPlayer.EventId})">
-                                    <i class="fa fa-trophy"></i> <span>@eventPlayer.Event.EventName</span>
-                                </a>
-                            </li>
                         }
-
-            }
-                }
-
-                <li>
-                    <a href="@Url.Action("Index", "PoolDashboard")">
-                        <i class="fa fa-users"></i> <span>Your Leagues</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="@Url.Action("Index", "EventPlayers")">
-                        <i class="fa fa-soccer-ball-o"></i>
-                        <span>Your Comps</span>
-
-
-                    </a>
-                </li>
-
-
-
-                if (User.IsInRole("Admin"))
-            {
-
+                    }
 
                     <li>
-                        <a href="@Url.Action("AdminHome", "Admin")">
-                            <i class="fa fa-gear"></i> <span>Admin</span>
+                        <a href="@Url.Action("Index", "PoolDashboard")">
+                            <i class="fa fa-users"></i> <span>Your Leagues</span>
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="@Url.Action("CompsDashboardIndex", "CompsDashboard")">
+                            <i class="fa fa-soccer-ball-o"></i>
+                            <span>Your Comps</span>
+                        </a>
+                    </li>
+
+                    if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a href="@Url.Action("AdminHome", "Admin")">
+                                <i class="fa fa-gear"></i> <span>Admin</span>
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a href="@Url.Action("ForumIndex", "ForumTopics")">
+                            <i class="fa fa-comments-o"></i> <span>Message Board</span>
+                        </a>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-smile-o"></i> <span>Jokes</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="@Url.Action("ShowJoke", "Jokes")">
+                                    <i class="fa fa-smile-o"></i> <span>Show Joke</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("JokesTable", "Jokes")">
+                                    <i class="fa fa-list"></i> <span>Joke League</span>
+                                </a>
+                            </li>
+
+                            @if (hasJokes)
+                            {
+                                <li>
+                                    <a href="@Url.Action("DisplayJokeList", "Jokes")">
+                                        <i class="fa fa-list"></i> <span>Edit Your Jokes</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@Url.Action("AddJoke", "Jokes")">
+                                        <i class="fa fa-list"></i> <span>Add New Joke</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-question-circle"></i> <span>Footy Quiz</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+
+                        <ul class="treeview-menu">
+
+                            <li>
+                                <a href="@Url.Action("DoQuiz", "QuizQuestions")">
+                                    <i class="fa fa-question"></i> <span>Do Footy Quiz</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("QuizTable", "QuizQuestions")">
+                                    <i class="fa fa-list"></i> <span>Quiz League</span>
+                                </a>
+                            </li>
+                            @if (hasQuizQuestions)
+                            {
+                                <li>
+
+                                    <a href="@Url.Action("DisplayQuizQuestionList", "QuizQuestions")">
+                                        <i class="fa fa-list"></i> <span>Edit Your Questions</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@Url.Action("AddQuizQuestion", "QuizQuestions")">
+                                        <i class="fa fa-list"></i> <span>Add New Quiz Question</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
                 }
-                <li>
-                    <a href="@Url.Action("ForumIndex", "ForumTopics")">
-                        <i class="fa fa-comments-o"></i> <span>Message Board</span>
-                    </a>
-                </li>
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-home"></i> <span>Home</span>
+                        </a>
+                    </li>
+                }
+
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-smile-o"></i> <span>Jokes</span>
+                        <i class="fa fa-question-circle"></i> <span>Help</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -76,117 +158,27 @@
 
                     <ul class="treeview-menu">
                         <li>
-                            <a href="@Url.Action("ShowJoke", "Jokes")">
-                                <i class="fa fa-smile-o"></i> <span>Show Joke</span>
+                            <a href="@Url.Action("Rules", "Home")">
+                                <i class="fa fa-book"></i> <span>Site Info</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("JokesTable", "Jokes")">
-                                <i class="fa fa-list"></i> <span>Joke League</span>
+                            <a href="@Url.Action("ContactUs", "Home")">
+                                <i class="fa fa-envelope"></i> <span>Contact Us</span>
                             </a>
                         </li>
-
-                        @if (hasJokes)
-                        {
-                            <li>
-                                <a href="@Url.Action("DisplayJokeList", "Jokes")">
-                                    <i class="fa fa-list"></i> <span>Edit Your Jokes</span>
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="@Url.Action("AddJoke", "Jokes")">
-                                    <i class="fa fa-list"></i> <span>Add New Joke</span>
-                                </a>
-                            </li>
-                        }
-
+                        <li>
+                            <a href="@Url.Action("FeatureRequest", "Home")">
+                                <i class="fa fa-envelope"></i> <span>Feature Request</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-question-circle"></i> <span>Footy Quiz</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-
-                    <ul class="treeview-menu">
-
-                        <li>
-                            <a href="@Url.Action("DoQuiz", "QuizQuestions")">
-                                <i class="fa fa-question"></i> <span>Do Footy Quiz</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("QuizTable", "QuizQuestions")">
-                                <i class="fa fa-list"></i> <span>Quiz League</span>
-                            </a>
-                        </li>
-                        @if (hasQuizQuestions)
-                        {
-                            <li>
-                                
-                                <a href="@Url.Action("DisplayQuizQuestionList", "QuizQuestions")">
-                                    <i class="fa fa-list"></i> <span>Edit Your Questions</span>
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="@Url.Action("AddQuizQuestion", "QuizQuestions")">
-                                    <i class="fa fa-list"></i> <span>Add New Quiz Question</span>
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-
-            }
-            else
-            {
-                <li>
-                    <a href="@Url.Action("Index", "Home")">
-                        <i class="fa fa-home"></i> <span>Home</span>
-                    </a>
-                </li>
-            }
 
 
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-question-circle"></i> <span>Help</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="@Url.Action("Rules", "Home")">
-                            <i class="fa fa-book"></i> <span>Site Info</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("ContactUs", "Home")">
-                            <i class="fa fa-envelope"></i> <span>Contact Us</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("FeatureRequest", "Home")">
-                            <i class="fa fa-envelope"></i> <span>Feature Request</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
-
-
-        </ul>
-        @* END Menu *@
-    </section>
-</aside>
+            </ul>
+            @* END Menu *@
+        </section>
+    </aside>
+</div>

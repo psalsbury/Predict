@@ -1,6 +1,7 @@
 ﻿using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
+using Predict.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web.Mvc;
 using Predict.Helper;
+using System.Data.SqlClient;
 
 namespace Predict.Controllers
 {
@@ -23,6 +25,66 @@ namespace Predict.Controllers
         }
 
         // GET: EventPlayers
+        public ActionResult JoinAComp()
+        {
+            // Session["EventPlayers"] is required for the view. if its null, go back to the home page
+            if (!User.Identity.IsAuthenticated | Session["EventPlayers"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var eventPlayersViewModel = _context.Database.SqlQuery<EventPlayersViewModel>(
+                "spGetEventListForDisplay @OnlyShowActive"
+                , new SqlParameter("@OnlyShowActive", true)).ToList();
+
+            var eventPlayers = (List<EventPlayer>)Session["EventPlayers"];
+            var eventIdsPlaying = eventPlayers.Where(a => a.Event.EventFinished == false).Select(a => a.EventId).ToList();
+
+            // Only show the active comps that this player is not already playing
+            var filteredList = eventPlayersViewModel.Where(a => !eventIdsPlaying.Contains(a.EventId)).ToList();
+            return View(filteredList);
+        }
+
+        // GET: EventPlayers
+        public ActionResult ActiveComps()
+        {
+            // Session["EventPlayers"] is required for the view. if its null, go back to the home page
+            if (!User.Identity.IsAuthenticated | Session["EventPlayers"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userId = User.Identity.GetUserId();
+            var eventPlayersViewModel = _context.Database.SqlQuery<EventPlayersViewModel>(
+                "spGetEventListForDisplay @OnlyShowActive, @CreatedByUserId, @ParticipatingInUserId"
+                , new SqlParameter("@OnlyShowActive", true)
+                , new SqlParameter("@CreatedByUserId", DBNull.Value)
+                , new SqlParameter("@ParticipatingInUserId", userId)).ToList();
+
+            return View(eventPlayersViewModel);
+        }
+
+        public ActionResult FinishedComps()
+        {
+            // Session["EventPlayers"] is required for the view. if its null, go back to the home page
+            if (!User.Identity.IsAuthenticated | Session["EventPlayers"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userId = User.Identity.GetUserId();
+            var eventPlayersViewModel = _context.Database.SqlQuery<EventPlayersViewModel>(
+                "spGetEventListForDisplay @OnlyShowActive, @CreatedByUserId, @ParticipatingInUserId"
+                , new SqlParameter("@OnlyShowActive", false)
+                , new SqlParameter("@CreatedByUserId", DBNull.Value)
+                , new SqlParameter("@ParticipatingInUserId", userId))
+                .OrderByDescending(a => a.EndDateTime)
+                .ToList();
+
+            return View(eventPlayersViewModel);
+        }
+
+        // GET: EventPlayers
         public ActionResult Index()
         {
             // Session["EventPlayers"] is required for the view. if its null, go back to the home page
@@ -33,7 +95,7 @@ namespace Predict.Controllers
 
             var myEvents = (List<Event>)Predict.Helper.Cache.GetCachedItem("Events");
 
-            return View(myEvents);
+            return View(myEvents.OrderBy(a => a.EventDescription));
         }
 
         [HttpPost]

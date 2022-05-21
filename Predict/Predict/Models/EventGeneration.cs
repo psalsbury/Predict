@@ -21,8 +21,9 @@ namespace Predict.Models
         [ForeignKey("LeagueEventGenerationId")]
         public LeagueEventGeneration LeagueEventGeneration { get; set; }
 
-        [Key, Column(Order = 2)]
+        [Key, Column(Order = 2, TypeName = "datetime2")]
         public DateTime BaseStartDate { get; set; }
+        [Column(TypeName = "datetime2")]
         public DateTime BaseEndDate { get; set; }
 
         [Required]

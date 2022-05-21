@@ -270,6 +270,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -296,6 +297,7 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
@@ -354,6 +356,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\EventFixturesController.cs" />
+    <Compile Include="Controllers\Api\EventPlayersController.cs" />
     <Compile Include="Controllers\Api\EventsController.cs" />
     <Compile Include="Controllers\Api\FixtureOddsController.cs" />
     <Compile Include="Controllers\Api\JokeRatingsController.cs" />
@@ -362,6 +365,7 @@
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\Api\QuizQuestionsController.cs" />
     <Compile Include="Controllers\BonusQuestionPredictionsController.cs" />
+    <Compile Include="Controllers\CompsDashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventFixturesController.cs" />
     <Compile Include="Controllers\EventPlayersController.cs" />
@@ -398,7 +402,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GoogleCaptcha\GoogleCaptchaResponse.cs" />
-    <Compile Include="Helper\EventTeam.cs" />
     <Compile Include="Helper\LeagueTableTeamThirdPlaceHelper.cs" />
     <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="Helper\Helper.cs" />
@@ -461,6 +464,10 @@
     <Compile Include="Migrations\202205040737113_ForumSQLUpdates.Designer.cs">
       <DependentUpon>202205040737113_ForumSQLUpdates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205111145291_BaseDatesDateTime2.cs" />
+    <Compile Include="Migrations\202205111145291_BaseDatesDateTime2.Designer.cs">
+      <DependentUpon>202205111145291_BaseDatesDateTime2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -488,6 +495,7 @@
     <Compile Include="RapidApi\RapidApiV3CountriesClassHelper.cs" />
     <Compile Include="RapidApi\RapidApiV3FixtureClassHelper.cs" />
     <Compile Include="RapidApi\RapidApiV3LeagueClassHelper.cs" />
+    <Compile Include="ViewModels\EventPlayersViewModel.cs" />
     <Compile Include="ViewModels\JokeTable.cs" />
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
@@ -542,6 +550,11 @@
     <Compile Include="ViewModels\StatsFixtureViewModel.cs" />
     <Compile Include="ViewModels\StatsKOViewModel.cs" />
     <Compile Include="ViewModels\TableViewModel.cs" />
+    <Compile Include="WebServices\wsEventPlayer.asmx.cs">
+      <DependentUpon>wsEventPlayer.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Content Include="WebServices\wsEventPlayer.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
@@ -663,6 +676,10 @@
     <Content Include="Views\QuizQuestions\DoQuiz.cshtml" />
     <Content Include="Views\LeagueEventGenerations\LeagueEventGenerationsIndex.cshtml" />
     <Content Include="Views\LeagueEventGenerations\EditLeagueEventGeneration.cshtml" />
+    <Content Include="Views\CompsDashboard\CompsDashboardIndex.cshtml" />
+    <Content Include="Views\EventPlayers\JoinAComp.cshtml" />
+    <Content Include="Views\EventPlayers\ActiveComps.cshtml" />
+    <Content Include="Views\EventPlayers\FinishedComps.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -721,6 +738,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205040737113_ForumSQLUpdates.resx">
       <DependentUpon>202205040737113_ForumSQLUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205111145291_BaseDatesDateTime2.resx">
+      <DependentUpon>202205111145291_BaseDatesDateTime2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -53,7 +53,10 @@ namespace Predict.Controllers
                 Id = s.Id,
                 Description = s.RapidApiV3League.CountryName + " " + s.RapidApiV3League.Name + " " + s.Year.ToString()
             })
+            .OrderBy(a => a.Description)
             .ToList();
+
+            rapidApiV3LeagueSeasons.Add(new { Id = 0, Description = "League /Season" });
 
             return new SelectList(rapidApiV3LeagueSeasons, "Id", "Description", "League /Season");
         }

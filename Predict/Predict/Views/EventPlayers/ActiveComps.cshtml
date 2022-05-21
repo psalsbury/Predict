@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNet.Identity
+@using Predict.Models
+@using System.Linq;
+@model List<Predict.ViewModels.EventPlayersViewModel>
+
+@{
+    var eventPlayers = (List<EventPlayer>)Session["EventPlayers"];
+    var playerId = User.Identity.GetUserId();
+    ViewBag.Title = "Join A Prediction Comp";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/CompsDashboard/CompsDashboardIndex">Comps Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Active Comps</li>
+    </ol>
+</nav>
+
+<table id="EventPlayers" class="table table-hover">
+    <tr>
+
+        <th>
+            Comp
+        </th>
+        <th>Players</th>
+        <th>&nbsp;</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr height="60">
+
+            <td style="vertical-align: middle;">
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td style="vertical-align: middle;">@item.NbrPlayers</td>
+            <td style="vertical-align: middle;" class="row no-gutters">
+                <button class="btn btn-danger js-delete btn-sm" value="Leave" dataEventId="@item.EventId">Leave</button>
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    $("#EventPlayers").on("click",
+        ".js-delete",
+        function () {
+            var button = $(this);
+            $(button.html("<i class='fa fa-refresh fa-spin'></i>"));
+            $.ajax(
+                {
+                    url: "../api/EventPlayers/Delete/" + button.attr("dataEventId"),
+                    method: "POST",
+                    success: function () {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/webservices/wsEventPlayer.asmx/UpdateEventPlayerSession",
+                            data: "{}",
+                            contentType: "application/json",
+                            datatype: "json",
+                            success: function () {
+                                $('#sidebardiv').load('@Url.Action("_SideBar","Home")');
+                            },
+                            error: function (request, error) {
+                                alert('Please log out and back in to refresh');
+                            }
+                        });
+
+                        $(button.closest("tr")).fadeOut(1000);
+                    },
+                    error: function (request, error) {
+                        $(button.attr('class', 'btn btn-danger js-delete btn-sm'));
+                        $(button.html("Leave"));
+                    }
+                });
+
+
+        });
+</script>

@@ -39,7 +39,7 @@ namespace Predict.Controllers
             var events = _context.Events.Where(a => (a.EndDateTime >= DateTime.MinValue
                                                      || a.StartDateTime == DateTime.MinValue)
                                                     && (isAdmin || a.CreatedByPlayerId== playerId))
-                .OrderByDescending(a => a.StartDateTime)                                    
+                .OrderByDescending(a => a.EndDateTime)                                    
                 .ToList();
 
             return View(events);

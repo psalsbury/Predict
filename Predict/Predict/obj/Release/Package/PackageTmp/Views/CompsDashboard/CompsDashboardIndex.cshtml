@@ -1,0 +1,91 @@
+﻿@{
+    var nbrUpcoming = ViewBag.nbrUpcoming;
+    var nbrParticipatingIn = ViewBag.nbrParticipatingIn;
+    var nbrCompletedEvents = ViewBag.nbrCompletedEvents;
+    var nbrOwnedEvents = ViewBag.nbrOwnedEvents;
+    ViewBag.Title = "Comps Dashboard";
+}
+
+<link rel="stylesheet" href="~/content/css/ionicons.min.css">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Comps Dashboard</a>
+        </li>
+    </ol>
+</nav>
+
+<!-- Info boxes -->
+<div class="row">
+
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-trophy"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text"><b>@nbrUpcoming Comp@(nbrUpcoming == 1?"":"s") open</b></span>
+                @Html.ActionLink("Join A Comp", "JoinAComp", "EventPlayers", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-blue"><i class="ion ion-play"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text"><b>@nbrParticipatingIn Comp@(nbrUpcoming == 1?"":"s") in progress</b></span>
+                @Html.ActionLink("Your Active Comps", "ActiveComps", "EventPlayers", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-power"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text"><b>@nbrCompletedEvents Comp@(nbrCompletedEvents == 1?"":"s")</b></span>
+                @Html.ActionLink("Your Finished Comps", "FinishedComps", "EventPlayers", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-purple"><i class="fa fa-pencil"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">&nbsp</span>
+                @Html.ActionLink("Create New Comp", "AddEvent", "Events", null, new { @class = "btn btn-success" })
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    @if (1 == 1)
+    {
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-book"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"><b>@nbrOwnedEvents Comp@(nbrOwnedEvents == 1 ? "" : "s")</b></span>
+                    @Html.ActionLink("Manage Your Comps", "EventsIndex", "Events", null, new { @class = "btn btn-success" })
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+    }
+
+</div>

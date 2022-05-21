@@ -3,14 +3,14 @@
 @model IEnumerable<Predict.Models.Event>
 
 @{
-    ViewBag.Title = "Add/Edit Comps";
+    ViewBag.Title = "Manage Your Comps";
 }
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/EventPlayers">Your Comps</a>
+            <a href="/CompsDashboard/CompsDashboardIndex">Comps Dashboard</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Comps List</li>
+        <li class="breadcrumb-item active" aria-current="page">Manage Your Comps</li>
     </ol>
 </nav>
 
@@ -48,26 +48,32 @@
                     @item.EndDateTime.ToString("f")
                 </td>
                 <td>
+                    @if (item.EventFinished)
+                    {
+                        @Html.ActionLink("Show Fixtures", "GroupGameResults", "Results", new { @id = item.Id }, new { @class = "btn btn-info" })
+                    }
+                    else
+                    {
 
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success">Action</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="@Url.Action("Index", "EventFixtures", new {id = item.Id}) ">Add Fixtures</a></li>
-                            <li><a href="@Url.Action("GroupGameResults", "Results", new {id = item.Id}) ">Show Fixtures</a></li>
-                            @if (@User.IsInRole("Admin"))
-                            {
-                                <li><a href="@Url.Action("Index", "KoFixtures", new {id = item.Id}) ">KO Fixtures</a></li>
-                            }
-                            <li><a href="@Url.Action("EditEvent", "Events", new {id = item.Id})">Edit</a></li>
-                            <li class="divider"></li>
-                            <li class="js-delete" dataEventId="@item.Id" dataEventName="@item.EventName"><a href="#">Delete Comp</a></li>
-                        </ul>
-                    </div>
-
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success">Action</button>
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@Url.Action("Index", "EventFixtures", new {id = item.Id}) ">Add Fixtures</a></li>
+                                <li><a href="@Url.Action("GroupGameResults", "Results", new {id = item.Id}) ">Show Fixtures</a></li>
+                                @if (@User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("Index", "KoFixtures", new {id = item.Id}) ">KO Fixtures</a></li>
+                                }
+                                <li><a href="@Url.Action("EditEvent", "Events", new {id = item.Id})">Edit</a></li>
+                                <li class="divider"></li>
+                                <li class="js-delete" dataEventId="@item.Id" dataEventName="@item.EventName"><a href="#">Delete Comp</a></li>
+                            </ul>
+                        </div>
+                    }
                 </td>
             </tr>
         }

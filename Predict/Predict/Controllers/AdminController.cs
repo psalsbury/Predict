@@ -31,6 +31,9 @@ namespace Predict.Controllers
 
             var v3Countries = _context.RapidApiV3Countries.ToList();
 
+            var nbrTimesApiCalled = RapidApi.RapidApiHelper.SettingCheck(_context);
+
+            ViewBag.nbrTimesApiCalled = nbrTimesApiCalled;
             return View(v3Countries);
         }
 
@@ -54,6 +57,19 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             RapidApi.RapidApiHelper.ForceDailyRapidApiLeagueCheck();
+
+            return RedirectToAction("AdminHome", "Admin");
+        }
+
+
+        [HttpPost]
+        public ActionResult GenerateAndUpdateEvents()
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            RapidApi.RapidApiHelper.GenerateAndUpdateEvents();
 
             return RedirectToAction("AdminHome", "Admin");
         }
