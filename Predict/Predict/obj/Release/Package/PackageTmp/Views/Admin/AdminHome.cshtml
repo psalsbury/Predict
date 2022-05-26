@@ -2,7 +2,7 @@
 @model List<Predict.Models.RapidApiV3Country>
 
 @using Predict.RapidApi
-@{ 
+@{
     var nbrTimesApiCalled = ViewBag.nbrTimesApiCalled;
 }
 
@@ -18,12 +18,22 @@
     </div>
 }
 
-@using (Html.BeginForm("ForceDailyUpdate", "Admin"))
+@using (Html.BeginForm("ForceDailyUpdateWithBetting", "Admin"))
 {
     <div class="form-group">
         <div>
             @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-            <input type="submit" value="Force Daily Update" class="btn btn-success" />
+            <input type="submit" value="Force Daily Update With Betting Odds" class="btn btn-success" />
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("ForceDailyUpdateWithoutBetting", "Admin"))
+{
+    <div class="form-group">
+        <div>
+            @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+            <input type="submit" value="Force Daily Update Without Betting Odds" class="btn btn-success" />
         </div>
     </div>
 }

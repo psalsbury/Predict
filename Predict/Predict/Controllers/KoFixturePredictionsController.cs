@@ -206,10 +206,12 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var loggedInUserId = User.Identity.GetUserId();
-            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, loggedInUserId, false, eventId);
+            var showReadOnly = Cache.HasEventStarted(eventId) == true ? true : false;
 
-            if (Cache.HasEventStarted(eventId))
+            var loggedInUserId = User.Identity.GetUserId();
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, loggedInUserId, showReadOnly, eventId);
+
+            if (showReadOnly)
             {
                 koFixturePredictionViewModel.ReadOnly = true;
                 return View("KoFixturePredictions",koFixturePredictionViewModel);

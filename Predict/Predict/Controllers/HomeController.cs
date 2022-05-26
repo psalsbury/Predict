@@ -3,8 +3,9 @@ using Predict.Helper;
 using Predict.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Web.Mvc;
+using System.Data.Entity;
+
 
 namespace Predict.Controllers
 {
@@ -27,12 +28,16 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return View(eventPlayer);
 
-            SessionHelper.SetUserSessionVariables(Session, User.Identity.GetUserId(), false);
+            var playerId = User.Identity.GetUserId();
+
+            SessionHelper.SetUserSessionVariables(Session, playerId, false);
 
             var eventId = System.Convert.ToInt16(Request["EventId"]);
 
-            if(User.Identity.IsAuthenticated && eventId != 0 && Helper.Cache.GetCachedEvent(eventId) == null)
-                return RedirectToAction("Index", "Home");
+            if (Helper.Cache.GetCachedEvent(eventId) == null)
+            {
+                Helper.Cache.SetEventCache(eventId);
+            }
 
             if (eventId == 0)
             {
@@ -45,7 +50,16 @@ namespace Predict.Controllers
             else
             {
                 eventPlayer =
-                    ((List<EventPlayer>)Session["EventPlayers"]).First(e => e.EventId == eventId);
+                    ((List<EventPlayer>)Session["EventPlayers"]).FirstOrDefault(e => e.EventId == eventId);
+
+                if(eventPlayer==null)
+                {
+                    eventPlayer = _context.EventPlayers
+                        .Include(a => a.Event)
+                        .Where(a => a.EventId == eventId && a.PlayerId == playerId).FirstOrDefault();
+                    SessionHelper.AddEventPlayerToSessionVariable(eventPlayer, Session);
+                    SessionHelper.UpdateSessionForHomePage(_context, Session, eventPlayer, false, true);
+                }
             }
 
             if (eventPlayer != null)

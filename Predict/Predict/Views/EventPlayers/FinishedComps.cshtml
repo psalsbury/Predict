@@ -4,7 +4,7 @@
 @model List<Predict.ViewModels.EventPlayersViewModel>
 
 @{
-    ViewBag.Title = "Finished Comp";
+    ViewBag.Title = "Finished Comps";
 }
 
 <nav aria-label="breadcrumb">
@@ -16,6 +16,8 @@
     </ol>
 </nav>
 
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+
 <table id="EventPlayers" class="table table-hover">
     <tr>
 
@@ -23,25 +25,38 @@
             Comp
         </th>
         <th>Players</th>
-        <th>thing</th>
+        <th>&nbsp;</th>
     </tr>
 
     @foreach (var item in Model)
     {
 
-<tr height="60">
+        <tr height="60">
 
-    <td style="vertical-align: middle;">
-        @Html.DisplayFor(modelItem => item.EventName)
-    </td>
-    <td style="vertical-align: middle;">@item.NbrPlayers</td>
-    <td style="vertical-align: middle;">
+            <td style="vertical-align: middle;">
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td style="vertical-align: middle;">@item.NbrPlayers</td>
+            <td style="vertical-align: middle;">
 
-        <a class="btn btn-info" href='@Url.Action("Index", "Home", new { eventId = item.EventId})'>
-            <i class="fa fa-home"></i>&nbsp; Home
-        </a>
-    </td>
-</tr>
+                <a class="btn btn-info" href='@Url.Action("Index", "Home", new { eventId = item.EventId})'>
+                    <i class="fa fa-home"></i>&nbsp; Home
+                </a>
+            </td>
+        </tr>
     }
 </table>
 
+
+<script>
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#EventPlayers tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+</script>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using Predict.Models;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Predict.Controllers.Api
 {
@@ -152,6 +153,7 @@ namespace Predict.Controllers.Api
             var green = "#E8FBE1";
             var red = "#FFDBDB";
             var amber = "#FAF8DF";
+            var blue = "#B4CFEC";
 
             var homeColor = "";
             var drawColor = "";
@@ -221,19 +223,40 @@ namespace Predict.Controllers.Api
                 }
             }
 
-            var fixtureOddsByScore = _context.FixtureOddsByScores.Where(a => a.RapidApiFixtureId == rapidApiFixtureId
-                                                                             && ((a.HomeScore == homeResult &&
-                                                                                     a.AwayScore == awayResult) ||
-                                                                                 (a.HomeScore == homePrediction &&
-                                                                                     a.AwayScore == awayPrediction)));
+            var allFixtureOddsByScore = _context.FixtureOddsByScores.Where(a => a.RapidApiFixtureId == rapidApiFixtureId && a.Odds != 0).ToList();
+            var fixtureOddsByScore = allFixtureOddsByScore.Where(a => ((a.HomeScore == homeResult &&
+                                                                        a.AwayScore == awayResult) 
+                                                                        ||
+                                                                       (a.HomeScore == homePrediction &&
+                                                                        a.AwayScore == awayPrediction)));
+            row = "<div>"
+                     + "<p class='alignleft' style='vertical-align: middle;'><i>Odds refreshed daily up until kick off</i><p>";
 
+            if(allFixtureOddsByScore.Count>0)
+            {
+                row += "<span class='btn btn-primary alignright' id='petebutton'>&nbsp;<i class='fa fa-info'></i></span>";
+            }
+
+            row += "</div><br><br>";
+
+            row += "<div id='playerinfo'>";
             if (fixtureOddsByResult != null)
             {
 
-                row = "<table class='table table-bordered'><tr bgcolor='" + homeColor + "'><td>{0}</td><td>" + fixtureOddsByResult.HomeOdds +
-                          "</td></tr>";
-                row += "<tr bgcolor='" + drawColor + "'><td>Draw</td><td>" + fixtureOddsByResult.DrawOdds + "</td></tr>";
-                row += "<tr bgcolor='" + awayColor + "'><td>{1}</td><td>" + fixtureOddsByResult.AwayOdds + "</td></tr></table>";
+                row += "<table class='table table-bordered' style='font-size: 11px;'>"
+                        + "<tr bgcolor='" + homeColor + "'>"
+                            + "<td>{0}</td>"
+                            + "<td>" + fixtureOddsByResult.HomeOdds + "</td>"
+                        + "</tr>";
+                row += "<tr bgcolor='" + drawColor + "'>"
+                        + "<td>Draw</td>"
+                        + "<td>" + fixtureOddsByResult.DrawOdds + "</td>"
+                    + "</tr>";
+                row += "<tr bgcolor='" + awayColor + "'>"
+                        + "<td>{1}</td>"
+                        + "<td>" + fixtureOddsByResult.AwayOdds + "</td>"
+                        + "</tr>"
+                    + "</table>";
             }
 
             // If another user is viewing the odds for a player, then dont show the odds for the predicted score;
@@ -253,9 +276,15 @@ namespace Predict.Controllers.Api
                     row += "<p><i>Predicted scoreline odds</i><p>";
                 }
 
-                row += "<table class='table table-bordered'><tr bgcolor='"+ (predCorrect?green: (homeResult>=0?red:amber))+"'><td width='25%'>{0}</td><td width='15%'>" + predictionScore.HomeScore +
-                       "<td  width='25%'>{1}</td><td width='15%'>" + predictionScore.AwayScore +
-                       "<td width='20%'>" + predictionScore.Odds + "</td></tr></table>";
+                row += "<table class='table table-bordered' style='font-size: 11px;'>"
+                        + "<tr bgcolor='"+ (predCorrect?green: (homeResult>=0?red:amber))+"'>"
+                            + "<td width='32%'>{0}</td>"
+                            + "<td width='8%'>" + predictionScore.HomeScore + "</td>"
+                            + "<td width='32%'>{1}</td>"
+                            + "<td width='8%'>" + predictionScore.AwayScore + "</td>"
+                            + "<td width='20%'>" + predictionScore.Odds + "</td>"
+                        + "</tr>"
+                        + "</table>";
             }
 
             if (homeResult != homePrediction || awayResult != awayPrediction)
@@ -264,12 +293,65 @@ namespace Predict.Controllers.Api
                 if (resultScore != null)
                 {
                     row += "<p><i>Actual scoreline odds</i><p> " +
-                            "<table class='table table-bordered'><tr bgcolor='"+green+"'><td width='25%'>{0}</td><td width='15%'>" + resultScore.HomeScore +
-                           "<td width='25%'>{1}</td><td width='15%'>" + resultScore.AwayScore +
-                           "<td width='20%'>" + resultScore.Odds + "</td></tr></table>";
+                            "<table class='table table-bordered' style='font-size: 11px;'>"
+                                + "<tr bgcolor='" + green +"'>"
+                                    + "<td width='32%'>{0}</td>"
+                                    + "<td width='8%'>" + resultScore.HomeScore + "</td>"
+                                    + "<td width='32%'>{1}</td>"
+                                    + "<td width='8%'>" + resultScore.AwayScore + "</td>"
+                                    + "<td width='20%'>" + resultScore.Odds + "</td>"
+                                + "</tr>"
+                             + "</table>";
                 }
             }
+            row += "</div>";
+            row += "<div id='allodds'>";
 
+
+
+            for (int i = 1; i <= 3; i++)
+            {
+                List<FixtureOddsByScore> tablsAllFixtureOddsByScore;
+                if (i==1)
+                {
+                    tablsAllFixtureOddsByScore = allFixtureOddsByScore.Where(a => a.HomeScore > a.AwayScore).OrderBy(a => a.Odds).ToList(); ;
+                    row += "<b><i>{0} win</i></b>";
+                }
+                else if (i == 2)
+                {
+                    tablsAllFixtureOddsByScore = allFixtureOddsByScore.Where(a => a.HomeScore < a.AwayScore).OrderBy(a => a.Odds).ToList();
+                    row += "<b><i>{1} win</i></b>";
+                }
+                else
+                {
+                    tablsAllFixtureOddsByScore = allFixtureOddsByScore.Where(a => a.HomeScore == a.AwayScore).OrderBy(a => a.Odds).ToList();
+                    row += "<b><i>Game is a draw</i></b>";
+                }
+
+                row += "<table class='table' style='font-size: 11px;'>";
+                foreach (var thisFixtureOddsByScore in tablsAllFixtureOddsByScore)
+                {
+                    if (thisFixtureOddsByScore.HomeScore == homeResult && thisFixtureOddsByScore.AwayScore == awayResult)
+                    {
+                        row += "<tr bgcolor='" + blue + "'>";
+                    }
+                    else
+                    {
+                        row += "<tr>";
+                    }
+                    row += "<td width='32%'>{0}</td>"
+                            + "<td width='8%'>" + thisFixtureOddsByScore.HomeScore + "</td>"
+                            + "<td width='32%'>{1}</td>"
+                            + "<td width='8%'>" + thisFixtureOddsByScore.AwayScore + "</td>"
+                            + "<td width='20%'>" + thisFixtureOddsByScore.Odds + "</td>"
+                        + "</tr>";
+                }
+                row += "</table>";
+            }
+
+
+            row += "</div>";
+            
             // return html needed to show
             return row;
         }

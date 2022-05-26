@@ -495,6 +495,7 @@
     <Compile Include="RapidApi\RapidApiV3CountriesClassHelper.cs" />
     <Compile Include="RapidApi\RapidApiV3FixtureClassHelper.cs" />
     <Compile Include="RapidApi\RapidApiV3LeagueClassHelper.cs" />
+    <Compile Include="RapidApi\RapidApiV3OddsClassHelper.cs" />
     <Compile Include="ViewModels\EventPlayersViewModel.cs" />
     <Compile Include="ViewModels\JokeTable.cs" />
     <Compile Include="Models\KoFixture.cs" />

@@ -50,13 +50,25 @@ namespace Predict.Controllers
         }
 
         [HttpPost]
-        public ActionResult ForceDailyUpdate()
+        public ActionResult ForceDailyUpdateWithBetting()
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            RapidApi.RapidApiHelper.ForceDailyRapidApiLeagueCheck();
+            RapidApi.RapidApiHelper.ForceDailyRapidApiLeagueCheckWithBetting();
+
+            return RedirectToAction("AdminHome", "Admin");
+        }
+
+        [HttpPost]
+        public ActionResult ForceDailyUpdateWithoutBetting()
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            RapidApi.RapidApiHelper.ForceDailyRapidApiLeagueCheckWithoutBetting();
 
             return RedirectToAction("AdminHome", "Admin");
         }

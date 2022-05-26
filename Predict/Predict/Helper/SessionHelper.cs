@@ -57,6 +57,9 @@ namespace Predict.Helper
 
         public static void UpdateSessionForHomePage(ApplicationDbContext context, HttpSessionStateBase session, EventPlayer eventPlayer, bool forceRefresh, bool forcePoolRefresh)
         {
+            if (eventPlayer == null)
+                return;
+            
             var eventId = eventPlayer.EventId;
             var userId = eventPlayer.PlayerId;
 
@@ -176,6 +179,19 @@ namespace Predict.Helper
                 .ToList();
 
             session[sessionName] = eventPlayers;
+        }
+
+        public static void AddEventPlayerToSessionVariable(EventPlayer eventPlayer, HttpSessionStateBase session)
+        {
+            const string sessionName = "EventPlayers";
+            if (session[sessionName] == null || eventPlayer==null)
+                return;
+
+            var eventPlayers = (List<EventPlayer>)session[sessionName];
+            eventPlayers.Add(eventPlayer);
+            session[sessionName] = eventPlayers;
+            return;
+
         }
 
         private static void UpdatePlayerPoolInfo(ApplicationDbContext context, HttpSessionStateBase session,
