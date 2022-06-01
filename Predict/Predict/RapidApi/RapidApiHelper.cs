@@ -296,7 +296,7 @@ namespace Predict.RapidApi
             var rapidApiResultChecks = (List<RapidApiResultCheck>)Helper.Cache.GetCachedItem(cacheKey);
             if (rapidApiResultChecks == null)
             {
-                SetNextResultCheckDateTime(false);
+                SetNextResultCheckDateTime(false, false);
                 rapidApiResultChecks = (List<RapidApiResultCheck>)Helper.Cache.GetCachedItem(cacheKey);
             }
 
@@ -326,10 +326,10 @@ namespace Predict.RapidApi
             }
 
             if (checkPerformed)
-                SetNextResultCheckDateTime(true);
+                SetNextResultCheckDateTime(true, false);
         }
 
-        public static void SetNextResultCheckDateTime(bool roundUp)
+        public static void SetNextResultCheckDateTime(bool roundUp, bool forceUpdate)
         {
             // Get all the fixtures that are associated to events, that do not have a result
             Logger.Info("SetNextResultCheckDateTime - Start - roundUp = {0}", roundUp);
@@ -338,7 +338,11 @@ namespace Predict.RapidApi
             bool updateNeeded = false;
 
             var rapidApiResultChecks = (List<RapidApiResultCheck>)Helper.Cache.GetCachedItem(cacheKey);
-            if (rapidApiResultChecks == null)
+            if (forceUpdate)
+            {
+                updateNeeded = true;
+            }
+            else if (rapidApiResultChecks == null)
             {
                 Logger.Info("SetNextResultCheckDateTime - rapidApiResultChecks == null");
                 updateNeeded = true;
@@ -923,6 +927,11 @@ namespace Predict.RapidApi
 
                 context.SaveChanges();
 
+                // If a generation has been made with a fixture for today, then update the config to check for the result
+                var earliestFixture = fixtures.Select(a => a.FixtureDateTime).Min();
+                if (earliestFixture.Date <= DateTime.UtcNow.Date)
+                    SetNextResultCheckDateTime(false, true);
+
                 Logger.Info("CheckAndAddFixturesForEvent {0} Fixtures added for EventId {1} ", fixtures.Count, eventGeneration.EventId);
                 return true; // a change has been made
             }
@@ -1114,7 +1123,8 @@ namespace Predict.RapidApi
             }
             else if (leagueEventGeneration.GenerationFrequencyId == 21) // All fixtures for a league/team
             {
-                eventName = context.Teams.Where(a => a.Id == leagueEventGeneration.TeamId).FirstOrDefault().TeamName;
+                var teamName = context.Teams.Where(a => a.Id == leagueEventGeneration.TeamId).FirstOrDefault().TeamName;
+                eventName = teamName;
 
                 var rapidApiV3LeagueSeason = context.RapidApiV3LeagueSeasons
                         .Include(a => a.RapidApiV3League)
@@ -1124,6 +1134,12 @@ namespace Predict.RapidApi
                 var year = rapidApiV3LeagueSeason.Year.ToString();
                 var nextyear = (rapidApiV3LeagueSeason.Year + 1).ToString();
                 eventName = eventName + " " + (rapidApiV3LeagueSeason.RapidApiV3League.Type == "League" ? year.Substring(year.Length - 2) + "/" + nextyear.Substring(nextyear.Length - 2) : year);
+
+                if(eventName.Length>26)
+                {
+                    //Reduce size of event name to fit in menu
+                    eventName = teamName + " " + (rapidApiV3LeagueSeason.RapidApiV3League.Type == "League" ? year.Substring(year.Length - 2) + "/" + nextyear.Substring(nextyear.Length - 2) : year);
+                }
             }
 
             return eventName;
@@ -1228,6 +1244,10 @@ namespace Predict.RapidApi
 
             context.SaveChanges();
 
+            // If a generation has been made with a fixture for today, then update the config to check for the result
+            var earliestFixture = fixtures.Select(a => a.FixtureDateTime).Min();
+            if(earliestFixture.Date <= DateTime.UtcNow.Date)
+                SetNextResultCheckDateTime(false, true);
         }
         
         private static DateTime RoundUp(DateTime dt, TimeSpan d)

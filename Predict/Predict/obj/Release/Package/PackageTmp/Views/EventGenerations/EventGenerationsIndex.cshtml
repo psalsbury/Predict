@@ -1,0 +1,57 @@
+﻿@model List<Predict.Models.EventGeneration>
+@{ 
+    var leagueEventGenerationId = ViewBag.LeagueEventGenerationId;
+    var leagueId = ViewBag.LeagueId;
+    ViewBag.Title = "History Of Generations";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Admin/AdminHome">Admin Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Leagues/LeaguesIndex">Leagues</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/LeagueEventGenerations/LeagueEventGenerationsIndex/@(leagueEventGenerationId)">Gens</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/LeagueEventGenerations/EditLeagueEventGeneration/@leagueEventGenerationId?LeagueId=@leagueId">Edit</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">History</li>
+    </ol>
+</nav>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            Event Name
+        </th>
+        <th>TimeFrame</th>
+        <th>
+            Created
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Event.EventName, "Index", "Home", new { eventId = item.EventId }, null)
+        </td>
+        <td>
+            @if(item.BaseEndDate == DateTime.MinValue)
+            {
+                <p>Duration</p>
+            }
+            else
+            {
+        <p>@item.BaseStartDate.ToString("dd/MM/yy") --> @item.BaseEndDate.ToString("dd/MM/yy")</p>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDateTime)
+        </td>
+    </tr>
+}
+
+</table>

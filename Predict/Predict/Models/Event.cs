@@ -12,7 +12,7 @@ namespace Predict.Models
         public short Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(26)]
         [Display(Name = "Comp Name")]
         public string EventName { get; set; }
 
@@ -31,7 +31,6 @@ namespace Predict.Models
 
         [Column(TypeName = "datetime2")]
         public DateTime EndDateTime { get; set; }
-
         public int Fixtures { get; set; }
         public int KoFixtures { get; set; }
         public int BonusQuestions { get; set; }

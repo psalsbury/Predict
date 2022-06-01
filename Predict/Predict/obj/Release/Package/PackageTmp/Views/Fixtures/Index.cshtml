@@ -17,13 +17,21 @@
     </ol>
 </nav>
 
-<p>
-    <input type="button"
-           value="Create New Fixture"
-           class="btn btn-success"
-           onclick="location.href = '@Url.Action("Create", "Fixtures", new { leagueId = leagueId })'" />
+<div>
 
-</p>
+
+    @using (Html.BeginForm("UpdateFixturesFromApi", "Fixtures"))
+    {
+        <input type="button"
+               value="Create New Fixture"
+               class="btn btn-success  alignleft"
+               onclick="location.href = '@Url.Action("Create", "Fixtures", new { leagueId = leagueId })'" />
+
+        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+        @Html.Hidden("leagueId", leagueId);
+        <input type="submit" value="Update From API" class="btn btn-success alignright" />
+    }
+</div>
 
 <table id="groupresults" name="groupresults" class="table table-bordered table-hover no-gutters">
 

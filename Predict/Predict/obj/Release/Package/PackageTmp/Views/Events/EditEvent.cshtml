@@ -27,8 +27,11 @@
         @Html.LabelFor(model => model.EventName, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.TextBoxFor(model => model.EventName, new { @class = "form-control" })
+            <i>Max 26 chars</i><br />
             @Html.ValidationMessageFor(m => m.EventName, "", new { @class = "text-danger" })
+
         </div>
+
     </div>
 
     @if (Model.Id != 0)

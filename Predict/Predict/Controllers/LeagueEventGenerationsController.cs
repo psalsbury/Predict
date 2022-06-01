@@ -18,6 +18,7 @@ namespace Predict.Controllers
         {
             _context = new ApplicationDbContext();
         }
+
         // GET: LeagueEventGenerations
         [HttpGet]
         public ActionResult LeagueEventGenerationsIndex(short id)

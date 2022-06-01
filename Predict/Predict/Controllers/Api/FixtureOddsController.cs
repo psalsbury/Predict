@@ -223,18 +223,18 @@ namespace Predict.Controllers.Api
                 }
             }
 
-            var allFixtureOddsByScore = _context.FixtureOddsByScores.Where(a => a.RapidApiFixtureId == rapidApiFixtureId && a.Odds != 0).ToList();
+            var allFixtureOddsByScore = _context.FixtureOddsByScores.Where(a => a.RapidApiFixtureId == rapidApiFixtureId).ToList();
             var fixtureOddsByScore = allFixtureOddsByScore.Where(a => ((a.HomeScore == homeResult &&
                                                                         a.AwayScore == awayResult) 
                                                                         ||
                                                                        (a.HomeScore == homePrediction &&
                                                                         a.AwayScore == awayPrediction)));
             row = "<div>"
-                     + "<p class='alignleft' style='vertical-align: middle;'><i>Odds refreshed daily up until kick off</i><p>";
+                     + "<p class='alignleft' style='vertical-align: middle;'><i>Odds refreshed daily</i><p>";
 
             if(allFixtureOddsByScore.Count>0)
             {
-                row += "<span class='btn btn-primary alignright' id='petebutton'>&nbsp;<i class='fa fa-info'></i></span>";
+                row += "<span class='btn btn-primary alignright' id='petebutton'>Switch View</span>";
             }
 
             row += "</div><br><br>";
@@ -263,7 +263,7 @@ namespace Predict.Controllers.Api
             if (otherUserViewing)
                 return row;
 
-            var predictionScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homePrediction && a.AwayScore == awayPrediction && a.Odds > 0);
+            var predictionScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homePrediction && a.AwayScore == awayPrediction);
             if (predictionScore != null)
             {
                 if(homeResult==homePrediction && awayResult==awayPrediction)
@@ -289,7 +289,7 @@ namespace Predict.Controllers.Api
 
             if (homeResult != homePrediction || awayResult != awayPrediction)
             {
-                var resultScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homeResult && a.AwayScore == awayResult && a.Odds > 0);
+                var resultScore = fixtureOddsByScore.FirstOrDefault(a => a.HomeScore == homeResult && a.AwayScore == awayResult);
                 if (resultScore != null)
                 {
                     row += "<p><i>Actual scoreline odds</i><p> " +
@@ -306,8 +306,6 @@ namespace Predict.Controllers.Api
             }
             row += "</div>";
             row += "<div id='allodds'>";
-
-
 
             for (int i = 1; i <= 3; i++)
             {
@@ -333,7 +331,18 @@ namespace Predict.Controllers.Api
                 {
                     if (thisFixtureOddsByScore.HomeScore == homeResult && thisFixtureOddsByScore.AwayScore == awayResult)
                     {
-                        row += "<tr bgcolor='" + blue + "'>";
+                        row += "<tr bgcolor='" + green + "'>";
+                    }
+                    else if (thisFixtureOddsByScore.HomeScore == homePrediction && thisFixtureOddsByScore.AwayScore == awayPrediction)
+                    {
+                        if(homeResult>=0)
+                        {
+                            row += "<tr bgcolor='" + red + "'>";
+                        }
+                        else
+                        {
+                            row += "<tr bgcolor='" + amber + "'>";
+                        }
                     }
                     else
                     {

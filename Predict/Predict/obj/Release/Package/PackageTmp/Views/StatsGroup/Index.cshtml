@@ -14,209 +14,210 @@
     </ol>
 </nav>
 
-
-
-<link rel="stylesheet" id="wpfront-scroll-top-css" href="~/wpfront-scroll-top/css/wpfront-scroll-top.min.css?ver=2.0.7.08086" media="all">
-
-<div id="wpfront-scroll-top-container" style="opacity: 0.8; right: 120px; bottom: 20px; display: block;">
-    <img src="~/wpfront-scroll-top/images/icons/39.png" alt="" style="width: auto; height: auto;">
-</div>
-
-<div id="wpfront-scroll-nextfixture-container" style="opacity: 0.8; right: 20px; bottom: 20px; display: block;">
-    <a href="#nextPredictionLocation"><img src="~/wpfront-scroll-top/images/icons/down.png" alt="" style="width: auto; height: auto;"></a>
-
-</div>
-
-<script type="text/javascript">
-
-    function wpfront_scroll_top_init() {
-        if (typeof wpfront_scroll_top === "function" && typeof jQuery !== "undefined") {
-            wpfront_scroll_top({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 120, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
-        } else {
-            setTimeout(wpfront_scroll_top_init, 100);
-        }
-    }
-
-    function wpfront_scroll_nextfixture_init() {
-        if (typeof wpfront_scroll_nextfixture === "function" && typeof jQuery !== "undefined") {
-            wpfront_scroll_nextfixture({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 20, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
-        } else {
-            setTimeout(wpfront_scroll_nextfixture_init, 100);
-        }
-    }
-
-    wpfront_scroll_top_init();
-    wpfront_scroll_nextfixture_init();
-</script>
-
-<script src="~/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.0.7.08086" id="wpfront-scroll-top-js"></script>
-
-@if (ViewBag.ShowKoStats == true)
+@if (Model.Count() > 48)
 {
-    <a href="/StatsKO?eventId=@ViewBag.EventId&poolid=@ViewBag.PoolId">
-        <input type="button" class="btn btn-primary alignleft" value="KO Stats">
-    </a>
+
+    <link rel="stylesheet" id="wpfront-scroll-top-css" href="~/wpfront-scroll-top/css/wpfront-scroll-top.min.css?ver=2.0.7.08086" media="all">
+
+    <div id="wpfront-scroll-top-container" style="opacity: 0.8; right: 120px; bottom: 20px; display: block;">
+        <img src="~/wpfront-scroll-top/images/icons/39.png" alt="" style="width: auto; height: auto;">
+    </div>
+
+    <div id="wpfront-scroll-nextfixture-container" style="opacity: 0.8; right: 20px; bottom: 20px; display: block;">
+        <a href="#nextPredictionLocation"><img src="~/wpfront-scroll-top/images/icons/down.png" alt="" style="width: auto; height: auto;"></a>
+
+    </div>
+
+    <script type="text/javascript">
+
+        function wpfront_scroll_top_init() {
+            if (typeof wpfront_scroll_top === "function" && typeof jQuery !== "undefined") {
+                wpfront_scroll_top({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 120, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+            } else {
+                setTimeout(wpfront_scroll_top_init, 100);
+            }
+        }
+
+        function wpfront_scroll_nextfixture_init() {
+            if (typeof wpfront_scroll_nextfixture === "function" && typeof jQuery !== "undefined") {
+                wpfront_scroll_nextfixture({ "scroll_offset": 100, "button_width": 0, "button_height": 0, "button_opacity": 0.8, "button_fade_duration": 200, "scroll_duration": 400, "location": 1, "marginX": 20, "marginY": 20, "hide_iframe": false, "auto_hide": false, "auto_hide_after": 2, "button_action": "top", "button_action_element_selector": "", "button_action_container_selector": "html, body", "button_action_element_offset": 0 });
+            } else {
+                setTimeout(wpfront_scroll_nextfixture_init, 100);
+            }
+        }
+
+        wpfront_scroll_top_init();
+        wpfront_scroll_nextfixture_init();
+    </script>
+
+    <script src="~/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.0.7.08086" id="wpfront-scroll-top-js"></script>
 }
-
-<table class="table table-bordered table-hover" id="fixtures" name="fixtures" align="center">
-    <tr>
-        <th style="text-align: center; vertical-align: middle;">
-            Match
-        </th>
-        <th style="text-align: center; vertical-align: middle;">
-            Fixture Date
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
+    @if (ViewBag.ShowKoStats == true)
     {
+        <a href="/StatsKO?eventId=@ViewBag.EventId&poolid=@ViewBag.PoolId">
+            <input type="button" class="btn btn-primary alignleft" value="KO Stats">
+        </a>
+    }
 
+    <table class="table table-bordered table-hover" id="fixtures" name="fixtures" align="center">
+        <tr>
+            <th style="text-align: center; vertical-align: middle;">
+                Match
+            </th>
+            <th style="text-align: center; vertical-align: middle;">
+                Fixture Date
+            </th>
+            <th>
 
-        if (!item.Fixture.FixtureDatePassed)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
         {
-            OutstandingPredictionCount += 1;
-        }
-
-        var rowColour = "";
-        if (item.Fixture.HomeResult != null)
-        {
-            rowColour = "#e3e5e6"; // Green
-        }
-        <tr bgcolor="@rowColour">
-
-            <td style="text-align: left; vertical-align: middle;">
-
-                @if (OutstandingPredictionCount == 1)
-                {
-
-                    <section id="nextPredictionLocation"></section>
-                }
 
 
-                <div class="container-fluid">
-                    <div class="row vertical-middle text-center">
-                        <div class="col-sm-6 text-center; row no-gutters">
-                            <table width="100%">
-                                <tr>
-                                    <td width="20">
-                                        <img src="@Url.Content(item.Fixture.HomeTeam.FlagFileLocation)" height="20" />
-                                    </td>
-                                    <td align="left">
-                                        &nbsp @Html.DisplayFor(modelItem => item.Fixture.HomeTeam.TeamName)
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+            if (!item.Fixture.FixtureDatePassed)
+            {
+                OutstandingPredictionCount += 1;
+            }
 
-                        <div class="col-sm-6 text-center; row no-gutters">
-                            <table width="100%">
-                                <tr>
-                                    <td width="20">
-                                        <img src="@Url.Content(item.Fixture.AwayTeam.FlagFileLocation)" height="20" />
-                                    </td>
-                                    <td align="left">
-                                        &nbsp @Html.DisplayFor(modelItem => item.Fixture.AwayTeam.TeamName)
-                                    </td>
+            var rowColour = "";
+            if (item.Fixture.HomeResult != null)
+            {
+                rowColour = "#e3e5e6"; // Green
+            }
+            <tr bgcolor="@rowColour">
 
-                                </tr>
-                            </table>
+                <td style="text-align: left; vertical-align: middle;">
+
+                    @if (OutstandingPredictionCount == 1)
+                    {
+
+                        <section id="nextPredictionLocation"></section>
+                    }
+
+
+                    <div class="container-fluid">
+                        <div class="row vertical-middle text-center">
+                            <div class="col-sm-6 text-center; row no-gutters">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="20">
+                                            <img src="@Url.Content(item.Fixture.HomeTeam.FlagFileLocation)" height="20" />
+                                        </td>
+                                        <td align="left">
+                                            &nbsp @Html.DisplayFor(modelItem => item.Fixture.HomeTeam.TeamName)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-sm-6 text-center; row no-gutters">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="20">
+                                            <img src="@Url.Content(item.Fixture.AwayTeam.FlagFileLocation)" height="20" />
+                                        </td>
+                                        <td align="left">
+                                            &nbsp @Html.DisplayFor(modelItem => item.Fixture.AwayTeam.TeamName)
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </td>
+                </td>
 
 
-            <td style="text-align: center; vertical-align: middle;" class="myDate" width="25%">
+                <td style="text-align: center; vertical-align: middle;" class="myDate" width="25%">
 
-                @Html.Hidden("FixtureDateTime", item.Fixture.FixtureDateTime.ToLongDateString() + " " + item.Fixture.FixtureDateTime.ToShortTimeString())
-            </td>
-            <td class="row no-gutters">
-                <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId&poolid=@ViewBag.PoolId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
-            </td>
+                    @Html.Hidden("FixtureDateTime", item.Fixture.FixtureDateTime.ToLongDateString() + " " + item.Fixture.FixtureDateTime.ToShortTimeString())
+                </td>
+                <td class="row no-gutters">
+                    <a href="StatsGroup/StatsFixture/@item.FixtureId?eventid=@item.EventId&poolid=@ViewBag.PoolId" class="btn btn-primary btn active" role="button" aria-pressed="true">Stats</a>
+                </td>
 
-        </tr>
+            </tr>
+        }
+
+    </table>
+
+    @if (OutstandingPredictionCount == 0)
+    {
+
+        <section id="nextPredictionLocation"></section>
     }
 
-</table>
+    <script>
 
-@if (OutstandingPredictionCount == 0)
-{
+        //get all td with actionclass in table
+        $("tbody tr td.myDate").each(function () {
 
-    <section id="nextPredictionLocation"></section>
-}
+            $hiddenValue = $(this).find("input[type=hidden]").val();
 
-<script>
+            var d = new Date($hiddenValue);
 
-    //get all td with actionclass in table
-    $("tbody tr td.myDate").each(function () {
+            this.innerHTML = convertUTCDateToLocalDate(d);
 
-        $hiddenValue = $(this).find("input[type=hidden]").val();
-
-        var d = new Date($hiddenValue);
-
-        this.innerHTML = convertUTCDateToLocalDate(d);
-
-    });
-
-    function convertUTCDateToLocalDate(date) {
-        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-
-        var offset = date.getTimezoneOffset() / 60;
-        var hours = date.getHours();
-
-        newDate.setHours(hours - offset);
-        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
-        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
-
-        return da + ' ' + mo + ' ' + pad(newDate.getHours(), 2) + ':' + pad(newDate.getMinutes(), 2);
-
-    }
-
-    function pad(n, width, z) {
-        z = z || '0';
-        n = n + '';
-        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    }
-</script>
-
-<script>
-
-    $(function () {
-        $("#fixtures").DataTable({
-            "bLengthChange": false
-        });;
-    });
-
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        // Add smooth scrolling to all links
-        $("a").on('click', function (event) {
-
-            // Make sure this.hash has a value before overriding default behavior
-            if (this.hash !== "") {
-                // Prevent default anchor click behavior
-                event.preventDefault();
-
-                // Store hash
-                var hash = this.hash;
-
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 800, function () {
-
-                    // Add hash (#) to URL when done scrolling (default click behavior)
-                    window.location.hash = hash;
-                });
-            } // End if
         });
-    });
-</script>
+
+        function convertUTCDateToLocalDate(date) {
+            var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+            var offset = date.getTimezoneOffset() / 60;
+            var hours = date.getHours();
+
+            newDate.setHours(hours - offset);
+            mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
+            da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+
+            return da + ' ' + mo + ' ' + pad(newDate.getHours(), 2) + ':' + pad(newDate.getMinutes(), 2);
+
+        }
+
+        function pad(n, width, z) {
+            z = z || '0';
+            n = n + '';
+            return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        }
+    </script>
+
+    <script>
+
+        $(function () {
+            $("#fixtures").DataTable({
+                "bLengthChange": false
+            });;
+        });
+
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Add smooth scrolling to all links
+            $("a").on('click', function (event) {
+
+                // Make sure this.hash has a value before overriding default behavior
+                if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function () {
+
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    });
+                } // End if
+            });
+        });
+    </script>

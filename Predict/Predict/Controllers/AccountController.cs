@@ -747,7 +747,8 @@ namespace Predict.Controllers
 
                     GoogleCaptchaResponse myDeserializedClass =
                         JsonConvert.DeserializeObject<GoogleCaptchaResponse>(reply);
-                    _logger.Log(LogLevel.Info, reply);
+
+                    _logger.Log(LogLevel.Info, "Google Captha response --> {0}", reply);
 
                     return myDeserializedClass.success;
                 }
@@ -755,7 +756,7 @@ namespace Predict.Controllers
             catch (Exception e)
             {
                 {
-                    _logger.Log(LogLevel.Info, " Google captcha has failed. Error is as follows --> " + e.Message);
+                    _logger.Log(LogLevel.Info, " Google captcha has failed. Error is as follows --> {0}", e.Message);
 
                     return true;
                 }

@@ -368,6 +368,7 @@
     <Compile Include="Controllers\CompsDashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventFixturesController.cs" />
+    <Compile Include="Controllers\EventGenerationsController.cs" />
     <Compile Include="Controllers\EventPlayersController.cs" />
     <Compile Include="Controllers\EventPoolsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -467,6 +468,10 @@
     <Compile Include="Migrations\202205111145291_BaseDatesDateTime2.cs" />
     <Compile Include="Migrations\202205111145291_BaseDatesDateTime2.Designer.cs">
       <DependentUpon>202205111145291_BaseDatesDateTime2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205311504197_EventNameTo26Chars.cs" />
+    <Compile Include="Migrations\202205311504197_EventNameTo26Chars.Designer.cs">
+      <DependentUpon>202205311504197_EventNameTo26Chars.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -681,6 +686,7 @@
     <Content Include="Views\EventPlayers\JoinAComp.cshtml" />
     <Content Include="Views\EventPlayers\ActiveComps.cshtml" />
     <Content Include="Views\EventPlayers\FinishedComps.cshtml" />
+    <Content Include="Views\EventGenerations\EventGenerationsIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -742,6 +748,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205111145291_BaseDatesDateTime2.resx">
       <DependentUpon>202205111145291_BaseDatesDateTime2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205311504197_EventNameTo26Chars.resx">
+      <DependentUpon>202205311504197_EventNameTo26Chars.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

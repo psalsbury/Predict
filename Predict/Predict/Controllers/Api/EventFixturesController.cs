@@ -69,6 +69,12 @@ namespace Predict.Controllers.Api
 
             Helper.Cache.UpdateEventStartEnd(_context, eventId);
 
+            var fixtureDateTime = _context.Fixtures.Where(a => a.Id == fixtureId).FirstOrDefault().FixtureDateTime;
+
+            // If a fixture has been added for today, then check what time the system needs to get the result
+            if (fixtureDateTime.Date == DateTime.UtcNow.Date)
+                RapidApi.RapidApiHelper.SetNextResultCheckDateTime(true, true);
+
             return Ok();
         }
 

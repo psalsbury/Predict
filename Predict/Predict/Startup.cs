@@ -17,7 +17,7 @@ namespace Predict
             var logger = NLog.LogManager.GetCurrentClassLogger();
             logger.Info("Startup Configuration - Start");
             Helper.Cache.SetEventCache();
-            RapidApiHelper.SetNextResultCheckDateTime(false);
+            RapidApiHelper.SetNextResultCheckDateTime(false, false);
         }
     }
 }

@@ -84,6 +84,20 @@ namespace Predict.Controllers
             Mapper.Map(fixture, fixtureViewModel);
             return View("EditFixture", fixtureViewModel);
         }
+        [HttpPost]
+        public ActionResult UpdateFixturesFromApi()
+        {
+            var leagueId = System.Convert.ToInt16(Request["leagueId"]);
+            var league = _context.Leagues
+                .Where(a => a.Id == leagueId).FirstOrDefault();
+
+            var rapidApiV3LeagueSeason = _context.RapidApiV3LeagueSeasons.Where(a => a.Id == league.RapidApiV3LeagueSeasonId).FirstOrDefault();
+            var earliestTime = DateTime.UtcNow;
+
+            RapidApi.RapidApiHelper.V3FixturesByLeague(rapidApiV3LeagueSeason, earliestTime, leagueId);
+            return RedirectToAction("Index", "Fixtures", new { @leagueId = leagueId });
+
+        }
 
         [HttpPost]
         public ActionResult Save(FixtureViewModel fixtureViewModel)

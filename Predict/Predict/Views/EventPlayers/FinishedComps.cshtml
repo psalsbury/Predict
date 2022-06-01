@@ -34,13 +34,13 @@
         <tr height="60">
 
             <td style="vertical-align: middle;">
-                @Html.DisplayFor(modelItem => item.EventName)
+                <h4>@Html.DisplayFor(modelItem => item.EventName)</h4>
             </td>
-            <td style="vertical-align: middle;">@item.NbrPlayers</td>
+            <td style="vertical-align: middle;"><h4>@item.NbrPlayers</h4></td>
             <td style="vertical-align: middle;">
 
                 <a class="btn btn-info" href='@Url.Action("Index", "Home", new { eventId = item.EventId})'>
-                    <i class="fa fa-home"></i>&nbsp; Home
+                    <i class="fa fa-home"></i>
                 </a>
             </td>
         </tr>

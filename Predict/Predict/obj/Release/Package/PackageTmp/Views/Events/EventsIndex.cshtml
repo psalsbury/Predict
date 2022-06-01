@@ -32,6 +32,7 @@
                 </th>
                 <th class="hidden-xs">Start Date</th>
                 <th class="hidden-xs">End Date</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
 
@@ -39,7 +40,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EventName)
+                    <h4>@Html.DisplayFor(modelItem => item.EventName)</h4>
                 </td>
                 <td class="hidden-xs">
                     @item.StartDateTime.ToString("f")
@@ -47,17 +48,17 @@
                 <td class="hidden-xs">
                     @item.EndDateTime.ToString("f")
                 </td>
-                <td>
+                <td width="120">
                     @if (item.EventFinished && item.EndDateTime!=DateTime.MinValue)
                     {
-                        @Html.ActionLink("Show Fixtures", "GroupGameResults", "Results", new { @id = item.Id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Fixtures", "GroupGameResults", "Results", new { @id = item.Id }, new { @class = "btn btn-info" })
                     }
                     else
                     {
 
                         <div class="btn-group">
-                            <button type="button" class="btn btn-success">Action</button>
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                Action
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -68,7 +69,7 @@
                                 {
                                     <li><a href="@Url.Action("Index", "KoFixtures", new {id = item.Id}) ">KO Fixtures</a></li>
                                 }
-                                <li><a href="@Url.Action("EditEvent", "Events", new {id = item.Id})">Edit</a></li>
+                                <li><a href="@Url.Action("EditEvent", "Events", new {id = item.Id})">Edit Comp</a></li>
                                 <li class="divider"></li>
                                 <li class="js-delete" dataEventId="@item.Id" dataEventName="@item.EventName"><a href="#">Delete Comp</a></li>
                             </ul>

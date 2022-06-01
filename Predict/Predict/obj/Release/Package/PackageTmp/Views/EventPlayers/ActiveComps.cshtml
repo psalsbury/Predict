@@ -34,9 +34,9 @@
         <tr height="60">
 
             <td style="vertical-align: middle;">
-                @Html.DisplayFor(modelItem => item.EventName)
+                <h4>@Html.DisplayFor(modelItem => item.EventName)</h4>
             </td>
-            <td style="vertical-align: middle;">@item.NbrPlayers</td>
+            <td style="vertical-align: middle;"><h4>@item.NbrPlayers</h4></td>
             <td style="vertical-align: middle;" class="row no-gutters">
                 <button class="btn btn-danger js-delete btn-sm" value="Leave" dataEventId="@item.EventId">Leave</button>
             </td>
