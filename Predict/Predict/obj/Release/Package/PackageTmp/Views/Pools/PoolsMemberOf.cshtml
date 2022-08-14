@@ -17,72 +17,87 @@
     </ol>
 </nav>
 
+<!-- / MODAL FORM FOR ODDS-->
+<div class="modal fade" id="modal-poolInfo" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <input class="form-control" id="myInput" type="text" placeholder="Search..">
 
-<div class="col-md-4">
-    <table class="table table-bordered" id="poolMembershipJoined">
+
+    <table class="table table-bordered" id="poolMembershipJoined" width="100%">
         <thead class="thead-dark">
             <tr>
                 <th>
-                    Nbr
-                </th>
-                <th>
                     League Name
                 </th>
+                <th></th>
             </tr>
         </thead>
 
         @foreach (var joinedPool in @Model)
         {
 
-            <tr>
-                <td>
-                    <h4>
-                        @rowNbr
-                    </h4>
+    <tr>
 
-                </td>
-                <td>
-                    <h4>
-                        @Html.DisplayFor(modelItem => joinedPool.Pool.PoolName)
-                    </h4>
-                </td>
-                <td>
-                    @if (!joinedPool.Pool.DefaultPoolForEvent)
-                    {
-                    <button class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
+        <td>
+            <h4>
+                @Html.DisplayFor(modelItem => joinedPool.Pool.PoolName)
+            </h4>
+        </td>
+        <td class="btn-group-vertical">
+            <div class="btn-group-vertical">
+                <button class="btn btn-primary  btn-sm" type="button" data-toggle="modal" data-target="#modal-poolInfo"
+                        data-title="@joinedPool.PoolId"
+                        data-title2="@joinedPool.Pool.PoolName">
+                    <b>Info</b>&nbsp;
+                    <i class="fa fa-info"></i>
+                </button>
+                <button @(joinedPool.Pool.DefaultPoolForEvent ? "disabled" : "") class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
 
-                        <b>Leave League</b>&nbsp;
-                        <i class="fa fa-trash"></i>
-                    </button>
-                    }
+                    <b>Leave</b>&nbsp;
+                    <i class="fa fa-trash"></i>
+                </button>
 
 
-                </td>
+            </div>
+        </td>
 
-            </tr>
+    </tr>
             rowNbr += 1;
         }
     </table>
-    </div>
 
-    <script src="~/Scripts/bootbox.js"></script>
 
-    <script>
+<script src="~/Scripts/bootbox.js"></script>
 
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#poolMembershipJoined tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+<script>
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#poolMembershipJoined tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+    });
 
-    </script>
+</script>
 
-    <script>
-
+<script>
 
     $("#poolMembershipJoined").on("click",
         ".js-delete",
@@ -106,4 +121,31 @@
 
 
 
-    </script>
+</script>
+
+
+
+<script>
+    $('#modal-poolInfo').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var modal = $(this);
+        var poolId = button.data('title');
+        var title = button.data('title2');
+
+        // Ajax call to get the content of the modal form
+        $.ajax({
+                type: "GET",
+            url: "/api/Pools/GetPoolInfo/" + poolId ,
+            success: function (data) {
+                var htmlTable = data.toString();
+                modal.find('.modal-body').html(htmlTable);
+            },
+            error: function (request, error) {
+                    modal.find('.modal-body').html("<p>Sorry, No info found for this pool</p>");
+            }
+        });
+
+        modal.find('.modal-title').text(title);
+    });
+
+</script>

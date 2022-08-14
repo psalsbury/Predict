@@ -134,7 +134,7 @@
                         <p style="font-size: 30px">
                             Game Info
                         </p>
-                        <p>See whos predicted what</p>
+                        <p>See prediction stats</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -150,7 +150,7 @@
         if (nbrKoPredictionsToEnter > 0 && nbrKoPredictionsEntered < nbrKoPredictionsToEnter)
         {
             <text><p style="color:red;font-size:25px;">
-                    KO Predictions must be entered before 11th June 20:00 BST
+                    KO Predictions must be entered before 21st November 10:00 GMT
                 </p>
             </text>
         }
@@ -249,14 +249,23 @@
 
                             <div class="info-box-content">
 
-                                <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
-                                    <span class="info-box-text">Nbr of Members</span>
+                                @if (poolInfoViewModels.Count() > 1)
+                                {
+                                    <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                        <span class="info-box-text">Nbr of Players</span>
 
-                                    <span class="btn btn-primary pull-right">Game Info &nbsp;<i class="fa fa-bullseye"></i></span>
+                                        <span class="btn btn-primary pull-right">Game Info &nbsp;<i class="fa fa-bullseye"></i></span>
+
+                                        <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="info-box-text">Nbr of Players</span>
 
                                     <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
-
-                                </a>
+                                }
                             </div>
 
                         </li>

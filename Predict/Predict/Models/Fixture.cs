@@ -47,6 +47,9 @@ namespace Predict.Models
         [Column(TypeName = "datetime2")]
         public DateTime ModifiedDateTime { get; set; }
 
+        [StringLength(50)]
+        public string RapidApiLongStatus { get; set; }
+
         public bool FixtureDatePassed => FixtureDateTime < DateTime.UtcNow; // FixtureDateTime should already be UTC
     }
 }

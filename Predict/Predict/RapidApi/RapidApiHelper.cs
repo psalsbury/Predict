@@ -276,6 +276,7 @@ namespace Predict.RapidApi
             // Check if events need to be created.
             DailyRapidApiGenerateEvents(context);
             DailyRapidApiUpdateEvents(context);
+            SetNextResultCheckDateTime(false, true);
 
         }
 
@@ -308,7 +309,7 @@ namespace Predict.RapidApi
                 {
                     var rapidApiV3LeagueSeason = new RapidApiV3LeagueSeason { Id = (int)rapidApiResultCheck.RapidApiV3LeagueSeasonId, Year = (int)rapidApiResultCheck.Year, RapidApiV3LeagueId = (int)rapidApiResultCheck.RapidApiV3LeagueId };
 
-                    Logger.Info("GetRapidApiResults V3 = Getting results from rapidApiV3LeagueSeasonId = {0}. FixtureDateTime = {1}, ResultCheckDateTime = {2}, Now = {3}", rapidApiV3LeagueSeason.Id, rapidApiResultCheck.FixtureDateTime.Date, rapidApiResultCheck.ResultCheckDateTime, DateTime.UtcNow);
+                    Logger.Info("GetRapidApiResults V3 = Getting results from rapidApiV3LeagueSeasonId = {0}. FixtureDateTime = {1}, ResultCheckDateTime = {2}, Now = {3}", rapidApiV3LeagueSeason.Id, rapidApiResultCheck.FixtureDateTime, rapidApiResultCheck.ResultCheckDateTime, DateTime.UtcNow);
 
                     if (rapidApiResultCheck.FixtureDateTime.Date < DateTime.UtcNow.Date)
                     {
@@ -332,7 +333,7 @@ namespace Predict.RapidApi
         public static void SetNextResultCheckDateTime(bool roundUp, bool forceUpdate)
         {
             // Get all the fixtures that are associated to events, that do not have a result
-            Logger.Info("SetNextResultCheckDateTime - Start - roundUp = {0}", roundUp);
+            Logger.Info("SetNextResultCheckDateTime - Start - roundUp = {0} - forceUpdate = {1}", roundUp, forceUpdate);
 
             string cacheKey = "NextFixtureCheckDateTime";
             bool updateNeeded = false;
@@ -374,7 +375,7 @@ namespace Predict.RapidApi
                     if (roundUp)
                         rapidApiResultCheck.ResultCheckDateTime = RoundUp(rapidApiResultCheck.ResultCheckDateTime, TimeSpan.FromMinutes(5));
 
-                    Logger.Info("SetNextResultCheckDateTime - Set League {0}, fixture date {1}, next check date to {2}", rapidApiResultCheck.RapidApiLeagueId, rapidApiResultCheck.FixtureDateTime, rapidApiResultCheck.ResultCheckDateTime);
+                    Logger.Info("SetNextResultCheckDateTime - Set League {0}, fixture date {1}, next check date to {2}", rapidApiResultCheck.LeagueName, rapidApiResultCheck.FixtureDateTime, rapidApiResultCheck.ResultCheckDateTime);
                 }
                 Helper.Cache.SetCachedItem(cacheKey, rapidApiResultChecks);
                 context.Dispose();
@@ -667,7 +668,7 @@ namespace Predict.RapidApi
             var newResultFound = false;
             var eventsWithChangedFixtureDateTime = new List<short>();
 
-            // loop through all fixtures in the future
+            // loop through all fixtures returned from RapidApi
             foreach (var rapidApiV3Fixture in rapidApiV3Fixtures.response.Where(f =>
                 f.fixture.date >= earliestDate))
             {
@@ -678,7 +679,6 @@ namespace Predict.RapidApi
                     rapidApiV3Fixture.teams.away.name, rapidApiV3Fixture.teams.away.logo);
                 var rapidApiFixtureId = rapidApiV3Fixture.fixture.id;
 
-
                 // Check if the fixture needs updating
                 var updateDb = false;
 
@@ -686,15 +686,21 @@ namespace Predict.RapidApi
                 rapidApiV3Fixture.fixture.date = rapidApiV3Fixture.fixture.date.ToUniversalTime();
 
                 var fixture = fixtures.FirstOrDefault(f => f.RapidApiFixtureId == rapidApiFixtureId);
-                if (rapidApiV3Fixture.fixture.status.@long == "Match Postponed" || (rapidApiV3Fixture.fixture.status.@long == "Not Started" &&
-                                                                    rapidApiV3Fixture.fixture.date.AddHours(3) <
-                                                                    DateTime.UtcNow)
-                ) // match was postponed but kept at not started status
+
+                var removeFixture = false;
+                if (rapidApiV3Fixture.fixture.status.@long == "Match Postponed"
+                        || rapidApiV3Fixture.fixture.status.@long == "Time To Be Defined"
+                        || rapidApiV3Fixture.fixture.status.@long == "Match Cancelled"
+                        || rapidApiV3Fixture.fixture.status.@long == "Match Abandoned"
+                        || rapidApiV3Fixture.fixture.status.@long == "Not Started" && DateTime.UtcNow > rapidApiV3Fixture.fixture.date.AddHours(2))
+                    removeFixture = true;
+
+                if (removeFixture) // match was postponed but kept at not started status
                 {
                     if (fixture != null)
                     {
                         if (fixture.HomeResult != null)
-                            newResultFound = true;
+                            newResultFound = true; // Results was previously processed so perform update.
 
                         context.Fixtures.Remove(fixture);
                         updateDb = true;
@@ -711,6 +717,7 @@ namespace Predict.RapidApi
                             AwayTeamId = awayTeam.Id,
                             LeagueId = leagueId,
                             FixtureDateTime = rapidApiV3Fixture.fixture.date,
+                            RapidApiLongStatus = rapidApiV3Fixture.fixture.status.@long,
                             CreatedDateTime = DateTime.UtcNow,
                             ModifiedDateTime = DateTime.UtcNow
                         };
@@ -719,6 +726,13 @@ namespace Predict.RapidApi
                     else
                     {
                         // Existing fixture
+                        if (fixture.RapidApiLongStatus != rapidApiV3Fixture.fixture.status.@long)
+                        {
+                            fixture.RapidApiLongStatus = rapidApiV3Fixture.fixture.status.@long;
+                            fixture.ModifiedDateTime = DateTime.UtcNow;
+                            updateDb = true;
+                        }
+
                         if (fixture.FixtureDateTime != rapidApiV3Fixture.fixture.date)
                         {
                             // Date has changed
@@ -726,7 +740,7 @@ namespace Predict.RapidApi
                             fixture.ModifiedDateTime = DateTime.UtcNow;
                             updateDb = true;
 
-                            // Get all the events that have this fixture
+                            // Get all the events that have this fixture. This is to update the event start/end date
                             var eventFixtures = context.EventFixtures.Where(a => a.FixtureId == fixture.Id).ToList();
                             foreach (var eventFixture in eventFixtures)
                             {
@@ -1053,17 +1067,20 @@ namespace Predict.RapidApi
                     {
                         if (dateToCheck > DateTime.UtcNow)
                         {
-                            endDate = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(2).Month, 1).AddDays(-1);
+                            // Very first fixture is ahead of today, so this is the first month we are generating for.
+                            dateToCheck = new DateTime(dateToCheck.Year, dateToCheck.Month, 1);
+                            endDate = new DateTime(dateToCheck.AddMonths(1).Year, dateToCheck.AddMonths(2).Month, 1).AddDays(-1);
                         }
                         else
                         {
+                            // first fixture is in the past. get the dates for next month
                             dateToCheck = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(1).Month, 1);
-                            endDate = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(2).Month, 1).AddDays(-1);
+                            endDate = new DateTime(DateTime.UtcNow.AddMonths(2).Year, DateTime.UtcNow.AddMonths(2).Month, 1).AddDays(-1);
                         }
 
                     }
 
-                    if (dateToCheck > lastFixtureForLeague.FixtureDateTime.Date && lastFixtureForLeague.FixtureDateTime.Date < DateTime.UtcNow.AddDays(-14))
+                    if (DateTime.UtcNow > lastFixtureForLeague.FixtureDateTime.Date && lastFixtureForLeague.FixtureDateTime.Date < DateTime.UtcNow.AddDays(-14))
                     {
                         // There are no fixtures left. Disable any further generations . Wait 14 days in case there are additional fixtures like play offs
                         leagueEventGeneration.Enabled = false;

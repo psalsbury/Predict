@@ -25,7 +25,7 @@
                 League Name
             </th>
             <th>
-                Join Code Required
+                Join Code
             </th>
             <th>
 
@@ -36,21 +36,21 @@
     {
 
         var joinCodeNeeded = item.JoinCode.IsNullOrWhiteSpace() ? "" : "joinCodeNeeded";
-        var joinCodeNeededDisplay = item.JoinCode.IsNullOrWhiteSpace() ? "No" : "Yes";
+        var joinCodeNeededDisplay = item.JoinCode.IsNullOrWhiteSpace() ? "cross" : "tick";
 
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PoolName)
             </td>
             <td>
-                @joinCodeNeededDisplay
+                <img src="~/Images/@(joinCodeNeededDisplay).gif" />
             </td>
 
             <td>
                 <button class="btn btn-success" value="join" joinCode="@joinCodeNeeded" dataPoolId="@item.Id" poolName="@item.PoolName">
 
                     <i class="fa fa-thumbs-up" ></i>
-                    Join League
+                    Join
                 </button>
             </td>
 

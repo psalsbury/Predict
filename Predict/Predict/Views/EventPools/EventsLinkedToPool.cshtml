@@ -13,12 +13,12 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="~/PoolDashboard">Pool Admin</a>
+                <a href="~/PoolDashboard">League Admin</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="/Pools/">Manage Pools</a>
+                <a href="/Pools/">Manage Leagues</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Pool Comps</li>
+            <li class="breadcrumb-item active" aria-current="page">League Comps</li>
         </ol>
     </nav>
 
@@ -29,13 +29,13 @@
             <th>
                 Comp Name
             </th>
-            <th>
+            <th class="hidden-xs">
                 Comp Start Date
             </th>
-            <th>Pool Linked to this Comp</th>
+            <th>League Linked</th>
         </tr>
 
-        @foreach (var item in Model.Events.Where(a => a.StartDateTime >= DateTime.UtcNow.AddMonths(-1)).OrderByDescending(a => a.StartDateTime))
+        @foreach (var item in Model.Events.Where(a => a.StartDateTime >= DateTime.UtcNow.AddMonths(-1)).OrderByDescending(a => a.EndDateTime))
         {
             <tr>
                 <td>
@@ -48,7 +48,7 @@
                         @Html.DisplayFor(modelItem => item.EventDescription)
                     }
                 </td>
-                <td>
+                <td class="hidden-xs">
                     @Html.DisplayFor(a => item.StartDateTime)
                 </td>
                 <td>

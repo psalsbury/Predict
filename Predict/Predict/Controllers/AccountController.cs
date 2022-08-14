@@ -270,7 +270,7 @@ namespace Predict.Controllers
                         return View("Register", model);
                     }
 
-                    var user = new ApplicationUser { UserName = model.DisplayName, Email = model.Email, EmailConfirmed = !confirmEmailAddress };
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = !confirmEmailAddress };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -353,9 +353,9 @@ namespace Predict.Controllers
 
                         _logger.Log(LogLevel.Info, model.Email + " changes saved to database ok");
 
-                            _logger.Log(LogLevel.Info, model.Email + " confirm email address = " + confirmEmailAddress.ToString());
+                         _logger.Log(LogLevel.Info, model.Email + " confirm email address = " + confirmEmailAddress.ToString());
 
-                            if (confirmEmailAddress)
+                        if (confirmEmailAddress)
                         {
                             // Send an email with this link
                             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

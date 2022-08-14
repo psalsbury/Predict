@@ -11,5 +11,6 @@ namespace Predict.RapidApi
         public short LeagueId { get; set; }
         public DateTime FixtureDateTime { get; set; }
         public DateTime ResultCheckDateTime { get; set; }
+        public string LeagueName { get; set; }
     }
 }

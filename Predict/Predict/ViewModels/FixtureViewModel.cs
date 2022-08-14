@@ -38,6 +38,10 @@ namespace Predict.ViewModels
 
         [Required] public DateTime ModifiedDateTime { get; set; }
 
+
+        [StringLength(50)]
+        public string RapidApiLongStatus { get; set; }
+
         public List<Team> Teams { get; set; }
         public List<League> Leagues { get; set; }
     }

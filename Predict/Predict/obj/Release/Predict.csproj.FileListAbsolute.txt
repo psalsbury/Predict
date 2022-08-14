@@ -598,3 +598,4 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.leagueAssociatio
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.ForumSQLUpdates.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.BaseDatesDateTime2.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EventNameTo26Chars.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.FixtureStatus.resources

@@ -19,6 +19,41 @@ namespace Predict.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
+        [HttpGet]
+        [Route("api/Pools/GetPoolInfo/{poolId}")]
+        public string GetPoolInfo(int poolId)
+        {
+
+            var table = "";
+            if (!User.Identity.IsAuthenticated)
+                return "";
+
+            var pool = _context.Pools.SingleOrDefault(p => p.Id == poolId);
+            if (pool == null)
+                return "";
+
+            var poolInfoFromSpViewModels = _context.Database.SqlQuery<ViewModels.PoolInfoFromSpViewModel>(
+                    "spGetPoolInfo @PoolId"
+                     , new System.Data.SqlClient.SqlParameter("@PoolId", poolId)).ToList();
+
+            if(poolInfoFromSpViewModels.Count>0)
+            {
+                var poolInfoFromSpViewModel = poolInfoFromSpViewModels.First();
+                table = "<table class='table table-striped'>"
+                    + "<tr><td>Number Of Players</td>" + "<td>" + poolInfoFromSpViewModel.NbrPlayers + "</td></tr>"
+                    + "<tr><td>Admin Name</td>" + "<td>" + poolInfoFromSpViewModel.AdminDisplayName + "</td></tr>"
+                    + "<tr><td>Most Recent Comp Name</td>" + "<td>" + poolInfoFromSpViewModel.MostRecentEventName + "</td></tr>"
+                    + "<tr><td>Most Recent Comp Winner</td>" + "<td>" + poolInfoFromSpViewModel.MostRecentEventWinner + "</td></tr>"
+                    + "<tr><td>Nbr Comps</td>" + "<td>" + poolInfoFromSpViewModel.NbrCompsEntered + "</td></tr>"
+                    + "<tr><td>Correct Score Points</td>" + "<td>" + poolInfoFromSpViewModel.CorrectScorePoints + "</td></tr>"
+                    + "<tr><td>Correct Result Points</td>" + "<td>" + poolInfoFromSpViewModel.CorrectResultPoints + "</td></tr>"
+                    + "<tr><td>Win Margin Points</td>" + "<td>" + poolInfoFromSpViewModel.WinMarginPoints + "</td></tr>"
+                    + "</table>";
+            }
+
+            return table;
+        }
+
         [HttpPost]
         [Route("api/Pools/delete/{poolId}")]
         public IHttpActionResult Delete(int poolId)

@@ -46,6 +46,7 @@ BEGIN
 	INNER JOIN dbo.Players AS PL ON PL.Id = QQPA.PlayerId
 	LEFT OUTER JOIN dbo.Teams AS TE ON TE.Id = PL.SupportTeamId
 	WHERE QQPA.PlayerId <> QUQ.PlayerId
+	AND PL.Id <> 'e51699d7-7cf2-4565-905c-4a89c4f80063'
 	GROUP BY QQPA.PlayerId
 			, PL.Displayname
 			, TE.TeamFlag

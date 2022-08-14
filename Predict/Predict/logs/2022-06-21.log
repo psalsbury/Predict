@@ -1,0 +1,47 @@
+2022-06-21 20:42:20.7191 INFO Default Quartz.NET properties loaded from embedded resource file
+2022-06-21 20:42:20.7862 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2022-06-21 20:42:20.7862 INFO Quartz Scheduler v.3.2.2.0 created.
+2022-06-21 20:42:20.8022 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2022-06-21 20:42:20.8022 INFO RAMJobStore initialized.
+2022-06-21 20:42:20.8022 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-06-21 20:42:20.8022 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2022-06-21 20:42:20.8022 INFO Quartz scheduler version: 3.2.2.0
+2022-06-21 20:42:20.8742 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2022-06-21 20:42:21.0362 INFO Startup Configuration - Start
+2022-06-21 20:42:21.0362 INFO SetEventCache - Start
+2022-06-21 20:42:21.0866 INFO SetCachedItem = setting cache for Events
+2022-06-21 20:42:21.0866 INFO SetCachedItem = setting cache for Events, with Expiry Date of 21/07/2022 20:42:21
+2022-06-21 20:42:21.0866 INFO SetNextResultCheckDateTime - Start - roundUp = False - forceUpdate = False
+2022-06-21 20:42:21.0866 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2022-06-21 20:42:21.1453 INFO SetNextResultCheckDateTime - Set League World Cup 2022, fixture date 21/11/2022 10:00:00, next check date to 21/11/2022 11:55:00
+2022-06-21 20:42:21.1453 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-06-21 20:42:21.1453 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 21/07/2022 20:42:21
+2022-06-21 20:42:35.9641 INFO Account - Login (HttpPost) - pete@salsbury.co.uk logged in
+2022-06-21 20:42:36.2439 INFO SetCachedItem = setting cache for Events
+2022-06-21 20:42:36.2439 INFO SetCachedItem = setting cache for Events, with Expiry Date of 21/07/2022 20:42:36
+2022-06-21 20:43:00.0324 INFO DailyRapidApiLeagueCheck --> lastDate = 03/06/2022 00:00:00, Now = 21/06/2022 00:00:00
+2022-06-21 20:43:00.2980 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 22/06/2022 00:00:00
+2022-06-21 20:43:00.2980 INFO DailyRapidApiLeagueCheck --> performUpdate = True
+2022-06-21 20:43:00.2980 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2022-06-21 20:43:00.3604 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 4, EarliestDate = 21/11/2022 00:00:00
+2022-06-21 20:43:00.9540 INFO V3UpdateFixtures - earliestDate = 21/11/2022 00:00:00, leagueId = 19
+2022-06-21 20:43:01.4696 INFO V3OddsByLeagueAndBookmaker - rapidApiV3LeagueId = 1
+2022-06-21 20:43:02.1725 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 1, pageNbr = 0
+2022-06-21 20:43:02.1881 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 51, EarliestDate = 05/06/2022 00:00:00
+2022-06-21 20:43:02.5318 INFO V3UpdateFixtures - earliestDate = 05/06/2022 00:00:00, leagueId = 23
+2022-06-21 20:43:02.8286 INFO SetEventCache - Start
+2022-06-21 20:43:02.8286 INFO SetCachedItem = setting cache for Events
+2022-06-21 20:43:02.8286 INFO SetCachedItem = setting cache for Events, with Expiry Date of 21/07/2022 20:43:02
+2022-06-21 20:43:02.8286 INFO V3OddsByLeagueAndBookmaker - rapidApiV3LeagueId = 43
+2022-06-21 20:43:04.9219 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 43, pageNbr = 0
+2022-06-21 20:43:05.0625 INFO SetNextResultCheckDateTime - Start - roundUp = False - forceUpdate = True
+2022-06-21 20:43:05.0781 INFO SetNextResultCheckDateTime - Set League World Cup 2022, fixture date 21/11/2022 10:00:00, next check date to 21/11/2022 11:55:00
+2022-06-21 20:43:05.0781 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-06-21 20:43:05.0781 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 21/07/2022 20:43:05

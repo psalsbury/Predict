@@ -1,45 +1,41 @@
-/****** Script for SelectTopNRows command from SSMS  ******/
-SELECT TOP (1000) [Id]
-      ,[LeagueId]
-      ,[SubLeagueName]
-      ,[SubLeagueShortName]
-      ,[CreatedDateTime]
-      ,[ModifiedDateTime]
-  FROM [Predictioncomp].[dbo].[LeagueSubLeagues]
 
-select * from [dbo].[LeagueSubLeagueTeams]
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 1, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('qatar','ECUADOR','SENEGAL','NETHERLANDS')
 
-  insert into [Predictioncomp].[dbo].[LeagueSubLeagues]
-  select 19,'Group A', 'A', GETDATE(), GETDATE()
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 2, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('ENGLAND','IRAN','USA','WALES')
 
-  insert into [Predictioncomp].[dbo].[LeagueSubLeagues]
-  select 19,'Group C', 'C', GETDATE(), GETDATE()
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 3, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('aRGENTINA','SAUDI ARABIA','MEXICO','POLAND')
 
-  insert into [Predictioncomp].[dbo].[LeagueSubLeagues]
-  select 19,'Group F', 'F', GETDATE(), GETDATE()
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 4, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('FRANCE','AUSTRALIA','DENMARK','TUNISIA')
 
-    insert into [Predictioncomp].[dbo].[LeagueSubLeagues]
-  select 19,'Group G', 'G', GETDATE(), GETDATE()
-
-  INSERT INTO [dbo].[LeagueSubLeagueTeams]
-  SELECT 5, 874,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 5, 875,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 5, 872,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 5, 11,  GETDATE(), GETDATE()
-
-    INSERT INTO [dbo].[LeagueSubLeagueTeams] --f
-  SELECT 7, 2,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 7, 882,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 7, 880,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 7, 3,  GETDATE(), GETDATE()
-
-      INSERT INTO [dbo].[LeagueSubLeagueTeams] --g
-  SELECT 8, 887,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 8, 888,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 8, 17,  GETDATE(), GETDATE()
-  UNION ALL   SELECT 8, 883,  GETDATE(), GETDATE()
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 5, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('SPAIN','COSTA RICA','GERMANY','JAPAN')
 
 
-  select *
-  from teams
-  where teamname = 'cameroon'
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 6, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('BRAZIL','SERBIA','SWITZERLAND','CAMEROON')
+
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 7, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('PORTUGAL','SWITZERLAND','SOUTH KOREA','GHANA')
+
+ INSERT INTO [dbo].[LeagueSubLeagueTeams]
+select 8, ID,  GETDATE(), GETDATE()
+from teams
+where TeamName IN ('BELGIUM','CANADA','MOROCCO','CROATIA')

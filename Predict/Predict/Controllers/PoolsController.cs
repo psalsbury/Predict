@@ -70,7 +70,7 @@ namespace Predict.Controllers
             // Admin of the site can see all pools
             var joinedPools = _context.PoolPlayers
                 .Include(a => a.Pool)
-                .Where(a => a.PlayerId == playerId && a.Enabled == true);
+                .Where(a => a.PlayerId == playerId && a.Enabled == true).OrderBy(a => a.Pool.PoolName);
 
             return View("PoolsMemberOf", joinedPools);
         }

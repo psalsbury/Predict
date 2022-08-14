@@ -5,7 +5,7 @@
     string disableAutoFill;
     if (!Model.ReadOnly)
     {
-        var nbrFixturePredictionsToEnter = 36;
+        var nbrFixturePredictionsToEnter = 48;
         var nbrFixturePredictionsEntered = (int) Session["nbrFixturePredictions"];
         disableAutoFill = nbrFixturePredictionsToEnter - nbrFixturePredictionsEntered == 0 ? "" : "disabled";
     }

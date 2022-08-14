@@ -91,13 +91,15 @@
     var rapidApiResultChecks = (List<RapidApiResultCheck>)Predict.Helper.Cache.GetCachedItem("NextFixtureCheckDateTime");
     foreach (var rapidApiResultCheck in rapidApiResultChecks)
     {
-        @rapidApiResultCheck.RapidApiLeagueId
-        <text> / </text>
-        @rapidApiResultCheck.RapidApiV3LeagueSeasonId
-        <text>-->(First unfinished Fixture) </text>
+        @rapidApiResultCheck.LeagueName; 
+        --       
+        @rapidApiResultCheck.RapidApiV3LeagueSeasonId;
+        <text>-->(First unfinished Fixture)</text>
+
         @rapidApiResultCheck.FixtureDateTime;
         <text>-->(Next time to check)</text>
         @rapidApiResultCheck.ResultCheckDateTime;
+
         <text>
             <br />
         </text>

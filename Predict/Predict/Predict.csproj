@@ -473,6 +473,10 @@
     <Compile Include="Migrations\202205311504197_EventNameTo26Chars.Designer.cs">
       <DependentUpon>202205311504197_EventNameTo26Chars.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206031157246_FixtureStatus.cs" />
+    <Compile Include="Migrations\202206031157246_FixtureStatus.Designer.cs">
+      <DependentUpon>202206031157246_FixtureStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -519,6 +523,7 @@
     <Compile Include="Models\QuizQuestionPlayerAnswer.cs" />
     <Compile Include="ViewModels\LeagueEventGenerationsEditViewModel.cs" />
     <Compile Include="ViewModels\LeagueEventGenerationsViewModel.cs" />
+    <Compile Include="ViewModels\PoolInfoFromSpViewModel.cs" />
     <Compile Include="ViewModels\QuizQuestionsForQuiz.cs" />
     <Compile Include="ViewModels\QuizQuestionsForQuizViewModel.cs" />
     <Compile Include="ViewModels\QuizTable.cs" />
@@ -751,6 +756,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205311504197_EventNameTo26Chars.resx">
       <DependentUpon>202205311504197_EventNameTo26Chars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206031157246_FixtureStatus.resx">
+      <DependentUpon>202206031157246_FixtureStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

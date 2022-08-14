@@ -8,6 +8,9 @@
     @Html.ActionLink("Create New", "Create", new { eventId = ViewBag.EventId })
 </p>
 
+@if (Model.Count() > 0)
+{
+
 <table class="table table-bordered table-hover" id="KO1">
     <thead>
     <tr>
@@ -50,7 +53,7 @@
                     @Html.DisplayFor(modelItem => item.ModifiedDateTime)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditKoFixture", new {id = item.Id, eventId = item.EventId}) |
+                    @Html.ActionLink("Edit", "EditKoFixture", new { id = item.Id, eventId = item.EventId }) |
                     @Html.ActionLink("Delete", "DeleteKoFixture", new { id = item.Id, eventId = item.EventId })
                 </td>
             </tr>
@@ -108,6 +111,11 @@
         }
     }
 </table>
+}
+else
+{
+    <p>No Data To Display</p>
+}
 
 <script>
 
