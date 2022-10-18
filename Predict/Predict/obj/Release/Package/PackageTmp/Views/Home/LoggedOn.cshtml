@@ -249,14 +249,23 @@
 
                             <div class="info-box-content">
 
-                                <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                @if (poolInfoViewModels.Count() > 1)
+                                {
+                                    <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
+                                        <span class="info-box-text">Nbr of Players</span>
+
+                                        <span class="btn btn-primary pull-right">Game Info &nbsp;<i class="fa fa-bullseye"></i></span>
+
+                                        <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
+
+                                    </a>
+                                }
+                                else
+                                {
                                     <span class="info-box-text">Nbr of Players</span>
 
-                                    <span class="btn btn-primary pull-right">Game Info &nbsp;<i class="fa fa-bullseye"></i></span>
-
                                     <span class="info-box-number">@poolInfoViewModel.TotalNumberOfPlayers</span>
-
-                                </a>
+                                }
                             </div>
 
                         </li>

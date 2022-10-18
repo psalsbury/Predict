@@ -147,6 +147,7 @@ namespace Predict.Controllers.Api
                         , EventId = eventPool.EventId
                         , CreatedDateTime = DateTime.UtcNow
                         , ModifiedDateTime = DateTime.UtcNow
+                        , AdminApprovedDateTime = DateTime.UtcNow
                         , PoolId = eventPool.PoolId
                         , Enabled = true
                     };
@@ -172,9 +173,9 @@ namespace Predict.Controllers.Api
                     var email = new IdentityMessage
                     {
                         Body = player.PlayerName + " (" + joiningPLayer.Email + ") has joined your " +
-                                 pool.PoolName + " pool."
+                                 pool.PoolName + " league."
                         + "<br><br>To Login to your account please follow this link <a href='https://www.predictioncomp.com'>www.predictioncomp.com</a>",
-                        Subject = "New member of your " + pool.PoolName + " pool",
+                        Subject = "New member of your " + pool.PoolName + " league",
                         Destination = adminPlayer.Email
                     };
                     Helper.Cache.SendEmail(email);
