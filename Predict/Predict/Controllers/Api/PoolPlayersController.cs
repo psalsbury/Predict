@@ -122,6 +122,7 @@ namespace Predict.Controllers.Api
                 .Where(a => a.PoolId == poolId)
                 .Where(a => a.Event.StartDateTime > DateTime.UtcNow).ToList();
 
+
             foreach (var eventPoolPlayer in eventPoolPlayers)
             {
                 eventPoolPlayer.Enabled = true;
@@ -130,6 +131,11 @@ namespace Predict.Controllers.Api
                 Helper.Cache.SetCachedItem("ForceUpdate*" + playerId + "*" + eventPoolPlayer.EventId, DateTime.Now.AddHours(1));
             }
 
+            var eventPlayers = _context.EventPlayers
+                .Where(a => a.PlayerId == playerId)
+                .Where(a => a.Enabled == true)
+                .ToList();
+
             // now get new ones
             var eventPools = _context.EventPools
                 .Include(a => a.Event)
@@ -137,22 +143,34 @@ namespace Predict.Controllers.Api
                 .Where(a => a.Event.StartDateTime > DateTime.UtcNow)
                 .Where(a => a.Enabled==true).ToList();
 
+            // loop through each event that this pool is in
             foreach (var eventPool in eventPools)
             {
-                if (!eventPoolPlayers.Any(a => a.EventId == eventPool.EventId))
+                // if this player is playing this event, then add in the eventpoolplayer
+                if(eventPlayers.Any(a => a.EventId == eventPool.EventId))
                 {
-                    var eventPoolPlayer = new EventPoolPlayer
-                    {
-                        PlayerId = playerId
-                        , EventId = eventPool.EventId
-                        , CreatedDateTime = DateTime.UtcNow
-                        , ModifiedDateTime = DateTime.UtcNow
-                        , AdminApprovedDateTime = DateTime.UtcNow
-                        , PoolId = eventPool.PoolId
-                        , Enabled = true
-                    };
-                    _context.EventPoolPlayers.Add(eventPoolPlayer);
+                    var eventPoolPlayer = eventPoolPlayers.FirstOrDefault(a => a.EventId == eventPool.EventId);
 
+                    if (eventPoolPlayer != null)
+                    {
+                        eventPoolPlayer.Enabled = true;
+                        eventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                        _context.EventPoolPlayers.AddOrUpdate(eventPoolPlayer);
+                    }
+                    else
+                    {
+                        eventPoolPlayer = new EventPoolPlayer
+                        {
+                            PlayerId = playerId
+                            , EventId = eventPool.EventId
+                            , CreatedDateTime = DateTime.UtcNow
+                            , ModifiedDateTime = DateTime.UtcNow
+                            , AdminApprovedDateTime = DateTime.UtcNow
+                            , PoolId = eventPool.PoolId
+                            , Enabled = true
+                        };
+                        _context.EventPoolPlayers.Add(eventPoolPlayer);
+                    }
                     Helper.Cache.SetCachedItem("ForceUpdate*" + playerId + "*" + eventPoolPlayer.EventId, DateTime.Now.AddHours(1));
                 }
             }

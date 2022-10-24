@@ -1,0 +1,31 @@
+2022-10-19 20:57:10.6830 INFO Default Quartz.NET properties loaded from embedded resource file
+2022-10-19 20:57:10.7629 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2022-10-19 20:57:10.7709 INFO Quartz Scheduler v.3.2.2.0 created.
+2022-10-19 20:57:10.8029 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2022-10-19 20:57:10.8029 INFO RAMJobStore initialized.
+2022-10-19 20:57:10.8029 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-10-19 20:57:10.8589 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2022-10-19 20:57:10.8589 INFO Quartz scheduler version: 3.2.2.0
+2022-10-19 20:57:10.8589 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2022-10-19 20:57:11.0108 INFO Startup Configuration - Start
+2022-10-19 20:57:11.0187 INFO SetEventCache - Start
+2022-10-19 20:57:11.0827 INFO SetCachedItem = setting cache for Events
+2022-10-19 20:57:11.0827 INFO SetCachedItem = setting cache for Events, with Expiry Date of 18/11/2022 20:57:11
+2022-10-19 20:57:11.0827 INFO SetNextResultCheckDateTime - Start - roundUp = False - forceUpdate = False
+2022-10-19 20:57:11.0827 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2022-10-19 20:57:11.1429 INFO SetNextResultCheckDateTime - Set League World Cup 2022, fixture date 21/11/2022 10:00:00, next check date to 21/11/2022 11:55:00
+2022-10-19 20:57:11.1429 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-10-19 20:57:11.1429 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 18/11/2022 20:57:11
+2022-10-19 20:58:00.0584 INFO DailyRapidApiLeagueCheck --> lastDate = 21/06/2022 00:00:00, Now = 19/10/2022 00:00:00
+2022-10-19 20:58:00.3267 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 20/10/2022 00:00:00
+2022-10-19 20:58:00.3267 INFO DailyRapidApiLeagueCheck --> performUpdate = True
+2022-10-19 20:58:00.3267 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2022-10-19 20:58:15.1626 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 4, EarliestDate = 21/11/2022 00:00:00
+2022-10-19 20:58:34.9320 INFO V3UpdateFixtures - earliestDate = 21/11/2022 00:00:00, leagueId = 19

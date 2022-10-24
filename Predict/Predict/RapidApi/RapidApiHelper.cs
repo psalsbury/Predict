@@ -246,11 +246,16 @@ namespace Predict.RapidApi
             foreach (var v3League in v3Leagues)
             {
 
-                // Find the earliest date that has a results that has not been processed
+        
                 DateTime earliestDate = DateTime.UtcNow.Date;
 
+                // Find the earliest date that has a result that has not been processed
                 if (context.Fixtures.Any(a => a.ResultProcessed == false && a.LeagueId == v3League.Id))
                     earliestDate = context.Fixtures.Where(a => a.ResultProcessed == false && a.LeagueId == v3League.Id).Min(f => f.FixtureDateTime);
+
+                // If earliest date is in the future then use current date in case any fixtures have been brought forwards
+                if (earliestDate > DateTime.UtcNow.Date)
+                    earliestDate = DateTime.UtcNow.Date;
 
                 var rapidApiV3LeagueSeason = context.RapidApiV3LeagueSeasons.Where(a => a.Id == v3League.RapidApiV3LeagueSeasonId).FirstOrDefault(); ;
 

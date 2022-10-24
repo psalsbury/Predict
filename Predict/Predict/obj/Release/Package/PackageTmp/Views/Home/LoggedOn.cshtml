@@ -150,7 +150,7 @@
         if (nbrKoPredictionsToEnter > 0 && nbrKoPredictionsEntered < nbrKoPredictionsToEnter)
         {
             <text><p style="color:red;font-size:25px;">
-                    KO Predictions must be entered before 21st November 10:00 GMT
+                    KO Predictions must be entered before 20th November 16:00 GMT
                 </p>
             </text>
         }
@@ -249,7 +249,7 @@
 
                             <div class="info-box-content">
 
-                                @if (poolInfoViewModels.Count() > 1)
+                                @if (poolInfoViewModels.Count() > 1 && 1==2)
                                 {
                                     <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
                                         <span class="info-box-text">Nbr of Players</span>
