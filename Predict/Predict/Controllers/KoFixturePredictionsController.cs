@@ -250,7 +250,9 @@ namespace Predict.Controllers
             };
             koFixturePredictionViewModel.LeagueSubLeagueTeams = _context.LeagueSubLeagueTeams
                                     .Include(p => p.Team)
-                                    .Where(a => a.LeagueSubLeague.LeagueId == koEvent.LinkedLeagueId).ToList();
+                                    .Where(a => a.LeagueSubLeague.LeagueId == koEvent.LinkedLeagueId)
+                                    .OrderBy(t => t.Team.TeamName)
+                                    .ToList();
 
             koFixturePredictionViewModel.ActualTeams = _context.Database.SqlQuery<ActualTeam>(
                 "spGetKoResultTeams @intEventId"

@@ -38,11 +38,13 @@
             </td>
             <td style="vertical-align: middle;"><h4>@item.NbrPlayers</h4></td>
             <td style="vertical-align: middle;" class="row no-gutters">
-                <button class="btn btn-danger js-delete btn-sm" value="Leave" dataEventId="@item.EventId">Leave</button>
+                <button class="btn btn-danger js-delete btn-sm" value="Leave" dataEventName="@item.EventName" dataEventId="@item.EventId">Leave</button>
             </td>
         </tr>
     }
 </table>
+
+<script src="~/Scripts/bootbox.js"></script>
 
 <script>
     $("#EventPlayers").on("click",
@@ -63,6 +65,7 @@
                             contentType: "application/json",
                             datatype: "json",
                             success: function () {
+                                bootbox.alert("You have succesfully left the " + button.attr("dataEventName") + " comp");
                                 $('#sidebardiv').load('@Url.Action("_SideBar","Home")');
                             },
                             error: function (request, error) {

@@ -51,32 +51,30 @@
         @foreach (var joinedPool in @Model)
         {
 
-    <tr>
+        <tr>
 
-        <td>
-            <h4>
-                @Html.DisplayFor(modelItem => joinedPool.Pool.PoolName)
-            </h4>
-        </td>
-        <td class="btn-group-vertical">
-            <div class="btn-group-vertical">
-                <button class="btn btn-primary  btn-sm" type="button" data-toggle="modal" data-target="#modal-poolInfo"
-                        data-title="@joinedPool.PoolId"
-                        data-title2="@joinedPool.Pool.PoolName">
-                    <b>Info</b>&nbsp;
-                    <i class="fa fa-info"></i>
-                </button>
-                <button @(joinedPool.Pool.DefaultPoolForEvent ? "disabled" : "") class="btn btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
+            <td>
+                <h4>
+                    @Html.DisplayFor(modelItem => joinedPool.Pool.PoolName)
+                </h4>
+            </td>
+            <td class="btn-group">
+                <div class="btn-group" style="align-content:end;">
+                    <button class="btn btn-primary btn-block btn-sm" type="button" data-toggle="modal" data-target="#modal-poolInfo"
+                            data-title="@joinedPool.PoolId"
+                            data-title2="@joinedPool.Pool.PoolName">
+                        <b>Info</b>&nbsp;
+                        <i class="fa fa-info"></i>
+                    </button>
+                    <button @(joinedPool.Pool.DefaultPoolForEvent ? "disabled" : "") class="btn btn-block btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
 
-                    <b>Leave</b>&nbsp;
-                    <i class="fa fa-trash"></i>
-                </button>
+                        <b>Leave</b>&nbsp;
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </td>
 
-
-            </div>
-        </td>
-
-    </tr>
+        </tr>
             rowNbr += 1;
         }
     </table>
@@ -110,8 +108,9 @@
                             {
                                 url: "../api/poolPlayers/delete/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
                                 method: "POST",
-                                success: function() {
-                                $(button.closest("tr")).fadeOut(1000);
+                                success: function () {
+                                    bootbox.alert("You have succesfully left the " + button.attr("poolName") + " league");
+                                    $(button.closest("tr")).fadeOut(1000);
                             }
                         });
                     }

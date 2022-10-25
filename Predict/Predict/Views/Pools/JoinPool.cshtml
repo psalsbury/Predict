@@ -84,28 +84,6 @@
 
 <script>
 
-
-    $("#poolMembershipJoined").on("click",
-        ".js-approve",
-        function() {
-            var button = $(this);
-            bootbox.confirm("Are you sure you want to leave the " + button.attr("poolName") + " league?",
-                function(result) {
-                    if (result) {
-                        $.ajax(
-                            {
-                                url: "../api/poolPlayers/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
-                            method: "DELETE",
-                            success: function() {
-                                $(button.closest("tr")).fadeOut(1000);
-                            }
-                        });
-                    }
-
-                });
-        });
-
-
     $("#poolMembershipNotJoined").on("click",
         ".btn-success",
         function() {
@@ -137,11 +115,12 @@
                     "/@(User.Identity.GetUserId())" +
                     "/" + joinCode,
                 method: "POST",
-                success: function() {
+                success: function () {
+                    bootbox.alert("You have succesfully joined the " + button.attr("poolName") + " league");
                     $(button.closest("tr")).fadeOut(1000);
                 },
                 error: function(request, status, error) {
-                    bootbox.alert("Join request has not been successful : " + error);
+                    bootbox.alert("Join request to join the " + button.attr("poolName") + " league has failed");
                 }
             });
     };
