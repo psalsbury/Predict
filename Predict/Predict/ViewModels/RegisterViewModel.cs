@@ -15,12 +15,19 @@ namespace Predict.ViewModels
 
         [Display(Name = "Player Name")] public string PlayerName { get; set; }
 
-        public string Id { get; set; }
+        public string JoinCode { get; set; }
 
         [Display(Name = "Comp")] public short EventId { get; set; }
 
+        [Display(Name = "League")] public int PoolId { get; set; }
+
+        public short defaultEventId { get; set; }
+
+        public int defaultPoolId { get; set; }
+
         public IEnumerable<Team> Teams { get; set; }
         public IEnumerable<Event> Events { get; set; }
+        public IEnumerable<Pool> Pools { get; set; }
     }
 
     public class UpdateRegisterViewModel 

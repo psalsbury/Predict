@@ -79,7 +79,8 @@ namespace Predict.Controllers.Api
                 return BadRequest("Invalid parameters");
 
             var playerId = User.Identity.GetUserId();
-            var myEventPlayer = _context.EventPlayers.Where(a => a.EventId == eventId && a.PlayerId == playerId).FirstOrDefault();
+            var myEventPlayer = _context.EventPlayers
+                .Where(a => a.EventId == eventId && a.PlayerId == playerId).FirstOrDefault();
 
             if (myEventPlayer == null)
             {
@@ -187,46 +188,71 @@ namespace Predict.Controllers.Api
 
         private bool AddPlayerToPoolsThatAreCompetingInThisEvent(short eventId, string playerId)
         {
+            // loop around all the pools connected to the event, then check if the player is a member of the pool 
 
-            // Make sure the player is associated to all pools that are associated to the player that are associated to this event
-            var eventPools = _context.EventPools.Where(a => a.EventId == eventId)
-                .Where(a => a.Enabled == true).ToList();
-
-            var poolPlayers = _context.PoolPlayers.Where(a => a.PlayerId == playerId)
-                .Where(a => a.Enabled == true).ToList();
+            var poolsToJoin = (from dr in _context.EventPools
+                                    join e in _context.PoolPlayers on dr.PoolId equals e.PoolId
+                                    join p in _context.Pools on dr.PoolId equals p.Id
+                                    where e.PlayerId == playerId 
+                                    & dr.EventId == eventId
+                                    select new { dr.PoolId, p.PoolName }).ToList();
 
             var changesMade = false;
 
-            foreach (var eventPool in eventPools)
+            foreach (var poolToJoin in poolsToJoin)
             {
-                var exists = poolPlayers.Exists(a => a.PoolId == eventPool.PoolId && a.Enabled == true);
-                if (exists)
-                {
-                    changesMade = true;
-                    // If the player is also associated the the pool then associate the player/pool to the event
-                    var myEventPoolPlayer = _context.EventPoolPlayers.FirstOrDefault(f =>
-                        f.EventId == eventId && f.PlayerId == playerId && f.PoolId == eventPool.PoolId);
-                    if (myEventPoolPlayer == null)
-                    {
-                        myEventPoolPlayer = new EventPoolPlayer()
-                        {
-                            CreatedDateTime = DateTime.UtcNow,
-                            ModifiedDateTime = DateTime.UtcNow,
-                            EventId = eventId,
-                            PlayerId = playerId,
-                            PoolId = eventPool.PoolId,
-                            AdminApprovedDateTime = DateTime.UtcNow,
-                            PoolPosition = 0,
-                            Enabled = true
-                        };
-                    }
-                    else
-                    {
-                        myEventPoolPlayer.Enabled = true;
-                        myEventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
-                    }
+                changesMade = true;
 
-                    _context.EventPoolPlayers.AddOrUpdate(myEventPoolPlayer);
+                // If the player is also associated to the pool then associate the player/pool to the event
+                var myEventPoolPlayer = _context.EventPoolPlayers.FirstOrDefault(f =>
+                    f.EventId == eventId && f.PlayerId == playerId && f.PoolId == poolToJoin.PoolId);
+                if (myEventPoolPlayer == null)
+                {
+                    myEventPoolPlayer = new EventPoolPlayer()
+                    {
+                        CreatedDateTime = DateTime.UtcNow,
+                        ModifiedDateTime = DateTime.UtcNow,
+                        EventId = eventId,
+                        PlayerId = playerId,
+                        PoolId = poolToJoin.PoolId,
+                        AdminApprovedDateTime = DateTime.UtcNow,
+                        PoolPosition = 0,
+                        Enabled = true
+                    };
+                }
+                else
+                {
+                    myEventPoolPlayer.Enabled = true;
+                    myEventPoolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                }
+
+                _context.EventPoolPlayers.AddOrUpdate(myEventPoolPlayer);
+
+                // Email the administrator of the league if the the admin requires an email
+                var emailNotificationData =_context.Pools
+                    .Include(a => a.AdminPlayer)
+                    .Include(b => b.AdminPlayer.AspNetUser)
+                    .Where(a => a.Id == poolToJoin.PoolId)
+                    .Where(a => a.EmailNotifications == true)
+                    .FirstOrDefault();
+
+                if(emailNotificationData != null)
+                {
+                    var player = _context.Players
+                        .Include(a => a.AspNetUser)
+                        .FirstOrDefault(a => a.Id == playerId);
+
+                    var myevent = Helper.Cache.GetCachedEvent(eventId);
+
+                    var email = new IdentityMessage
+                    {
+                        Body = player.PlayerName + " (" + player.AspNetUser.Email + ") has joined the  " + myevent.EventName + " comp in your "
+                                    + poolToJoin.PoolName + " league."
+                                    + "<br><br>To Login to your account please follow this link <a href='https://www.predictioncomp.com'>www.predictioncomp.com</a>",
+                        Subject = "New league member has joined the  " + myevent.EventName + " comp",
+                        Destination = emailNotificationData.AdminPlayer.AspNetUser.Email
+                    };
+                    Helper.Cache.SendEmail(email);
                 }
             }
             if(changesMade)

@@ -190,11 +190,22 @@ namespace Predict.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            var globalPoolId = Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
             var context = new ApplicationDbContext();
+            short defaultEventId = 0;
+            var defaultPoolId = 0;
+
+            short.TryParse(Request["EventId"],out defaultEventId);
+            int.TryParse(Request["PoolId"], out defaultPoolId);
+
             var registerViewModel = new RegisterViewModel
             {
-                Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList()
+                Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList()
+                , Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList()
+                , defaultEventId = defaultEventId
+                , defaultPoolId= defaultPoolId
             };
+
             context.Dispose();
             return View(registerViewModel);
         }
@@ -241,13 +252,18 @@ namespace Predict.Controllers
                 var context = new ApplicationDbContext();
 
                 _logger.Log(LogLevel.Info, model.Email + " has registered");
+                var globalPoolId = Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]);
 
                 var captchaResponse = Request["g-recaptcha-response"];
                 var response = ValidateCaptcha(captchaResponse);
                 if (!response)
                 {
+
                     ModelState.AddModelError("Captcha", "Please Complete Google Captcha");
-                    model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                    model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
+                    model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
+                    model.defaultPoolId = model.PoolId;
+                    model.defaultEventId = model.EventId;
                     return View("Register", model);
                 }
 
@@ -258,15 +274,35 @@ namespace Predict.Controllers
                     if (model.Password != model.ConfirmPassword)
                     {
                         ModelState.AddModelError("Password", "Passwords do not match");
-                        model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                        model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
+                        model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
+                        model.defaultPoolId = model.PoolId;
+                        model.defaultEventId = model.EventId;
                         return View("Register", model);
+                    }
+
+                    if(model.PoolId>0)
+                    {
+                        var pool = context.Pools.FirstOrDefault(a => a.Id == model.PoolId & (a.JoinCode == model.JoinCode | a.JoinCode == null));
+                        if(pool == null)
+                        {
+                            ModelState.AddModelError("Join Code", "The league join code was not correct");
+                            model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
+                            model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
+                            model.defaultPoolId = model.PoolId;
+                            model.defaultEventId = model.EventId;
+                            return View("Register", model);
+                        }
                     }
 
                     var nbrWithSameDisplayName = context.Players.Count(a => a.DisplayName == model.DisplayName);
                     if (nbrWithSameDisplayName != 0)
                     {
                         ModelState.AddModelError("Password", "Display name is already taken");
-                        model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                        model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
+                        model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
+                        model.defaultPoolId = model.PoolId;
+                        model.defaultEventId = model.EventId;
                         return View("Register", model);
                     }
 
@@ -294,8 +330,23 @@ namespace Predict.Controllers
 
                         context.Players.Add(player);
 
+                        if (model.PoolId > 0)
+                        {
+                            // Add the player to be associated to the selected pool
+                            var poolPlayer = new PoolPlayer
+                            {
+                                Enabled = true,
+                                CreatedDateTime = DateTime.UtcNow,
+                                ModifiedDateTime = DateTime.UtcNow,
+                                PlayerId = user.Id,
+                                PoolId = model.PoolId
+                            };
+                            context.PoolPlayers.Add(poolPlayer);
+                        }
+
                         if (myEvent != null)
                         {
+                            // User has chosen to join an event
                             var eventPlayer = new EventPlayer
                             {
                                 EventId = model.EventId,
@@ -305,6 +356,28 @@ namespace Predict.Controllers
                                 ModifiedDateTime = DateTime.UtcNow
                             };
                             context.EventPlayers.Add(eventPlayer);
+
+                            if(model.PoolId>0)
+                            {
+                                _logger.Log(LogLevel.Info, model.PoolId + " player added into pool on registration");
+
+                                // only want to add EventPoolPlayer if there is an entry in EventPool
+                                var eventPoolExists = context.EventPools.Any(a => a.EventId == myEvent.Id & a.PoolId == model.PoolId & a.Enabled == true);
+                                if (eventPoolExists)
+                                {
+                                    var leagueEventPoolPlayer = new EventPoolPlayer
+                                    {
+                                        PoolId = model.PoolId,
+                                        PlayerId = user.Id,
+                                        EventId = model.EventId,
+                                        AdminApprovedDateTime = DateTime.UtcNow,
+                                        Enabled = true,
+                                        CreatedDateTime = DateTime.UtcNow,
+                                        ModifiedDateTime = DateTime.UtcNow
+                                    };
+                                    context.EventPoolPlayers.Add(leagueEventPoolPlayer);
+                                }
+                            }
 
                             var defaultPoolId = myEvent.DefaultPoolId;
                             if (defaultPoolId > 0)
@@ -376,7 +449,10 @@ namespace Predict.Controllers
                     AddErrors(result);
                 }
 
-                model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).ToList();
+                model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
+                model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
+                model.defaultPoolId = model.PoolId;
+                model.defaultEventId = model.EventId;
                 return View("Register", model);
 
             }

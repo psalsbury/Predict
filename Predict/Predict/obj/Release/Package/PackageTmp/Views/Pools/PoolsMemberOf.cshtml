@@ -35,36 +35,65 @@
     </div>
 </div>
 
+<!-- / MODAL FORM FOR MEMBER INFORMATION -->
+<div class="modal fade" id="modal-link">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Registration Link</h4>
+            </div>
+            <div class="modal-body">
+                <p>Registration Link</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <input class="form-control" id="myInput" type="text" placeholder="Search..">
 
 
-    <table class="table table-bordered" id="poolMembershipJoined" width="100%">
-        <thead class="thead-dark">
-            <tr>
-                <th>
-                    League Name
-                </th>
-                <th></th>
-            </tr>
-        </thead>
+<table class="table table-bordered" id="poolMembershipJoined" width="100%">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                League Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-        @foreach (var joinedPool in @Model)
-        {
+    @foreach (var joinedPool in @Model)
+    {
 
         <tr>
 
-            <td>
+            <td width="60%">
                 <h4>
                     @Html.DisplayFor(modelItem => joinedPool.Pool.PoolName)
                 </h4>
             </td>
-            <td class="btn-group">
+            <td width=40% class="btn-group">
                 <div class="btn-group" style="align-content:end;">
                     <button class="btn btn-primary btn-block btn-sm" type="button" data-toggle="modal" data-target="#modal-poolInfo"
                             data-title="@joinedPool.PoolId"
                             data-title2="@joinedPool.Pool.PoolName">
                         <b>Info</b>&nbsp;
                         <i class="fa fa-info"></i>
+                    </button>
+                    <button class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#modal-link"
+                            data-title="@joinedPool.PoolId"
+                            data-title2="@joinedPool.Pool.PoolName">
+
+                        <b>Register Link</b>&nbsp;
+                        <i class="fa fa-link"></i>
                     </button>
                     <button @(joinedPool.Pool.DefaultPoolForEvent ? "disabled" : "") class="btn btn-block btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
 
@@ -75,9 +104,9 @@
             </td>
 
         </tr>
-            rowNbr += 1;
-        }
-    </table>
+        rowNbr += 1;
+    }
+</table>
 
 
 <script src="~/Scripts/bootbox.js"></script>
@@ -133,18 +162,28 @@
 
         // Ajax call to get the content of the modal form
         $.ajax({
-                type: "GET",
-            url: "/api/Pools/GetPoolInfo/" + poolId ,
+            type: "GET",
+            url: "/api/Pools/GetPoolInfo/" + poolId,
             success: function (data) {
                 var htmlTable = data.toString();
                 modal.find('.modal-body').html(htmlTable);
             },
             error: function (request, error) {
-                    modal.find('.modal-body').html("<p>Sorry, No info found for this pool</p>");
+                modal.find('.modal-body').html("<p>Sorry, No info found for this pool</p>");
             }
         });
 
         modal.find('.modal-title').text(title);
+    });
+
+    $('#modal-link').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var modal = $(this);
+        var poolId = button.data('title');
+        var title = button.data('title2');
+
+        modal.find('.modal-body').html("https://www.predictioncomp.com/Account/Register?PoolId=" + poolId);
+
     });
 
 </script>

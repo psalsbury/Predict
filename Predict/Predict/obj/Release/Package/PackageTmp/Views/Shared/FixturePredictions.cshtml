@@ -653,6 +653,21 @@
     });
 </script>
 
+<script>
+    $('body').on('click', '#petebutton', function () {
+
+        if ($('#playerinfo').css('display') == 'none') {
+            $("#playerinfo").show(1000);
+            $("#allodds").hide(1000);
+        } else {
+            $("#playerinfo").hide(1000);
+            $("#allodds").show(1000);
+        }
+
+
+    });
+</script>
+
 @if (Model.FixturePredictions.Count() > 48)
 {
     <script>

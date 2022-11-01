@@ -161,7 +161,7 @@ namespace Predict.Controllers
                 };
                 _context.PoolPlayers.Add(poolPlayer);
 
-                // Add this pool to all unfinished events entered by the person who has created the pool
+                // Add this pool to all none started events entered by the person who has created the pool
                 var eventPlayersItemList = _context.EventPlayers
                                         .Include(e => e.Event)
                                         .Where(a => a.Event.StartDateTime >= DateTime.UtcNow && a.PlayerId == poolFromDb.AdminPlayerId)

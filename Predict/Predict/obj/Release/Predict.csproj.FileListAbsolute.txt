@@ -599,3 +599,4 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.ForumSQLUpdates.
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.BaseDatesDateTime2.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EventNameTo26Chars.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.FixtureStatus.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EmailLeads.resources

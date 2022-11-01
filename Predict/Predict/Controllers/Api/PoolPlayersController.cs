@@ -1,17 +1,13 @@
 ﻿using Microsoft.Ajax.Utilities;
 using Predict.Models;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using Microsoft.ApplicationInsights;
 using Microsoft.AspNet.Identity;
-using Microsoft.Extensions.Logging;
-using Predict.Helper;
 
 namespace Predict.Controllers.Api
 {
@@ -121,7 +117,6 @@ namespace Predict.Controllers.Api
                 .Where(a => a.PlayerId == playerId)
                 .Where(a => a.PoolId == poolId)
                 .Where(a => a.Event.StartDateTime > DateTime.UtcNow).ToList();
-
 
             foreach (var eventPoolPlayer in eventPoolPlayers)
             {

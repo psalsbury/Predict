@@ -7,7 +7,7 @@
 
             @* BEGIN Menu *@
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">Prediction Menu</li>
+                <li class="header" style="background-color:grey; color:aliceblue; font-weight:bold">MY PREDICTIONS</li>
 
                 @if (Request.IsAuthenticated)
                 {
@@ -31,19 +31,26 @@
 
                         }
                     }
+                    <shadow>&nbsp;</shadow>
+                    <shadow>&nbsp;</shadow>
+                    <li class="header" style="background-color: grey; color: aliceblue; font-weight: bold">CREATE / JOIN / MANAGE</li>
 
                     <li>
                         <a href="@Url.Action("Index", "PoolDashboard")">
-                            <i class="fa fa-users"></i> <span>Your Leagues</span>
+                            <i class="fa fa-users"></i> <span>A League Of Your Own</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="@Url.Action("CompsDashboardIndex", "CompsDashboard")">
                             <i class="fa fa-soccer-ball-o"></i>
-                            <span>Your Comps</span>
+                            <span>A Competition</span>
                         </a>
                     </li>
+                    <shadow>&nbsp;</shadow>
+                    <shadow>&nbsp;</shadow>
+
+                    <li class="header" style="background-color: grey; color: aliceblue; font-weight: bold">OTHER LINKS</li>
 
                     if (User.IsInRole("Admin"))
                     {
@@ -59,44 +66,8 @@
                         </a>
                     </li>
 
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-smile-o"></i> <span>Jokes</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
 
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="@Url.Action("ShowJoke", "Jokes")">
-                                    <i class="fa fa-smile-o"></i> <span>Show Joke</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("JokesTable", "Jokes")">
-                                    <i class="fa fa-list"></i> <span>Joke League</span>
-                                </a>
-                            </li>
 
-                            @if (hasJokes)
-                            {
-                                <li>
-                                    <a href="@Url.Action("DisplayJokeList", "Jokes")">
-                                        <i class="fa fa-list"></i> <span>Edit Your Jokes</span>
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li>
-                                    <a href="@Url.Action("AddJoke", "Jokes")">
-                                        <i class="fa fa-list"></i> <span>Add New Joke</span>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-question-circle"></i> <span>Footy Quiz</span>

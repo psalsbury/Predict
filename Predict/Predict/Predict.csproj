@@ -403,6 +403,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GoogleCaptcha\GoogleCaptchaResponse.cs" />
+    <Compile Include="Helper\EmailLeadProcessor.cs" />
     <Compile Include="Helper\LeagueTableTeamThirdPlaceHelper.cs" />
     <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="Helper\Helper.cs" />
@@ -477,10 +478,15 @@
     <Compile Include="Migrations\202206031157246_FixtureStatus.Designer.cs">
       <DependentUpon>202206031157246_FixtureStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210292210172_EmailLeads.cs" />
+    <Compile Include="Migrations\202210292210172_EmailLeads.Designer.cs">
+      <DependentUpon>202210292210172_EmailLeads.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
     <Compile Include="Models\BonusQuestionPrediction.cs" />
+    <Compile Include="Models\EmailLead.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventFixture.cs" />
     <Compile Include="Models\EventGeneration.cs" />
@@ -759,6 +765,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206031157246_FixtureStatus.resx">
       <DependentUpon>202206031157246_FixtureStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210292210172_EmailLeads.resx">
+      <DependentUpon>202210292210172_EmailLeads.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
