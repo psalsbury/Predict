@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
 using Predict.ViewModels;
+using System.Data.SqlClient;
 
 namespace Predict.Controllers
 {
@@ -45,12 +46,18 @@ namespace Predict.Controllers
                 && dr.Enabled == true
                 select dr.PoolId).Distinct().Count();
 
+
+            var eventNotJoined = _context.Database.SqlQuery<string>(
+                "spCheckIfLeagueAdminNeedsJoin @PlayerId"
+                , new SqlParameter("@PlayerId ", playerId)).FirstOrDefault();
+
             var poolDashboardViewModel = new PoolDashboardViewModel
             {
                 NumberOfPoolsAdminOf = pools.Count()
-                , NumberOfPoolsMemberOf = _context.PoolPlayers.Count(a => a.PlayerId == playerId && a.Enabled==true)
+                , NumberOfPoolsMemberOf = _context.PoolPlayers.Count(a => a.PlayerId == playerId && a.Enabled == true)
                 , HasPoolWithoutComp = nbrPoolsWithComp < pools.Count() ? true : false
                 , HasOwnedPoolsButNotAMember = nbrPoolsOwnedButNotJoined < pools.Count ? true : false
+                , EventNotJoined = eventNotJoined
             };
 
             return View(poolDashboardViewModel);

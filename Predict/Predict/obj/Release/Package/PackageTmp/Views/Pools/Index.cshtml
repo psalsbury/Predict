@@ -15,6 +15,27 @@
     </ol>
 </nav>
 
+<div class="modal fade" id="modal-link">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Registration Link</h4>
+            </div>
+            <div class="modal-body">
+                <p>Registration Link</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <input class="form-control" id="myInput" type="text" placeholder="Search..">
 
 <div class="col-md-4">
@@ -43,9 +64,18 @@
                     <a href="~/Pools/Edit/@item.Id" class="btn btn btn-block btn-info"><i class="fa fa-pencil-square-o"></i> &nbsp; Edit </a>
                     <a href="~/PoolPlayers/PoolAdmin/@item.Id" class="btn btn-block btn-primary"><i class="fa fa-users"></i> &nbsp;Players </a>
                     <a href="~/EventPools/EventsLinkedToPool/@item.Id" class="btn btn-block btn-success"><i class="fa fa-trophy"></i>&nbsp;Comps </a>
+
+                    <button class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#modal-link"
+                            data-title="@item.Id"
+                            data-title2="@item.PoolName">
+
+                        <b>Register Link</b>&nbsp;
+                        <i class="fa fa-link"></i>
+                    </button>
+
                     @if (item.Id != globalPoolId)
                     {
-                <button class="btn btn-block btn-danger" value="Remove" poolId="@item.Id"><i class="fa fa-trash"></i>&nbsp;Delete </button>
+                        <button class="btn btn-block btn-danger" value="Remove" poolId="@item.Id"><i class="fa fa-trash"></i>&nbsp;Delete </button>
 
                     }
                 </td>
@@ -105,5 +135,17 @@
                 ]
             });
         });
+
+        $('#modal-link').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var modal = $(this);
+            var poolId = button.data('title');
+            var title = button.data('title2');
+
+            modal.find('.modal-body').html("<h4>Send this link to your friends to join your league</h4><br>https://www.predictioncomp.com/Account/Register?PoolId=" + poolId);
+
+
+        });
+
 
     </script>

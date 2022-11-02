@@ -11,6 +11,7 @@ namespace Predict.ViewModels
         public int NumberOfPoolsMemberOf { get; set; }
         public bool HasPoolWithoutComp { get; set; }
         public bool HasOwnedPoolsButNotAMember { get; set; }
+        public string EventNotJoined { get; set; }
 
     }
 }

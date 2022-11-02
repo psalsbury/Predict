@@ -88,13 +88,16 @@
                         <b>Info</b>&nbsp;
                         <i class="fa fa-info"></i>
                     </button>
-                    <button class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#modal-link"
-                            data-title="@joinedPool.PoolId"
-                            data-title2="@joinedPool.Pool.PoolName">
 
-                        <b>Register Link</b>&nbsp;
-                        <i class="fa fa-link"></i>
-                    </button>
+                        <button class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#modal-link"
+                                data-title="@joinedPool.PoolId"
+                                data-title2="@joinedPool.Pool.PoolName">
+
+                            <b>Register Link</b>&nbsp;
+                            <i class="fa fa-link"></i>
+                        </button>
+
+
                     <button @(joinedPool.Pool.DefaultPoolForEvent ? "disabled" : "") class="btn btn-block btn-danger js-delete btn-sm" value="Join" dataPlayerId="@joinedPool.PlayerId" dataPoolId="@joinedPool.Pool.Id" poolName="@joinedPool.Pool.PoolName">
 
                         <b>Leave</b>&nbsp;
@@ -182,7 +185,7 @@
         var poolId = button.data('title');
         var title = button.data('title2');
 
-        modal.find('.modal-body').html("https://www.predictioncomp.com/Account/Register?PoolId=" + poolId);
+        modal.find('.modal-body').html("<h4>Send this link to your friends to join your league</h4><br>https://www.predictioncomp.com/Account/Register?PoolId=" + poolId);
 
     });
 

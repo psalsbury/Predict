@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 using NLog;
 using Predict.GoogleCaptcha;
 using Predict.ViewModels;
-using Quartz;
+using System.Data.Entity;
 using RegisterViewModel = Predict.ViewModels.RegisterViewModel;
 
 namespace Predict.Controllers
@@ -330,8 +330,12 @@ namespace Predict.Controllers
 
                         context.Players.Add(player);
 
-                        if (model.PoolId > 0)
+                        if (model.PoolId > 0 & model.PoolId != globalPoolId)
                         {
+                            var pool = context.Pools
+                                .Include(a => a.AdminPlayer.AspNetUser)
+                                .First(a => a.Id == model.PoolId);
+
                             // Add the player to be associated to the selected pool
                             var poolPlayer = new PoolPlayer
                             {
@@ -341,7 +345,14 @@ namespace Predict.Controllers
                                 PlayerId = user.Id,
                                 PoolId = model.PoolId
                             };
+                            if(pool.EmailNotifications)
+                            {
+                                Helper.Cache.SendNewPoolMemberEmail(player.PlayerName, model.Email, pool.PoolName, pool.AdminPlayer.AspNetUser.Email);
+                                poolPlayer.EmailSentToAdminDateTime = DateTime.UtcNow;
+                            }
+
                             context.PoolPlayers.Add(poolPlayer);
+
                         }
 
                         if (myEvent != null)
@@ -357,7 +368,7 @@ namespace Predict.Controllers
                             };
                             context.EventPlayers.Add(eventPlayer);
 
-                            if(model.PoolId>0)
+                            if(model.PoolId>0 & model.PoolId != globalPoolId)
                             {
                                 _logger.Log(LogLevel.Info, model.PoolId + " player added into pool on registration");
 

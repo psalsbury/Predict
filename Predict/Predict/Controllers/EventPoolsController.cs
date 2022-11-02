@@ -121,25 +121,23 @@ namespace Predict.Controllers
 
                     if (!playingIn.IsNullOrWhiteSpace())
                     {
-                        // Event 
+
+                        // IF POOL IS LINKED TO THIS COMP
+                        // then created eventpoolplayer records for all players linked to the pool and the event
+
                         var eventPoolPlayers = _context.EventPoolPlayers
                             .Where(a => a.PoolId == eventPoolsViewModel.PoolId)
                             .Where(a => a.EventId == myEvent.Id).ToList();
-
-                        // TODO THE BELOW STATEMENT IS GETTING ALL PLAYERS IN THE EVENT ... AROUND 800
-                        var eventPlayers = _context.EventPlayers.Where(a => a.EventId == myEvent.Id)
-                            .Where(a => a.Enabled == true).ToList();
 
                         foreach (var poolPlayer in poolPlayers)
                         {
 
                             // Check if the player is playing this event
-                            var playingEvent = eventPlayers.Exists(a => a.PlayerId == poolPlayer.PlayerId);
+                            var playingEvent = _context.EventPlayers.Any(a => a.PlayerId == poolPlayer.PlayerId & a.EventId== myEvent.Id & a.Enabled==true);
                             if (playingEvent)
                             {
-                                var eventPoolPlayer =
-                                eventPoolPlayers.FirstOrDefault(a =>
-                                    a.PlayerId == poolPlayer.PlayerId);
+                                var eventPoolPlayer = eventPoolPlayers.FirstOrDefault(a =>
+                                                a.PlayerId == poolPlayer.PlayerId);
 
                                 if (eventPoolPlayer == null)
                                 {

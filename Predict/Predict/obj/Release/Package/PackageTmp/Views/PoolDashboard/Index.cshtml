@@ -85,7 +85,7 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                To link your league to a prediction comp, such as Euro 2021, please select 'Manage Leagues', then select 'Comps'
+                To link your league to a prediction comp, such as the World Cup, please select 'Manage Leagues', then select 'Comps'
             </div>
 
         }
@@ -100,6 +100,18 @@
             </div>
 
         }
+
+        @if (Model.EventNotJoined != null)
+        {
+
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+        Don't forget to join the <b>@Model.EventNotJoined</b> comp by clicking on the menu item CREATE/JOIN/MANAGE <br /><i>A competition</i>  <br />  <i>Join A Comp</i>
+    </div>
+
+        }
+
     </div>
 </div>
 

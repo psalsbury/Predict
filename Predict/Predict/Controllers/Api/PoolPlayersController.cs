@@ -179,19 +179,11 @@ namespace Predict.Controllers.Api
             // May need to change this to be picked up by quartz 1 min job to send outstanding requests if errors
             if (pool.EmailNotifications)
             {
-                var joiningPLayer = _context.Users.FirstOrDefault(a => a.Id == playerId);
+                var joiningPlayer = _context.Users.FirstOrDefault(a => a.Id == playerId);
                 var adminPlayer = _context.Users.FirstOrDefault(a => a.Id == pool.AdminPlayerId);
-                if (joiningPLayer != null && adminPlayer != null)
+                if (joiningPlayer != null && adminPlayer != null)
                 {
-                    var email = new IdentityMessage
-                    {
-                        Body = player.PlayerName + " (" + joiningPLayer.Email + ") has joined your " +
-                                 pool.PoolName + " league."
-                        + "<br><br>To Login to your account please follow this link <a href='https://www.predictioncomp.com'>www.predictioncomp.com</a>",
-                        Subject = "New member of your " + pool.PoolName + " league",
-                        Destination = adminPlayer.Email
-                    };
-                    Helper.Cache.SendEmail(email);
+                    Helper.Cache.SendNewPoolMemberEmail(player.PlayerName, joiningPlayer.Email, pool.PoolName, adminPlayer.Email);
 
                     poolPlayer.EmailSentToAdminDateTime = DateTime.UtcNow;
                     _context.PoolPlayers.AddOrUpdate(poolPlayer);

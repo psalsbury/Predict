@@ -35,7 +35,7 @@ namespace Predict.Controllers
 
             var eventPlayersViewModel = _context.Database.SqlQuery<EventPlayersViewModel>(
                 "spGetEventListForDisplay @OnlyShowActive"
-                , new SqlParameter("@OnlyShowActive", true)).ToList();
+                , new SqlParameter("@OnlyShowActive", true)).OrderBy(a => a.EventName).ToList();
 
             var eventPlayers = (List<EventPlayer>)Session["EventPlayers"];
             var eventIdsPlaying = eventPlayers.Where(a => a.Event.EventFinished == false).Select(a => a.EventId).ToList();

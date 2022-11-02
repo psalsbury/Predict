@@ -20,6 +20,20 @@ namespace Predict.Helper
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
+
+        public static void SendNewPoolMemberEmail(string playerName, string emailAddress, string poolName, string adminEmailAddress)
+        {
+            var email = new IdentityMessage
+            {
+                Body = playerName + " (" + emailAddress + ") has joined your " +
+             poolName + " league."
+                + "<br><br>To Login to your account please follow this link <a href='https://www.predictioncomp.com'>www.predictioncomp.com</a>",
+                Subject = "New member of your " + poolName + " league",
+                Destination = adminEmailAddress
+            };
+            Helper.Cache.SendEmail(email);
+        }
+
         public static void SendEmail(IdentityMessage message)
         {
             var smtpMessage = new MailMessage
