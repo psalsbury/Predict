@@ -43,10 +43,11 @@
                     <h4>@Html.DisplayFor(modelItem => item.EventName)</h4>
                 </td>
                 <td class="hidden-xs">
-                    @item.StartDateTime.ToString("f")
+
+                    @(item.StartDateTime==DateTime.MinValue ? "N/A": item.StartDateTime.ToString("f"))
                 </td>
                 <td class="hidden-xs">
-                    @item.EndDateTime.ToString("f")
+                    @(item.EndDateTime==DateTime.MinValue ? "N/A": item.EndDateTime.ToString("f"))
                 </td>
                 <td width="120">
                     @if (item.EventFinished && item.EndDateTime!=DateTime.MinValue)
@@ -98,8 +99,7 @@
 
 <script>
 
-    $("#Events").on("click",
-        ".js-delete",
+    $("#Events").on("click", ".js-delete",
         function () {
             var button = $(this);
             bootbox.confirm("Are you sure you want to delete the " + button.attr("dataEventName") + " comp?",
@@ -110,7 +110,11 @@
                                 url: "../api/events/delete/" + button.attr("dataEventId"),
                                 method: "POST",
                                 success: function () {
+                                    bootbox.alert("You have succesfully deleted the " + button.attr("dataEventName")+ " comp");
                                     $(button.closest("tr")).fadeOut(1000);
+                                },
+                                error: function (request, error) {
+                                    bootbox.alert(button.attr("dataEventName") + " comp could not be deleted");
                                 }
                             });
                     }

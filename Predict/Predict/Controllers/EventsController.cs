@@ -39,7 +39,8 @@ namespace Predict.Controllers
             var events = _context.Events.Where(a => (a.EndDateTime >= DateTime.MinValue
                                                      || a.StartDateTime == DateTime.MinValue)
                                                     && (isAdmin || a.CreatedByPlayerId== playerId))
-                .OrderByDescending(a => a.EndDateTime)                                    
+                .OrderByDescending(a => (a.StartDateTime == DateTime.MinValue))
+                .ThenByDescending(a => a.EndDateTime)                                    
                 .ToList();
 
             return View(events);
@@ -70,6 +71,20 @@ namespace Predict.Controllers
             if (!ModelState.IsValid)
             {
                 return View("EditEvent", passedInEvent);
+            }
+
+            var currentDateTime = DateTime.UtcNow;
+            passedInEvent.EventName = passedInEvent.EventName.Trim();
+
+            // If a new event, check to see if it already exists
+            if (passedInEvent.Id==0)
+            {
+                var exists = _context.Events.Any(a => a.EventName == passedInEvent.EventName & (a.StartDateTime > currentDateTime | a.EndDateTime > currentDateTime));
+                if(exists)
+                {
+                    ModelState.AddModelError("", "This comp name already exists");
+                    return View("EditEvent", passedInEvent);
+                }
             }
 
             var playerId = User.Identity.GetUserId();

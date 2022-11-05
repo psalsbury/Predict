@@ -60,6 +60,7 @@ namespace Predict.Controllers
                 var leagueTablesViewModel =
                     leagueTablesController.GetLeagueTablesViewModel(loggedInUserId, playerId, eventId);
                 leagueTablesViewModel.Results = false;
+                leagueTablesViewModel.OtherUserViewing = true;
                 predictionsConsolidated.LeagueTablesViewModel = leagueTablesViewModel;
             }
 

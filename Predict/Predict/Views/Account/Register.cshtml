@@ -1,11 +1,11 @@
 ﻿@model Predict.ViewModels.RegisterViewModel
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
+<div class="login-logo">
+    <b>Prediction</b>Comp
+</div>
 <div class="register-box">
-    <div class="login-logo">
-        <b>Prediction</b>Comp
-    </div>
+
     <div class="register-box-body">
         <div>
 
@@ -47,7 +47,7 @@
                         @foreach (var item in Model.Events)
                         {
                             var selected = "";
-                            if(Model.defaultEventId==item.Id)
+                            if (Model.defaultEventId == item.Id)
                             {
                                 selected = "selected";
                             }
@@ -74,8 +74,12 @@
 
                 <div class="form-group has-feedback">
 
-                    <div class="g-recaptcha" data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez">
-                    </div>
+                    <div class="g-recaptcha" style="transform: scale(0.77);
+-webkit-transform: scale(0.77); transform-origin: 0 0;
+-webkit-transform-origin: 0 0;" data-theme="light"
+                         data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez"></div>
+
+
                     <br />
                     <input type="submit" id="btnSubmit" class="btn btn-primary btn-block btn-flat" value="Register" />
 

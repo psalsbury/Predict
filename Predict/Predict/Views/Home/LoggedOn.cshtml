@@ -60,94 +60,94 @@
         }
         var firstPass = true;
 
-    <div class="row">
+        <div class="row">
 
-        @if (nbrFixturePredictionsToEnter > 0)
-        {
-
-
-        <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/FixturePredictions/FixturePredictions/@eventId'">
-                <div class="small-box bg-@fixturePredictionBox">
-                    <div class="inner">
-                        <h3 style="color:white">
-                            @nbrFixturePredictionsEntered <sup style="font-size: 20px; color:white">  of @nbrFixturePredictionsToEnter</sup>
-                        </h3>
-                        <p style="color:white">Games predicted</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-ios-football-outline"></i>
-                    </div>
-                    <a href="~/FixturePredictions/FixturePredictions/@eventId" class="small-box-footer">
-                        <b>Your predictions</b> <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-
-                </div>
-            
-        </div>
-
-                }
-                @if (nbrKoPredictionsToEnter > 0)
-                {
-
-                    <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId'">
-                        <!-- small box -->
-                        <div class="small-box bg-@koPredictionBox">
-                            <div class="inner">
-                                <h3>
-                                    @nbrKoPredictionsEntered <sup style="font-size: 20px">  of @nbrKoPredictionsToEnter</sup>
-                                </h3>
-                                <p>KO Predictions entered</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-ios-football-outline"></i>
-                            </div>
-
-                            <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId" class="small-box-footer">
-                                @(compStarted==true?"View":"Enter") them here <i class="fa fa-arrow-circle-right"></i>
-                            </a>
+            @if (nbrFixturePredictionsToEnter > 0)
+            {
 
 
-                        </div>
-                    </div>
-                }
-                @if (nbrBonusQuestionsToEnter > 0)
-                {
-                    <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/BonusQuestionPredictions/BonusQuestionPredictions/@eventId'">
-                        <!-- small box -->
-                        <div class="small-box bg-@bonusPredictionBox">
-                            <div class="inner">
-                                <h3>
-                                    @nbrBonusQuestionPredictionsEntered <sup style="font-size: 20px">  of @nbrBonusQuestionsToEnter</sup>
-                                </h3>
-                                <p>Bonus Predictions entered</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-ios-circle-outline"></i>
-                            </div>
-                            <a href="~/BonusQuestionPredictions/BonusQuestionPredictions/@eventId" class="small-box-footer">
-                                Enter them here <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                }
-                <div style="cursor: pointer" class="col-lg-3 col-xs-6"  onClick="location.href='/StatsGroup?eventId=@eventId'">
-                    <!-- small box -->
-                    <div class="small-box bg-blue">
+                <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/FixturePredictions/FixturePredictions/@eventId'">
+                    <div class="small-box bg-@fixturePredictionBox">
                         <div class="inner">
-                            <p style="font-size: 30px">
-                                Game Info
-                            </p>
-                            <p>See prediction stats</p>
+                            <h3 style="color:white">
+                                @nbrFixturePredictionsEntered <sup style="font-size: 20px; color:white">  of @nbrFixturePredictionsToEnter</sup>
+                            </h3>
+                            <p style="color:white">Games predicted</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="ion ion-ios-football"></i>
                         </div>
-                        <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})" class="small-box-footer">
-                            See them here <i class="fa fa-arrow-circle-right"></i>
+                        <a href="~/FixturePredictions/FixturePredictions/@eventId" class="small-box-footer">
+                            <b>Your predictions</b> <i class="fa fa-arrow-circle-right"></i>
                         </a>
 
                     </div>
+
                 </div>
+
+            }
+            @if (nbrKoPredictionsToEnter > 0)
+            {
+
+                <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId'">
+                    <!-- small box -->
+                    <div class="small-box bg-@koPredictionBox">
+                        <div class="inner">
+                            <h3>
+                                @nbrKoPredictionsEntered <sup style="font-size: 20px">  of @nbrKoPredictionsToEnter</sup>
+                            </h3>
+                            <p>KO Predictions entered</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-football-outline"></i>
+                        </div>
+
+                        <a href="~/KOFixturePredictions/KOFixturePredictionsGrouped/@eventId" class="small-box-footer">
+                            @(compStarted==true?"View":"Enter") them here <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+
+
+                    </div>
+                </div>
+            }
+            @if (nbrBonusQuestionsToEnter > 0)
+            {
+                <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/BonusQuestionPredictions/BonusQuestionPredictions/@eventId'">
+                    <!-- small box -->
+                    <div class="small-box bg-@bonusPredictionBox">
+                        <div class="inner">
+                            <h3>
+                                @nbrBonusQuestionPredictionsEntered <sup style="font-size: 20px">  of @nbrBonusQuestionsToEnter</sup>
+                            </h3>
+                            <p>Bonus Predictions</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-lightbulb-outline"></i>
+                        </div>
+                        <a href="~/BonusQuestionPredictions/BonusQuestionPredictions/@eventId" class="small-box-footer">
+                            Enter them here <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+            <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/StatsGroup?eventId=@eventId'">
+                <!-- small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                        <p style="font-size: 30px">
+                            Stats
+                        </p>
+                        <p>See prediction stats</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "StatsGroup", new {eventId = eventPlayer.EventId})" class="small-box-footer">
+                        See them here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+
+                </div>
+            </div>
 
         </div>
         if (nbrKoPredictionsToEnter > 0 && nbrKoPredictionsEntered < nbrKoPredictionsToEnter)
@@ -221,7 +221,7 @@
                         <!-- /.item -->
                         <li class="item">
                             <span class="info-box-icon bg-blue">
-                                <i class="ion ion-ios-football-outline"></i>
+                                <i class="ion ion-ios-pulse"></i>
                             </span>
                             <div class="info-box-content">
 
@@ -232,7 +232,7 @@
 
                                     @if (poolInfoViewModel.PoolPosition == 0)
                                     {
-                                        <span class="info-box-number">(not started)</span>
+                                        <span>(not started)</span>
                                     }
                                     else
                                     {
@@ -252,7 +252,7 @@
 
                             <div class="info-box-content">
 
-                                @if (poolInfoViewModels.Count() > 1 && 1==2)
+                                @if (poolInfoViewModels.Count() > 1 && 1 == 2)
                                 {
                                     <a href="~/StatsGroup?eventid=@eventId&poolid=@poolInfoViewModel.PoolId" class="product-title">
                                         <span class="info-box-text">Nbr of Players</span>
@@ -275,7 +275,7 @@
 
                         <li class="item">
                             <span class="info-box-icon bg-red">
-                                <i class="ion ion-ios-circle-outline"></i>
+                                <i class="ion ion-ios-calculator-outline"></i>
                             </span>
                             <div class="info-box-content">
 
@@ -286,7 +286,7 @@
 
                                     @if (poolInfoViewModel.PoolPosition == 0)
                                     {
-                                        <span class="info-box-number">(not started)</span>
+                                        <span>(not started)</span>
                                     }
                                     else
                                     {
@@ -309,29 +309,54 @@
             firstPass = false;
         }
 
-        if (poolInfoViewModels.Count() < ViewBag.nbrPoolsInEvent)
+    <div class="row">
+
+        @if (poolInfoViewModels.Count() < ViewBag.nbrPoolsInEvent)
         {
-            <div class="row">
-                <div class="col-lg-3 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-blue">
-                        <div class="inner">
-                            <h3>
-                                @ViewBag.nbrPoolsInEvent<sup style="font-size: 20px"> </sup>
-                            </h3>
-                            <p>Leagues competing</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="~/Table/BestPools?eventid=@eventId" class="small-box-footer">
-                            View them here <i class="fa fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
+        <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/Table/BestPools?eventid=@eventId'">
+            <!-- small box -->
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3>
+                        @ViewBag.nbrPoolsInEvent<sup style="font-size: 20px"> </sup>
+                    </h3>
+                    <p>Leagues competing</p>
                 </div>
+                <div class="icon">
+                    <i class="ion ion-ios-people"></i>
+                </div>
+                <a href="~/Table/BestPools?eventid=@eventId" class="small-box-footer">
+                    Click to view <i class="fa fa-arrow-circle-right"></i>
+                </a>
             </div>
+        </div>
+
         }
 
+        @if (nbrKoPredictionsToEnter > 0)
+        {
+
+            <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/LeagueTables/LeagueTables/@eventId'">
+                <!-- small box -->
+                <div class="small-box bg-@fixturePredictionBox">
+                    <div class="inner">
+                        <h3>
+                            8
+                        </h3>
+                        <p>Predicted Group Tables</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-photos-outline"></i>
+                    </div>
+
+                    <a href="~/LeagueTables/LeagueTables/@eventId" class="small-box-footer">
+                        Click to view <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        }
+    </div>
 
     }
 }

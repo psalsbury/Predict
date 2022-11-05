@@ -273,6 +273,7 @@ C:\repos\Predict\Predict\Predict\bin\EntityFramework.xml
 C:\repos\Predict\Predict\Predict\bin\EntityFramework.SqlServer.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Cookies.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.OAuth.xml
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.csprojAssemblyReference.cache
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.InitialMigration.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.AdddPoolPlayerEmailSent.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.DateTime2.resources

@@ -129,6 +129,19 @@ namespace Predict.Controllers
                 return View("EditPool", poolModel);
             }
 
+            poolModel.PoolName = poolModel.PoolName.Trim();
+
+            // If a new event, check to see if it already exists
+            if (poolModel.Id == 0)
+            {
+                var exists = _context.Pools.Any(a => a.PoolName == poolModel.PoolName);
+                if (exists)
+                {
+                    ModelState.AddModelError("", "This league name already exists");
+                    return View("EditPool", poolModel);
+                }
+            }
+
             var newPool = false;
             var poolFromDb = new Pool();
             if (poolModel.Id != 0) poolFromDb = _context.Pools.Single(m => m.Id == poolModel.Id);

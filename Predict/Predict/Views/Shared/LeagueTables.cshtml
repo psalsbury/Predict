@@ -2,58 +2,66 @@
 @model Predict.ViewModels.LeagueTablesViewModel
 
 @{
-    ViewBag.Title = Model.Results ? "League Tables" : "Predicted League Tables";
+    ViewBag.Title = Model.Results ? "Group Tables" : "Predicted Group Tables";
 
     var flagFileLocation = ConfigurationManager.AppSettings["FlagFileLocation"];
 }
-
-
-<div class="container-flex" align="left">
-    @foreach (var leagueTable in Model.LeagueTables)
-    {
-        <text>
-            <h3>
-                League
-                @Html.Label(leagueTable.LeagueSubLeague.SubLeagueName)
-            </h3>
-        </text>
-        <div class="box-body">
-            <div class="table table-hover">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th colspan="2">Team</th>
-                        <th>P</th>
-                        <th>W</th>
-                        <th>D</th>
-                        <th>L</th>
-                        <th class="hidden-xs">GF</th>
-                        <th class="hidden-xs">GA</th>
-                        <th>GD</th>
-                        <th>Pts</th>
-                    </tr>
-                    </thead>
-                    @foreach (var leagueTableTeam in leagueTable.LeagueTableTeams)
-                    {
-                        <tr>
-                            <td>@leagueTableTeam.Position.ToString()</td>
-                            <td style="width: 1%">
-                                <img src="@Url.Content(leagueTableTeam.TeamFlag)"  height="20" />
-                            </td>
-                            <td>@leagueTableTeam.Team </td>
-                            <td>@leagueTableTeam.Played.ToString()</td>
-                            <td>@leagueTableTeam.Won.ToString()</td>
-                            <td>@leagueTableTeam.Draws.ToString()</td>
-                            <td>@leagueTableTeam.Lost.ToString()</td>
-                            <td class="hidden-xs">@leagueTableTeam.GoalsFor.ToString()</td>
-                            <td class="hidden-xs">@leagueTableTeam.GoalsAgainst.ToString()</td>
-                            <td>@leagueTableTeam.GoalDifference.ToString()</td>
-                            <td>@leagueTableTeam.Points.ToString()</td>
-                        </tr>
-                    }
-                </table>
+@if (!Model.OtherUserViewing)
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Predicted Group Tables</li>
+        </ol>
+    </nav>
+}
+    <div class="container-flex" align="left">
+        @foreach (var leagueTable in Model.LeagueTables)
+        {
+            <text>
+                <h3>
+                    @Html.Label(leagueTable.LeagueSubLeague.SubLeagueName)
+                </h3>
+            </text>
+            <div class="box-body">
+                <div class="table table-hover">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th width="5%">#</th>
+                                <th width="20%" colspan="2">Team</th>
+                                <th>P</th>
+                                <th>W</th>
+                                <th>D</th>
+                                <th>L</th>
+                                <th class="hidden-xs">GF</th>
+                                <th class="hidden-xs">GA</th>
+                                <th>GD</th>
+                                <th>Pts</th>
+                            </tr>
+                        </thead>
+                        @foreach (var leagueTableTeam in leagueTable.LeagueTableTeams)
+                        {
+                            <tr>
+                                <td>@leagueTableTeam.Position.ToString()</td>
+                                <td style="width: 1%">
+                                    <img src="@Url.Content(leagueTableTeam.TeamFlag)" height="20" />
+                                </td>
+                                <td>@leagueTableTeam.Team </td>
+                                <td>@leagueTableTeam.Played.ToString()</td>
+                                <td>@leagueTableTeam.Won.ToString()</td>
+                                <td>@leagueTableTeam.Draws.ToString()</td>
+                                <td>@leagueTableTeam.Lost.ToString()</td>
+                                <td class="hidden-xs">@leagueTableTeam.GoalsFor.ToString()</td>
+                                <td class="hidden-xs">@leagueTableTeam.GoalsAgainst.ToString()</td>
+                                <td>@leagueTableTeam.GoalDifference.ToString()</td>
+                                <td>@leagueTableTeam.Points.ToString()</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>

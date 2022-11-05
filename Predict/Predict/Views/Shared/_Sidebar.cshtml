@@ -1,4 +1,5 @@
 ﻿@using Predict.Helper
+@using Predict.ViewModels
 @using Predict.Models
 @using WebHelpers.Mvc5
 <div id="sidebardiv">
@@ -14,6 +15,7 @@
                     var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
                     var hasJokes = System.Convert.ToBoolean(Session["PlayerJokes"]);
                     var hasQuizQuestions = System.Convert.ToBoolean(Session["PlayerQuizQuestions"]);
+                    var pools = new Dictionary<int, string>();
 
                     if (eventPlayers != null)
                     {
@@ -47,6 +49,23 @@
                             <span>A Competition</span>
                         </a>
                     </li>
+
+                    if(pools.Count>0)
+                    {
+
+                        <shadow>&nbsp;</shadow>
+                        <shadow>&nbsp;</shadow>
+
+                        <li class="header" style="background-color: grey; color: aliceblue; font-weight: bold">MY LEAGUES</li>
+                        foreach (var a in pools)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "PoolDashboard")">
+                                    <i class="fa fa-users"></i> <span>@a.Value</span>
+                                </a>
+                            </li>
+                        }
+                    }
                     <shadow>&nbsp;</shadow>
                     <shadow>&nbsp;</shadow>
 
@@ -65,8 +84,6 @@
                             <i class="fa fa-comments-o"></i> <span>Message Board</span>
                         </a>
                     </li>
-
-
 
                     <li class="treeview">
                         <a href="#">

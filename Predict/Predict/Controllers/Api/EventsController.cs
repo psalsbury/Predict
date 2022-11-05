@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Predict.Models;
@@ -34,10 +31,6 @@ namespace Predict.Controllers.Api
             // Check that its the user who created it that is trying to delete
             if(myEvent.CreatedByPlayerId != User.Identity.GetUserId())
                 return BadRequest();
-
-            // Ensure that the comp has not started
-            if(myEvent.StartDateTime <= DateTime.UtcNow && myEvent.StartDateTime!=DateTime.MinValue)
-                 return BadRequest();
 
             _context.FixturePredictions.RemoveRange(
                 _context.FixturePredictions.Where(a => a.EventId == eventId));

@@ -48,6 +48,37 @@ namespace Predict.Controllers
             var nbrCompletedEvents = _context.EventPlayers.Where(a => a.Event.EndDateTime < dteNow && a.PlayerId==playerId).Count();
             var nbrOwnedEvents = _context.Events.Where(a => a.CreatedByPlayerId==playerId).Count();
 
+            // find if the user has any comps without fixtures
+            var eventsNoFixtures = from a in _context.Events
+                        join b in _context.EventFixtures
+                            on a.Id equals b.EventId into c
+                        from b in c.DefaultIfEmpty()
+                        where b == null
+                        & a.CreatedByPlayerId == playerId
+                        select a;
+
+            var eventNoFixtures = eventsNoFixtures.FirstOrDefault();
+            if (eventNoFixtures != null)
+            {
+                ViewBag.compsWithoutFixtures = eventNoFixtures.EventName;
+            }
+
+            // find if the user has any comps that ther are not playing
+            var eventsNotPlaying = from a in _context.Events
+                        join b in _context.EventPlayers
+                            on a.Id equals b.EventId into c
+                        from b in c.DefaultIfEmpty()
+                        where b == null
+                        & a.CreatedByPlayerId == playerId
+                        & (a.StartDateTime > dteNow | a.EndDateTime > dteNow)
+                        select a;
+
+            var eventNotPlaying = eventsNotPlaying.FirstOrDefault();
+            if (eventNotPlaying != null)
+            {
+                ViewBag.eventsNotPlaying = eventNotPlaying.EventName;
+            }
+
             ViewBag.nbrUpcoming = nbrUpcoming;
             ViewBag.nbrParticipatingIn = nbrParticipatingIn;
             ViewBag.nbrCompletedEvents = nbrCompletedEvents;

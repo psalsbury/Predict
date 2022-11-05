@@ -8,5 +8,6 @@ namespace Predict.ViewModels
         public List<LeagueTable> LeagueTables { get; set; }
         public bool Results { get; set; }
         public bool IsPremiumPlayer { get; set; }
+        public bool OtherUserViewing { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Predict.Models;
 using Predict.ViewModels;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Predict.Controllers
 {
@@ -29,6 +30,21 @@ namespace Predict.Controllers
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
             leagueTablesViewModel.IsPremiumPlayer = isPremiumPlayer;
             return leagueTablesViewModel;
+        }
+
+        // GET: EventFixtures
+        public ActionResult LeagueTables(short id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            var userId = User.Identity.GetUserId();
+
+            var leagueTablesViewModel = GetLeagueTablesViewModel(userId,userId,id);
+            ViewBag.EventId = id;
+            leagueTablesViewModel.OtherUserViewing = false;
+
+            return View(leagueTablesViewModel);
         }
     }
 }

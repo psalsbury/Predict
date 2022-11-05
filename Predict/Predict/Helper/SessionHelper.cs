@@ -120,7 +120,7 @@ namespace Predict.Helper
 
             UpdatePlayerSessionVariable(context, session, userId, forceRefresh);
             UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
-            UpdatePlayerJokeCount(context, session, userId, forceRefresh);
+            //UpdatePlayerJokeCount(context, session, userId, forceRefresh);
             UpdatePlayerQuizQuestionCount(context, session, userId, forceRefresh);
 
             session.Timeout = 252000; // 180 day
