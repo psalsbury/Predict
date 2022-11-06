@@ -529,6 +529,7 @@
     <Compile Include="Models\QuizQuestionPlayerAnswer.cs" />
     <Compile Include="ViewModels\LeagueEventGenerationsEditViewModel.cs" />
     <Compile Include="ViewModels\LeagueEventGenerationsViewModel.cs" />
+    <Compile Include="ViewModels\PoolHomeViewModel.cs" />
     <Compile Include="ViewModels\PoolInfoFromSpViewModel.cs" />
     <Compile Include="ViewModels\QuizQuestionsForQuiz.cs" />
     <Compile Include="ViewModels\QuizQuestionsForQuizViewModel.cs" />
@@ -698,6 +699,7 @@
     <Content Include="Views\EventPlayers\ActiveComps.cshtml" />
     <Content Include="Views\EventPlayers\FinishedComps.cshtml" />
     <Content Include="Views\EventGenerations\EventGenerationsIndex.cshtml" />
+    <Content Include="Views\Pools\PoolHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

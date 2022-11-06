@@ -1,0 +1,155 @@
+﻿@model Predict.ViewModels.PoolHomeViewModel
+@{
+
+    ViewBag.Title = Model.Pool.PoolName;
+}
+
+<div class="box box-solid">
+
+    <div class="box-header with-border">
+        <h3 class="box-title">League Details</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="box-body">
+
+        <div class="form-group">
+            @Html.Label("Admin Name", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pool.AdminPlayer.DisplayName, new { htmlAttributes = new { @readonly = "READONLY" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pool.JoinCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pool.JoinCode, new { htmlAttributes = new { @readonly = "READONLY" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pool.MemberInfo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Pool.MemberInfo, new { @class = "form-control", rows = 5, @readonly = "READONLY" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pool.FreezePredictions, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Pool.FreezePredictions)
+                    <p>
+                        <i>If Ticked, predictions will be frozen after the first fixture has started</i>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="box box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">Scoring</h3>
+        <div class="box-tools pull-right">
+            <button id="pete" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+
+        <div id="ScoringTab" class="tabcontent">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pool.CorrectScorePoints, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Pool.CorrectScorePoints, new { htmlAttributes = new { @readonly = "READONLY" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pool.CorrectResultPoints, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Pool.CorrectResultPoints, new { htmlAttributes = new { @readonly = "READONLY" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pool.WinMarginPoints, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Pool.WinMarginPoints, new { htmlAttributes = new { @readonly = "READONLY" } })
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="box box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">Previous Winners</h3>
+        <div class="box-tools pull-right">
+            <button id="pete" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+
+    </div>
+    <div class="box-body">
+
+        <div id="ScoringTab" class="tabcontent">
+            <div class="box-body">
+
+                @if (Model.EventPoolPlayers != null & Model.EventPoolPlayers.Count>0)
+                {
+
+                    <table class="table table-bordered table-hover" id="fixturesByResult" style="width: 100%" align="center">
+                        <tr>
+                            <th>
+                                Comp Name
+                            </th>
+                            <th>
+                                Winner
+                            </th>
+                            <th>
+                                Points
+                            </th>
+                        </tr>
+
+
+                        @foreach (var eventPoolPlayer in Model.EventPoolPlayers)
+                        {
+                            <tr>
+                                <td>
+                                    <small>@eventPoolPlayer.Event.EventName</small>
+                                </td>
+                                <td>
+                                    <small>@eventPoolPlayer.Player.PlayerName</small>
+                                </td>
+                                <td>
+                                    <small>@eventPoolPlayer.TotalScore</small>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <text>No Previous Comps</text>
+                }
+                </div>
+        </div>
+    </div>
+</div>
+

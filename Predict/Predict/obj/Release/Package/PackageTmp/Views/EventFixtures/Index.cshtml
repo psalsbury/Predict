@@ -42,91 +42,97 @@
 {
     <br />
     <text>Click on <b style="font-size:larger;">+</b> or <b style="font-size:larger;">-</b> to add/ remove fixtures to your Comp</text>
-        <br /><br />
-        <table id="EventFixtures" class="table table-bordered table-hover no-gutters">
-            @foreach (var item in Model.Fixtures.ToList())
+    <br />
+    <br />
+    <table id="EventFixtures" class="table table-bordered table-hover no-gutters">
+        @foreach (var item in Model.Fixtures.ToList())
+        {
+
+            var exists = false;
+            if (Model.EventFixtures != null && Model.EventFixtures.Count > 0)
             {
+                exists = Model.EventFixtures.Exists(a => a.FixtureId == item.Id);
+            }
 
-                var exists = false;
-                if (Model.EventFixtures != null && Model.EventFixtures.Count > 0)
-                {
-                    exists = Model.EventFixtures.Exists(a => a.FixtureId == item.Id);
-                }
+            <tr class="fixture">
+                <td style="vertical-align: middle;" class="row no-gutters">
+                    @if (exists)
+                    {
+                        <button class="btn btn-danger js-delete btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id"><i class="fa fa-minus"></i></button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success js-add btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id"><i class="fa fa-plus"></i></button>
+                    }
+                </td>
 
-                <tr class="fixture">
-                    <td style="vertical-align: middle;" class="row no-gutters">
-                        @if (exists)
-                        {
-                            <button class="btn btn-danger js-delete btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id"><i class="fa fa-minus"></i></button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-success js-add btn-sm" value="Add" dataFixtureId="@item.Id" dataEventId="@Model.Event.Id"><i class="fa fa-plus"></i></button>
-                        }
-                    </td>
+                <td style="text-align: left; vertical-align: middle;" witdth="50%">
+                    <div class="container-fluid">
+                        <div class="row vertical-middle text-center">
+                            <div class="col-sm-6 text-left ; row no-gutters">
+                                <table width="100%" cellpadding="0">
+                                    <tr>
+                                        <td border="1" width="15%">
+                                            <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20" />
+                                        </td>
+                                        <td style="text-align: left">
+                                            &nbsp;
+                                            @item.HomeTeam.TeamName
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                    <td style="text-align: left; vertical-align: middle;" witdth="50%">
-                        <div class="container-fluid">
-                            <div class="row vertical-middle text-center">
-                                <div class="col-sm-6 text-left ; row no-gutters">
-                                    <table width="100%" cellpadding="0">
-                                        <tr>
-                                            <td border="1" width="15%">
-                                                <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20" />
-                                            </td>
-                                            <td style="text-align: left">
-                                                &nbsp;
-                                                @item.HomeTeam.TeamName
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class="col-sm-6 text-left ; row no-gutters">
-                                    <table width="100%">
-                                        <tr>
-                                            <td border="1" width="15%">
-                                                <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20" />
-                                            </td>
-                                            <td style="text-align: left">
-                                                &nbsp;
-                                                @item.AwayTeam.TeamName
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                            <div class="col-sm-6 text-left ; row no-gutters">
+                                <table width="100%">
+                                    <tr>
+                                        <td border="1" width="15%">
+                                            <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20" />
+                                        </td>
+                                        <td style="text-align: left">
+                                            &nbsp;
+                                            @item.AwayTeam.TeamName
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                    <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
-                        @Html.Hidden("FixtureDateTime", item.FixtureDateTime.ToLongDateString() + " " + item.FixtureDateTime.ToShortTimeString())
-                    </td>
-                </tr>
-            }
-        </table>
+                <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
+                    @Html.Hidden("FixtureDateTime", item.FixtureDateTime.ToLongDateString() + " " + item.FixtureDateTime.ToShortTimeString())
+                </td>
+            </tr>
+        }
+    </table>
 
-        <script>
+    <script>
 
-            $(document).ready(function () {
-                $("#myInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $(".fixture").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".fixture").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+        });
 
-        </script>
+    </script>
 
+}
+else
+{
+    <h1>Select league to add fixtures..</h1>
+    <br />
+    <br />
+    <h4>If there are any countries/leagues you would like including, please contact us <a href="@Url.Action("ContactUs", "Home")">here</a></h4>
+}
 
-    }
-    else
-    {
-        <h1>Select league to add fixtures..</h1>
-        <br /><br />
-        <h4>If there are any countries/leagues you would like including, please contact us <a href="@Url.Action("ContactUs", "Home")">here</a></h4>
-    }
+<input type="button"
+       value="All Done"
+       class="btn btn-success"
+       onclick="location.href = '@Url.Action("CompsDashboardIndex", "CompsDashboard") '" />
 
 <script>
     $("#EventFixtures").on("click",
@@ -224,3 +230,4 @@
     }
 
 </script>
+

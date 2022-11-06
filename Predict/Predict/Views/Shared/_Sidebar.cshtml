@@ -15,7 +15,8 @@
                     var eventPlayers = SessionHelper.GetOrderedEventsForPlayers(Session);
                     var hasJokes = System.Convert.ToBoolean(Session["PlayerJokes"]);
                     var hasQuizQuestions = System.Convert.ToBoolean(Session["PlayerQuizQuestions"]);
-                    var pools = new Dictionary<int, string>();
+                    var eventPools = (List<PoolPlayer>)Session["PoolPlayers"];
+
 
                     if (eventPlayers != null)
                     {
@@ -33,6 +34,24 @@
 
                         }
                     }
+                    if (eventPools != null & eventPools.Count>0)
+                    {
+                    <shadow>&nbsp;</shadow>
+                    <shadow>&nbsp;</shadow>
+                    <li class="header" style="background-color: grey; color: aliceblue; font-weight: bold">YOUR LEAGUES</li>
+
+                        foreach (var eventPool in eventPools)
+                        {
+                            <li>
+                                <a href="@Url.Action("PoolHome", "Pools", new {poolID = eventPool.PoolId})">
+                                    <i class="fa fa-users"></i> <span>@eventPool.Pool.PoolName</span>
+                                </a>
+                            </li>
+                        }
+                    }
+
+
+
                     <shadow>&nbsp;</shadow>
                     <shadow>&nbsp;</shadow>
                     <li class="header" style="background-color: grey; color: aliceblue; font-weight: bold">CREATE / JOIN / MANAGE</li>
@@ -50,22 +69,6 @@
                         </a>
                     </li>
 
-                    if(pools.Count>0)
-                    {
-
-                        <shadow>&nbsp;</shadow>
-                        <shadow>&nbsp;</shadow>
-
-                        <li class="header" style="background-color: grey; color: aliceblue; font-weight: bold">MY LEAGUES</li>
-                        foreach (var a in pools)
-                        {
-                            <li>
-                                <a href="@Url.Action("Index", "PoolDashboard")">
-                                    <i class="fa fa-users"></i> <span>@a.Value</span>
-                                </a>
-                            </li>
-                        }
-                    }
                     <shadow>&nbsp;</shadow>
                     <shadow>&nbsp;</shadow>
 

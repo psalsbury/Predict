@@ -29,5 +29,15 @@ namespace Predict.WebServices
             Predict.Helper.SessionHelper.UpdateEventPlayersSessionVariable(context, mySession, userId, true);
         }
 
+        [WebMethod(Description = "update Pool Player Session", EnableSession = true)]
+        public void UpdatePoolPlayerSession()
+        {
+            var context = new ApplicationDbContext();
+            var userId = User.Identity.GetUserId();
+
+            HttpSessionStateBase mySession = new HttpSessionStateWrapper(HttpContext.Current.Session);
+            Predict.Helper.SessionHelper.UpdatePoolPlayersSessionVariable(context, mySession, userId, true);
+        }
+
     }
 }

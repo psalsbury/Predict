@@ -2,6 +2,7 @@
 using Predict.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -120,6 +121,8 @@ namespace Predict.Helper
 
             UpdatePlayerSessionVariable(context, session, userId, forceRefresh);
             UpdateEventPlayersSessionVariable(context, session, userId, forceRefresh);
+            UpdatePoolPlayersSessionVariable(context, session, userId, forceRefresh);
+
             //UpdatePlayerJokeCount(context, session, userId, forceRefresh);
             UpdatePlayerQuizQuestionCount(context, session, userId, forceRefresh);
 
@@ -176,6 +179,26 @@ namespace Predict.Helper
                 .Include(t => t.Event)
                 .Where(e => e.PlayerId == userId && e.Enabled == true && e.Event.EndDateTime >= twoWeeksAgo)
                 .OrderBy(a => a.Event.StartDateTime)
+                .ToList();
+
+            session[sessionName] = eventPlayers;
+        }
+
+        public static void UpdatePoolPlayersSessionVariable(ApplicationDbContext context,
+            HttpSessionStateBase session,
+            string userId, bool forceRefresh)
+        {
+            const string sessionName = "PoolPlayers";
+            if (session[sessionName] != null && !forceRefresh)
+                return;
+
+            var globalPoolId = (System.Convert.ToInt32(ConfigurationManager.AppSettings["GlobalPoolId"]));
+
+            // Get all the events that the logged on user is participating in
+            var eventPlayers = context.PoolPlayers
+                .Include(t => t.Pool)
+                .Where(e => e.PlayerId == userId && e.Enabled == true && e.PoolId != globalPoolId)
+                .OrderBy(a => a.Pool.PoolName)
                 .ToList();
 
             session[sessionName] = eventPlayers;

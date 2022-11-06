@@ -56,6 +56,34 @@ namespace Predict.Controllers
         }
 
         // GET: Pools
+        public ActionResult PoolHome(int poolId)
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            var playerId = User.Identity.GetUserId();
+            var dteNow = DateTime.UtcNow;
+
+            var poolPlayer = _context.PoolPlayers.FirstOrDefault(a => a.PoolId == poolId & a.PlayerId == playerId);
+            if (poolPlayer == null)
+                return RedirectToAction("Login", "Account");
+
+            var poolHomeViewModel = new PoolHomeViewModel();
+            poolHomeViewModel.PoolPlayer = poolPlayer;
+            poolHomeViewModel.Pool = _context.Pools
+                .Include(b => b.AdminPlayer)
+                .Where(a => a.Id == poolId).First();
+
+            poolHomeViewModel.EventPoolPlayers = _context.EventPoolPlayers
+                .Include(e => e.Event)
+                .Include(p => p.Player)
+                .Where(a => a.Enabled == true & a.PoolId == poolId & a.Event.EndDateTime < dteNow & a.PoolPosition == 1)
+                .ToList();
+
+            return View("PoolHome", poolHomeViewModel);
+        }
+
         public ActionResult PoolsMemberOf()
         {
             // If user is not logged in redirect to the home page

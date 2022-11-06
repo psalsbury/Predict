@@ -141,8 +141,23 @@
                                 url: "../api/poolPlayers/delete/" + button.attr("dataPoolId") + "/@(User.Identity.GetUserId())",
                                 method: "POST",
                                 success: function () {
-                                    bootbox.alert("You have succesfully left the " + button.attr("poolName") + " league");
-                                    $(button.closest("tr")).fadeOut(1000);
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/webservices/wsEventPlayer.asmx/UpdatePoolPlayerSession",
+                                        data: "{}",
+                                        contentType: "application/json",
+                                        datatype: "json",
+                                        success: function () {
+                                            bootbox.alert("You have succesfully left the " + button.attr("poolName") + " league");
+                                            $(button.closest("tr")).fadeOut(1000);
+                                            $('#sidebardiv').load('@Url.Action("_SideBar","Home")');
+                                        },
+                                        error: function (request, error) {
+                                            alert('Please log out and back in to refresh');
+                                    }
+                                });
+
                             }
                         });
                     }

@@ -29,7 +29,7 @@ namespace Predict.Controllers.Api
                 return BadRequest();
 
             // Check that its the user who created it that is trying to delete
-            if(myEvent.CreatedByPlayerId != User.Identity.GetUserId())
+            if(myEvent.CreatedByPlayerId != User.Identity.GetUserId() & !User.IsInRole("Admin"))
                 return BadRequest();
 
             _context.FixturePredictions.RemoveRange(

@@ -7,7 +7,6 @@ namespace Predict.ViewModels
     {
         public Pool Pool { get; set; }
         public List<PoolPlayer> PoolPlayers { get; set; }
-
         public int GlobalPoolId { get; set; }
     }
 }
