@@ -32,7 +32,8 @@
             <th class="hidden-xs">
                 Comp Start Date
             </th>
-            <th>League Linked</th>
+            <th>Linked</th>
+            <th>&nbsp;</th>
         </tr>
 
         @foreach (var item in Model.Events.Where(a => a.StartDateTime >= DateTime.UtcNow.AddMonths(-1)).OrderByDescending(a => a.EndDateTime))
@@ -67,6 +68,16 @@
                         <input type="checkbox" value="@item.Id" id="event_@item.Id" name="event_@item.Id" @(exists ? "checked" : "") )>
                     }
 
+                </td>
+                <td>
+                    @if (exists)
+                    {
+                        <a href="~/EventPools/EventPoolInvites?eventid=@item.Id&poolid=@Model.PoolId" class="btn btn-block btn-success"><i class="fa fa-envelope"></i>&nbsp;Invites</a>
+                    }
+                    else
+                    {
+                        <text>  &nbsp; </text>
+                    }
                 </td>
             </tr>
         }

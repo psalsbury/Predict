@@ -1,0 +1,114 @@
+﻿@using Predict.Models
+@using Microsoft.AspNet.Identity
+@model Predict.ViewModels.EventPoolInvitesViewModel
+
+@{
+    ViewBag.Title = "Send Email Invites";
+    var playerId = User.Identity.GetUserId();
+}
+
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="~/PoolDashboard">League Admin</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/Pools/">Manage Leagues</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/EventPools/EventsLinkedToPool/@Model.Pool.Id">Add Comps</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Invites</li>
+    </ol>
+</nav>
+
+<p><b>Tick the check box for the people to email</b></p>
+
+@using (Html.BeginForm("SaveEventPoolInvites", "EventPools"))
+{
+    @Html.HiddenFor(a => Model.PoolId);
+    @Html.HiddenFor(b => b.EventId);
+    <table class="table table-bordered table-hover" id="poolPlayers">
+
+            <tr>
+                <td width="75%">
+                    <b>Player Details</b>
+                </td>
+                <td align="center" width="25%">
+                    <b>Select All</b><br />
+                    <input type=checkbox onclick="toggle(this);" />
+
+                </td>
+            </tr>
+
+        @for (var i = 0; i < Model.PoolPlayers.Count(); i++)
+        {
+            <tr>
+                <td width="75%">
+                    <table>
+                        <tr>
+                            <td data-toggle="popover" title="Display Name: @Model.PoolPlayers[i].Player.DisplayName" data-content="Date Registered: @Model.PoolPlayers[i].Player.CreatedDateTime">
+                                <b>@Html.DisplayFor(m => m.PoolPlayers[i].Player.PlayerName)</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => m.PoolPlayers[i].Player.AspNetUser.Email)
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+                <td align="center" width="25%">
+                    @{
+                        var emailRequestToJoins = Model.EmailRequestToJoins.FirstOrDefault(a => a.PlayerId == Model.PoolPlayers[i].PlayerId);
+                        var notSentDesc = "";
+                        if (emailRequestToJoins != null)
+                        {
+                            switch (emailRequestToJoins.StatusId)
+                            {
+                                case 1:
+                                    notSentDesc = "Ready To Send";
+                                    break;
+                                case 2:
+                                    notSentDesc = "Sent";
+                                    break;
+                                case 3:
+                                    notSentDesc = "no longer in pool";
+                                    break;
+                                case 4:
+                                    notSentDesc = "not sent as already joined";
+                                    break;
+                            }
+                            @notSentDesc
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(a => @Model.PoolPlayers[i].PlayerId)
+                            <input type="checkbox" value="email" name="email_@Model.PoolPlayers[i].PlayerId" />
+                        }
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="form-group">
+        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+        <input type="submit" value="Send Emails" class="btn btn-success" />
+    </div>
+}
+
+<script>
+
+    function toggle(source) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != source)
+                checkboxes[i].checked = source.checked;
+        }
+    }
+
+</script>

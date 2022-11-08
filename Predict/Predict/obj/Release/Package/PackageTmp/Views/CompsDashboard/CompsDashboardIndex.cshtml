@@ -71,20 +71,22 @@
         <!-- /.info-box -->
     </div>
 
+    @if (nbrOwnedEvents > 0)
+    {
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-book"></i></span>
 
-    <!-- /.col -->
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-book"></i></span>
-
-            <div class="info-box-content">
-                <span class="info-box-text"><b>@nbrOwnedEvents Comp@(nbrOwnedEvents == 1 ? "" : "s")</b></span>
-                @Html.ActionLink("Manage Your Comps", "EventsIndex", "Events", null, new { @class = "btn btn-success" })
+                <div class="info-box-content">
+                    <span class="info-box-text"><b>@nbrOwnedEvents Comp@(nbrOwnedEvents == 1 ? "" : "s")</b></span>
+                    @Html.ActionLink("Manage Your Comps", "EventsIndex", "Events", null, new { @class = "btn btn-success" })
+                </div>
+                <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box-content -->
+            <!-- /.info-box -->
         </div>
-        <!-- /.info-box -->
-    </div>
+    }
 
 </div>
     @{

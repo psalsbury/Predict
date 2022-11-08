@@ -22,6 +22,7 @@ namespace Predict.ScheduledTasks
                             RapidApiHelper.GetRapidApiResults();        // Check to see if any fixtures have finished. IF they have, make a call to get the result
                             RapidApiHelper.DailyRapidApiLeagueCheck();  // Called once per day to ensure that all fixtures are up to date
                             Predict.Helper.EmailLeadProcessor.SendLeadEmail();
+                            Predict.Helper.EmailRequestToJoinProcessor.SendRequestToJoinEmail();
                         }
                         catch (Exception ex)
                         {

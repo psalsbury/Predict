@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using System.Configuration;
 using System.Data.Entity.Migrations;
 
-
 namespace Predict.Helper
 {
     public static class EmailLeadProcessor

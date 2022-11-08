@@ -292,6 +292,7 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.BaseDatesDateTim
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EventNameTo26Chars.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.FixtureStatus.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EmailLeads.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EmailInvites.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.GenerateResource.cache
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.CoreCompileInputs.cache
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.CopyComplete

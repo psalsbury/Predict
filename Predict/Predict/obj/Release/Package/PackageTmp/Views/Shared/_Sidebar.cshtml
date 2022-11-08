@@ -34,16 +34,22 @@
 
                         }
                     }
+                    if (eventPools != null & eventPools.Count>0)
+                    {
                     <shadow>&nbsp;</shadow>
                     <shadow>&nbsp;</shadow>
                     <li class="header" style="background-color: grey; color: aliceblue; font-weight: bold">YOUR LEAGUES</li>
-                    if (eventPools != null)
-                    {
+
                         foreach (var eventPool in eventPools)
                         {
+                            var poolName = eventPool.Pool.PoolName;
+                            if (poolName.Length > 25)
+                            {
+                                poolName = poolName.Substring(1, 25) + "..";
+                            }
                             <li>
                                 <a href="@Url.Action("PoolHome", "Pools", new {poolID = eventPool.PoolId})">
-                                    <i class="fa fa-users"></i> <span>@eventPool.Pool.PoolName</span>
+                                    <i class="fa fa-users"></i> <span>@poolName</span>
                                 </a>
                             </li>
                         }

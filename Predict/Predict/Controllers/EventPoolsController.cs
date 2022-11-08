@@ -23,6 +23,73 @@ namespace Predict.Controllers
         }
 
         // GET: EventPools
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveEventPoolInvites(EventPoolInvitesViewModel eventPoolInvitesViewModel)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var playerId = User.Identity.GetUserId();
+            var valid = _context.Pools.Any(a => a.AdminPlayerId == playerId & a.Id == eventPoolInvitesViewModel.PoolId);
+
+            if (valid & eventPoolInvitesViewModel.PoolPlayers != null)
+            { 
+                foreach (var d in eventPoolInvitesViewModel.PoolPlayers)
+                {
+                    var emailRequested = Request["email_" + d.PlayerId];
+                    if (emailRequested == "email")
+                    {
+                        var emailRequestToJoin = new EmailRequestToJoin
+                        {
+                            PlayerId = d.PlayerId,
+                            PoolId = eventPoolInvitesViewModel.PoolId,
+                            EventId = eventPoolInvitesViewModel.EventId,
+                            StatusId = 1, // 1 = ready to send
+                            CreatedDateTime = DateTime.UtcNow
+                        };
+                        _context.EmailRequestToJoin.AddOrUpdate(emailRequestToJoin);
+
+                    }
+                }
+                _context.SaveChanges();
+            }
+            return RedirectToAction("EventsLinkedToPool", "EventPools", new { id = eventPoolInvitesViewModel.PoolId });
+        }
+
+
+        public ActionResult EventPoolInvites(short eventId, int poolId)
+        {
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var eventPoolInvitesViewModel = new EventPoolInvitesViewModel
+            {
+                PoolPlayers = _context.PoolPlayers
+                    .Include(p => p.Player)
+                    .Include(u => u.Player.AspNetUser)
+                    .Where(a => a.PoolId == poolId & a.Enabled == true).ToList(),
+
+                EventPoolPlayers = _context.EventPoolPlayers
+                .Where(a => a.PoolId == poolId & a.EventId == eventId & a.Enabled == true).ToList(),
+
+                EmailRequestToJoins = _context.EmailRequestToJoin.Where(a => a.PoolId == poolId & a.EventId == eventId).ToList(),
+                Pool = _context.Pools.Where(p => p.Id == poolId).FirstOrDefault(),
+
+                EventId = eventId,
+                PoolId = poolId
+            };
+
+            return View(eventPoolInvitesViewModel);
+        }
+
+
         public ActionResult EventsLinkedToPool(int id)
         {
 

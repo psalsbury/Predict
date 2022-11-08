@@ -404,6 +404,7 @@
     </Compile>
     <Compile Include="GoogleCaptcha\GoogleCaptchaResponse.cs" />
     <Compile Include="Helper\EmailLeadProcessor.cs" />
+    <Compile Include="Helper\EmailRequestToJoinProcessor.cs" />
     <Compile Include="Helper\LeagueTableTeamThirdPlaceHelper.cs" />
     <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="Helper\Helper.cs" />
@@ -482,11 +483,16 @@
     <Compile Include="Migrations\202210292210172_EmailLeads.Designer.cs">
       <DependentUpon>202210292210172_EmailLeads.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211082152224_EmailInvites.cs" />
+    <Compile Include="Migrations\202211082152224_EmailInvites.Designer.cs">
+      <DependentUpon>202211082152224_EmailInvites.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
     <Compile Include="Models\BonusQuestionPrediction.cs" />
     <Compile Include="Models\EmailLead.cs" />
+    <Compile Include="Models\EmailRequestToJoin.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventFixture.cs" />
     <Compile Include="Models\EventGeneration.cs" />
@@ -512,6 +518,7 @@
     <Compile Include="RapidApi\RapidApiV3LeagueClassHelper.cs" />
     <Compile Include="RapidApi\RapidApiV3OddsClassHelper.cs" />
     <Compile Include="ViewModels\EventPlayersViewModel.cs" />
+    <Compile Include="ViewModels\EventPoolInvitesViewModel.cs" />
     <Compile Include="ViewModels\JokeTable.cs" />
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
@@ -700,6 +707,7 @@
     <Content Include="Views\EventPlayers\FinishedComps.cshtml" />
     <Content Include="Views\EventGenerations\EventGenerationsIndex.cshtml" />
     <Content Include="Views\Pools\PoolHome.cshtml" />
+    <Content Include="Views\EventPools\EventPoolInvites.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -770,6 +778,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210292210172_EmailLeads.resx">
       <DependentUpon>202210292210172_EmailLeads.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211082152224_EmailInvites.resx">
+      <DependentUpon>202211082152224_EmailInvites.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

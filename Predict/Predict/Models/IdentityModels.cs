@@ -29,6 +29,7 @@ namespace Predict.Models
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<EmailLead> EmailLead { get; set; }
+        public DbSet<EmailRequestToJoin> EmailRequestToJoin { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventPlayer> EventPlayers { get; set; }
         public DbSet<EventPool> EventPools { get; set; }
