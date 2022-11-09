@@ -59,7 +59,9 @@ namespace Predict.Controllers
                 "spGetEventListForDisplay @OnlyShowActive, @CreatedByUserId, @ParticipatingInUserId"
                 , new SqlParameter("@OnlyShowActive", true)
                 , new SqlParameter("@CreatedByUserId", DBNull.Value)
-                , new SqlParameter("@ParticipatingInUserId", userId)).ToList();
+                , new SqlParameter("@ParticipatingInUserId", userId))
+                .OrderBy(a => a.EventName)
+                .ToList();
 
             return View(eventPlayersViewModel);
         }

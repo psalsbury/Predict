@@ -62,6 +62,7 @@
                 </td>
                 <td align="center" width="25%">
                     @{
+                        var alreadyMember = Model.EventPoolPlayers.Any(a => a.PlayerId == Model.PoolPlayers[i].PlayerId);
                         var emailRequestToJoins = Model.EmailRequestToJoins.FirstOrDefault(a => a.PlayerId == Model.PoolPlayers[i].PlayerId);
                         var notSentDesc = "";
                         if (emailRequestToJoins != null)
@@ -85,8 +86,16 @@
                         }
                         else
                         {
-                            @Html.HiddenFor(a => @Model.PoolPlayers[i].PlayerId)
-                            <input type="checkbox" value="email" name="email_@Model.PoolPlayers[i].PlayerId" />
+                            if (alreadyMember)
+                            {
+                                <text>Joined</text>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(a => @Model.PoolPlayers[i].PlayerId)
+                                <input type="checkbox" value="email" name="email_@Model.PoolPlayers[i].PlayerId" />
+                            }
+
                         }
                     }
 

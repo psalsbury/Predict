@@ -15,6 +15,14 @@
         </ol>
     </nav>
 }
+@{
+    var international = false;
+    if(Model.EventName.Contains("World Cup"))
+    {
+        international = true;
+    }
+}
+
 
 <table width="100%">
     <tr>
@@ -181,7 +189,7 @@
                                 <table width="100%" cellpadding="0">
                                     <tr>
                                         <td>
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
@@ -223,7 +231,7 @@
                                 <table width="100%">
                                     <tr>
                                         <td>
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp

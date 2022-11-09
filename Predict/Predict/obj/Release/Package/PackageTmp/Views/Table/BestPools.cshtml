@@ -76,7 +76,7 @@
                     @tableViewModel.PoolName
                 </a>
                 <br />
-                <i>@tableViewModel.NbrOfMembers members</i>
+                <i>@tableViewModel.NbrOfMembers member@(@tableViewModel.NbrOfMembers>1?"s":"") </i>
             </td>
             <td STYLE="text-align: center">
                 @tableViewModel.CorrectScore.ToString()

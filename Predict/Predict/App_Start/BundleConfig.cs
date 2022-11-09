@@ -14,7 +14,7 @@ namespace Predict
                 //.Include("~/Content/css/bootstrap-select.css")
                 //.Include("~/Content/css/bootstrap-datepicker3.min.css")
 
-                .Include("~/Content/css/AdminLTE.css")
+                .Include("~/Content/css/AdminLTE2.css")
                 .Include("~/Content/css/skins/skin-blue.css")
                 .Include("~/Content/css/font-awesome.min.css"));
                 //.Include("~/plugins/datatables/dataTables.bootstrap.min.css"));

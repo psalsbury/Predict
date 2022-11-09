@@ -23,6 +23,19 @@ table.tableSorter th div.sortArrow div.sortArrowDescending { background: url('/I
 body {
     padding-bottom: 20px;
     padding-top: 50px;
+    overflow-x: hidden;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
 }
 
 /* Set padding to keep content from hitting the edges */
