@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Pool.PoolName;
 }
 
-<div class="box box-solid">
+<div class="box box-success">
 
     <div class="box-header with-border">
         <h3 class="box-title">League Details</h3>
@@ -64,7 +64,7 @@
     </div>
 </div>
 
-<div class="box box-solid collapsed-box">
+<div class="box box-success collapsed-box">
     <div class="box-header with-border">
         <h3 class="box-title">Scoring</h3>
         <div class="box-tools pull-right">
@@ -106,7 +106,7 @@
 </div>
 
 
-<div class="box box-solid">
+<div class="box box-success">
     <div class="box-header with-border">
         <h3 class="box-title">Previous Winners</h3>
         <div class="box-tools pull-right">
@@ -163,3 +163,99 @@
     </div>
 </div>
 
+<div class="box box-primary direct-chat direct-chat-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Model.Pool.PoolName Chat</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+ 
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+
+        <div class="direct-chat-messages" id="messages">
+
+
+            @foreach (var poolchat in Model.PoolChats)
+            {
+                var rightLeft = "left";
+                if (poolchat.PlayerId == Model.PoolPlayer.PlayerId)
+                {
+                    rightLeft = "right";
+                }
+
+                    <div class="direct-chat-msg @rightLeft">
+                        <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-@rightLeft">@poolchat.Player.DisplayName&nbsp;</span>
+                            <span class="direct-chat-timestamp pull-@rightLeft">@poolchat.CreatedDateTime.ToString("dd MMM yy H:mm:ss") &nbsp;</span>
+                        </div>
+
+                        <img class="direct-chat-img" src="../images/person.png" alt="Message User Image">
+                        <div class="direct-chat-text">
+                            @poolchat.Message
+                        </div>
+                    </div>
+            }
+        </div>
+
+
+    </div>
+
+    <div class="box-footer">
+        <div class="input-group">
+            <input type="text"  maxlength="100" id="message" name="message" placeholder="Type Message ..." class="form-control">
+            <span class="input-group-btn">
+                <button class="btn btn-primary btn-flat" id="SendMessage">Send</button>
+            </span>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    $("#messages").animate({ scrollTop: $('#messages').prop("scrollHeight") }, 1000);
+
+    $(document).ready(function () {
+        $("#SendMessage").on("click", function () {
+
+            var newChat = new Object();
+            newChat.poolId = '@Model.Pool.Id';
+            newChat.message = $('#message').val();
+            var ajaxRequest = {
+                url: '../api/poolChats/AddPoolChat',
+                type: 'POST',
+                datatype: 'json',
+                data: newChat,
+                success: function () {
+                    addChat($('#message').val());
+                    newChat.message = $('#message').val('');
+                }
+            };
+
+            $.ajax(ajaxRequest);
+
+        });
+    });
+
+    function addChat(message) {
+
+        var me = '<div class="direct-chat-msg right">'+
+            '<div class="direct-chat-info clearfix">' +
+            '<span class="direct-chat-name pull-right">@Model.PoolPlayer.Player.DisplayName</span>' +
+            '<span class="direct-chat-timestamp pull-left">@DateTime.UtcNow.ToString("dd MMM yy H:mm:ss")</span>'+
+            ' </div>' +
+            '<img class="direct-chat-img" src="../images/person.png" alt="Message User Image">' +
+            '<div class="direct-chat-text">' +
+            message+
+            '</div>' +
+            '</div>'
+        document.getElementById("messages").innerHTML = document.getElementById("messages").innerHTML + me;
+        $("#messages").animate({ scrollTop: $('#messages').prop("scrollHeight") }, 1000);
+    }
+
+</script>

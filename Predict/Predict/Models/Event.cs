@@ -34,6 +34,7 @@ namespace Predict.Models
         public int Fixtures { get; set; }
         public int KoFixtures { get; set; }
         public int BonusQuestions { get; set; }
+        public bool International { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]

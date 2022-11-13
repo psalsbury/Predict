@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using Predict.Models;
 using System.Data.Entity;
 using System.Configuration;
-using System.Web;
 
 namespace Predict.Controllers.Api
 {

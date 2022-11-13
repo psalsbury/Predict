@@ -58,9 +58,9 @@ namespace Predict.Helper
 
                                 Body = "Dear " + poolPlayer.Player.PlayerName + "," + "<br>" + "<br>" +
                                 adminPlayer.DisplayName + " is running a prediction comp and has invited you to join. " +
-                                "<br><br>The comp is called " + myEvent.EventName +
+                                "<br><br>The comp is called " + myEvent.EventName + " " + 
                                 "and starts on " + myEvent.StartDateTime.ToString("dd-MMM-yyyy HH:mm:ss") +
-                                "<br><br>To join, log into <a href='www.predictioncomp.com'>www.predictioncomp.com</a> and select CREATE/JOIN/MANAGE then select 'A Competition'. From there you can Join the comp by selecting 'Join A Comp'" +
+                                "<br><br>To join, log into <a href='www.predictioncomp.com'>www.predictioncomp.com</a> and select CREATE/JOIN/MANAGE then select 'A Competition'. From there you can join the comp by selecting 'Join A Comp'" +
                                 "<br><br>" +
                                 "Good Luck!" + "<br>" +
                                 "The Prediction Comp Team"

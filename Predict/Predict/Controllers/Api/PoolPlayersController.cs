@@ -191,7 +191,6 @@ namespace Predict.Controllers.Api
                 }
             }
 
-            _context.Dispose();
             return Ok();
         }
 

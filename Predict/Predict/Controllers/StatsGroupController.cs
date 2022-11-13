@@ -42,10 +42,13 @@ namespace Predict.Controllers
 
             var showKoStats = _context.KoFixtures.Any(a => a.EventId == eventId);
 
+            var myEvent = Helper.Cache.GetCachedEvent(eventId);
+
             ViewBag.ShowKoStats = showKoStats;
             ViewBag.EventId = eventId;
             ViewBag.PoolId = poolId;
             ViewBag.PoolName = poolName;
+            ViewBag.International = myEvent.International;
             return View(eventFixtures);
         }
 
@@ -55,6 +58,8 @@ namespace Predict.Controllers
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
+
+            var myEvent = Helper.Cache.GetCachedEvent(eventId);
 
             var statsFixtureViewModel = new StatsFixtureViewModel
             {
@@ -71,6 +76,7 @@ namespace Predict.Controllers
                 ).ToList()
             };
             statsFixtureViewModel.EventId = eventId;
+            statsFixtureViewModel.International = myEvent.International;
 
             var poolName = "";
 

@@ -3,7 +3,13 @@
 @model Predict.ViewModels.EventFixturesViewModel
 @{
     ViewBag.Title = Model.Event.EventName + " Fixtures";
-}
+
+    var international = false;
+
+    if (Model.Event.Id == 219)
+    {
+        international = true;
+    }
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -73,7 +79,7 @@
                                 <table width="100%" cellpadding="0">
                                     <tr>
                                         <td border="1" width="15%">
-                                            <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(item.HomeTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                                         </td>
                                         <td style="text-align: left">
                                             &nbsp;
@@ -87,7 +93,7 @@
                                 <table width="100%">
                                     <tr>
                                         <td border="1" width="15%">
-                                            <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(item.AwayTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                                         </td>
                                         <td style="text-align: left">
                                             &nbsp;

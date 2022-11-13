@@ -357,10 +357,12 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\EventFixturesController.cs" />
     <Compile Include="Controllers\Api\EventPlayersController.cs" />
+    <Compile Include="Controllers\Api\EventPoolPlayerController.cs" />
     <Compile Include="Controllers\Api\EventsController.cs" />
     <Compile Include="Controllers\Api\FixtureOddsController.cs" />
     <Compile Include="Controllers\Api\JokeRatingsController.cs" />
     <Compile Include="Controllers\Api\JokesController.cs" />
+    <Compile Include="Controllers\Api\PoolChatsController.cs" />
     <Compile Include="Controllers\Api\PoolsController.cs" />
     <Compile Include="Controllers\Api\PoolPlayersController.cs" />
     <Compile Include="Controllers\Api\QuizQuestionsController.cs" />
@@ -487,6 +489,10 @@
     <Compile Include="Migrations\202211082152224_EmailInvites.Designer.cs">
       <DependentUpon>202211082152224_EmailInvites.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211122146446_PoolChat.cs" />
+    <Compile Include="Migrations\202211122146446_PoolChat.Designer.cs">
+      <DependentUpon>202211122146446_PoolChat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -508,6 +514,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Joke.cs" />
     <Compile Include="Models\JokeRating.cs" />
+    <Compile Include="Models\PoolChat.cs" />
     <Compile Include="Models\LeagueSubLeague.cs" />
     <Compile Include="Models\LeagueSubLeagueTeam.cs" />
     <Compile Include="Models\RapidApiV3Country.cs" />
@@ -781,6 +788,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202211082152224_EmailInvites.resx">
       <DependentUpon>202211082152224_EmailInvites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211122146446_PoolChat.resx">
+      <DependentUpon>202211122146446_PoolChat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -142,10 +142,24 @@
             var poolId = button.data('title');
             var title = button.data('title2');
 
-            modal.find('.modal-body').html("<h4>Send this link to your friends to join your league</h4><br>https://www.predictioncomp.com/Account/Register?PoolId=" + poolId);
-
+            modal.find('.modal-body').html("<h4>Send this link to your friends to join your league</h4><br>https://www.predictioncomp.com/Account/Register?PoolId=" + poolId + '&nbsp();<br><br><button onclick="myFunction(' + poolId + ')">Copy text</button>');
 
         });
 
+        function myFunction(poolId) {
+
+ 
+            // Get the text field
+            var copyText = 'https://www.predictioncomp.com/Account/Register?PoolId=' + poolId;
+            // Select the text field
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText);
+   
+            // Alert the copied text
+            alert('Copied the text: ' + copyText);
+        }
 
     </script>
+
+

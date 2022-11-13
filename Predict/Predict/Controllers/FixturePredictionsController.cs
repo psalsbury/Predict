@@ -62,8 +62,7 @@ namespace Predict.Controllers
 
             fixturePredictionsViewModel.OtherUserViewing = (userId != loggedInUserId);
             fixturePredictionsViewModel.UserId = userId;
-            fixturePredictionsViewModel.EventStartDateTime = myEvent.StartDateTime;
-            fixturePredictionsViewModel.EventEndDateTime = myEvent.EndDateTime;
+            fixturePredictionsViewModel.MyEvent = myEvent;
 
             var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
             fixturePredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
@@ -136,8 +135,7 @@ namespace Predict.Controllers
                 fixturePredictions.OrderBy(a => a.EventFixture.Fixture.FixtureDateTime).ToList();
 
             fixturePredictionsViewModel.UserId = userId;
-            fixturePredictionsViewModel.EventId = eventId;
-            fixturePredictionsViewModel.EventName = Helper.Cache.GetCachedEvent(eventId).EventName;
+            fixturePredictionsViewModel.MyEvent = Helper.Cache.GetCachedEvent(eventId);
 
             return fixturePredictionsViewModel;
         }
@@ -152,7 +150,7 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var userId = User.Identity.GetUserId();
-            var eventId = fixturePredictionsViewModel.EventId;
+            var eventId = fixturePredictionsViewModel.MyEvent.Id;
             var predictionChanged = true;
 
             // Get existing predictions and update or delete
@@ -242,7 +240,7 @@ namespace Predict.Controllers
             _context.SaveChanges();
             SessionHelper.RefreshFixturePredictions(Session, userId, eventId);
 
-            return RedirectToAction("Index", "Home", new { EventId = fixturePredictionsViewModel.EventId });
+            return RedirectToAction("Index", "Home", new { EventId = fixturePredictionsViewModel.MyEvent.Id });
         }
     }
 }

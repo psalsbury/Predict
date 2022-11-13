@@ -13,5 +13,6 @@ namespace Predict.ViewModels
         public List<EventPool> RecentEventPools { get; set; }
         public List<EventPoolPlayer> EventPoolPlayers { get; set; }
         public PoolPlayer PoolPlayer { get; set; }
+        public List<PoolChat> PoolChats { get; set; }
     }
 }

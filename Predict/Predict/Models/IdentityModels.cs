@@ -22,7 +22,7 @@ namespace Predict.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base(Environment.MachineName == "PETESXPS" ? "DefaultConnection" : "GoDaddyConnection", false)
+            : base(Environment.MachineName == "PETESXPS2" ? "DefaultConnection" : "GoDaddyConnection", false)
         {
         }
 
@@ -46,6 +46,7 @@ namespace Predict.Models
         public DbSet<LeagueSubLeague> LeagueSubLeagues { get; set; }
         public DbSet<LeagueSubLeagueTeam> LeagueSubLeagueTeams { get; set; }
         public DbSet<LeagueEventGeneration> LeagueEventGenerations { get; set; }
+        public DbSet<PoolChat> PoolChats { get; set; }
         public DbSet<Pool> Pools { get; set; }
         public DbSet<PoolPlayer> PoolPlayers { get; set; }
         public DbSet<EventPoolPlayer> EventPoolPlayers { get; set; }

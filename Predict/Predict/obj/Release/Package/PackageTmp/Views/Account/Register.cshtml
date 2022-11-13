@@ -75,8 +75,8 @@
                 <div class="form-group has-feedback">
 
                     <div class="g-recaptcha" style="transform: scale(0.77);
--webkit-transform: scale(0.77); transform-origin: 0 0;
--webkit-transform-origin: 0 0;" data-theme="light"
+                        -webkit-transform: scale(0.77); transform-origin: 0 0;
+                        -webkit-transform-origin: 0 0;" data-theme="light"
                          data-sitekey="6LdmK4IaAAAAAMb9yed_0Ap3tZQ-A1Df85qYSWez"></div>
 
 
@@ -105,7 +105,7 @@
             var poolName = $("#PoolId :selected").attr("poolName");
             var requiresCode = $("#PoolId :selected").attr("joinCode");
             var joinCode = "";
-            if (requiresCode != "") {
+            if (requiresCode != null) {
                 joinCode = prompt("Please enter the join code for " + poolName + " league");
                 document.getElementById('JoinCode').value = joinCode;
             }

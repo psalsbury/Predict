@@ -81,6 +81,11 @@ namespace Predict.Controllers
                 .Where(a => a.Enabled == true & a.PoolId == poolId & a.Event.EndDateTime < dteNow & a.PoolPosition == 1)
                 .ToList();
 
+            poolHomeViewModel.PoolChats = _context.PoolChats
+                .Include(p => p.Player)
+                .Where(c => c.PoolId == poolId)
+                .OrderBy(d => d.CreatedDateTime).Take(50).ToList();
+
             return View("PoolHome", poolHomeViewModel);
         }
 
@@ -185,7 +190,6 @@ namespace Predict.Controllers
                 _context.Pools.Add(poolFromDb);
             }
 
-
             _context.SaveChanges();
 
             if (newPool)
@@ -247,6 +251,8 @@ namespace Predict.Controllers
 
                 }
                 _context.SaveChanges();
+
+
             }
             else
             {

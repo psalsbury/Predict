@@ -1,7 +1,7 @@
 ﻿@using System.Web.UI.WebControls
 @model Predict.ViewModels.FixturePredictionsViewModel
 @{
-    ViewBag.Title = @Model.EventName;
+    ViewBag.Title = @Model.MyEvent.EventName;
 }
 
 @if (!Model.OtherUserViewing)
@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="/Home/Index?eventid=@Model.EventId">Home</a>
+                <a href="/Home/Index?eventid=@Model.MyEvent.Id">Home</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Fixture Predictions</li>
         </ol>
@@ -17,12 +17,11 @@
 }
 @{
     var international = false;
-    if(Model.EventName.Contains("World Cup"))
+    if (Model.MyEvent.International)
     {
         international = true;
     }
 }
-
 
 <table width="100%">
     <tr>
@@ -34,7 +33,7 @@
             }
             else if (Model.OtherUserViewing)
             {
-                <a href="/PositionHistory/ShowHistory?eventId=@Model.EventId&poolid=@Model.Pool.Id&playerid=@Model.UserId">
+                <a href="/PositionHistory/ShowHistory?eventId=@Model.MyEvent.Id&poolid=@Model.Pool.Id&playerid=@Model.UserId">
                     <input type="button" class="btn btn-primary alignleft" value="Posn History">
                 </a>
             }
@@ -135,7 +134,7 @@
         </div>
     </div>
 
-    @Html.HiddenFor(m => m.EventId)
+    @Html.HiddenFor(m => m.MyEvent.Id)
     var OutstandingPredictionCount = 0;
 
     <table id="predictions" name="predictions" class="table table-bordered">
@@ -189,7 +188,7 @@
                                 <table width="100%" cellpadding="0">
                                     <tr>
                                         <td>
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.HomeTeam.FlagFileLocation)" height="20" @(international ? "width=32" : "") />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
@@ -197,7 +196,7 @@
                                         </td>
                                         <td style="text-align: center" width="20%">
 
-                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
+                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.MyEvent.StartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
                                             {
                                                 @Html.TextBoxFor(m => m.FixturePredictions[i].HomePrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2", style = "text-align:center;", @class = "homePrediction" })
 
@@ -231,14 +230,14 @@
                                 <table width="100%">
                                     <tr>
                                         <td>
-                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
+                                            <img src="@Url.Content(Model.FixturePredictions[i].EventFixture.Fixture.AwayTeam.FlagFileLocation)" height="20" @(international ? "width=32" : "") />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
                                             @Html.DisplayFor(m => m.FixturePredictions[i].EventFixture.Fixture.AwayTeam.TeamName)
                                         </td>
                                         <td style="text-align: center" width="20%">
-                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
+                                            @if (!Model.OtherUserViewing && !Model.FixturePredictions[i].EventFixture.Fixture.FixtureDatePassed && !(Model.MyEvent.StartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
                                             {
                                                 @Html.TextBoxFor(m => m.FixturePredictions[i].AwayPrediction, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2", style = "text-align:center;", @class = "awayPrediction" })
 
@@ -648,7 +647,7 @@
         // Ajax call to get the content of the modal form
         $.ajax({
             type: "GET",
-            url: "/api/FixtureOdds/GetBettingResultsForComp/@Model.EventId/@Model.UserId" ,
+            url: "/api/FixtureOdds/GetBettingResultsForComp/@Model.MyEvent.Id/@Model.UserId" ,
             success: function (data) {
                 var htmlTable = data.toString();
                 modal.find('.modal-body').html(htmlTable);

@@ -39,9 +39,11 @@ namespace Predict.Controllers
                 return RedirectToAction("Login", "Account");
 
             var userId = User.Identity.GetUserId();
+            var myEvent = Helper.Cache.GetCachedEvent(id);
 
             var leagueTablesViewModel = GetLeagueTablesViewModel(userId,userId,id);
             ViewBag.EventId = id;
+            ViewBag.International = myEvent.International;
             leagueTablesViewModel.OtherUserViewing = false;
 
             return View(leagueTablesViewModel);

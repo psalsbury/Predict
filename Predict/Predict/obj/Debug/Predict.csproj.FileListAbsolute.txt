@@ -290,11 +290,12 @@ C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.ForumSQLUpdates.re
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.BaseDatesDateTime2.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.EventNameTo26Chars.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.FixtureStatus.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.EmailLeads.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.EmailInvites.resources
+C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.PoolChat.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.GenerateResource.cache
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CoreCompileInputs.cache
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.dll
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.pdb
-C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.EmailLeads.resources
-C:\repos\Predict\Predict\Predict\obj\Debug\Predict.Migrations.EmailInvites.resources
 C:\repos\Predict\Predict\Predict\obj\Debug\Predict.csprojAssemblyReference.cache

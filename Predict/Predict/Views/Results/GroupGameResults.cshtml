@@ -1,7 +1,15 @@
 ﻿@model Predict.ViewModels.GroupGameResultsViewModel
 
 @{
-    ViewBag.Title = @ViewBag.EventName  + " Fixtures";
+    ViewBag.Title = @ViewBag.EventName + " Fixtures";
+}
+@{
+    var international = false;
+
+    if (Model.EventFixtures.First().EventId == 219)
+    {
+        international = true;
+    }
 }
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -18,14 +26,14 @@
 
     <table id="groupresults" name="groupresults" class="table table-bordered table-hover">
         <thead>
-        <tr>
+            <tr>
 
-            <th class="hidden-xs hidden-sm" style="text-align: center; vertical-align: middle;"></th>
-            <th style="text-align: center; vertical-align: middle;">Game</th>
-            <th style="text-align: center; vertical-align: middle;">
-                Fixture Time
-            </th>
-        </tr>
+                <th class="hidden-xs hidden-sm" style="text-align: center; vertical-align: middle;"></th>
+                <th style="text-align: center; vertical-align: middle;">Game</th>
+                <th style="text-align: center; vertical-align: middle;">
+                    Fixture Time
+                </th>
+            </tr>
         </thead>
         @for (var i = 0; i < Model.EventFixtures.Count(); i++)
         {
@@ -42,7 +50,7 @@
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.EventFixtures[i].Fixture.HomeTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(Model.EventFixtures[i].Fixture.HomeTeam.FlagFileLocation)" height="20" @(international ? "width=32" : "") />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
@@ -59,7 +67,7 @@
                                 <table width="100%" cellpadding="2">
                                     <tr>
                                         <td width="20%">
-                                            <img src="@Url.Content(Model.EventFixtures[i].Fixture.AwayTeam.FlagFileLocation)" height="20" />
+                                            <img src="@Url.Content(Model.EventFixtures[i].Fixture.AwayTeam.FlagFileLocation)" height="20" @(international ? "width=32" : "") />
                                         </td>
                                         <td style="text-align: left" width="60%">
                                             &nbsp
@@ -87,7 +95,7 @@
 </div>
 <script>
 
-    $(function() {
+    $(function () {
         $("#fixtures").DataTable({
             "bLengthChange": false,
             "autoWidth": false
@@ -100,7 +108,7 @@
 <script>
 
     //get all td with actionclass in table
-    $("tbody tr td.myDate").each(function() {
+    $("tbody tr td.myDate").each(function () {
 
         $hiddenValue = $(this).find("input[type=hidden]").val();
 
@@ -120,7 +128,7 @@
         mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
 
-        return da + ' ' + mo + ' ' + pad(newDate.getHours(),2) + ':' + pad(newDate.getMinutes(), 2);
+        return da + ' ' + mo + ' ' + pad(newDate.getHours(), 2) + ':' + pad(newDate.getMinutes(), 2);
 
     }
 

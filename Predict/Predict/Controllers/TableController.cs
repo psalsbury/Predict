@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Predict.Controllers
 {
@@ -47,6 +48,7 @@ namespace Predict.Controllers
 
             ViewBag.PoolId = poolId;
             ViewBag.EventId = eventId;
+            ViewBag.PoolAdmin = pool.AdminPlayerId == User.Identity.GetUserId();
 
             ViewBag.nbrFixturePredictionsRequired = myEvent.Fixtures;
             ViewBag.nbrKOPredictionsRequired = myEvent.KoFixtures;

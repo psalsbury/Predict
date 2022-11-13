@@ -17,13 +17,7 @@ namespace Predict.ViewModels
 
         public bool OtherUserViewing { get; set; }
 
-        public short EventId { get; set; }
-
-        public string EventName { get; set; }
-
-        public DateTime EventStartDateTime { get; set; }
-
-        public DateTime EventEndDateTime { get; set; }
+        public Event MyEvent { get; set; }
 
         public bool IsPremiumPlayer { get; set; }
 

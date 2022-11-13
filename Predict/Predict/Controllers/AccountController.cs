@@ -258,7 +258,6 @@ namespace Predict.Controllers
                 var response = ValidateCaptcha(captchaResponse);
                 if (!response)
                 {
-
                     ModelState.AddModelError("Captcha", "Please Complete Google Captcha");
                     model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
                     model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
@@ -273,6 +272,7 @@ namespace Predict.Controllers
                 {
                     if (model.Password != model.ConfirmPassword)
                     {
+                        _logger.Log(LogLevel.Info, model.Email + " --> Passwords do not match");
                         ModelState.AddModelError("Password", "Passwords do not match");
                         model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
                         model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
@@ -286,6 +286,7 @@ namespace Predict.Controllers
                         var pool = context.Pools.FirstOrDefault(a => a.Id == model.PoolId & (a.JoinCode == model.JoinCode | a.JoinCode == null));
                         if(pool == null)
                         {
+                            _logger.Log(LogLevel.Info, model.Email + " --> The league join code was not correct");
                             ModelState.AddModelError("Join Code", "The league join code was not correct");
                             model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
                             model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
@@ -298,6 +299,7 @@ namespace Predict.Controllers
                     var nbrWithSameDisplayName = context.Players.Count(a => a.DisplayName == model.DisplayName);
                     if (nbrWithSameDisplayName != 0)
                     {
+                        _logger.Log(LogLevel.Info, model.Email + " --> Display name is already taken");
                         ModelState.AddModelError("Password", "Display name is already taken");
                         model.Events = context.Events.Where(a => a.StartDateTime >= DateTime.UtcNow).OrderByDescending(a => a.KoFixtures).ThenBy(a => a.EventName).ToList();
                         model.Pools = context.Pools.Where(a => a.Id != globalPoolId).OrderBy(a => a.PoolName).ToList();
@@ -352,7 +354,6 @@ namespace Predict.Controllers
                             }
 
                             context.PoolPlayers.Add(poolPlayer);
-
                         }
 
                         if (myEvent != null)

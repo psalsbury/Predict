@@ -12,6 +12,13 @@
 
     var nbrPredictionsDraw = Model.StatFixturePredictions.Where(s => s.HomePrediction == s.AwayPrediction)
         .Sum(s => s.NumberOfPredictions);
+
+    var international = false;
+
+    if (Model.International)
+    {
+        international = true;
+    }
 }
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -76,7 +83,7 @@
 
             <tr>
                 <td>
-                    <img src="@Url.Content(@Model.Fixture.HomeTeam.FlagFileLocation)" height="20" />
+                    <img src="@Url.Content(@Model.Fixture.HomeTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                 </td>
                 <td>
                     <b>@Model.Fixture.HomeTeam.TeamName</b> to win
@@ -91,7 +98,7 @@
 
             <tr>
                 <td>
-                    <img src="@Url.Content(@Model.Fixture.AwayTeam.FlagFileLocation)" height="20" />
+                    <img src="@Url.Content(@Model.Fixture.AwayTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                 </td>
                 <td>
                     <b>@Model.Fixture.AwayTeam.TeamName</b> to win
@@ -142,11 +149,11 @@
             <tr>
                 <th style="text-align:center" >
                     <div class="hidden-xs hidden-sm">@Model.Fixture.HomeTeam.TeamName</div>
-                    <img src="@Url.Content(@Model.Fixture.HomeTeam.FlagFileLocation)" height="20" />
+                    <img src="@Url.Content(@Model.Fixture.HomeTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                 </th>
                 <th style="text-align:center" >
                     <div style="align-content: center" class="hidden-xs hidden-sm">@Model.Fixture.AwayTeam.TeamName</div>
-                    <img src="@Url.Content(@Model.Fixture.AwayTeam.FlagFileLocation)" height="20" />
+                    <img src="@Url.Content(@Model.Fixture.AwayTeam.FlagFileLocation)" height="20" @(international?"width=32":"") />
                 </th>
                 <th>
                     Result
