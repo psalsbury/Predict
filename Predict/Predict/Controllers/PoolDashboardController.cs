@@ -27,7 +27,7 @@ namespace Predict.Controllers
 
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
 
             var playerId = User.Identity.GetUserId();

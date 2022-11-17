@@ -18,11 +18,11 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var player = _context.Players.FirstOrDefault(a => a.Id == playerId);
             if(player == null)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var positionHistory = (from a in _context.EventPoolPlayerPositionHistory
                                    join c in _context.Pools on a.PoolId equals c.Id

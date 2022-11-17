@@ -27,7 +27,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var loggedInUserId = User.Identity.GetUserId();
             var fixturePredictionsViewModel = GetFixturePredictionsViewModel(loggedInUserId, loggedInUserId, eventId);
@@ -41,7 +41,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var loggedInUserId = User.Identity.GetUserId();
             var fixturePredictionsViewModel = GetFixturePredictionsViewModel(loggedInUserId, userId, eventId);
@@ -147,7 +147,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var userId = User.Identity.GetUserId();
             var eventId = fixturePredictionsViewModel.MyEvent.Id;

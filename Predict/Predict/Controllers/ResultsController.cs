@@ -21,7 +21,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
 
             var leagueTablesViewModel = new LeagueTablesViewModel();
@@ -35,7 +35,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var groupGameResultsViewModel = new GroupGameResultsViewModel();
 
@@ -66,7 +66,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var koFixtureController = new KoFixturesController();
             var koFixturePredictionViewModel = koFixtureController.GetKoFixturePredictionViewModel(eventId);

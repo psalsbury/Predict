@@ -22,7 +22,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var eventFixtures = _context.EventFixtures
                 .Include(b => b.Fixture.HomeTeam)
@@ -57,7 +57,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var myEvent = Helper.Cache.GetCachedEvent(eventId);
 

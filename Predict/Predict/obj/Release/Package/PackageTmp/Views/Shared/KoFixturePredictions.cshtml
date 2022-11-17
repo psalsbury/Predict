@@ -15,6 +15,10 @@
     }
 }
 
+
+
+
+
 @using (Html.BeginForm(Model.Predictions ? (Model.ReadOnly ? "ReadOnly" : "Save") : "SaveKoResults", Model.Predictions ? "KoFixturePredictions" : "KoFixtures"))
 {
     @Html.AntiForgeryToken()

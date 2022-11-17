@@ -23,7 +23,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var fixtures = _context.Fixtures
                 .Include(b => b.HomeTeam)
@@ -41,7 +41,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             // If not an admin of the site, then do not allow the creation of a fixture
             if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
@@ -61,7 +61,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
@@ -72,7 +72,7 @@ namespace Predict.Controllers
 
             if(fixture==null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
             }
 
             var fixtureViewModel = new FixtureViewModel
@@ -104,7 +104,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var fixture = new Fixture();
             if (fixtureViewModel.Id != 0) fixture = _context.Fixtures.SingleOrDefault(f => f.Id == fixtureViewModel.Id);
@@ -112,6 +112,7 @@ namespace Predict.Controllers
             Mapper.Map(fixtureViewModel, fixture);
 
             fixture.ModifiedDateTime = DateTime.UtcNow;
+            fixture.ResultProcessed = false;
 
             if (fixtureViewModel.Id == 0)
             {
@@ -128,7 +129,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var fixture = _context.Fixtures.FirstOrDefault(a => a.Id== fixtureViewModel.Id);
             if(fixture==null)

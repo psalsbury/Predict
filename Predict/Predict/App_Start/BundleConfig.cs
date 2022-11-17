@@ -22,6 +22,9 @@ namespace Predict
             bundles.Add(new ScriptBundle("~/Bundles/jquery")
                 .Include("~/Content/js/plugins/jquery/jquery-3.3.1.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval")
+                .Include("~/Content/js/plugins/validator/validator.js"));
+
             bundles.Add(new ScriptBundle("~/Bundles/js")
                 .Include("~/Content/js/plugins/bootstrap/bootstrap.js")
                 //.Include("~/Content/js/plugins/fastclick/fastclick.js")

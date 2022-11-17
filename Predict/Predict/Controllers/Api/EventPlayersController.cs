@@ -194,6 +194,8 @@ namespace Predict.Controllers.Api
                                     join p in _context.Pools on dr.PoolId equals p.Id
                                     where e.PlayerId == playerId 
                                     & dr.EventId == eventId
+                                    & dr.Enabled == true
+                                    & e.Enabled == true
                                     select new { dr.PoolId, p.PoolName }).ToList();
 
             var changesMade = false;

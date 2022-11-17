@@ -25,7 +25,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             ViewBag.EventId = id;
 
@@ -37,7 +37,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var koFixture = new KoFixture();
             if (koFixtureViewModel.Id != 0)
@@ -60,7 +60,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             // If not an admin of the site, then do not allow the creation of a fixture
             if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
@@ -74,7 +74,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var eventId = koFixturePredictionViewModel.EventId;
 
@@ -134,7 +134,7 @@ namespace Predict.Controllers
             // I WANT TO REUSE THE KO FIXTURE PREDICTION CONTROLLER, SO WILL SIMULATE PREDICTIONS
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             return View("KoFixturePredictions", GetKoFixturePredictionViewModel(eventId));
         }
@@ -202,7 +202,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
@@ -218,7 +218,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var koFixture = _context.KoFixtures.SingleOrDefault(f => f.Id == id);
             if (!User.IsInRole("Admin") | (koFixture == null)) return RedirectToAction("Index", "Home");

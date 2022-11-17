@@ -42,7 +42,7 @@ namespace Predict.Controllers
         {
 
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
 
@@ -89,12 +89,12 @@ namespace Predict.Controllers
         {
 
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var joke = _context.Jokes.FirstOrDefault(a => a.Id == id);
 
             if (joke==null)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             return View("AddJoke",joke);
 

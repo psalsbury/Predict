@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = Model.Predictions ? "Edit Knock Out Fixture Predictions" : "Edit Knock Out Fixture Results";
     var nbrKoPredictionsToEnter = (int)Session["nbrFixtures*" + Model.EventId];
-    var nbrFixturePredictionsEntered = (int) Session["nbrFixturePredictions*" + Model.EventId];
+    var nbrFixturePredictionsEntered = (int)Session["nbrFixturePredictions*" + Model.EventId];
     var disableAutoFill = nbrKoPredictionsToEnter - nbrFixturePredictionsEntered == 0 ? "" : "disabled";
     disableAutoFill = Predict.Helper.Cache.HasEventStarted(Model.EventId) ? "disabled" : disableAutoFill;
-    string autoFilButtonName="";
+    string autoFilButtonName = "";
 }
 
 <nav aria-label="breadcrumb">
@@ -20,6 +20,7 @@
 
 @using (Html.BeginForm(Model.Predictions ? (Model.ReadOnly ? "ReadOnly" : "Save") : "SaveKoResults", Model.Predictions ? "KoFixturePredictions" : "KoFixtures"))
 {
+    @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
 
     @Html.HiddenFor(model => model.MaxRows)
     @Html.HiddenFor(model => model.MaxCols)
@@ -28,7 +29,7 @@
     <div class="container-flex">
         <div class="row">
 
-            @if(@Model.KoStageFirstRoundQty==16)
+            @if (@Model.KoStageFirstRoundQty == 16)
             {
                 <div class="col-md-3">
                     <div class="panel panel-default flex-col">
@@ -40,7 +41,7 @@
                             }
                         </div>
                         <div class="panel-footer">
-                            @{ autoFilButtonName = "AutoFil_16" ; }
+                            @{ autoFilButtonName = "AutoFil_16"; }
                             <input class="btn btn-info" @disableAutoFill type="button" name="@autoFilButtonName" value="Auto Fill" id="@autoFilButtonName" onclick="AutoFill(this)">
                         </div>
                     </div>
@@ -117,8 +118,7 @@
 
 
     <div class="form-group">
-        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
-        <input type="submit" value="Save" class="btn btn-success"/>
+        <input type="submit" value="Save" class="btn btn-success" />
     </div>
 }
 
@@ -163,7 +163,7 @@
         {
             return selectedTeam;
         }
-        return Html.DropDownList(listName, new SelectList(Model.LeagueSubLeagueTeams, "TeamId", "Team.TeamName", selectedValue), defaultValue, new {id = listName, @class = "myclass"}).ToString();
+        return Html.DropDownList(listName, new SelectList(Model.LeagueSubLeagueTeams, "TeamId", "Team.TeamName", selectedValue), defaultValue, new { id = listName, @class = "myclass" }).ToString();
     }
 
 }

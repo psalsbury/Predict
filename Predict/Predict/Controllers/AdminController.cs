@@ -25,7 +25,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 
@@ -42,7 +42,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             Helper.Cache.UpdateScoring(_context);
 
@@ -54,7 +54,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             RapidApi.RapidApiHelper.ForceDailyRapidApiLeagueCheckWithBetting();
 
@@ -66,7 +66,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             RapidApi.RapidApiHelper.ForceDailyRapidApiLeagueCheckWithoutBetting();
 
@@ -79,7 +79,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             RapidApi.RapidApiHelper.GenerateAndUpdateEvents();
 
@@ -91,7 +91,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var country = HttpContext.Request.Params.Get("Country");
             var year = System.Convert.ToInt32(HttpContext.Request.Params.Get("year"));
@@ -106,7 +106,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             RapidApi.RapidApiHelper.V3Countries();
 

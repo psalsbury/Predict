@@ -24,7 +24,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var leagues = _context.Leagues.OrderByDescending(a => a.CreatedDateTime).ToList();
             return View(leagues);
@@ -72,7 +72,7 @@ namespace Predict.Controllers
             }
 
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             league.ModifiedDateTime = DateTime.UtcNow;
 

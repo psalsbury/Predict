@@ -34,7 +34,7 @@ namespace Predict.Controllers
 
             var eventId = System.Convert.ToInt16(Request["EventId"]);
 
-            if (Helper.Cache.GetCachedEvent(eventId) == null)
+            if (Helper.Cache.GetCachedEvent(eventId) == null && eventId != 0)
             {
                 Helper.Cache.SetEventCache(eventId);
             }

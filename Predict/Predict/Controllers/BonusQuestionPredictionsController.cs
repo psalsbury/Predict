@@ -24,7 +24,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var loggedInUserId = User.Identity.GetUserId();
             var bonusQuestionPredictionsViewModel =
@@ -98,7 +98,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var eventId = bonusQuestionPredictionsViewModel.EventId;
             var loggedInUserId = User.Identity.GetUserId();

@@ -36,7 +36,7 @@ namespace Predict.Controllers
         public ActionResult LeagueTables(short id)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var userId = User.Identity.GetUserId();
             var myEvent = Helper.Cache.GetCachedEvent(id);

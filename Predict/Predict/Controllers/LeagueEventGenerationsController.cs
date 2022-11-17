@@ -25,7 +25,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             if (!User.IsInRole("Admin")) return RedirectToAction("Index", "Home");
 

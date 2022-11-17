@@ -47,7 +47,7 @@ namespace Predict.Controllers
         {
 
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
             var player = _context.Players.FirstOrDefault(a => a.Id == playerId);
@@ -139,12 +139,12 @@ namespace Predict.Controllers
         {
 
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var quizQuestion = _context.QuizQuestions.FirstOrDefault(a => a.Id == id);
 
             if (quizQuestion == null)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var quizQuestionViewModel = new QuizQuestionViewModel
             {
@@ -162,7 +162,7 @@ namespace Predict.Controllers
         {
 
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
 
@@ -175,7 +175,7 @@ namespace Predict.Controllers
         public ActionResult DoQuiz()
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
 

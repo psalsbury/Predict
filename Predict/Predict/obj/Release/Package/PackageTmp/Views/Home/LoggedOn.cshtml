@@ -64,8 +64,6 @@
 
             @if (nbrFixturePredictionsToEnter > 0)
             {
-
-
                 <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/FixturePredictions/FixturePredictions/@eventId'">
                     <div class="small-box bg-@fixturePredictionBox">
                         <div class="inner">
@@ -309,10 +307,10 @@
             firstPass = false;
         }
 
-    <div class="row">
+<div class="row">
 
-        @if (poolInfoViewModels.Count() < ViewBag.nbrPoolsInEvent)
-        {
+    @if (poolInfoViewModels.Count() < ViewBag.nbrPoolsInEvent)
+    {
         <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/Table/BestPools?eventid=@eventId'">
             <!-- small box -->
             <div class="small-box bg-blue">
@@ -331,32 +329,31 @@
             </div>
         </div>
 
-        }
+    }
 
-        @if (nbrKoPredictionsToEnter > 0)
-        {
+    @if (nbrKoPredictionsToEnter > 0)
+    {
 
-            <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/LeagueTables/LeagueTables/@eventId'">
-                <!-- small box -->
-                <div class="small-box bg-@fixturePredictionBox">
-                    <div class="inner">
-                        <h3>
-                            8
-                        </h3>
-                        <p>Predicted Group Tables</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-ios-photos-outline"></i>
-                    </div>
-
-                    <a href="~/LeagueTables/LeagueTables/@eventId" class="small-box-footer">
-                        Click to view <i class="fa fa-arrow-circle-right"></i>
-                    </a>
+        <div style="cursor: pointer" class="col-lg-3 col-xs-6" onClick="location.href='/PredictionsConsolidated/ViewPredictionSummary?eventid=@eventId'">
+            <div class="small-box bg-@fixturePredictionBox">
+                <div class="inner">
+                    <h3>
+                        8
+                    </h3>
+                    <p>Prediction Summary</p>
                 </div>
-            </div>
+                <div class="icon">
+                    <i class="ion ion-ios-photos-outline"></i>
+                </div>
 
-        }
-    </div>
+                <a href="~/PredictionsConsolidated/ViewPredictionSummary?eventid=@eventId" class="small-box-footer">
+                    Click to view <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+
+    }
+</div>
 
     }
 }

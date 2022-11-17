@@ -34,7 +34,7 @@ namespace Predict.Controllers
             // 3) Create a new comp
             // 4) Manage your comps
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var dteNow = DateTime.UtcNow;
             var playerId = User.Identity.GetUserId();

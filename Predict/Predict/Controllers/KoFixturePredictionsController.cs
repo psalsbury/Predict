@@ -20,21 +20,12 @@ namespace Predict.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public ActionResult ReadOnly(KoFixturePredictionViewModel koFixturePredictionViewModel)
-        {
-            // If user is not logged in redirect to the home page
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
-
-            return RedirectToAction("Index", "Home");
-        }
-
         [ValidateAntiForgeryToken]
         public ActionResult Save(KoFixturePredictionViewModel koFixturePredictionViewModel)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var userId = User.Identity.GetUserId();
             var eventId = koFixturePredictionViewModel.EventId;
@@ -184,17 +175,18 @@ namespace Predict.Controllers
         }
 
         // GET: KOFixturePredictions
-        [Route("KoFixturePredictions/{userId}")]
-        public ActionResult KoFixturePredictions(string userId, short eventId)
+        public ActionResult KoFixturePredictions(short eventId)
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
+
+            var showReadOnly = Cache.HasEventStarted(eventId) == true ? true : false;
 
             var loggedInUserId = User.Identity.GetUserId();
-            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, userId, false, eventId);
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, loggedInUserId, true, eventId);
 
-            return View(koFixturePredictionViewModel);
+            return View("KoFixturePredictionsRO",koFixturePredictionViewModel);
         }
 
 
@@ -204,7 +196,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var showReadOnly = Cache.HasEventStarted(eventId) == true ? true : false;
 

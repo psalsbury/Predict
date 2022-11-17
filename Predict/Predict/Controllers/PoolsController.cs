@@ -24,7 +24,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             // Normal user can see only their pools
             var userid = User.Identity.GetUserId();
@@ -42,7 +42,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
 
@@ -60,14 +60,17 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
             var dteNow = DateTime.UtcNow;
 
-            var poolPlayer = _context.PoolPlayers.FirstOrDefault(a => a.PoolId == poolId & a.PlayerId == playerId);
+            var poolPlayer = _context.PoolPlayers
+                .Include(p => p.Player)
+                .FirstOrDefault(a => a.PoolId == poolId & a.PlayerId == playerId);
+
             if (poolPlayer == null)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var poolHomeViewModel = new PoolHomeViewModel();
             poolHomeViewModel.PoolPlayer = poolPlayer;
@@ -93,7 +96,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var playerId = User.Identity.GetUserId();
 
@@ -112,7 +115,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var poolModel = new Pool
             {
@@ -136,7 +139,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var loggedInUserId = User.Identity.GetUserId();
             var isPoolAdmin = _context.Pools.Any(o => o.Id == id && o.AdminPlayerId == loggedInUserId);
@@ -155,7 +158,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             if (!ModelState.IsValid)
             {
@@ -275,7 +278,7 @@ namespace Predict.Controllers
         {
             // If user is not logged in redirect to the home page
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
 
             var pool = _context.Pools.FirstOrDefault(a => a.Id == id);
             if (pool == null) return RedirectToAction("Index", "Home");

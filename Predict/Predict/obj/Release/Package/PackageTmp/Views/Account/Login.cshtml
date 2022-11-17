@@ -12,7 +12,7 @@
                                       background-size: cover; ">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "LoginForm" }))
+            @using (Html.BeginForm("return RedirectToAction("Index", "Home");, "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "LoginForm" }))
             {
                 @Html.AntiForgeryToken()
                 <h1>Sign in</h1>
