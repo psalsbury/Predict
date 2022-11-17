@@ -26,5 +26,7 @@ namespace Predict.ViewModels
         public Pool Pool { get; set; }
 
         public bool FreezeAllPredictions { get; set; }
+
+        public bool ReadOnly { get; set; }
     }
 }

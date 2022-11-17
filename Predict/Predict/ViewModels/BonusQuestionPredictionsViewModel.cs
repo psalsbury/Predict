@@ -12,7 +12,7 @@ namespace Predict.ViewModels
         public bool ReadOnly { get; set; }
         public bool IsPremiumPlayer { get; set; }
         public DateTime EventStartDateTime { get; set; }
-
+        public bool OtherUserViewing { get; set; }
         public DateTime EventEndDateTime { get; set; }
         public bool FreezeAllPredictions { get; set; }
     }

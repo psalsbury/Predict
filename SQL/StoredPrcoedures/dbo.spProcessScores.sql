@@ -18,7 +18,8 @@ UPDATE FIXTURES SET RESULTPROCESSED = 0 WHERE ID = 2358
 select * from eventpoolplayers WHERE eventid = 64 AND POOLID = 1 ORDER BY POOLPOSITION 
 select * from eventpoolplayers WHERE eventid = 1 AND POOLID = 1 ORDER BY POOLPOSITION 
 
-EXEC dbo.spProcessScores '2 AUG 2021'
+BEGIN TRAN
+EXEC dbo.spProcessScores '16 NOV 2022'
 
 select * from eventpoolplayers WHERE eventid = 64 AND POOLID = 1 ORDER BY POOLPOSITION 
 select * from eventpoolplayers WHERE eventid = 1 AND POOLID = 1 ORDER BY POOLPOSITION 
@@ -194,6 +195,7 @@ BEGIN
 				, SUM(BQ.Score) AS TotalBonusScore
 			FROM dbo.BonusQuestionPredictions AS BQP
 			INNER JOIN dbo.BonusQuestions AS BQ ON BQ.Id = BQP.BonusQuestionId 
+			INNER JOIN #tmpEvents AS TMP ON TMP.EventID = BQ.EventId
 			INNER JOIN dbo.EventPoolPlayers AS EPP ON EPP.PlayerId = BQP.PlayerID AND EPP.EventId = bq.EventId
 			WHERE BQP.PredictedAnswer = BQ.Answer
 			GROUP BY BQP.PlayerId
@@ -205,7 +207,7 @@ BEGIN
 			, PP.ModifiedDateTime = GETUTCDATE()
 		FROM dbo.EventPoolPlayers AS PP
 		INNER JOIN dbo.Pools AS PO ON PO.Id = PP.PoolId 
-		INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId
+		INNER JOIN CTE ON CTE.PlayerID = PP.PlayerId AND CTE.PoolId = PP.PoolId AND CTE.EventId = PP.EventId
 		WHERE PP.[Enabled] = 1;
 
 	END

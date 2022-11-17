@@ -32,42 +32,48 @@
                 <th>
                     Answer
                 </th>
-                <th style="text-align: center; vertical-align: middle;" witdth="25%">
-                    Deadline for Answer
-                </th>
+                @if (!Model.ReadOnly)
+                {
+                    <th style="text-align: center; vertical-align: middle;" witdth="25%">
+                        Deadline for Answer
+                    </th>
+                }
+
             </tr>
         </thead>
         @for (var i = 0; i < Model.BonusQuestionPredictions.Count(); i++)
         {
-            <tr>
-                <td>
-                    @Html.HiddenFor(m => m.BonusQuestionPredictions[i].Id)
-                    @Html.HiddenFor(m => m.BonusQuestionPredictions[i].BonusQuestionId)
-                    <b>@Html.DisplayFor(m => m.BonusQuestionPredictions[i].BonusQuestion.Question)</b>
-                </td>
+    <tr>
+        <td>
+            @Html.HiddenFor(m => m.BonusQuestionPredictions[i].Id)
+            @Html.HiddenFor(m => m.BonusQuestionPredictions[i].BonusQuestionId)
+            <b>@Html.DisplayFor(m => m.BonusQuestionPredictions[i].BonusQuestion.Question)</b>
+        </td>
 
-                <td>
-                    @if (Model.ReadOnly && !Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed)
-                    {
-                        <text>?</text>
-                    }
-                    else if (Model.ReadOnly || Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed || (Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
-                    {
-                        @Html.DisplayFor(m => m.BonusQuestionPredictions[i].PredictedAnswer)
-                        @Html.HiddenFor(m => m.BonusQuestionPredictions[i].PredictedAnswer)
-                    }
-                    else
-                    {
-                        @Html.TextBoxFor(m => m.BonusQuestionPredictions[i].PredictedAnswer, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
-                    }
-                </td>
-                <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
-                    
-                    @Html.Hidden("ToBeAnsweredByDateTime", Model.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime.ToLongDateString() + " " + Model.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime.ToShortTimeString())
+        <td>
+            @if (Model.OtherUserViewing && Model.ReadOnly && !Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed)
+            {
+                <text>?</text>
+            }
+            else if (Model.ReadOnly || Model.BonusQuestionPredictions[i].BonusQuestion.DatePassed || (Model.EventStartDateTime < DateTime.UtcNow && Model.FreezeAllPredictions))
+            {
+                @Html.DisplayFor(m => m.BonusQuestionPredictions[i].PredictedAnswer)
+                @Html.HiddenFor(m => m.BonusQuestionPredictions[i].PredictedAnswer)
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.BonusQuestionPredictions[i].PredictedAnswer, new { onblur = "IsNumeric(this)", size = "2", maxlength = "2" })
+            }
+        </td>
+        @if (!Model.ReadOnly)
+        {
+            <td style="text-align: center; vertical-align: middle;" witdth="25%" class="myDate">
 
-                </td>
+                @Html.Hidden("ToBeAnsweredByDateTime", Model.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime.ToLongDateString() + " " + Model.BonusQuestionPredictions[i].BonusQuestion.ToBeAnsweredByDateTime.ToShortTimeString())
 
-            </tr>
+            </td>
+        }
+        </tr>
         }
     </table>
 

@@ -170,7 +170,7 @@
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="fa fa-minus"></i>
             </button>
- 
+
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
         </div>
     </div>
@@ -187,17 +187,17 @@
                     rightLeft = "right";
                 }
 
-                    <div class="direct-chat-msg @rightLeft">
-                        <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name pull-@rightLeft">@poolchat.Player.DisplayName&nbsp;</span>
-                            <span class="direct-chat-timestamp pull-@rightLeft">@poolchat.CreatedDateTime.ToString("dd MMM yy H:mm:ss") &nbsp;</span>
-                        </div>
-
-                        <img class="direct-chat-img" src="../images/person.png" alt="Message User Image">
-                        <div class="direct-chat-text">
-                            @poolchat.Message
-                        </div>
+                <div class="direct-chat-msg @rightLeft">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-@rightLeft">@poolchat.Player.DisplayName&nbsp;</span>
+                        <span class="direct-chat-timestamp pull-@rightLeft">@poolchat.CreatedDateTime.ToString("dd MMM yy H:mm:ss") &nbsp;</span>
                     </div>
+
+                    <img class="direct-chat-img" src="../images/person.png" alt="Message User Image">
+                    <div class="direct-chat-text">
+                        @poolchat.Message
+                    </div>
+                </div>
             }
         </div>
 
@@ -206,7 +206,7 @@
 
     <div class="box-footer">
         <div class="input-group">
-            <input type="text"  maxlength="100" id="message" name="message" placeholder="Type Message ..." class="form-control">
+            <input type="text" maxlength="100" id="message" name="message" placeholder="Type Message ..." class="form-control">
             <span class="input-group-btn">
                 <button class="btn btn-primary btn-flat" id="SendMessage">Send</button>
             </span>
@@ -257,5 +257,23 @@
         document.getElementById("messages").innerHTML = document.getElementById("messages").innerHTML + me;
         $("#messages").animate({ scrollTop: $('#messages').prop("scrollHeight") }, 1000);
     }
+
+
+    $(document).ready(function () {
+        function poll() {
+            $.get({
+                url: '/api/stream/',
+                success: function (data) {
+                    console.log(data)
+                },
+                timeout: 10000                    // == 10 seconds timeout
+            }).always(function () {
+                setTimeout(poll, 30000)           // == 30 seconds polling period
+            })
+        }
+
+        // start polling
+        poll()
+    })
 
 </script>

@@ -1,0 +1,157 @@
+﻿@model Predict.ViewModels.KoFixturePredictionViewModel
+
+
+@{
+    ViewBag.Title = "Predicted Knock Out Draw";
+}
+<p><nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Predicted Group Tables</li>
+    </ol>
+</nav></p>
+    <div class="table-responsive">
+
+        <table id="dtHorizontalExample" class="table table-sm" cellspacing="0" width="100%">
+            <tr>
+
+                @{
+
+                    for (var col = 1; col <= Model.MaxCols; col++)
+                    {
+                        @:<td width="150">
+                        var sPoints = GetPoints(col);
+                        @:@sPoints.ToString()
+                        @:Points</td>
+                    }
+                }
+
+            </tr>
+
+            @{
+
+                for (var row = 1; row <= Model.MaxRows; row++)
+                {
+                    @:<tr>
+                    for (var col = 1; col <= Model.MaxCols; col++)
+                    {
+                        var lRowStartPos = Power2(col); // First column we want a drop down
+                        var lRowPattern = Power2(col + 1); // Every x rows
+                        var lActualPos = row - lRowStartPos; //
+
+                        if (lActualPos % lRowPattern == 0)
+                        {
+                            @:<td style="border: 1px solid #000000; width: 10%" nowrap>
+                            var roundOf = Power2(Math.Abs(col - 1 - Model.MaxCols));
+                            var position = lActualPos / lRowPattern + 1;
+
+                            @Html.Raw(ReturnDropDown(roundOf, position))
+                            ;
+                        }
+                        else
+                        {
+                            @:<td>
+                        }
+                        @:</td>
+                    }
+                    @:</tr>
+                }
+            }
+
+        </table>
+    </div>
+    <br/>
+
+
+@functions 
+{
+
+    public static int Power2(int exponent)
+    {
+        var result = 1;
+        for (var power = 2; power <= exponent; power++)
+        {
+            result = result * 2;
+        }
+        return result;
+    }
+
+    public static int GetPoints(int col)
+    {
+        var points = 0;
+        switch (col)
+        {
+            case 1:
+                points = 1;
+                break;
+
+            case 2:
+                points = 2;
+                break;
+
+            case 3:
+                points = 4;
+                break;
+
+            case 4:
+                points = 6;
+                break;
+            case 5:
+                points = 10;
+                break;
+        }
+        return points;
+    }
+
+    public string ReturnDropDown(int roundOf, int position)
+    {
+        var listName = roundOf + "_" + position;
+        var selectedTeam = Model.ReadOnly ? "?" : "Not Selected";
+        var defaultValue = "Select Team";
+        var selectedValue = 0;
+
+        if (roundOf == 1)
+        {
+            if (Model.KoWinningTeam != null)
+            {
+                selectedValue = Model.KoWinningTeam.TeamId ?? default(int);
+                selectedTeam = Model.KoWinningTeam.Team.TeamName;
+            }
+        }
+        else
+        {
+            var firstTeam = position % 2 != 0;
+
+            var koFixturePosition = firstTeam ? (position + 1) / 2 : position / 2;
+            var koFixturePredictions = Model.KoFixturePredictions.SingleOrDefault(k => k.KoFixture.RoundOf == roundOf && k.KoFixture.Position == koFixturePosition);
+            if (koFixturePredictions != null)
+            {
+                selectedValue = firstTeam ? koFixturePredictions.Team1Id ?? default(int) : koFixturePredictions.Team2Id ?? default(int);
+                if (firstTeam && koFixturePredictions.Team1 != null)
+                {
+                    selectedTeam = koFixturePredictions.Team1.TeamName;
+                }
+
+                if (!firstTeam && koFixturePredictions.Team2 != null)
+                {
+                    selectedTeam = koFixturePredictions.Team2.TeamName;
+                }
+            }
+        }
+
+        var correctPrediction = Model.ActualTeams.Any(a => a.RoundOf == roundOf && a.TeamId == selectedValue);
+
+ 
+            var returnString = selectedTeam;
+            if (correctPrediction)
+            {
+                returnString = "<font color='green'><b>" + selectedTeam + "</b></font>";
+            }
+            return returnString;
+ }
+
+
+
+ }

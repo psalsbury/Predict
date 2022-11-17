@@ -5,23 +5,9 @@
     ViewBag.Title = Model.Results ? "Group Tables" : "Predicted Group Tables";
 
     var flagFileLocation = ConfigurationManager.AppSettings["FlagFileLocation"];
-    var international = false;
-    if (ViewBag.International)
-    {
-        international = true;
-    }
+    var international = true;
 }
-@if (!Model.OtherUserViewing)
-{
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index?eventid=@ViewBag.EventId">Home</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">Predicted Group Tables</li>
-        </ol>
-    </nav>
-}
+
     <div class="container-flex" align="left">
         @foreach (var leagueTable in Model.LeagueTables)
         {

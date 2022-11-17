@@ -707,6 +707,8 @@ namespace Predict.RapidApi
                         if (fixture.HomeResult != null)
                             newResultFound = true; // Results was previously processed so perform update.
 
+                        Logger.Info("Removing Fixture {0} vs {1} ", homeTeam.TeamName, awayTeam.TeamName);
+
                         context.Fixtures.Remove(fixture);
                         updateDb = true;
                     }

@@ -3,9 +3,10 @@
 
 @{
     ViewBag.Title = Model.Player.DisplayName + "'s Predictions";
-    var showKOpPreds = DateTime.UtcNow > System.Convert.ToDateTime("20 Nov 2022 16:00" )? true : false;
-    var showKBonusPreds1 = DateTime.UtcNow > System.Convert.ToDateTime("13 Dec 2022 19:00" )? true : false;
-    var showKBonusPreds2 = DateTime.UtcNow > System.Convert.ToDateTime("18 Dec 2022 19:00" )? true : false;
+    var showKOpPreds = DateTime.UtcNow > System.Convert.ToDateTime("20 Nov 2022 16:00") ? true : false;
+    var showKBonusPreds1 = DateTime.UtcNow > System.Convert.ToDateTime("13 Dec 2022 19:00") ? true : false;
+    var showKBonusPreds2 = DateTime.UtcNow > System.Convert.ToDateTime("18 Dec 2022 19:00") ? true : false;
+    var fromSummary = ViewBag.Summary;
 }
 
 <nav aria-label="breadcrumb">
@@ -13,9 +14,12 @@
         <li class="breadcrumb-item">
             <a href="/Home/Index?eventid=@Model.EventId">Home</a>
         </li>
-        <li class="breadcrumb-item">
-            <a href="/Table/ShowTable?eventid=@Model.EventId&poolid=@Model.Pool.Id">Table</a>
-        </li>
+        @if (fromSummary=="false")
+         { 
+            <li class="breadcrumb-item">
+                <a href="/Table/ShowTable?eventid=@Model.EventId&poolid=@Model.PoolId">Table</a>
+            </li>
+         }
         <li class="breadcrumb-item active" aria-current="page">Predictions</li>
     </ol>
 </nav>
@@ -26,7 +30,7 @@
 }
 else
 {
-    <div class="nav-tabs-custom">
+    <div class="nav-tabs-custom" width="100%">
         <ul class="nav nav-tabs">
             <li class="active">
                 <a href="#tab_1" data-toggle="tab">Group</a>
