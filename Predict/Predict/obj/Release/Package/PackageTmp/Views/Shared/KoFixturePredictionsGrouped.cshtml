@@ -2,11 +2,21 @@
 
 @{
     ViewBag.Title = Model.Predictions ? "Edit Knock Out Fixture Predictions" : "Edit Knock Out Fixture Results";
-    var nbrKoPredictionsToEnter = (int)Session["nbrFixtures*" + Model.EventId];
-    var nbrFixturePredictionsEntered = (int)Session["nbrFixturePredictions*" + Model.EventId];
-    var disableAutoFill = nbrKoPredictionsToEnter - nbrFixturePredictionsEntered == 0 ? "" : "disabled";
-    disableAutoFill = Predict.Helper.Cache.HasEventStarted(Model.EventId) ? "disabled" : disableAutoFill;
+
+    var disableAutoFill = "";
     string autoFilButtonName = "";
+    if (User.IsInRole("Admin"))
+    {
+        disableAutoFill = "";
+    }
+    else
+    {
+        var nbrKoPredictionsToEnter = (int)Session["nbrFixtures*" + Model.EventId];
+        var nbrFixturePredictionsEntered = (int)Session["nbrFixturePredictions*" + Model.EventId];
+        disableAutoFill = nbrKoPredictionsToEnter - nbrFixturePredictionsEntered == 0 ? "" : "disabled";
+        disableAutoFill = Predict.Helper.Cache.HasEventStarted(Model.EventId) ? "disabled" : disableAutoFill;
+    }
+
 }
 
 <nav aria-label="breadcrumb">
@@ -25,6 +35,12 @@
     @Html.HiddenFor(model => model.MaxRows)
     @Html.HiddenFor(model => model.MaxCols)
     @Html.HiddenFor(model => model.EventId)
+
+    if(User.IsInRole("Admin"))
+    {
+        var pid = ViewBag.PJSPlayerId;
+        <input type="hidden" id="PJSPlayerId" name = "PJSPlayerId" value="@pid" />
+    }
 
     <div class="container-flex">
         <div class="row">
@@ -115,6 +131,8 @@
 
         </div>
     </div>
+
+    <p><b>Note:</b> Pressing the 'Autofill' button for the Last 16 will automatically select the teams that would qualify based on your group game predictions. For the rounds after that, pressing 'Autofill' will check each game from the previous stage and select the team that performed the best during the group stage. You can see the the KO draw by clicking on 'Prediction Summary' on the World Cup Home page</p>
 
 
     <div class="form-group">

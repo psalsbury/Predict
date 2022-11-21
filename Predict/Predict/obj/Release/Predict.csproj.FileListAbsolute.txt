@@ -275,6 +275,7 @@ C:\repos\Predict\Predict\Predict\bin\EntityFramework.xml
 C:\repos\Predict\Predict\Predict\bin\EntityFramework.SqlServer.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.Cookies.xml
 C:\repos\Predict\Predict\Predict\bin\Microsoft.Owin.Security.OAuth.xml
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.csprojAssemblyReference.cache
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.InitialMigration.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.AdddPoolPlayerEmailSent.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.DateTime2.resources
@@ -295,9 +296,9 @@ C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.FixtureStatus.re
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EmailLeads.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.EmailInvites.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.PoolChat.resources
+C:\repos\Predict\Predict\Predict\obj\Release\Predict.Migrations.poolchatid.resources
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.GenerateResource.cache
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.CoreCompileInputs.cache
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.csproj.CopyComplete
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.dll
 C:\repos\Predict\Predict\Predict\obj\Release\Predict.pdb
-C:\repos\Predict\Predict\Predict\obj\Release\Predict.csprojAssemblyReference.cache

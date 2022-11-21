@@ -35,7 +35,7 @@ namespace Predict.ViewModels
         public bool ReadOnly { get; set; }
         public bool Predictions { get; set; } // if false then used for results
         public bool IsPremiumPlayer { get; set; }
-
+        public bool InConsolidatedView { get; set; }
         public int Power2(int exponent)
         {
             var result = 1;

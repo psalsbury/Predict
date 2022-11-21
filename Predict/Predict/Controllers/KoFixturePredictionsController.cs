@@ -5,7 +5,6 @@ using Predict.ViewModels;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -27,13 +26,23 @@ namespace Predict.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            var userId = User.Identity.GetUserId();
+            var userId = "";
             var eventId = koFixturePredictionViewModel.EventId;
-            var KoPredictionsEntered = 0;
+            if (User.IsInRole("Admin"))
+            {
+                userId = Request["PJSPlayerId"];
+                if(userId=="" | userId==null)
+                    userId = User.Identity.GetUserId();
+            }
+            else
+            {
+                userId = User.Identity.GetUserId();
+                if (Cache.HasEventStarted(eventId))
+                    throw new Exception(
+                        "Knock out predictions are not allowed to be changed after the competition has started");
+            }
 
-            if (Cache.HasEventStarted(eventId))
-                throw new Exception(
-                    "Knock out predictions are not allowed to be changed after the competition has started");
+            var KoPredictionsEntered = 0;
 
             var koFixturePredictions = _context.KoFixturePredictions
                 .Where(p => p.PlayerId == userId)
@@ -185,10 +194,31 @@ namespace Predict.Controllers
 
             var loggedInUserId = User.Identity.GetUserId();
             var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, loggedInUserId, true, eventId);
-
+            koFixturePredictionViewModel.InConsolidatedView = false;
             return View("KoFixturePredictionsRO",koFixturePredictionViewModel);
         }
 
+
+        // GET: KOFixturePredictionsGrouped
+        // [Route("KoFixturePredictionsGrouped/{eventId}")]
+        public ActionResult KoFixturePredictionsGroupedPJS(short eventId, string playerId)
+        {
+            // If user is not logged in redirect to the home page
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+            if(!User.IsInRole("Admin"))
+                return RedirectToAction("Index", "Home");
+
+            ViewBag.PJSPlayerId = playerId;
+            var showReadOnly = false;
+
+            var loggedInUserId = User.Identity.GetUserId();
+            var koFixturePredictionViewModel = GetKoFixturePredictionViewModel(loggedInUserId, playerId, showReadOnly, eventId);
+
+            return View("KoFixturePredictionsGrouped",koFixturePredictionViewModel);
+
+        }
 
         // GET: KOFixturePredictionsGrouped
         // [Route("KoFixturePredictionsGrouped/{eventId}")]
@@ -220,6 +250,11 @@ namespace Predict.Controllers
         {
 
             var isInLockDown = Cache.HasEventStarted(eventId);
+            if (loggedInUserId!= userId && loggedInUserId == "e51699d7-7cf2-4565-905c-4a89c4f80063" & !readOnly)
+            {
+                isInLockDown = false;
+            }
+
             var koEvent = _context.EventKos.FirstOrDefault(f => f.EventId == eventId);
             var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
@@ -273,9 +308,7 @@ namespace Predict.Controllers
             } while (maxRoundOf > 1);
 
             koFixturePredictionViewModel.MaxCols = maxCols;
-
-            if ((loggedInUserId != userId) | isInLockDown)
-                koFixturePredictionViewModel.ReadOnly = true;
+            koFixturePredictionViewModel.ReadOnly = readOnly;
 
             return koFixturePredictionViewModel;
         }

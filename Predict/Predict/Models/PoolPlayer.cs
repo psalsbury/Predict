@@ -6,13 +6,16 @@ namespace Predict.Models
 {
     public class PoolPlayer
     {
-        [Key, Column(Order = 0)]
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int Id { get; set; }
+
         [ForeignKey("Pool")]
         public int PoolId { get; set; }
 
         public Pool Pool { get; set; }
 
-        [Key, Column(Order = 1)]
         [StringLength(128)]
         [ForeignKey("Player")]
         public string PlayerId { get; set; }

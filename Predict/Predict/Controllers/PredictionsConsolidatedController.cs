@@ -84,6 +84,7 @@ namespace Predict.Controllers
                 var kOFixturePredictionsViewModel =
                     koFixturePredictionsController.GetKoFixturePredictionViewModel(loggedInUserId, playerId, true, eventId);
                 kOFixturePredictionsViewModel.ReadOnly = true;
+                kOFixturePredictionsViewModel.InConsolidatedView = true;
                 predictionsConsolidated.KoFixturePredictionViewModel = kOFixturePredictionsViewModel;
 
                 var leagueTablesController = new LeagueTablesController();

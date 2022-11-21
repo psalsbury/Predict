@@ -1,7 +1,7 @@
 ﻿@model Predict.ViewModels.KoFixturePredictionViewModel
 
 @{
-    ViewBag.Title = Model.Predictions ? "Edit Knock Out Fixture Predictions" : Model.ReadOnly ? "View Knock Out Results" : "Edit Knock Out Fixture Results";
+    ViewBag.Title = Model.Predictions ? "Knock Out Predictions" : Model.ReadOnly ? "View Knock Out Results" : "Edit Knock Out Fixture Results";
     string disableAutoFill;
     if (!Model.ReadOnly)
     {
@@ -14,11 +14,17 @@
         disableAutoFill = "disabled";
     }
 }
-
-
-
-
-
+@if (Model.InConsolidatedView == false)
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home/Index?eventid=@Model.EventId">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Knock Out Predictions</li>
+        </ol>
+    </nav>
+}
 @using (Html.BeginForm(Model.Predictions ? (Model.ReadOnly ? "ReadOnly" : "Save") : "SaveKoResults", Model.Predictions ? "KoFixturePredictions" : "KoFixtures"))
 {
     @Html.AntiForgeryToken()
@@ -193,6 +199,7 @@
     }
 
 }
+
 
 @if (!Model.ReadOnly)
 {

@@ -1,0 +1,61 @@
+2022-11-18 10:50:42.7287 INFO Default Quartz.NET properties loaded from embedded resource file
+2022-11-18 10:50:42.7927 INFO Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2022-11-18 10:50:42.7927 INFO Quartz Scheduler v.3.2.2.0 created.
+2022-11-18 10:50:42.8007 INFO JobFactory set to: Quartz.Simpl.PropertySettingJobFactory
+2022-11-18 10:50:42.8007 INFO RAMJobStore initialized.
+2022-11-18 10:50:42.8007 INFO Scheduler meta-data: Quartz Scheduler (v3.2.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-11-18 10:50:42.8647 INFO Quartz scheduler 'DefaultQuartzScheduler' initialized
+2022-11-18 10:50:42.8647 INFO Quartz scheduler version: 3.2.2.0
+2022-11-18 10:50:42.8807 INFO Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2022-11-18 10:50:43.0168 INFO Startup Configuration - Start
+2022-11-18 10:50:43.0168 INFO SetEventCache - Start
+2022-11-18 10:50:43.0729 INFO SetCachedItem = setting cache for Events
+2022-11-18 10:50:43.0729 INFO SetCachedItem = setting cache for Events, with Expiry Date of 18/12/2022 10:50:43
+2022-11-18 10:50:43.0889 INFO SetNextResultCheckDateTime - Start - roundUp = False - forceUpdate = False
+2022-11-18 10:50:43.0889 INFO SetNextResultCheckDateTime - rapidApiResultChecks == null
+2022-11-18 10:50:43.1288 INFO SetNextResultCheckDateTime - Set League World Cup 2022, fixture date 21/11/2022 13:00:00, next check date to 21/11/2022 14:55:00
+2022-11-18 10:50:43.1288 INFO SetNextResultCheckDateTime - Set League World UEFA Nations League, fixture date 21/03/2024 00:00:00, next check date to 21/03/2024 01:55:00
+2022-11-18 10:50:43.1288 INFO SetNextResultCheckDateTime - Set League Premier League 2022, fixture date 26/12/2022 12:30:00, next check date to 26/12/2022 14:25:00
+2022-11-18 10:50:43.1288 INFO SetNextResultCheckDateTime - Set League England Championship 2022, fixture date 03/12/2022 12:30:00, next check date to 03/12/2022 14:25:00
+2022-11-18 10:50:43.1288 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-11-18 10:50:43.1288 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 18/12/2022 10:50:43
+2022-11-18 10:51:00.1408 INFO DailyRapidApiLeagueCheck --> lastDate = 17/11/2022 00:00:00, Now = 18/11/2022 00:00:00
+2022-11-18 10:51:00.5194 INFO SetCachedItem = setting cache for DailyRapidApiLeagueCheck, with Expiry Date of 19/11/2022 00:00:00
+2022-11-18 10:51:00.5194 INFO DailyRapidApiLeagueCheck --> performUpdate = True
+2022-11-18 10:51:00.5194 INFO DailyRapidApiLeagueCheck --> Performing daily league update
+2022-11-18 10:51:00.5666 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 4, EarliestDate = 18/11/2022 00:00:00
+2022-11-18 10:51:01.2355 INFO V3UpdateFixtures - earliestDate = 18/11/2022 00:00:00, leagueId = 18
+2022-11-18 10:51:01.4393 INFO V3OddsByLeagueAndBookmaker - rapidApiV3LeagueId = 1
+2022-11-18 10:51:02.3059 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 1, pageNbr = 2
+2022-11-18 10:51:03.8174 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 1, pageNbr = 0
+2022-11-18 10:51:03.8331 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 5, EarliestDate = 18/11/2022 00:00:00
+2022-11-18 10:51:04.1190 INFO V3UpdateFixtures - earliestDate = 18/11/2022 00:00:00, leagueId = 24
+2022-11-18 10:51:04.1909 INFO V3OddsByLeagueAndBookmaker - rapidApiV3LeagueId = 5
+2022-11-18 10:51:04.5282 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 5, pageNbr = 0
+2022-11-18 10:51:04.5437 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 83, EarliestDate = 18/11/2022 00:00:00
+2022-11-18 10:51:04.9531 INFO V3UpdateFixtures - earliestDate = 18/11/2022 00:00:00, leagueId = 25
+2022-11-18 10:51:05.4626 INFO V3OddsByLeagueAndBookmaker - rapidApiV3LeagueId = 39
+2022-11-18 10:51:06.3028 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 39, pageNbr = 0
+2022-11-18 10:51:06.3185 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 84, EarliestDate = 18/11/2022 00:00:00
+2022-11-18 10:51:06.7881 INFO V3UpdateFixtures - earliestDate = 18/11/2022 00:00:00, leagueId = 26
+2022-11-18 10:51:07.5916 INFO V3OddsByLeagueAndBookmaker - rapidApiV3LeagueId = 40
+2022-11-18 10:51:12.8818 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 40, pageNbr = 2
+2022-11-18 10:51:15.0628 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 40, pageNbr = 0
+2022-11-18 10:51:15.0628 INFO V3FixturesByLeague - rapidApiV3LeagueSeasonId = 85, EarliestDate = 18/11/2022 00:00:00
+2022-11-18 10:51:15.4867 INFO V3UpdateFixtures - earliestDate = 18/11/2022 00:00:00, leagueId = 27
+2022-11-18 10:51:15.9973 INFO V3OddsByLeagueAndBookmaker - rapidApiV3LeagueId = 135
+2022-11-18 10:51:20.7499 INFO V3OddsByLeagueAndBookmaker - RapidApiV3LeagueId = 135, pageNbr = 0
+2022-11-18 10:51:21.0041 INFO SetNextResultCheckDateTime - Start - roundUp = False - forceUpdate = True
+2022-11-18 10:51:21.0198 INFO SetNextResultCheckDateTime - Set League World Cup 2022, fixture date 21/11/2022 13:00:00, next check date to 21/11/2022 14:55:00
+2022-11-18 10:51:21.0198 INFO SetNextResultCheckDateTime - Set League World UEFA Nations League, fixture date 21/03/2024 00:00:00, next check date to 21/03/2024 01:55:00
+2022-11-18 10:51:21.0198 INFO SetNextResultCheckDateTime - Set League Premier League 2022, fixture date 26/12/2022 12:30:00, next check date to 26/12/2022 14:25:00
+2022-11-18 10:51:21.0198 INFO SetNextResultCheckDateTime - Set League England Championship 2022, fixture date 03/12/2022 12:30:00, next check date to 03/12/2022 14:25:00
+2022-11-18 10:51:21.0198 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime
+2022-11-18 10:51:21.0198 INFO SetCachedItem = setting cache for NextFixtureCheckDateTime, with Expiry Date of 18/12/2022 10:51:21

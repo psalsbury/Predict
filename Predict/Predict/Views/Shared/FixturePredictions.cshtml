@@ -311,7 +311,7 @@
 
     @Html.AntiForgeryToken()
 
-    if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture)
+    if (!Model.OtherUserViewing && Model.AnyFixturesInTheFuture & ! Model.FreezeAllPredictions)
     {
         <div class="form-group">
             <div>

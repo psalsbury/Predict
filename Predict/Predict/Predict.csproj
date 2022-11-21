@@ -499,6 +499,10 @@
     <Compile Include="Migrations\202211122146446_PoolChat.Designer.cs">
       <DependentUpon>202211122146446_PoolChat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211201950320_poolchatid.cs" />
+    <Compile Include="Migrations\202211201950320_poolchatid.Designer.cs">
+      <DependentUpon>202211201950320_poolchatid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BonusQuestion.cs" />
@@ -797,6 +801,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202211122146446_PoolChat.resx">
       <DependentUpon>202211122146446_PoolChat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211201950320_poolchatid.resx">
+      <DependentUpon>202211201950320_poolchatid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

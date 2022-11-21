@@ -6,13 +6,16 @@ namespace Predict.Models
 {
     public class PoolChat
     {
-        [Key, Column(Order = 0)]
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int Id { get; set; }
+
         [ForeignKey("Pool")]
         public int PoolId { get; set; }
 
         public Pool Pool { get; set; }
 
-        [Key, Column(Order = 1)]
         [StringLength(128)]
         [ForeignKey("Player")]
         public string PlayerId { get; set; }
@@ -27,7 +30,6 @@ namespace Predict.Models
         [Column(TypeName = "datetime2")]
         public DateTime ModifiedDateTime { get; set; }
 
-        [Key, Column(Order = 2, TypeName = "datetime2")]
         [Required]
         public DateTime CreatedDateTime { get; set; }
 

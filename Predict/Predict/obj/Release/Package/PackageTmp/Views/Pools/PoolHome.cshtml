@@ -178,27 +178,31 @@
 
         <div class="direct-chat-messages" id="messages">
 
-
-            @foreach (var poolchat in Model.PoolChats)
-            {
-                var rightLeft = "left";
-                if (poolchat.PlayerId == Model.PoolPlayer.PlayerId)
-                {
-                    rightLeft = "right";
+                @{
+                int latestChatId = 0;
                 }
+                @foreach (var poolchat in Model.PoolChats)
+                {
+                    latestChatId = poolchat.Id;
+                    var rightLeft = "left";
+                    if (poolchat.PlayerId == Model.PoolPlayer.PlayerId)
+                    {
+                        rightLeft = "right";
+                    }
 
-                <div class="direct-chat-msg @rightLeft">
-                    <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-@rightLeft">@poolchat.Player.DisplayName&nbsp;</span>
-                        <span class="direct-chat-timestamp pull-@rightLeft">@poolchat.CreatedDateTime.ToString("dd MMM yy H:mm:ss") &nbsp;</span>
-                    </div>
+                    <div class="direct-chat-msg @rightLeft">
+                        <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-@rightLeft">@poolchat.Player.DisplayName&nbsp;</span>
+                            <span class="direct-chat-timestamp pull-@rightLeft">@poolchat.CreatedDateTime.ToString("dd MMM yy H:mm:ss") &nbsp;</span>
+                        </div>
 
-                    <img class="direct-chat-img" src="../images/person.png" alt="Message User Image">
-                    <div class="direct-chat-text">
-                        @poolchat.Message
+                        <img class="direct-chat-img" src="../images/person.png" alt="Message User Image">
+                        <div class="direct-chat-text">
+                            @poolchat.Message
+                        </div>
                     </div>
-                </div>
-            }
+                }
+                @Html.Hidden("lastChatId", latestChatId)
         </div>
 
 
@@ -223,6 +227,10 @@
     $(document).ready(function () {
         $("#SendMessage").on("click", function () {
 
+            if ($('#message').val() === '')
+                return;
+
+            var dteDate = new Date();
             var newChat = new Object();
             newChat.poolId = '@Model.Pool.Id';
             newChat.message = $('#message').val();
@@ -231,9 +239,13 @@
                 type: 'POST',
                 datatype: 'json',
                 data: newChat,
-                success: function () {
-                    addChat($('#message').val());
+                success: function (data) {
+                    addChat($('#message').val(), '@Model.PoolPlayer.PlayerId' , '@Model.PoolPlayer.Player.PlayerName', dteDate);
                     newChat.message = $('#message').val('');
+                    document.getElementById("lastChatId").value = data;
+                },
+                error: function (request, error) {
+                    alert('Chat could not be saved');
                 }
             };
 
@@ -242,18 +254,47 @@
         });
     });
 
-    function addChat(message) {
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
 
-        var me = '<div class="direct-chat-msg right">'+
+    function formatDate(date) {
+        return (
+            [
+                padTo2Digits(date.getDate()),
+                padTo2Digits(date.getMonth() + 1),
+                date.getFullYear(),
+            ].join('/') +
+            ' ' +
+            [
+                padTo2Digits(date.getHours()),
+                padTo2Digits(date.getMinutes()),
+                padTo2Digits(date.getSeconds()),
+            ].join(':')
+        );
+    }
+
+    function addChat(message, playerId, playerName,  messageDate) {
+
+        var dd = new Date(messageDate);
+        var myDate = formatDate(dd);
+
+        var rightLeft = "left";
+        if (playerId== '@Model.PoolPlayer.PlayerId') {
+            rightLeft = "right";
+        }
+
+        var me = '<div class="direct-chat-msg ' + rightLeft + '">'+
             '<div class="direct-chat-info clearfix">' +
-            '<span class="direct-chat-name pull-right">@Model.PoolPlayer.Player.DisplayName</span>' +
-            '<span class="direct-chat-timestamp pull-left">@DateTime.UtcNow.ToString("dd MMM yy H:mm:ss")</span>'+
+            '<span class="direct-chat-name pull-' + rightLeft + '">' + playerName + ' &nbsp; </span>' +
+            '<span class="direct-chat-timestamp pull-' + rightLeft + '">' + myDate + ' &nbsp; </span>'+
             ' </div>' +
             '<img class="direct-chat-img" src="../images/person.png" alt="Message User Image">' +
             '<div class="direct-chat-text">' +
             message+
             '</div>' +
             '</div>'
+
         document.getElementById("messages").innerHTML = document.getElementById("messages").innerHTML + me;
         $("#messages").animate({ scrollTop: $('#messages').prop("scrollHeight") }, 1000);
     }
@@ -262,18 +303,39 @@
     $(document).ready(function () {
         function poll() {
             $.get({
-                url: '/api/stream/',
+                url: '../api/poolChats/GetMostRecentChatId/@Model.Pool.Id',
                 success: function (data) {
-                    console.log(data)
+                    GetChats(data);
                 },
-                timeout: 10000                    // == 10 seconds timeout
+                timeout: 2000                    // == 10 seconds timeout
             }).always(function () {
-                setTimeout(poll, 30000)           // == 30 seconds polling period
+                setTimeout(poll, 3000)           // == 30 seconds polling period
             })
         }
 
         // start polling
-        poll()
+        poll();
     })
+
+    function GetChats(data) {
+        var latestMessageId = document.getElementById("lastChatId").value;
+        retreivedId = data;
+        if (retreivedId > latestMessageId) {
+            var ajaxRequest = {
+                url: '../api/poolChats/GetChats?poolid=@Model.Pool.Id&lastId=' + retreivedId,
+                type: 'GET',
+                success: function (data) {
+
+                    data.forEach((item) => {
+
+                        addChat(item.Message, item.PlayerId, item.Player.DisplayName, Date(item.CreatedDateTime))
+                        document.getElementById("lastChatId").value = item.Id;
+                    });
+                }
+            };
+
+            $.ajax(ajaxRequest);
+        }
+    }
 
 </script>

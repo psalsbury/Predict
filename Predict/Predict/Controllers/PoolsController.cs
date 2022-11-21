@@ -89,6 +89,12 @@ namespace Predict.Controllers
                 .Where(c => c.PoolId == poolId)
                 .OrderBy(d => d.CreatedDateTime).Take(50).ToList();
 
+            var latestChat = poolHomeViewModel.PoolChats.LastOrDefault();
+            if(latestChat!=null)
+            {
+                Helper.Cache.SetCachedItem("Chat*" + poolId, latestChat.Id);
+            }
+
             return View("PoolHome", poolHomeViewModel);
         }
 
