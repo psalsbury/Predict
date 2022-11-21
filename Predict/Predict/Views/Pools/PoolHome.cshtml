@@ -4,6 +4,9 @@
     ViewBag.Title = Model.Pool.PoolName;
 }
 
+
+
+
 <div class="box box-success">
 
     <div class="box-header with-border">
@@ -64,6 +67,62 @@
     </div>
 </div>
 
+<div class="box box-primary direct-chat direct-chat-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Model.Pool.PoolName Chat</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+
+        <div class="direct-chat-messages" id="messages">
+
+            @{
+                int latestChatId = 0;
+            }
+            @foreach (var poolchat in Model.PoolChats)
+            {
+                latestChatId = poolchat.Id;
+                var rightLeft = "left";
+                if (poolchat.PlayerId == Model.PoolPlayer.PlayerId)
+                {
+                    rightLeft = "right";
+                }
+
+                <div class="direct-chat-msg @rightLeft">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-@rightLeft">@poolchat.Player.DisplayName&nbsp;</span>
+                        <span class="direct-chat-timestamp pull-@rightLeft">@poolchat.CreatedDateTime.ToString("dd MMM yy H:mm:ss") &nbsp;</span>
+                    </div>
+
+                    <img class="direct-chat-img" src="../images/person.png" alt="Message User Image">
+                    <div class="direct-chat-text">
+                        @poolchat.Message
+                    </div>
+                </div>
+            }
+            @Html.Hidden("lastChatId", latestChatId)
+        </div>
+
+
+    </div>
+
+    <div class="box-footer">
+        <div class="input-group">
+            <input type="text" maxlength="100" id="message" name="message" placeholder="Type Message ..." class="form-control">
+            <span class="input-group-btn">
+                <button class="btn btn-primary btn-flat" id="SendMessage">Send</button>
+            </span>
+        </div>
+    </div>
+
+</div>
+
 <div class="box box-success collapsed-box">
     <div class="box-header with-border">
         <h3 class="box-title">Scoring</h3>
@@ -106,12 +165,12 @@
 </div>
 
 
-<div class="box box-success">
+<div class="box box-success collapsed-box">
     <div class="box-header with-border">
         <h3 class="box-title">Previous Winners</h3>
         <div class="box-tools pull-right">
             <button id="pete" type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
+                <i class="fa fa-plus"></i>
             </button>
         </div>
 
@@ -163,61 +222,6 @@
     </div>
 </div>
 
-<div class="box box-primary direct-chat direct-chat-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title">@Model.Pool.PoolName Chat</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
-            </button>
-
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-    </div>
-    <div class="box-body">
-
-        <div class="direct-chat-messages" id="messages">
-
-                @{
-                int latestChatId = 0;
-                }
-                @foreach (var poolchat in Model.PoolChats)
-                {
-                    latestChatId = poolchat.Id;
-                    var rightLeft = "left";
-                    if (poolchat.PlayerId == Model.PoolPlayer.PlayerId)
-                    {
-                        rightLeft = "right";
-                    }
-
-                    <div class="direct-chat-msg @rightLeft">
-                        <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name pull-@rightLeft">@poolchat.Player.DisplayName&nbsp;</span>
-                            <span class="direct-chat-timestamp pull-@rightLeft">@poolchat.CreatedDateTime.ToString("dd MMM yy H:mm:ss") &nbsp;</span>
-                        </div>
-
-                        <img class="direct-chat-img" src="../images/person.png" alt="Message User Image">
-                        <div class="direct-chat-text">
-                            @poolchat.Message
-                        </div>
-                    </div>
-                }
-                @Html.Hidden("lastChatId", latestChatId)
-        </div>
-
-
-    </div>
-
-    <div class="box-footer">
-        <div class="input-group">
-            <input type="text" maxlength="100" id="message" name="message" placeholder="Type Message ..." class="form-control">
-            <span class="input-group-btn">
-                <button class="btn btn-primary btn-flat" id="SendMessage">Send</button>
-            </span>
-        </div>
-    </div>
-
-</div>
 
 
 <script>

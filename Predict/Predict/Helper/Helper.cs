@@ -95,10 +95,15 @@ namespace Predict.Helper
             MemoryCache.Default.Set(cacheId, cachedItem, expiryDate);
         }
 
-        public static Event GetCachedEvent(int eventId)
+        public static Event GetCachedEvent(short eventId)
         {
             var myEvents = (List<Event>)GetCachedItem("Events");
             var myEvent = myEvents.FirstOrDefault(e => e.Id == eventId);
+            if (myEvent == null)
+            {
+                return SetEventCache(eventId);
+            }
+  
             return myEvent;
         }
 
@@ -160,16 +165,14 @@ namespace Predict.Helper
             var events = context.Events.Where(a => a.EndDateTime >= daysAgo || a.EndDateTime == DateTime.MinValue).ToList();
             SetCachedItem("Events", events);
 
-            context.Dispose();
         }
-        public static void SetEventCache(short eventId)
+        public static Event SetEventCache(short eventId)
         {
             // Sets/Updates one specific event
             var myEvents = (List<Event>)GetCachedItem("Events");
             if (myEvents == null)
             {
                 SetEventCache();
-                return;
             }
 
             var context = new ApplicationDbContext();
@@ -189,6 +192,7 @@ namespace Predict.Helper
             }
             SetCachedItem("Events", myEvents);
             context.Dispose();
+            return myNewEvent;
         }
 
         public static void UpdateScoring(ApplicationDbContext context)
