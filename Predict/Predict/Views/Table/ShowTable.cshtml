@@ -76,15 +76,15 @@
         <tr style="background-color: #428bca">
             <td>&nbsp</td>
             <td>&nbsp</td>
-            <td STYLE="color: WHITE; text-align: center;" class="hidden-xs hidden-sm" >
+            <td STYLE="color: WHITE; text-align: center;" class="hidden-xs hidden-sm">
                 <b>CS</b>
             </td>
-            <td STYLE="color: WHITE; text-align: center;" class="hidden-xs hidden-sm" >
+            <td STYLE="color: WHITE; text-align: center;" class="hidden-xs hidden-sm">
                 <b>CR</b>
             </td>
             @if (ViewBag.nbrKoPredictionsRequired > 0)
             {
-                <td STYLE="color: WHITE; text-align: center;" class="hidden-xs hidden-sm" >
+                <td STYLE="color: WHITE; text-align: center;" class="hidden-xs hidden-sm">
                     <b>KO</b>
                 </td>
             }
@@ -128,15 +128,15 @@
                 }
             </td>
 
-            <td STYLE="text-align: center" class="hidden-xs hidden-sm" >
+            <td STYLE="text-align: center" class="hidden-xs hidden-sm">
                 @tableViewModel.CorrectScore.ToString()
             </td>
-            <td STYLE="text-align: center" class="hidden-xs hidden-sm" >
+            <td STYLE="text-align: center" class="hidden-xs hidden-sm">
                 @((tableViewModel.CorrectResult + @tableViewModel.WinMargin).ToString())
             </td>
             @if (ViewBag.nbrKoPredictionsRequired > 0)
             {
-                <td STYLE="text-align: center" class="hidden-xs hidden-sm" >
+                <td STYLE="text-align: center" class="hidden-xs hidden-sm">
                     @tableViewModel.KoScore.ToString()
                 </td>
             }
@@ -173,8 +173,10 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 </script>
 
 
-@*@if (ViewBag.PoolAdmin)
+@if (ViewBag.PoolAdmin)
 {
-    <input class="btn btn-warning alignleft" type="button" value="Admin Mode" onclick="" id="adminMode" name="adminMode">
-
-}*@
+    <input type="button"
+           value="ADMIN -- Add/Remove Players"
+           class="btn btn-warning"
+           onclick="location.href = '@Url.Action("AddRemovePlayers", "EventPoolPlayers", new { eventId = eventId , poolId = ViewBag.PoolId })'" />
+}

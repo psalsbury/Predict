@@ -105,7 +105,8 @@ BEGIN
 		, PoolPosition = 0
 		, ModifiedDateTime = GETUTCDATE()
 	FROM EventPoolPlayers AS PP
-	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId;
+	INNER JOIN #tmpEventPools AS TMP ON TMP.EventId = PP.EventId AND TMP.PoolId = PP.PoolId
+	WHERE PP.[Enabled] = 1;
 		
 	/* Calculate the group scores */
 	UPDATE FP

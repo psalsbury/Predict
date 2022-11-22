@@ -1,0 +1,69 @@
+﻿@model Predict.ViewModels.EventPoolPlayersViewModel
+@{
+    ViewBag.Title = "Add/Remove Players";
+}
+
+<h2>@Model.Event.EventName - @Model.Pool.PoolName</h2>
+
+@using (Html.BeginForm("SaveAddRemovePlayers", "EventPoolPlayers"))
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="~/Table/ShowTable?eventid=@Model.Event.Id&poolid=@Model.Pool.Id">Table</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Add/Remove Players</li>
+        </ol>
+    </nav>
+
+    @Html.HiddenFor(a => Model.Pool.Id)
+    @Html.HiddenFor(a => Model.Event.Id)
+
+    <table class="table" id="EventPoolPlayers">
+        <tr>
+            <th>
+                Player Name
+            </th>
+            <th>
+                League Posn
+            </th>
+            <th>In This Comp</th>
+            <th>&nbsp;</th>
+        </tr>
+
+        @foreach (var item in Model.PoolPlayers)
+        {
+            var eventPoolPlayer = Model.EventPoolPlayers.FirstOrDefault(a => a.PlayerId == item.PlayerId);
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.Player.DisplayName)
+
+                </td>
+                <td>
+                    @if (eventPoolPlayer == null)
+                    {
+                        <text>-</text>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(a => eventPoolPlayer.PoolPosition)
+                    }
+
+                </td>
+                <td>
+
+                    <input type="checkbox" value="@item.PlayerId" name="player_@item.PlayerId" id="player_@item.PlayerId" @(eventPoolPlayer != null ? "checked" : "") )>
+
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="form-group">
+        @Html.AntiForgeryToken() @* Its important to add this to all forms to stop hackers *@
+        <input type="submit" value="Save" class="btn btn-success" />
+    </div>
+
+}
+

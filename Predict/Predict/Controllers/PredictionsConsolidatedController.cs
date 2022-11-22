@@ -63,8 +63,7 @@ namespace Predict.Controllers
             predictionsConsolidated.Player = _context.Players.FirstOrDefault(p => p.Id == playerId);
             if (predictionsConsolidated.Player == null) throw new Exception("Invalid Player");
 
-            var nbrKoPredictionsToEnter = (int)Session["nbrKoFixtures*" + eventId];
-            var nbrBonusQuestionsToEnter = (int)Session["nbrBonusQuestions*" + eventId];
+            var myEvent = Helper.Cache.GetCachedEvent(eventId);
 
             var fixturePredictionsController = new FixturePredictionsController();
             var loggedInUserId = User.Identity.GetUserId();
@@ -78,7 +77,7 @@ namespace Predict.Controllers
             fixturePredictionsViewModel.Pool = _context.Pools.FirstOrDefault(p => p.Id == poolId);
             if (fixturePredictionsViewModel.Pool == null) throw new Exception("Invalid Pool");
 
-            if (nbrKoPredictionsToEnter > 0)
+            if (myEvent.KoFixtures>0)
             {
                 var koFixturePredictionsController = new KoFixturePredictionsController();
                 var kOFixturePredictionsViewModel =
@@ -95,7 +94,7 @@ namespace Predict.Controllers
                 predictionsConsolidated.LeagueTablesViewModel = leagueTablesViewModel;
             }
 
-            if (nbrBonusQuestionsToEnter > 0)
+            if (myEvent.BonusQuestions > 0)
             {
                 var bonusQuestionPredictionsController = new BonusQuestionPredictionsController();
                 var bonusQuestionPredictionsViewModel =

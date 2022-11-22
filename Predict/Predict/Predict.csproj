@@ -378,6 +378,7 @@
     <Compile Include="Controllers\EventFixturesController.cs" />
     <Compile Include="Controllers\EventGenerationsController.cs" />
     <Compile Include="Controllers\EventPlayersController.cs" />
+    <Compile Include="Controllers\EventPoolPlayersController.cs" />
     <Compile Include="Controllers\EventPoolsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FixturePredictionsController.cs" />
@@ -536,6 +537,7 @@
     <Compile Include="RapidApi\RapidApiV3OddsClassHelper.cs" />
     <Compile Include="ViewModels\EventPlayersViewModel.cs" />
     <Compile Include="ViewModels\EventPoolInvitesViewModel.cs" />
+    <Compile Include="ViewModels\EventPoolPlayersViewModel.cs" />
     <Compile Include="ViewModels\JokeTable.cs" />
     <Compile Include="Models\KoFixture.cs" />
     <Compile Include="Models\KoFixturePrediction.cs" />
@@ -725,6 +727,7 @@
     <Content Include="Views\EventGenerations\EventGenerationsIndex.cshtml" />
     <Content Include="Views\Pools\PoolHome.cshtml" />
     <Content Include="Views\EventPools\EventPoolInvites.cshtml" />
+    <Content Include="Views\EventPoolPlayers\AddRemovePlayers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
