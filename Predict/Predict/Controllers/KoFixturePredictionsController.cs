@@ -256,7 +256,6 @@ namespace Predict.Controllers
             }
 
             var koEvent = _context.EventKos.FirstOrDefault(f => f.EventId == eventId);
-            var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
             if (userId == null)
                 userId = loggedInUserId;
@@ -285,7 +284,7 @@ namespace Predict.Controllers
                 "spGetKoResultTeams @intEventId"
                 , new System.Data.SqlClient.SqlParameter("@intEventId", eventId)).ToList();
 
-            var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
+            var isPremiumPlayer = false;
             koFixturePredictionViewModel.IsPremiumPlayer = isPremiumPlayer;
 
             if (!readOnly)

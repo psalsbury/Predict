@@ -44,8 +44,9 @@ namespace Predict.Controllers.Api
             _context.PoolPlayers.AddOrUpdate(poolPlayer);
 
             var eventPoolPlayers = _context.EventPoolPlayers.Include(a => a.Event)
-                .Where(a => a.Event.StartDateTime > DateTime.UtcNow)
+                .Where(a => a.Event.EndDateTime > DateTime.UtcNow)
                 .Where(a => a.PlayerId == playerId)
+                .Where(a => a.Enabled == true)
                 .Where(a => a.PoolId == poolId).ToList();
 
             // Remove player from any events that have not yet started
@@ -60,8 +61,6 @@ namespace Predict.Controllers.Api
             }
 
             _context.SaveChanges();
-
-
 
             return Ok();
         }

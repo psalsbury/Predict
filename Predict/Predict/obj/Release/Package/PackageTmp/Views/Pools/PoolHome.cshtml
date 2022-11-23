@@ -5,12 +5,10 @@
 }
 
 
-
-
 <div class="box box-success">
 
     <div class="box-header with-border">
-        <h3 class="box-title">League Details</h3>
+        <h3 class="box-title">Current Comps</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="fa fa-minus"></i>
@@ -18,6 +16,59 @@
         </div>
     </div>
 
+    <div class="box-body">
+
+        <table class="table table-bordered table-hover" id="fixturesByResult" style="width: 100%" align="center">
+            <tr>
+                <th>
+                    Comp Name
+                </th>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Table
+                </th>
+            </tr>
+
+
+            @foreach (var eventPool in Model.ActiveEventPools)
+            {
+        <tr>
+            <td>
+                <small><b>@eventPool.Event.EventName</b></small>
+            </td>
+            <td>
+                <small>@eventPool.Event.StartDateTime.ToShortDateString()</small>
+            </td>
+            <td>
+                <small>@eventPool.Event.EndDateTime.ToShortDateString()</small>
+            </td>
+            <td>
+                <a href="~/Table/ShowTable?eventid=@eventPool.EventId&poolid=@eventPool.PoolId" class="product-title">
+                    View Table
+                </a> 
+            </td>
+        </tr>
+            }
+        </table>
+
+    </div>
+</div>
+
+<div class="box box-success collapsed-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">League Details</h3>
+        <div class="box-tools pull-right">
+            <button id="pete" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+
+    </div>
     <div class="box-body">
 
         <div class="form-group">

@@ -38,16 +38,13 @@ namespace Predict.Controllers
         {
 
             var bonusQuestionPredictionsViewModel = new BonusQuestionPredictionsViewModel();
-            var player = (Player)System.Web.HttpContext.Current.Session["Player"];
             var myEvent = Helper.Cache.GetCachedEvent(eventId);
 
             bonusQuestionPredictionsViewModel.PlayerId = playerId;
             bonusQuestionPredictionsViewModel.EventId = eventId;
             bonusQuestionPredictionsViewModel.EventStartDateTime = myEvent.StartDateTime;
             bonusQuestionPredictionsViewModel.EventEndDateTime = myEvent.EndDateTime;
-
-            var isPremiumPlayer = !(loggedInUserId != playerId && !player.PremiumPlayer);
-            bonusQuestionPredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
+            bonusQuestionPredictionsViewModel.IsPremiumPlayer = false;
 
             if (playerId == loggedInUserId)
             {

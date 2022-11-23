@@ -53,7 +53,6 @@ namespace Predict.Controllers
 
             var fixturePredictions = new List<FixturePrediction>();
             var fixturePredictionsViewModel = new FixturePredictionsViewModel();
-            var player = (Player)System.Web.HttpContext.Current.Session["Player"];
 
             var myEvent = Helper.Cache.GetCachedEvent(eventId);
 
@@ -64,8 +63,7 @@ namespace Predict.Controllers
             fixturePredictionsViewModel.UserId = userId;
             fixturePredictionsViewModel.MyEvent = myEvent;
 
-            var isPremiumPlayer = !(loggedInUserId != userId && !player.PremiumPlayer);
-            fixturePredictionsViewModel.IsPremiumPlayer = isPremiumPlayer;
+            fixturePredictionsViewModel.IsPremiumPlayer = false;
 
             if (!fixturePredictionsViewModel.OtherUserViewing)
             {

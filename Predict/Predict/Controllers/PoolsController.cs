@@ -89,6 +89,13 @@ namespace Predict.Controllers
                 .Where(c => c.PoolId == poolId)
                 .OrderBy(d => d.CreatedDateTime).Take(50).ToList();
 
+            poolHomeViewModel.ActiveEventPools = _context.EventPools
+                .Include(a => a.Event)
+                .Where(c => c.PoolId == poolId)
+                .Where(d => d.Event.EndDateTime > dteNow)
+                .Where(e => e.Enabled == true)
+                .ToList();
+
             var latestChat = poolHomeViewModel.PoolChats.LastOrDefault();
             if(latestChat!=null)
             {
