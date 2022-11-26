@@ -77,32 +77,37 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
-                <!-- Notifications: style can be found in dropdown.less -->
-                <!--
-    <li class="dropdown notifications-menu">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-bell-o"></i>
-          @*  <span class="label label-warning">2</span>*@
-        </a>
-        <!--<ul class="dropdown-menu">
-            <li class="header">You have 2 notifications</li>
-            <li>-->
-                <!-- inner menu: contains the actual data -->
-                <!--<ul class="menu">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-soccer-ball-o"></i> Premier League 21/22 Comps available
+
+                @{
+                    var newChat = Session["NewChats"];
+                }
+
+                @if(newChat != null && newChat.ToString() == "true")
+                {
+
+                            <!-- Notifications: style can be found in dropdown.less -->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">1</span>
                     </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-soccer-ball-o"></i> Scottish Prem 21/22 Comps available
-                    </a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-                </li>-->
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 1 notifications</li>
+                        <li>
+                            <ul class="menu">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-comments-o"></i> New Messages In Your League
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                            </li>
+
+
+                }
+
                 <!-- Tasks: style can be found in dropdown.less -->
             </ul>
         </div>

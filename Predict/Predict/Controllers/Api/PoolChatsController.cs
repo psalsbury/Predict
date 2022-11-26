@@ -37,8 +37,8 @@ namespace Predict.Controllers.Api
 
             var playerId = User.Identity.GetUserId();
 
-            var exists = _context.PoolPlayers.Any(p => p.PoolId == poolId & p.PlayerId == playerId & p.Enabled == true);
-            if (!exists)
+            var poolPlayer = _context.PoolPlayers.FirstOrDefault(p => p.PoolId == poolId & p.PlayerId == playerId & p.Enabled == true);
+            if (poolPlayer==null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
             var poolChats = _context.PoolChats
@@ -46,6 +46,16 @@ namespace Predict.Controllers.Api
                 .Where(a => a.PoolId == poolId & a.Id >= lastId)
                 .OrderBy(a => a.CreatedDateTime).ToList();
 
+            if(poolChats != null && poolChats.Count>0)
+            {
+                if (poolPlayer.LastViewedPoolChatId != poolChats.Last().Id)
+                {
+                    poolPlayer.LastViewedPoolChatId = poolChats.Last().Id;
+                    poolPlayer.ModifiedDateTime = DateTime.UtcNow;
+                    _context.PoolPlayers.AddOrUpdate(poolPlayer);
+                    _context.SaveChanges();
+                }
+            }
             return Json(poolChats);
 
         }
@@ -76,8 +86,8 @@ namespace Predict.Controllers.Api
 
             var playerId = User.Identity.GetUserId();
 
-            var exists = _context.PoolPlayers.Any(p => p.PoolId == obj.poolId & p.PlayerId==playerId & p.Enabled==true);
-            if (!exists)
+            var poolPlayer = _context.PoolPlayers.FirstOrDefault(p => p.PoolId == obj.poolId & p.PlayerId==playerId & p.Enabled==true);
+            if (poolPlayer==null)
                 throw new Exception("Not a member of the pool");
 
             var dteNow = DateTime.UtcNow;
@@ -93,6 +103,12 @@ namespace Predict.Controllers.Api
 
             _context.PoolChats.Add(poolChat);
             _context.SaveChanges();
+
+            poolPlayer.LastViewedPoolChatId = poolChat.Id;
+            poolPlayer.ModifiedDateTime = dteNow;
+            _context.PoolPlayers.AddOrUpdate(poolPlayer);
+            _context.SaveChanges();
+
 
             Helper.Cache.SetCachedItem("Chat*" + obj.poolId, poolChat.Id);
 

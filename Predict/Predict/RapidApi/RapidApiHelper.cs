@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Data.Entity;
-using System.Net.PeerToPeer.Collaboration;
-using Antlr.Runtime;
 using League = Predict.Models.League;
 
 namespace Predict.RapidApi
@@ -805,10 +803,11 @@ namespace Predict.RapidApi
             else
             {
                 // Not updating the logo as this could be changed manually by me
-                if (team.TeamName != teamName || team.FlagFileLocation != logo)
+                if (team.TeamName != teamName || (team.TeamFlag != logo && team.FlagFileLocation == logo))
                 {
                     team.TeamName = teamName;
                     team.TeamFlag = logo;
+                    team.ModifiedDateTime = DateTime.UtcNow;
                     changeMade = true;
                 }
             }
@@ -1076,14 +1075,13 @@ namespace Predict.RapidApi
                         {
                             // Very first fixture is ahead of today, so this is the first month we are generating for.
                             dateToCheck = new DateTime(dateToCheck.Year, dateToCheck.Month, 1);
-                            endDate = new DateTime(dateToCheck.AddMonths(1).Year, dateToCheck.AddMonths(2).Month, 1).AddDays(-1);
                         }
                         else
                         {
                             // first fixture is in the past. get the dates for next month
                             dateToCheck = new DateTime(DateTime.UtcNow.AddMonths(1).Year, DateTime.UtcNow.AddMonths(1).Month, 1);
-                            endDate = new DateTime(DateTime.UtcNow.AddMonths(2).Year, DateTime.UtcNow.AddMonths(2).Month, 1).AddDays(-1);
                         }
+                        endDate = new DateTime(dateToCheck.AddMonths(1).Year, dateToCheck.AddMonths(1).Month, 1).AddDays(-1);
 
                     }
 

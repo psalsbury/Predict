@@ -89,6 +89,38 @@ namespace Predict.Controllers
 
             }
 
+            Session["NewChats"] = "false";
+            var poolPlayers = _context.PoolPlayers.Where(a => a.PlayerId == playerId && a.PoolId != 1 && a.Enabled == true).ToList();
+            foreach (var poolPlayer in poolPlayers)
+            {
+                int latestChat = 0;
+                var myObect = Helper.Cache.GetCachedItem("Chat*" + poolPlayer.PoolId);
+                if (myObect != null)
+                {
+                    latestChat = (int)myObect;
+                }
+                else
+                {
+                    var poolChats = _context.PoolChats.Where(a => a.PoolId == poolPlayer.PoolId)
+                        .OrderByDescending(a => a.Id)
+                        .Take(1);
+                    if (poolChats != null && poolChats.Count()==1)
+                    {
+                        latestChat = poolChats.FirstOrDefault().Id;
+                        Helper.Cache.SetCachedItem("Chat*" + poolPlayer.PoolId, latestChat);
+                    }
+                }
+
+                if(latestChat>0 && latestChat > poolPlayer.LastViewedPoolChatId)
+                {
+                    // Need to give a notifaction that there is a new message
+                    Session["NewChats"] = "true";
+                }
+
+            }
+   
+
+
             return View(eventPlayer);
         }
 

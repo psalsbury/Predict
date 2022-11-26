@@ -28,6 +28,8 @@ namespace Predict.Models
         [Column(TypeName = "bit")]
         public bool Enabled { get; set; }
 
+        public int LastViewedPoolChatId { get; set; }
+
         [Required]
         [Column(TypeName = "datetime2")] public DateTime CreatedDateTime { get; set; }
 

@@ -3,11 +3,11 @@ using Microsoft.AspNet.Identity;
 using Predict.Models;
 using Predict.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity.Migrations;
 
 namespace Predict.Controllers
 {
@@ -100,7 +100,16 @@ namespace Predict.Controllers
             if(latestChat!=null)
             {
                 Helper.Cache.SetCachedItem("Chat*" + poolId, latestChat.Id);
+                if (poolPlayer.LastViewedPoolChatId != latestChat.Id)
+                {
+                    poolPlayer.LastViewedPoolChatId = latestChat.Id;
+                    poolPlayer.ModifiedDateTime = dteNow;
+                    _context.PoolPlayers.AddOrUpdate(poolPlayer);
+                    _context.SaveChanges();
+                }
             }
+
+    
 
             return View("PoolHome", poolHomeViewModel);
         }
